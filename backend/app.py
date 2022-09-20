@@ -32,7 +32,7 @@ class Skill(db.Model):
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    pass
 
 #skill = Skill.query.all()
 
