@@ -38,7 +38,7 @@ def home():
     pass
 
 #This segment of codes is to do retrieval of all the existing roles. Used by both HR and Learner.
-@app.route("/getAllJobRoles")
+@app.route("/getAllJobRole")
 def getAllJobRoles():
     jobRoles = JobRole.query.all()
     return jsonify(
