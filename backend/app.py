@@ -37,7 +37,7 @@ class JobRole(db.Model):
 def home():
     pass
 
-#This segment of codes is to do retrieval of all the existing roles. Used by both HR and Learner.
+#This segment of code is to do retrieval of all the existing roles. Used by both HR and Learner.
 @app.route("/getAllJobRole")
 def getAllJobRole():
     jobRoles = JobRole.query.all()
