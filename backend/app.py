@@ -28,7 +28,6 @@ class JobRole(db.Model):
     job_role_desc = db.Column(db.String(255), nullable=False)
     job_role_status = db.Column(db.Integer, nullable=False)
     def __init__(self, job_role_name,  job_role_desc, job_role_status):
-      
         self.job_role_name = job_role_name
         self.job_role_desc= job_role_desc
         self.job_role_status = job_role_status
