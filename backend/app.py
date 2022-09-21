@@ -20,19 +20,20 @@ class JobRole(db.Model):
     __tablename__ = 'job_role'
     job_role_id = db.Column(db.Integer, primary_key=True, nullable=False)
     job_role_name = db.Column(db.String(50), nullable=False)
+    job_role_desc = db.Column(db.String(255), nullable=False)
     job_role_status = db.Column(db.Integer, nullable=False)
-    def __init__(self, job_role_name, job_role_status):
-     
+    def __init__(self, job_role_name,  job_role_desc, job_role_status):
         self.job_role_name = job_role_name
+        self.job_role_desc= job_role_desc
         self.job_role_status = job_role_status
 
     def json(self):
         return  {
             "job_role_id": self.job_role_id, 
             "job_role_name": self.job_role_name, 
+            "job_role_desc":self.job_role_desc,
             "job_role_status": self.job_role_status
         }
-
 @app.route("/")
 def home():
     pass
