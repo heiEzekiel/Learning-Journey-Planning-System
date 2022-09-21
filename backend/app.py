@@ -17,16 +17,19 @@ class Skill(db.Model):
     __tablename__ = 'Skill'
     skill_id = db.Column(db.Integer, primary_key=True, nullable=False)
     skill_name = db.Column(db.String(100), nullable=False)
+    skill_desc = db.Column(db.String(255), nullable=False)
     skill_status = db.Column(db.Integer, nullable=False)
-    def __init__(self, skill_id, skill_name, skill_status):
+    def __init__(self, skill_id, skill_name, skill_desc, skill_status):
         self.skill_id = skill_id
         self.skill_name = skill_name
         self.skill_status = skill_status
+        self.skill_desc = skill_desc
 
     def json(self):
         return  {
             "skill_id": self.skill_id, 
             "skill_name": self.skill_name, 
+            "skill_desc": self.skill_desc,
             "skill_status": self.skill_status
         }
 
