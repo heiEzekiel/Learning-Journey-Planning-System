@@ -45,7 +45,7 @@ def getAllJobRole():
             {
                 "code": 200,
                 "data": {
-                    "job_roles": [roles.json() for roles in jobRoles]
+                    "list_of_job_roles": [roles.json() for roles in jobRoles]
                 }
             }
         )
