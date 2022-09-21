@@ -21,8 +21,8 @@ class JobRole(db.Model):
     job_role_id = db.Column(db.Integer, primary_key=True, nullable=False)
     job_role_name = db.Column(db.String(50), nullable=False)
     job_role_status = db.Column(db.Integer, nullable=False)
-    def __init__(self, job_role_id, job_role_name, job_role_status):
-        self.job_role_id = job_role_id
+    def __init__(self, job_role_name, job_role_status):
+     
         self.job_role_name = job_role_name
         self.job_role_status = job_role_status
 
@@ -44,12 +44,11 @@ def getAllJobRole():
     return jsonify(
             {
                 "code": 200,
-                "data": {
-                    "list_of_job_roles": [roles.json() for roles in jobRoles]
-                }
+                "data": 
+                   [roles.json() for roles in jobRoles]
             }
         )
 
 #Run flask app
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
