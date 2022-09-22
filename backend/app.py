@@ -50,6 +50,7 @@ def home():
 @app.route("/createJobRole", methods=['POST'])
 def create_job_role():
     data = request.get_json()
+    print(data)
     new_job_role = JobRole(data['job_role_name'], data['job_role_desc'],0)
     try:
         db.session.add(new_job_role)
