@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html class="wide wow-animation" lang="en">
+  <head>
+    <title>Create Roles</title>
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <!-- Stylesheets-->
+<<<<<<< HEAD
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Poppins:400,500,600%7CTeko:300,400,500%7CMaven+Pro:500">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+=======
+    <link rel="stylesheet" href="css/bootstrap.css">
+>>>>>>> 9aa3708ba4480a50820b77517fdaa790f471b7df
+    <link rel="stylesheet" href="css/fonts.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/index.css">
+    <style>.ie-panel{display: none;background: #212121;padding: 10px 0;box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3);clear: both;text-align:center;position: relative;z-index: 1;} html.ie-10 .ie-panel, html.lt-ie-10 .ie-panel {display: block;}</style>
+  </head>
+  <body>
+    <div class="ie-panel"><a href="http://windows.microsoft.com/en-US/internet-explorer/"><img src="images/ie8-panel/warning_bar_0000_us.jpg" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today."></a></div>
+    <div class="preloader">
+      <div class="preloader-body">
+        <div class="cssload-container"><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+    <div class="page">
+      <div id="home">
+        <!-- Page Header-->
+        <header class="section page-header">
+          <!-- RD Navbar-->
+          <div class="rd-navbar-wrap">
+            <nav class="rd-navbar rd-navbar-classic" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed" data-md-layout="rd-navbar-fixed" data-md-device-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-static" data-lg-device-layout="rd-navbar-fixed" data-xl-layout="rd-navbar-static" data-xl-device-layout="rd-navbar-static" data-xxl-layout="rd-navbar-static" data-xxl-device-layout="rd-navbar-static" data-lg-stick-up-offset="46px" data-xl-stick-up-offset="46px" data-xxl-stick-up-offset="46px" data-lg-stick-up="true" data-xl-stick-up="true" data-xxl-stick-up="true">
+              <div class="rd-navbar-main-outer">
+                <div class="rd-navbar-main">
+                  <!-- RD Navbar Panel-->
+                  <div class="rd-navbar-panel">
+                    <!-- RD Navbar Toggle-->
+                    <button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
+                    <!-- RD Navbar Brand-->
+                    <div class="rd-navbar-brand"><a class="brand" href="index.html"><h3 style="margin-left: 80px;">LJPS</h3></a></div>
+                  </div>
+                  <div class="rd-navbar-main-element">
+                    <div class="rd-navbar-nav-wrap">
+                      <ul class="rd-navbar-nav">
+                        <li class="rd-nav-item active"><a class="rd-nav-link" href="">Roles</a></li>
+                        <li class="rd-nav-item"><a class="rd-nav-link" href="">Skills</a></li>
+                        <li class="rd-nav-item"><a class="rd-nav-link" href="">Courses</a></li>
+                        <li class="rd-nav-item"><a class="rd-nav-link" href="">Learners</a></li>
+                        <li class="rd-nav-item"><a class="rd-nav-link" href="">Profile</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </header>
+    </div>
+<<<<<<< HEAD
+<!-- Main contain starts here  -->
+<div class="container py-5 h-100">
+  <div class="row justify-content-center align-items-center h-100">
+    <div class="col-12 col-lg-9 col-xl-7">
+      <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+        <div class="card-body p-4 p-md-5">
+          <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Create new roles</h3>
+          <form>
+            <div class="row">
+              <div class="col-md-6 mb-4">
+                <div class="form-outline">
+                  Role ID
+                  <input type="text" id="roleid" class="form-control form-control-lg" />
+                </div>
+              </div>
+              <div class="col-md-6 mb-4">
+                <div class="form-outline">
+                  Role Name
+                  <input type="text" id="rolename" class="form-control form-control-lg" />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="text-align-center">Description</div>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+            <div class="row">
+              <div class="col-12">
+
+                <label class="form-label select-label">Select role status</label>
+                <select class="select form-control-lg">
+                  <option value="0" disabled>Choose option</option>
+                  <option value="1">Active</option>
+                  <option value="2">Not Active</option>
+                </select>
+              </div>
+            </div>
+            <div class="mt-4 pt-2">
+              <input class="btn btn-primary btn-md" type="submit" value="Submit" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!--  view the list of roles -->
+<!-- 
+<div class="container justify-content-center" style="margin-top: auto; margin-bottom: auto"> 
+    <div class="card" style="text-align: left;">
+        <div class="card-header">
+            <h4>Roles</h4>
+        </div>
+          <ol class="list-group list-group-numbered">
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+              <div class="ms-2 me-auto">
+                <div class="fw-bold">Software Developer</div>
+                
+              </div>
+              <button type="button" class="btn btn-outline-danger">Add</button>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+              <div class="ms-2 me-auto">
+                <div class="fw-bold">Data Analyst</div>
+                Some text goes here
+              </div>
+              <button type="button" class="btn btn-outline-danger">Add</button>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+              <div class="ms-2 me-auto">
+                <div class="fw-bold">Data Scientist</div>
+                Some text goes here
+              </div>
+              <button type="button" class="btn btn-outline-danger">Add</button>
+            </li>
+          </ol>
+    </div>
+</div>
+ -->
+
+
+=======
+    <div class="d-flex justify-content-center">
+        <table id="skill" ></table>
+    </div>
+>>>>>>> 9aa3708ba4480a50820b77517fdaa790f471b7df
+    <!-- Global Mailform Output-->
+    <div class="snackbars" id="form-output-global"></div>
+    <!-- Javascript-->
+    <script src="js/core.min.js"></script>
+    <script src="js/script.js"></script>
+<<<<<<< HEAD
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+=======
+    <script src="js/index.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <!-- coded by Himic-->
+>>>>>>> 9aa3708ba4480a50820b77517fdaa790f471b7df
+  </body>
+</html>
