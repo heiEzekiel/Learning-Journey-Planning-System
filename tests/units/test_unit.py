@@ -53,7 +53,7 @@ def test_class_job_role_invalid_parameters():
 
 
 #----------- create test_job_role ------------------
-def test_create_test_job_role_success():
+def test_create_job_role_success():
     """
     GIVEN a JobRole model
     WHEN a new JobRole is created
