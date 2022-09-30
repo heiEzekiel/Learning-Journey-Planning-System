@@ -23,6 +23,12 @@ class JobRole(db.Model):
     job_role_desc = db.Column(db.String(255), nullable=False)
     job_role_status = db.Column(db.Integer, nullable=False)
     def __init__(self, job_role_name,  job_role_desc, job_role_status):
+        if not isinstance(job_role_name, str):
+            raise TypeError("job_role_name must be a string")
+        if not isinstance(job_role_desc, str):
+            raise TypeError("job_role_desc must be a string")
+        if not isinstance(job_role_status, int):
+            raise TypeError("job_role_status must be an integer")
         self.job_role_name = job_role_name
         self.job_role_desc= job_role_desc
         self.job_role_status = job_role_status
@@ -40,15 +46,34 @@ def home():
 
 #This segment of code is to do retrieval of all the existing roles. Used by both HR and Learner.
 @app.route("/getAllJobRole")
-def getAllJobRole():
-    jobRoles = JobRole.query.all()
-    return jsonify(
+def getAllJobRole(test_data= ""):
+    jobRoles = None
+    if test_data == "":
+        jobRoles = JobRole.query.all()
+    if test_data != "": 
+        return jsonify(
+                {
+                    "code": 200,
+                    "data": 
+                    [roles.json() for roles in test_data]
+                }
+            )
+    elif jobRoles != None:
+        return jsonify(
+                {
+                    "code": 200,
+                    "data": 
+                    [roles.json() for roles in jobRoles]
+                }
+            )
+    else:
+        return jsonify(
             {
-                "code": 200,
-                "data": 
-                   [roles.json() for roles in jobRoles]
+                "code": 404,
+                "message": "There are no job roles."
             }
         )
+
 
 #Run flask app
 if __name__ == "__main__":
