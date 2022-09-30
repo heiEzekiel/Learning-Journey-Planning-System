@@ -18,39 +18,6 @@ app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {'pool_recycle': 299}
 CORS(app)
 db = SQLAlchemy(app)
 
-#skill = Skill.query.all()
-<<<<<<< HEAD
-
-#Job Role (For LJPS)
-class JobRole(db.Model):
-    __tablename__ = 'job_role'
-    job_role_id = db.Column(db.Integer, primary_key=True, nullable=False)
-    job_role_name = db.Column(db.String(50), nullable=False)
-    job_role_desc = db.Column(db.String(255), nullable=False)
-    job_role_status = db.Column(db.Integer, nullable=False)
-    def __init__(self, job_role_name,  job_role_desc, job_role_status):
-        if not isinstance(job_role_name, str):
-            raise TypeError("job_role_name must be a string")
-        if not isinstance(job_role_desc, str):
-            raise TypeError("job_role_desc must be a string")
-        if not isinstance(job_role_status, int):
-            raise TypeError("job_role_status must be an integer")
-        self.job_role_name = job_role_name
-        self.job_role_desc= job_role_desc
-        self.job_role_status = job_role_status
-
-    def json(self):
-        return  {
-            "job_role_id": self.job_role_id, 
-            "job_role_name": self.job_role_name, 
-            "job_role_desc":self.job_role_desc,
-            "job_role_status": self.job_role_status
-        }
-
-
-=======
->>>>>>> 2973a42efc078b1d42bf7d514f3f8b3137ef5ade
-
 #Job Role (For LJPS)
 class JobRole(db.Model):
     __tablename__ = 'job_role'
@@ -200,8 +167,8 @@ def getskills(test_data= ""):
             }
         )
 
-#This segment of code is update details of a selected skill
-#=============== Update Skill details by skill_id======================================
+#This segment of code is to create skill
+#=============== Create skill======================================
 @app.route("/createSkills", methods=['POST'])
 def createSkills(test_data=""):
     data = None
@@ -250,6 +217,66 @@ def createSkills(test_data=""):
                 "data": skill.json()
             }
         )
+
+#This segment of code is update details of a selected skill
+#=============== Update Skill details by skill_id======================================
+@app.route("/updateSkill/<int:skill_id>", methods=['PUT'])
+def change_apt(skill_id, test_data="", new_data=""):
+    skill = None
+    if test_data == "":
+        skill = Skill.query.filter_by(skill_id=skill_id).first()
+    else:
+        skill = test_data
+    if skill:
+        data = None
+        if new_data == "":
+            data = request.get_json()
+        else:
+            data = new_data
+        
+        if data['skill_name']:
+            skill.skill_name = data['skill_name']
+        if data['skill_desc']:
+            skill.skill_desc = data['skill_desc']
+
+        if test_data =="" and new_data=="":
+            try:
+                db.session.commit()
+            except Exception as e:
+                print(e)
+                return jsonify(
+                    {
+                        "code": 500,
+                        "data": {
+                            "skill_id": skill_id
+                        },
+                        "message": "An error occurred updating the skill."
+                    }
+                ), 500
+
+            return jsonify(
+                {
+                    "code": 200,
+                    "data": skill.json()
+                }
+            )
+        else:
+            return jsonify(
+                {
+                    "code": 200,
+                    "data": skill.json()
+                }
+            )
+    # return these if job role not found
+    return jsonify(
+        {
+            "code": 404,
+            "data": {
+                "skill_id": skill_id
+            },
+            "message": "skill_id not found."
+        }
+    ), 404
 
 #Run flask app
 if __name__ == "__main__":
