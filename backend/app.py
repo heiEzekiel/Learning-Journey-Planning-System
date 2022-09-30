@@ -1,17 +1,17 @@
 import os
 from tkinter import S
 from flask_sqlalchemy import SQLAlchemy
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 from os import environ
 
+# Flask App and DB connection is done here.
 app = Flask(__name__)   
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL') or 'mysql+mysqlconnector://root@localhost:3306/LJPS_DB'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {'pool_recycle': 299}
 
 CORS(app)
-
 db = SQLAlchemy(app)
 #Job Role (For LJPS)
 class JobRole(db.Model):
@@ -64,8 +64,9 @@ class Skill(db.Model):
         if not isinstance(skill_desc, str):
             raise TypeError("skill_desc must be a string")
         if not isinstance(skill_status, int):
-            raise TypeError("skill_status must be a integer")
+            raise TypeError("skill_status must be an integer")
         self.skill_name = skill_name
+        self.skill_desc = skill_desc
         self.skill_status = skill_status
         self.skill_desc = skill_desc
 
@@ -76,6 +77,7 @@ class Skill(db.Model):
             "skill_desc": self.skill_desc,
             "skill_status": self.skill_status
         }
+        
 #Role_Map Table
 class role_map(db.Model):
     __tablename__ = 'role_map'
@@ -145,19 +147,58 @@ def getSkillsForJob(job_role_id, test_data_role_map="", test_data_skill="", test
 
 
 
+#This segment of code is update details of a selected skill
+#=============== Update Skill details by skill_id======================================
+@app.route("/createSkills", methods=['POST'])
+def createSkills(test_data=""):
+    data = None
+    if test_data == "":
+        data = request.get_json()
+    else:
+        data = test_data
+    skill_name, skill_desc, skill_status = "", "", ""
+    if data['skill_name']:
+        skill_name = data['skill_name']
+    if data['skill_desc']:
+        skill_desc = data['skill_desc']
+    if data['skill_status']:
+        skill_status = int(data['skill_status'])
+    if (skill_name == "") or (skill_desc == "") or (skill_status == ""):
+        return jsonify(
+            {
+                "code": 500,
+                "message": "Skill name or Skill desc is empty"
+            }
+        ) 
+    skill = Skill(skill_name=skill_name, skill_desc=skill_desc, skill_status=skill_status)
+    if test_data == "":
+        try:
+            db.session.add(skill)
+            db.session.commit()
+        except Exception as e:
+            print(e)
+            return jsonify(
+                {
+                    "code": 500,
+                    "message": "An error occurred updating the skill."
+                }
+            ), 500
 
-@app.route("/getskills")
-def getskills():
-    skills = Skill.query.all()
-    print(skills)
-    return jsonify(
+        return jsonify(
             {
                 "code": 200,
-                "data": {
-                    "skill": [skill.json() for skill in skills]
-                }
+                "data": skill.json()
+            }
+        )
+    else:
+        return jsonify(
+            {
+                "code": 200,
+                "data": skill.json()
             }
         )
 
+
+#Run flask app
 if __name__ == "__main__":
     app.run(debug=True)
