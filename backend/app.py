@@ -28,6 +28,12 @@ class JobRole(db.Model):
     job_role_desc = db.Column(db.String(255), nullable=False)
     job_role_status = db.Column(db.Integer, nullable=False)
     def __init__(self, job_role_name,  job_role_desc, job_role_status):
+        if not isinstance(job_role_name, str):
+            raise TypeError("job_role_name must be a string")
+        if not isinstance(job_role_desc, str):
+            raise TypeError("job_role_desc must be a string")
+        if not isinstance(job_role_status, int):
+            raise TypeError("job_role_status must be an integer")
         self.job_role_name = job_role_name
         self.job_role_desc= job_role_desc
         self.job_role_status = job_role_status
