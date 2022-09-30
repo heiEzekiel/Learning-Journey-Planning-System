@@ -10,9 +10,10 @@ async function getAllSkills(){
                         message_str =  `
                         <thead>
                             <tr class="bg-light">
-                            <th scope="col">Skill ID</th>
-                            <th scope="col">Skill Name</th>
+                           
+                             <th scope="col">Skill Name</th>
                             <th scope="col">Skill Description</th>
+                            <th scope="col">Action</th>
                             </tr>
                         </thead>`
                         for (const skill of result) {
@@ -20,9 +21,11 @@ async function getAllSkills(){
                                 message_str += `
                                 <tbody>
                                     <tr>
-                                        <th scope="row">${skill['skill_id']}</th>
-                                        <td>${skill['skill_name']}</td>
-                                        <td class="text-wrap w-50">${skill['skill_desc']}</td>
+                        
+                                        <th scope="row">${skill['skill_name']}</th>
+                                        <td class="text-wrap w-50">${skill['skill_desc']}
+                                        <td class="text-wrap w-25">   <button type="button" class="btn btn-primary">Edit</button>
+                                        <button type="button" class="btn btn-danger">Delete</button></td>
                                     </tr>
                                 </tbody>
                                 `
