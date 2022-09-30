@@ -19,8 +19,13 @@ class Skill(db.Model):
     skill_name = db.Column(db.String(100), nullable=False)
     skill_desc = db.Column(db.String(255), nullable=False)
     skill_status = db.Column(db.Integer, nullable=False)
-    def __init__(self, skill_id, skill_name, skill_desc, skill_status):
-        self.skill_id = skill_id
+    def __init__(self, skill_name, skill_desc, skill_status):
+        if not isinstance(skill_name, str):
+            raise TypeError("skill_name must be a string")
+        if not isinstance(skill_desc, str):
+            raise TypeError("skill_desc must be a string")
+        if not isinstance(skill_status, int):
+            raise TypeError("skill_status must be an integer")
         self.skill_name = skill_name
         self.skill_status = skill_status
         self.skill_desc = skill_desc
@@ -40,15 +45,32 @@ def home():
 #skill = Skill.query.all()
 
 @app.route("/getskills")
-def getskills():
-    skills = Skill.query.all()
-    print(skills)
-    return jsonify(
+def getskills(test_data= ""):
+    skills = None
+    if test_data == "":
+        skills = Skill.query.all()
+    if test_data != "":
+        return jsonify (
             {
                 "code": 200,
-                "data": {
-                    "skill": [skill.json() for skill in skills]
+                "data": 
+                [skill.json() for skill in test_data]
+            }
+        )
+    elif skills != None:
+        return jsonify(
+                {
+                    "code": 200,
+                    "data": {
+                        "skill": [skill.json() for skill in skills]
+                    }
                 }
+            )
+    else:
+        return jsonify(
+            {
+                "code": 404,
+                "message": "No skills found."
             }
         )
 
