@@ -54,26 +54,26 @@
             </nav>
           </div>
         </header>
-        <div class="container text-left">
-          <h2 class="mb-5">Create new skill</h2>
+        <div class="container text-start">
+          <h2 class="mb-5 ">Create new skill</h2>
           <form>
-              <div class="form-group mb-3">
-                <label for="skillName">Skill Name</label>
-                <input type="text" class="form-control" id="skillName" placeholder="Enter skill" required>
-              </div>
-              <div class="form-group mb-3">
-                <label for="skillStatus">Skill Status</label>
-                <select class="form-control" id="skillStatus">
-                  <option value="0">Active</option>
-                  <option value="1">Inactive</option>
-                </select>
-              </div>
-              <div class="form-group mb-3">
-                <label for="skillDescription">Skill Description</label>
-                <textarea class="form-control" id="skillDescription" rows="3" placeholder="Enter Description" required></textarea>
+            <div class="form-group mb-3 w-50">
+              <label for="skillName">Skill Name</label>
+              <input type="text" class="form-control" id="skillName" placeholder="Enter skill" required>
             </div>
-              <button type="submit" class="btn btn-primary" onclick="createSkills()">Submit</button>
-          </form>
+            <div class="form-group mb-3 w-50 ">
+              <label for="skillStatus">Skill Status</label>
+              <select class="form-control" id="skillStatus">
+                <option value="0">Active</option>
+                <option value="1">Inactive</option>
+              </select>
+            </div>
+            <div class="form-group mb-3 w-50">
+              <label for="skillDescription">Skill Description</label>
+              <textarea class="form-control" id="skillDescription" rows="3" placeholder="Enter Description" required></textarea>
+          </div>
+            <button type="submit" class="btn btn-primary" onclick="createSkills()">Submit</button>
+        </form>
       </div>
     </div>
 
@@ -86,28 +86,40 @@
       var skillDescription = document.getElementById("skillDescription")
       async function createSkills(){
         event.preventDefault();
-        try {
-          const response = await fetch(`${backendUrl}/${create_skills}`, {
-            method: 'POST',
-            headers: {
-              accept: 'application/json',
-            },
-            body: JSON.stringify({"skill_name": skillName.value, "skill_desc": skillDescription.value, "skill_status": skillStatus.value})
-          });
-          if (!response.ok) {
-            throw new Error(`Error! status: ${response.status}`);
+        if (skillName.value != "" && skillDescription.value!=""){
+          try {
+            const response = await fetch(`${backendUrl}/${create_skills}`, {
+              method: 'POST',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                skill_name: skillName.value,
+                skill_desc: skillDescription.value,
+                skill_status: skillStatus.value
+              })
+            });
+            if (!response.ok) {
+              throw new Error(`Error! status: ${response.status}`);
+            }
+        
+            const result = await response.json();
+            skillName.value=""
+            skillDescription.value=""
+            skillStatus="0"
+            alert("Skill successfully created")
+            return result;
+          } catch (err) {
+            console.log(err);
           }
-      
-          const result = await response.json();
-          return result;
-        } catch (err) {
-          console.log(err);
+        }else{
+          alert("Fill up all inputs!")
         }
       }
 
     </script>
     <!-- Javascript-->
-    <script src="js/createSkills.js"></script>
     <script src="js/core.min.js"></script>
     <script src="js/script.js"></script>
     <!-- coded by Himic-->
