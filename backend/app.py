@@ -1,7 +1,13 @@
+<<<<<<< HEAD
 from cgi import test
 import os
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, request, jsonify, render_template
+=======
+import os
+from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, request, jsonify
+>>>>>>> main
 from flask_cors import CORS
 from os import environ
 
@@ -75,11 +81,11 @@ class Skill(db.Model):
         if not isinstance(skill_desc, str):
             raise TypeError("skill_desc must be a string")
         if not isinstance(skill_status, int):
-            raise TypeError("skill_status must be a integer")
+            raise TypeError("skill_status must be an integer")
         self.skill_name = skill_name
-        self.skill_status = skill_status
         self.skill_desc = skill_desc
-    skill_status = db.Column(db.Integer, nullable=False)
+        self.skill_status = skill_status
+        
 
     def json(self):
         return  {
@@ -323,6 +329,59 @@ def createRoleMap(job_role_id,skill_id):
             "message": "Success"
         }
     ), 201
+
+
+#This segment of code is update details of a selected skill
+#=============== Update Skill details by skill_id======================================
+@app.route("/createSkills", methods=['POST'])
+def createSkills(test_data=""):
+    data = None
+    if test_data == "":
+        data = request.get_json()
+    else:
+        data = test_data
+    skill_name, skill_desc, skill_status = "", "", ""
+    if data['skill_name']:
+        skill_name = data['skill_name']
+    if data['skill_desc']:
+        skill_desc = data['skill_desc']
+    if data['skill_status']:
+        skill_status = int(data['skill_status'])
+    if (skill_name == "") or (skill_desc == "") or (skill_status == ""):
+        return jsonify(
+            {
+                "code": 500,
+                "message": "Skill name or Skill desc is empty"
+            }
+        ) 
+    skill = Skill(skill_name=skill_name, skill_desc=skill_desc, skill_status=skill_status)
+    if test_data == "":
+        try:
+            db.session.add(skill)
+            db.session.commit()
+        except Exception as e:
+            print(e)
+            return jsonify(
+                {
+                    "code": 500,
+                    "message": "An error occurred updating the skill."
+                }
+            ), 500
+
+        return jsonify(
+            {
+                "code": 200,
+                "data": skill.json()
+            }
+        )
+    else:
+        return jsonify(
+            {
+                "code": 200,
+                "data": skill.json()
+            }
+        )
+
 
 #Run flask app
 if __name__ == "__main__":
