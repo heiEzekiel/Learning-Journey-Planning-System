@@ -1,3 +1,4 @@
+from cgi import test
 import os
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, request, jsonify, render_template
@@ -23,6 +24,12 @@ class JobRole(db.Model):
     job_role_desc = db.Column(db.String(255), nullable=False)
     job_role_status = db.Column(db.Integer, nullable=False)
     def __init__(self, job_role_name,  job_role_desc, job_role_status):
+        if not isinstance(job_role_name, str):
+            raise TypeError('job_role_name must be a string')
+        if not isinstance(job_role_desc, str):
+            raise TypeError('job_role_desc must be a string')
+        if not isinstance(job_role_status, int):
+            raise TypeError('job_role_status must be an integer')
         self.job_role_name = job_role_name
         self.job_role_desc= job_role_desc
         self.job_role_status = job_role_status
@@ -88,15 +95,16 @@ def home():
     pass
 #This segment of code is to get a specific job role. Used by both HR and Learner.
 @app.route("/getSpecificJobRole/<int:job_role_id>")
-def getAllJobRole(job_role_id,test_data= ""):
+def getSpecificJobRole(job_role_id,test_data= ""):
     jobRoles = None
     if test_data == "":
         jobRoles = JobRole.query.filter_by(job_role_id=job_role_id).all()
     if test_data != "": 
-        return (         
+        return jsonify(
                 {
                     "code": 200,
-                      "data": [jr.json() for jr in jobRoles]
+                    "data": 
+                    [roles.json() for roles in test_data]
                 }
             )
     elif jobRoles != None:
@@ -118,36 +126,52 @@ def getAllJobRole(job_role_id,test_data= ""):
 #This segment of code is update details of a selected role
 #=============== Update Job Role details by job_role_id======================================
 @app.route("/updateRole/<int:job_role_id>", methods=['PUT'])
-def change_apt(job_role_id):
-    jobrole = JobRole.query.filter_by(job_role_id=job_role_id).first()
+def change_apt(job_role_id, test_data="", new_data=""):
+    jobrole = None
+    if test_data == "":
+        jobrole = JobRole.query.filter_by(job_role_id=job_role_id).first()
+    else:
+        jobrole = test_data
     if jobrole:
         # take json input and parse it here
-        print(jobrole)
-        data = request.get_json()
+        data = None
+        if new_data == "":
+            data = request.get_json()
+        else:
+            data = new_data
         if data['job_role_name']:
             jobrole.job_role_name = data['job_role_name']
         if data['job_role_desc']:
             jobrole.job_role_desc = data['job_role_desc']
-        try:
-            db.session.commit()
-        except Exception as e:
-            print(e)
+        
+        if test_data == "" and new_data == "":
+            try:
+                db.session.commit()
+            except Exception as e:
+                print(e)
+                return jsonify(
+                    {
+                        "code": 500,
+                        "data": {
+                            "job_role_id": job_role_id
+                        },
+                        "message": "An error occurred updating the job."
+                    }
+                ), 500
+
             return jsonify(
                 {
-                    "code": 500,
-                    "data": {
-                        "job_role_id": job_role_id
-                    },
-                    "message": "An error occurred updating the job."
+                    "code": 200,
+                    "data": jobrole.json()
                 }
-            ), 500
-
-        return jsonify(
-            {
-                "code": 200,
-                "data": jobrole.json()
-            }
-        )
+            )
+        else:
+            return jsonify(
+                {
+                    "code": 200,
+                    "data": jobrole.json()
+                }
+            )
     # return these if job role not found
     return jsonify(
         {
@@ -162,9 +186,13 @@ def change_apt(job_role_id):
 
 # Get skills required for the selected job role
 @app.route("/getSkillsForJob/<int:job_role_id>")
-def getSkillsForJob(job_role_id):
+def getSkillsForJob(job_role_id, test_data_role_map="", test_data_skill="", test_data_job_role=""):
     # Get a list of skill_id required for the job
-    rolemapping = role_map.query.filter_by(job_role_id=job_role_id).all()
+    rolemapping = None
+    if test_data_role_map == "" and test_data_skill == "" and test_data_job_role == "":
+        rolemapping = role_map.query.filter_by(job_role_id=job_role_id).all()
+    else:
+        rolemapping = [role for role in test_data_role_map if int(role.job_role_id) == job_role_id]
     if rolemapping:
         role = [r.json() for r in rolemapping]
         list_of_skill = []
@@ -172,17 +200,21 @@ def getSkillsForJob(job_role_id):
             list_of_skill.append(i['skill_id'])
         skillName =[]
         # For each skill_id, find the name of skill
-        skill = Skill.query.all()
+        skill = None
+        if test_data_skill == "":
+            skill = Skill.query.all()
+        else:
+            skill = test_data_skill
         if skill:
             skill_list = [s.json() for s in skill]
             for i in skill_list:
                 if i['skill_id'] in list_of_skill:
                     skillName.append([i['skill_name'], i['skill_desc']])
             return jsonify(
-    {
+                {
             "code": 200,
             "data": skillName
-        }, 200
+            }, 200
 
             )   
                 
@@ -193,6 +225,7 @@ def getSkillsForJob(job_role_id):
            "message": "No records found."
        }
    ), 404
+
 
 
 
