@@ -14,7 +14,7 @@ CORS(app)
 db = SQLAlchemy(app)
 
 
-#Skill in the LJPS System
+#Skill Table
 class Skill(db.Model):
     __tablename__ = 'Skill'
     skill_id = db.Column(db.Integer, primary_key=True, nullable=False)
@@ -22,9 +22,16 @@ class Skill(db.Model):
     skill_desc = db.Column(db.String(255), nullable=False)
     skill_status = db.Column(db.Integer, nullable=False)
     def __init__(self, skill_name, skill_desc, skill_status):
+        if not isinstance(skill_name, str):
+            raise TypeError("skill_name must be a string")
+        if not isinstance(skill_desc, str):
+            raise TypeError("skill_desc must be a string")
+        if not isinstance(skill_status, int):
+            raise TypeError("skill_status must be a integer")
         self.skill_name = skill_name
         self.skill_status = skill_status
         self.skill_desc = skill_desc
+    skill_status = db.Column(db.Integer, nullable=False)
 
     def json(self):
         return  {
@@ -112,6 +119,35 @@ def getSkills(test_data= ""):
                 "message": "No skills found."
             }
         )
+
+
+#This segment of code is to get the skill info based on id
+@app.route("/getSpecificJobRole/<int:skill_id>")
+def getAllJobRole(skill_id,test_data= ""):
+    skill = None
+    if test_data == "":
+        skill = Skill.query.filter_by(skill_id=skill_id).all()
+    if test_data != "": 
+        return (         
+                {
+                    "code": 200,
+                      "data": [s.json() for s in skill]
+                }
+            )
+    elif skill != None:
+       return jsonify(
+           {
+               "code": 200,
+               "data": [s.json() for s in skill]
+           }
+       )
+    else:
+        return jsonify(
+            {
+                "code": 404,
+                "message": "There are no skill found."
+            }
+        )        
 
 
 #Run flask app
