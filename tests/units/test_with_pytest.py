@@ -1,4 +1,6 @@
-from backend.app import Skill
+from backend.app import Skill, createSkills
+import json
+from flask import Flask
 import pytest 
 
 
@@ -49,15 +51,29 @@ def test_skill_invalid_parameters():
     with pytest.raises(Exception):
         Skill(skill_id=0, skill_name=0, skill_desc=0, skill_status="1")
 
-=======
-
 def test_new_skill():
     """
     GIVEN a Skill model
     WHEN a new Skill is created
     THEN check the skil_id, skill_name, skill_status are defined correctly
     """
-    skill = Skill(1, 'patkennedy79@gmail.com',1)
-    assert skill.skill_id == 1
-    assert skill.skill_name == 'patkennedy79@gmail.com'
-    assert skill.skill_status == 1
+
+    app = Flask(__name__)
+
+    test_data = {
+        "skill_name": "Python",
+        "skill_desc": "Python is a programming language",
+        "skill_status": 1
+    }
+
+    with app.app_context():
+        result_data = createSkills(test_data)
+        assert result_data.json['code'] == 200
+        assert result_data.json['data']['skill_status'] == 1
+        assert result_data.json['data']['skill_name'] == "Python"
+        assert result_data.json['data']['skill_desc'] == "Python is a programming language"
+
+
+
+
+    

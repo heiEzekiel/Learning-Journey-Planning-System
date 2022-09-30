@@ -48,8 +48,12 @@ def home():
 #This segment of code is update details of a selected skill
 #=============== Update Skill details by skill_id======================================
 @app.route("/createSkills", methods=['POST'])
-def createSkills():
-    data = request.get_json()
+def createSkills(test_data=""):
+    data = None
+    if test_data == "":
+        data = request.get_json()
+    else:
+        data = test_data
     skill_name, skill_desc, skill_status = "", "", ""
     if data['skill_name']:
         skill_name = data['skill_name']
@@ -65,24 +69,32 @@ def createSkills():
             }
         ) 
     skill = Skill(skill_name=skill_name, skill_desc=skill_desc, skill_status=skill_status)
-    try:
-        db.session.add(skill)
-        db.session.commit()
-    except Exception as e:
-        print(e)
+    if test_data == "":
+        try:
+            db.session.add(skill)
+            db.session.commit()
+        except Exception as e:
+            print(e)
+            return jsonify(
+                {
+                    "code": 500,
+                    "message": "An error occurred updating the skill."
+                }
+            ), 500
+
         return jsonify(
             {
-                "code": 500,
-                "message": "An error occurred updating the skill."
+                "code": 200,
+                "data": skill.json()
             }
-        ), 500
-
-    return jsonify(
-        {
-            "code": 200,
-            "data": skill.json()
-        }
-    )
+        )
+    else:
+        return jsonify(
+            {
+                "code": 200,
+                "data": skill.json()
+            }
+        )
 
 
 #Run flask app
