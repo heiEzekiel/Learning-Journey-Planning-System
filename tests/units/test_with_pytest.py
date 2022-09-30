@@ -88,7 +88,6 @@ def test_view_job_role_success():
             assert result_data.json['data'][i]['job_role_status'] == test_data[i][2]
 
 
-def test_skill_success():
 #-------------------------test class Skill-----------------------------------
 def test_class_skill_success():
     """
