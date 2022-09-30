@@ -1,4 +1,4 @@
-from backend.app import role_map, JobRole, Skill, getSkillsForJob, createSkills
+from backend.app import role_map, JobRole, Skill, getSkillsForJob, createSkills, getAllJobRole, getskills
 from flask import Flask
 import json
 import pytest 
