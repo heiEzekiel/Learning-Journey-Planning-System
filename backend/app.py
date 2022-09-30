@@ -194,6 +194,103 @@ def getSkillsForJob(job_role_id):
        }
    ), 404
 
+
+
+@app.route("/removeRole/<int:job_role_id>/<int:skill_id>", methods=['DELETE'])
+def del_role(job_role_id,skill_id):
+   role = role_map.query.filter_by(job_role_id=job_role_id, skill_id=skill_id).first()
+   if role:
+       db.session.delete(role)
+       db.session.commit()
+       return jsonify(
+           {
+               "code": 200,
+               "message" : "Skill removed successfully"
+           }
+       )
+   return jsonify(
+       {
+           "code": 404,
+
+           "message": "Skill and Role not found."
+       }
+   ), 404
+
+# Get skill ID using skill name
+@app.route("/getSkillID/<string:skill_name>/", methods=['GET'])
+def getSkillID(skill_name):
+   role = Skill.query.filter_by(skill_name=skill_name)
+   if role:
+       return jsonify(
+           {
+               "code": 200,
+               "message" :  [r.json() for r in role]
+           }
+       )
+   return jsonify(
+       {
+           "code": 404,
+
+           "message": "Not Found"
+       }
+   ), 404
+
+
+@app.route("/getskills")
+def getskills(test_data= ""):
+    skills = None
+    if test_data == "":
+        skills = Skill.query.all()
+    if test_data != "":
+        return jsonify (
+            {
+                "code": 200,
+                "data": 
+                [skill.json() for skill in test_data]
+            }
+        )
+    elif skills != None:
+        return jsonify(
+                {
+                    "code": 200,
+                    "data": {
+                        "skill": [skill.json() for skill in skills]
+                    }
+                }
+            )
+    else:
+        return jsonify(
+            {
+                "code": 404,
+                "message": "No skills found."
+            }
+        )
+
+
+@app.route("/createRoleMap/<int:job_role_id>/<int:skill_id>", methods=['POST'])
+def createRoleMap(job_role_id,skill_id):
+    data = request.get_json()
+    new_map = role_map(data['job_role_id'], data['skill_id'])
+    try:
+        db.session.add(new_map)
+        db.session.commit()
+    except Exception as e:
+        print(e)
+        return jsonify(
+            {
+                "code": 500,
+                "message": "An error occurred creating the record."
+            }
+        ), 500
+
+    return jsonify(
+        {
+            "code": 201,
+            "data": new_map.json(),
+            "message": "Success"
+        }
+    ), 201
+
 #Run flask app
 if __name__ == "__main__":
     app.run(debug=True)
