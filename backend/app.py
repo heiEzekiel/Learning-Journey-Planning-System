@@ -367,29 +367,6 @@ def create_job_role(test_data = ''):
                     "message": "Job Role successfully created"
                 }
             ), 201
-    
-#This segment of code is to do retrieval of all the existing roles. Used by both HR and Learner.
-@app.route("/getAllJobRole")
-def getAllJobRole(test_data= ""):
-    jobRoles = None
-    if test_data == "":
-        jobRoles = JobRole.query.all()
-    if test_data != "": 
-        return jsonify(
-                {
-                    "code": 200,
-                    "data": 
-                    [roles.json() for roles in test_data]
-                }
-            )
-    elif jobRoles != None:
-        return jsonify(
-                {
-                    "code": 200,
-                    "data": 
-                    [roles.json() for roles in jobRoles]
-                }
-            )
 
 #This segment of code is to create skill
 #=============== Create skill======================================
@@ -501,6 +478,35 @@ def updateSkill(skill_id, test_data="", new_data=""):
             "message": "skill_id not found."
         }
     ), 404
+
+#This segment of code is to get the skill info based on id
+@app.route("/getSpecificJobRole/<int:skill_id>")
+def getAllJobRole(skill_id,test_data= ""):
+    skill = None
+    if test_data == "":
+        skill = Skill.query.filter_by(skill_id=skill_id).all()
+    if test_data != "": 
+        return (         
+                {
+                    "code": 200,
+                      "data": [s.json() for s in skill]
+                }
+            )
+    elif skill != None:
+       return jsonify(
+           {
+               "code": 200,
+               "data": [s.json() for s in skill]
+           }
+       )
+    else:
+        return jsonify(
+            {
+                "code": 404,
+                "message": "There are no skill found."
+            }
+        )        
+
 
 #Run flask app
 if __name__ == "__main__":
