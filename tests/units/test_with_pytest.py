@@ -61,4 +61,3 @@ def test_new_skill():
     assert skill.skill_id == 1
     assert skill.skill_name == 'patkennedy79@gmail.com'
     assert skill.skill_status == 1
->>>>>>> main
