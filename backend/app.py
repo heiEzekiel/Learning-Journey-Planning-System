@@ -1,4 +1,5 @@
 import os
+from tkinter import S
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
@@ -31,7 +32,7 @@ class JobRole(db.Model):
         if not isinstance(job_role_desc, str):
             raise TypeError("job_role_desc must be a string")
         if not isinstance(job_role_status, int):
-            raise TypeError("job_role_status must be an integer")
+            raise TypeError("job_role_status must be a integer")
         self.job_role_name = job_role_name
         self.job_role_desc= job_role_desc
         self.job_role_status = job_role_status
@@ -43,7 +44,7 @@ class JobRole(db.Model):
             "job_role_desc":self.job_role_desc,
             "job_role_status": self.job_role_status
         }
-        
+
 class Skill(db.Model):
     __tablename__ = 'Skill'
     skill_id = db.Column(db.Integer, primary_key=True, nullable=False)
@@ -68,10 +69,90 @@ class Skill(db.Model):
             "skill_desc": self.skill_desc,
             "skill_status": self.skill_status
         }
+        
+#Role_Map Table
+class role_map(db.Model):
+    __tablename__ = 'role_map'
+    job_role_id = db.Column(db.Integer, primary_key=True,nullable=False)
+    skill_id = db.Column(db.Integer, primary_key=True, nullable=False)
+    def __init__(self, job_role_id, skill_id):
+        if not isinstance(job_role_id, int):
+            raise TypeError("job_role_id must be a integer")
+        if not isinstance(skill_id, int):
+            raise TypeError("skill_id must be a integer")
+        self.job_role_id = job_role_id
+        self.skill_id = skill_id
+
+    def json(self):
+        return  {
+             "job_role_id": self.job_role_id,
+            "skill_id": self.skill_id           
+        }
+        
 @app.route("/")
 def home():
     pass
 
+
+#This segment of code is to do retrieval of all the existing roles. Used by both HR and Learner.
+@app.route("/getAllJobRole")
+def getAllJobRole():
+    jobRoles = JobRole.query.all()
+    return jsonify(
+            {
+                "code": 200,
+                "data": 
+                   [roles.json() for roles in jobRoles]
+            }
+        )
+
+# Get skills required for the selected job role
+@app.route("/getSkillsForJob/<int:job_role_id>")
+def getSkillsForJob(job_role_id, test_data_role_map="", test_data_skill="", test_data_job_role=""):
+    # Get a list of skill_id required for the job
+    rolemapping = None
+    if test_data_role_map == "" and test_data_skill == "" and test_data_job_role == "":
+        rolemapping = role_map.query.filter_by(job_role_id=job_role_id).all()
+    else:
+        rolemapping = [role for role in test_data_role_map if int(role.job_role_id) == job_role_id]
+    if rolemapping:
+        role = [r.json() for r in rolemapping]
+        list_of_skill = []
+        for i in (role):
+            list_of_skill.append(i['skill_id'])
+        skillName =[]
+        # For each skill_id, find the name of skill
+        skill = None
+        if test_data_skill == "":
+            skill = Skill.query.all()
+        else:
+            skill = test_data_skill
+        if skill:
+            skill_list = [s.json() for s in skill]
+            for i in skill_list:
+                if i['skill_id'] in list_of_skill:
+                    skillName.append([i['skill_name'], i['skill_desc']])
+            return jsonify(
+                {
+            "code": 200,
+            "data": skillName
+            }, 200
+
+            )   
+                
+
+    return jsonify(
+       {
+           "code": 404,
+           "message": "No records found."
+       }
+   ), 404
+
+
+
+
+#This segment of code is update details of a selected skill
+#=============== Update Skill details by skill_id======================================
 #This segment of code is to do creation of roles. Only used by HR/admin.
 #Takes in job_role_name and job_role_desc
 # job_role_status 0 means active
