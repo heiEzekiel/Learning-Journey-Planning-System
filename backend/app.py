@@ -68,7 +68,6 @@ class Skill(db.Model):
         self.skill_name = skill_name
         self.skill_status = skill_status
         self.skill_desc = skill_desc
-    skill_status = db.Column(db.Integer, nullable=False)
 
     def json(self):
         return  {
@@ -103,9 +102,13 @@ def home():
 #skill = Skill.query.all()
 # Get skills required for the selected job role
 @app.route("/getSkillsForJob/<int:job_role_id>")
-def getSkillsForJob(job_role_id):
+def getSkillsForJob(job_role_id, test_data_role_map="", test_data_skill="", test_data_job_role=""):
     # Get a list of skill_id required for the job
-    rolemapping = role_map.query.filter_by(job_role_id=job_role_id).all()
+    rolemapping = None
+    if test_data_role_map == "" and test_data_skill == "" and test_data_job_role == "":
+        rolemapping = role_map.query.filter_by(job_role_id=job_role_id).all()
+    else:
+        rolemapping = [role for role in test_data_role_map if int(role.job_role_id) == job_role_id]
     if rolemapping:
         role = [r.json() for r in rolemapping]
         list_of_skill = []
@@ -113,17 +116,23 @@ def getSkillsForJob(job_role_id):
             list_of_skill.append(i['skill_id'])
         skillName =[]
         # For each skill_id, find the name of skill
-        skill = Skill.query.all()
+        skill = None
+        if test_data_skill == "":
+            skill = Skill.query.all()
+        else:
+            skill = test_data_skill
         if skill:
             skill_list = [s.json() for s in skill]
+            print(skill_list)
             for i in skill_list:
                 if i['skill_id'] in list_of_skill:
                     skillName.append([i['skill_name'], i['skill_desc']])
+            print(skillName)
             return jsonify(
-    {
+                {
             "code": 200,
             "data": skillName
-        }, 200
+            }, 200
 
             )   
                 
