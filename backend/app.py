@@ -14,7 +14,7 @@ CORS(app)
 db = SQLAlchemy(app)
 
 
-#Skill Table
+#Skill in the LJPS System
 class Skill(db.Model):
     __tablename__ = 'Skill'
     skill_id = db.Column(db.Integer, primary_key=True, nullable=False)
@@ -27,10 +27,11 @@ class Skill(db.Model):
         if not isinstance(skill_desc, str):
             raise TypeError("skill_desc must be a string")
         if not isinstance(skill_status, int):
-            raise TypeError("skill_status must be a integer")
+            raise TypeError("skill_status must be an integer")
         self.skill_name = skill_name
-        self.skill_status = skill_status
         self.skill_desc = skill_desc
+        self.skill_status = skill_status
+        
 
     def json(self):
         return  {
@@ -47,7 +48,7 @@ def home():
 #This segment of code is update details of a selected skill
 #=============== Update Skill details by skill_id======================================
 @app.route("/updateSkill/<int:skill_id>", methods=['PUT'])
-def change_apt(skill_id, test_data="", new_data=""):
+def updateSkill(skill_id, test_data="", new_data=""):
     skill = None
     if test_data == "":
         skill = Skill.query.filter_by(skill_id=skill_id).first()
@@ -134,6 +135,52 @@ def getSkills(test_data= ""):
             {
                 "code": 404,
                 "message": "No skills found."
+@app.route("/createSkills", methods=['POST'])
+def createSkills(test_data=""):
+    data = None
+    if test_data == "":
+        data = request.get_json()
+    else:
+        data = test_data
+    skill_name, skill_desc, skill_status = "", "", ""
+    if data['skill_name']:
+        skill_name = data['skill_name']
+    if data['skill_desc']:
+        skill_desc = data['skill_desc']
+    if data['skill_status']:
+        skill_status = int(data['skill_status'])
+    if (skill_name == "") or (skill_desc == "") or (skill_status == ""):
+        return jsonify(
+            {
+                "code": 500,
+                "message": "Skill name or Skill desc is empty"
+            }
+        ) 
+    skill = Skill(skill_name=skill_name, skill_desc=skill_desc, skill_status=skill_status)
+    if test_data == "":
+        try:
+            db.session.add(skill)
+            db.session.commit()
+        except Exception as e:
+            print(e)
+            return jsonify(
+                {
+                    "code": 500,
+                    "message": "An error occurred updating the skill."
+                }
+            ), 500
+
+        return jsonify(
+            {
+                "code": 200,
+                "data": skill.json()
+            }
+        )
+    else:
+        return jsonify(
+            {
+                "code": 200,
+                "data": skill.json()
             }
         )
 
