@@ -31,7 +31,6 @@ class Skill(db.Model):
         self.skill_name = skill_name
         self.skill_status = skill_status
         self.skill_desc = skill_desc
-    skill_status = db.Column(db.Integer, nullable=False)
 
     def json(self):
         return  {
@@ -48,34 +47,52 @@ def home():
 #This segment of code is update details of a selected skill
 #=============== Update Skill details by skill_id======================================
 @app.route("/updateSkill/<int:skill_id>", methods=['PUT'])
-def change_apt(skill_id):
-    skill = Skill.query.filter_by(skill_id=skill_id).first()
+def change_apt(skill_id, test_data="", new_data=""):
+    skill = None
+    if test_data == "":
+        skill = Skill.query.filter_by(skill_id=skill_id).first()
+    else:
+        skill = test_data
     if skill:
-        data = request.get_json()
+        data = None
+        if new_data == "":
+            data = request.get_json()
+        else:
+            data = new_data
+        
         if data['skill_name']:
             skill.skill_name = data['skill_name']
         if data['skill_desc']:
             skill.skill_desc = data['skill_desc']
-        try:
-            db.session.commit()
-        except Exception as e:
-            print(e)
+
+        if test_data =="" and new_data=="":
+            try:
+                db.session.commit()
+            except Exception as e:
+                print(e)
+                return jsonify(
+                    {
+                        "code": 500,
+                        "data": {
+                            "skill_id": skill_id
+                        },
+                        "message": "An error occurred updating the skill."
+                    }
+                ), 500
+
             return jsonify(
                 {
-                    "code": 500,
-                    "data": {
-                        "skill_id": skill_id
-                    },
-                    "message": "An error occurred updating the skill."
+                    "code": 200,
+                    "data": skill.json()
                 }
-            ), 500
-
-        return jsonify(
-            {
-                "code": 200,
-                "data": skill.json()
-            }
-        )
+            )
+        else:
+            return jsonify(
+                {
+                    "code": 200,
+                    "data": skill.json()
+                }
+            )
     # return these if job role not found
     return jsonify(
         {
