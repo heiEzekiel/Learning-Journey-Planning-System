@@ -234,31 +234,6 @@ def test_new_skill():
         assert result_data.json['data']['skill_desc'] == "Python is a programming language"
 
 
-#----------- test_view_job_role ------------------
-def test_view_job_role_success():
-    app = Flask(__name__)
-
-    test_data = [
-        ['Human Resource', 'HR', 0],
-        ['Software Engineer', 'SE', 0],
-        ['Data Scientist', 'DS', 0]
-    ]
-
-    with app.app_context():
-        result_data = getAllJobRole([ 
-            JobRole(test_data[0][0], test_data[0][1], test_data[0][2]),
-            JobRole(test_data[1][0], test_data[1][1], test_data[1][2]),
-            JobRole(test_data[2][0], test_data[2][1], test_data[2][2])
-        ])
-
-        assert result_data.json['code'] == 200
-        assert len(result_data.json['data']) == 3
-        for i in range(len(test_data)):
-            assert result_data.json['data'][i]['job_role_name'] == test_data[i][0]
-            assert result_data.json['data'][i]['job_role_desc'] == test_data[i][1]
-            assert result_data.json['data'][i]['job_role_status'] == test_data[i][2]
-
-
 
 
 
