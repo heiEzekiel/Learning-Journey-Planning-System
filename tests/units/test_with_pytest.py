@@ -315,5 +315,3 @@ def test_new_skill():
         assert result_data.json['data']['skill_desc'] == "Python is a programming language"
 
 
-
-

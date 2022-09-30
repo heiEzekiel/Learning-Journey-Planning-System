@@ -93,19 +93,6 @@ class role_map(db.Model):
 def home():
     pass
 
-
-#This segment of code is to do retrieval of all the existing roles. Used by both HR and Learner.
-@app.route("/getAllJobRole")
-def getAllJobRole():
-    jobRoles = JobRole.query.all()
-    return jsonify(
-            {
-                "code": 200,
-                "data": 
-                   [roles.json() for roles in jobRoles]
-            }
-        )
-
 # Get skills required for the selected job role
 @app.route("/getSkillsForJob/<int:job_role_id>")
 def getSkillsForJob(job_role_id, test_data_role_map="", test_data_skill="", test_data_job_role=""):
