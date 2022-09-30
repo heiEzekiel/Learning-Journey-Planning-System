@@ -1,4 +1,4 @@
-from backend.app import JobRole, getAllJobRole
+from backend.app import JobRole, Skill, getAllJobRole, createSkills
 from flask import Flask
 import json
 import pytest 
@@ -86,3 +86,78 @@ def test_view_job_role_success():
             assert result_data.json['data'][i]['job_role_name'] == test_data[i][0]
             assert result_data.json['data'][i]['job_role_desc'] == test_data[i][1]
             assert result_data.json['data'][i]['job_role_status'] == test_data[i][2]
+
+
+def test_skill_success():
+    """
+    GIVEN a Skill model
+    WHEN a new Skill is created
+    THEN check the skill_name, skill_desc, skill_status are defined correctly
+    """
+    skill = Skill(skill_name="Python", skill_desc="Python is a programming language", skill_status=1)
+    assert skill.skill_name == "Python"
+    assert skill.skill_desc == "Python is a programming language"
+    assert skill.skill_status == 1
+
+def test_skill_invalid_skill_name():
+    """
+    GIVEN a Skill model
+    WHEN a new Skill is created with an invalid skill_name
+    THEN check the skill_name, skill_desc, skill_status are defined correctly
+    """
+    with pytest.raises(TypeError):
+        Skill(skill_name=0, skill_desc="Python is a programming language", skill_status=1)
+
+def test_skill_invalid_skill_desc():
+    """
+    GIVEN a Skill model
+    WHEN a new Skill is created with an invalid skill_desc
+    THEN check the skill_name, skill_desc, skill_status are defined correctly
+    """
+    with pytest.raises(TypeError):
+        Skill(skill_name="Python", skill_desc=0, skill_status=1)
+
+def test_skill_invalid_skill_status():
+    """
+    GIVEN a Skill model
+    WHEN a new Skill is created with an invalid skill_status
+    THEN check the skill_name, skill_desc, skill_status are defined correctly
+    """
+    with pytest.raises(TypeError):
+        Skill(skill_name="Python", skill_desc="Python is a programming language", skill_status="1")
+
+def test_skill_invalid_parameters():
+    """
+    GIVEN a Skill model
+    WHEN a new Skill is created with invalid amount of parameters parameters
+    THEN check the Exception is raised
+    """
+    with pytest.raises(Exception):
+        Skill(skill_id=0, skill_name=0, skill_desc=0, skill_status="1")
+
+def test_new_skill():
+    """
+    GIVEN a Skill model
+    WHEN a new Skill is created
+    THEN check the skil_id, skill_name, skill_status are defined correctly
+    """
+
+    app = Flask(__name__)
+
+    test_data = {
+        "skill_name": "Python",
+        "skill_desc": "Python is a programming language",
+        "skill_status": 1
+    }
+
+    with app.app_context():
+        result_data = createSkills(test_data)
+        assert result_data.json['code'] == 200
+        assert result_data.json['data']['skill_status'] == 1
+        assert result_data.json['data']['skill_name'] == "Python"
+        assert result_data.json['data']['skill_desc'] == "Python is a programming language"
+
+
+
+
+    

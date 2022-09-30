@@ -13,8 +13,6 @@ app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {'pool_recycle': 299}
 CORS(app)
 db = SQLAlchemy(app)
 
-#skill = Skill.query.all()
-
 #Job Role (For LJPS)
 class JobRole(db.Model):
     __tablename__ = 'job_role'
@@ -40,6 +38,34 @@ class JobRole(db.Model):
             "job_role_desc":self.job_role_desc,
             "job_role_status": self.job_role_status
         }
+
+#Skill in the LJPS System
+class Skill(db.Model):
+    __tablename__ = 'Skill'
+    skill_id = db.Column(db.Integer, primary_key=True, nullable=False)
+    skill_name = db.Column(db.String(100), nullable=False)
+    skill_desc = db.Column(db.String(255), nullable=False)
+    skill_status = db.Column(db.Integer, nullable=False)
+    def __init__(self, skill_name, skill_desc, skill_status):
+        if not isinstance(skill_name, str):
+            raise TypeError("skill_name must be a string")
+        if not isinstance(skill_desc, str):
+            raise TypeError("skill_desc must be a string")
+        if not isinstance(skill_status, int):
+            raise TypeError("skill_status must be an integer")
+        self.skill_name = skill_name
+        self.skill_desc = skill_desc
+        self.skill_status = skill_status
+        
+
+    def json(self):
+        return  {
+            "skill_id": self.skill_id, 
+            "skill_name": self.skill_name, 
+            "skill_desc": self.skill_desc,
+            "skill_status": self.skill_status
+        }
+
 @app.route("/")
 def home():
     pass
@@ -71,6 +97,57 @@ def getAllJobRole(test_data= ""):
             {
                 "code": 404,
                 "message": "There are no job roles."
+            }
+        )
+        
+#This segment of code is update details of a selected skill
+#=============== Update Skill details by skill_id======================================
+@app.route("/createSkills", methods=['POST'])
+def createSkills(test_data=""):
+    data = None
+    if test_data == "":
+        data = request.get_json()
+    else:
+        data = test_data
+    skill_name, skill_desc, skill_status = "", "", ""
+    if data['skill_name']:
+        skill_name = data['skill_name']
+    if data['skill_desc']:
+        skill_desc = data['skill_desc']
+    if data['skill_status']:
+        skill_status = int(data['skill_status'])
+    if (skill_name == "") or (skill_desc == "") or (skill_status == ""):
+        return jsonify(
+            {
+                "code": 500,
+                "message": "Skill name or Skill desc is empty"
+            }
+        ) 
+    skill = Skill(skill_name=skill_name, skill_desc=skill_desc, skill_status=skill_status)
+    if test_data == "":
+        try:
+            db.session.add(skill)
+            db.session.commit()
+        except Exception as e:
+            print(e)
+            return jsonify(
+                {
+                    "code": 500,
+                    "message": "An error occurred updating the skill."
+                }
+            ), 500
+
+        return jsonify(
+            {
+                "code": 200,
+                "data": skill.json()
+            }
+        )
+    else:
+        return jsonify(
+            {
+                "code": 200,
+                "data": skill.json()
             }
         )
 
