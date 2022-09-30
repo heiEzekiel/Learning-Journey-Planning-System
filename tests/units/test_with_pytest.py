@@ -1,4 +1,4 @@
-from backend.app import Skill, createSkills
+from backend.app import Skill, createSkills, updateSkill
 import json
 from flask import Flask
 import pytest 
@@ -115,7 +115,7 @@ def test_update_skill_success():
         'skill_desc' : 'Python is a programming language',
     }
     with app.app_context():
-        result_data = change_apt(2, test_data_skill2, new_data)
+        result_data = updateSkill(2, test_data_skill2, new_data)
         assert result_data.status_code == 200
         assert result_data.get_json()['data']['skill_name'] == 'Python'
         assert result_data.get_json()['data']['skill_desc'] == 'Python is a programming language'

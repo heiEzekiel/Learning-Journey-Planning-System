@@ -135,6 +135,8 @@ def getSkills(test_data= ""):
             {
                 "code": 404,
                 "message": "No skills found."
+            }
+        )
 @app.route("/createSkills", methods=['POST'])
 def createSkills(test_data=""):
     data = None
