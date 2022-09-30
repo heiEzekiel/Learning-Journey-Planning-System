@@ -25,6 +25,7 @@ class Skill(db.Model):
         self.skill_name = skill_name
         self.skill_status = skill_status
         self.skill_desc = skill_desc
+    skill_status = db.Column(db.Integer, nullable=False)
 
     def json(self):
         return  {
@@ -47,7 +48,7 @@ class role_map(db.Model):
              "job_role_id": self.job_role_id,
             "skill_id": self.skill_id           
         }
-
+        
 @app.route("/")
 def home():
     pass
@@ -90,6 +91,9 @@ def getSkillsForJob(job_role_id):
 
 
 
+
+@app.route("/getskills")
+def getskills():
     skills = Skill.query.all()
     print(skills)
     return jsonify(
