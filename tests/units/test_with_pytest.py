@@ -1,4 +1,4 @@
-from backend.app import JobRole, role_map, Skill, getSpecificJobRole, getSkillsForJob, change_apt, createSkills, getAllJobRole, getskills
+from backend.app import JobRole, role_map, Skill, getSpecificJobRole, getSkillsForJob, updateRole, createSkills, getAllJobRole, getskills
 from flask import Flask
 import json
 import pytest 
@@ -196,7 +196,7 @@ def test_update_role_success():
         'job_role_desc' : 'SD',
     }
     with app.app_context():
-        result_data = change_apt(2, test_data_jobrole2, new_data)
+        result_data = updateRole(2, test_data_jobrole2, new_data)
         assert result_data.status_code == 200
         assert result_data.get_json()['data']['job_role_name'] == 'Software Developer'
         assert result_data.get_json()['data']['job_role_desc'] == 'SD'
