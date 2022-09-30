@@ -14,10 +14,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL') or 'mysql+mysqlconn
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {'pool_recycle': 299}
 
+
 CORS(app)
 db = SQLAlchemy(app)
-
-#skill = Skill.query.all()
 
 #Job Role (For LJPS)
 class JobRole(db.Model):
@@ -73,6 +72,47 @@ class Skill(db.Model):
 def home():
     pass
 
+#This segment of code is to do creation of roles. Only used by HR/admin.
+#Takes in job_role_name and job_role_desc
+# job_role_status 0 means active
+@app.route("/createJobRole", methods=['POST'])
+def create_job_role(test_data = ''):
+    data = None
+    if test_data == '':
+        data = request.get_json()
+        new_job_role = JobRole(data['job_role_name'], data['job_role_desc'],0)
+        try:
+            db.session.add(new_job_role)
+            db.session.commit()
+        except Exception as e:
+            print(e)
+            return jsonify(
+                {
+                    "code": 500,
+                    "data": {
+                        "job_role_name": data['job_role_name']
+                    },
+                    "message": "An error occurred creating the job role."
+                }
+            ), 500
+
+        return jsonify(
+            {
+                "code": 201,
+                "data": new_job_role.json(),
+                "message": "Job Role successfully created"
+            }
+        ), 201
+    else:
+        new_job_role = JobRole(test_data['job_role_name'], test_data['job_role_desc'],0)
+        return jsonify(
+                {
+                    "code": 201,
+                    "data": new_job_role.json(),
+                    "message": "Job Role successfully created"
+                }
+            ), 201
+    
 #This segment of code is to do retrieval of all the existing roles. Used by both HR and Learner.
 @app.route("/getAllJobRole")
 def getAllJobRole(test_data= ""):
@@ -127,8 +167,8 @@ def getskills(test_data= ""):
             }
         )
 
-#This segment of code is update details of a selected skill
-#=============== Update Skill details by skill_id======================================
+#This segment of code is to create skill
+#=============== Create skill======================================
 @app.route("/createSkills", methods=['POST'])
 def createSkills(test_data=""):
     data = None
@@ -177,6 +217,66 @@ def createSkills(test_data=""):
                 "data": skill.json()
             }
         )
+
+#This segment of code is update details of a selected skill
+#=============== Update Skill details by skill_id======================================
+@app.route("/updateSkill/<int:skill_id>", methods=['PUT'])
+def change_apt(skill_id, test_data="", new_data=""):
+    skill = None
+    if test_data == "":
+        skill = Skill.query.filter_by(skill_id=skill_id).first()
+    else:
+        skill = test_data
+    if skill:
+        data = None
+        if new_data == "":
+            data = request.get_json()
+        else:
+            data = new_data
+        
+        if data['skill_name']:
+            skill.skill_name = data['skill_name']
+        if data['skill_desc']:
+            skill.skill_desc = data['skill_desc']
+
+        if test_data =="" and new_data=="":
+            try:
+                db.session.commit()
+            except Exception as e:
+                print(e)
+                return jsonify(
+                    {
+                        "code": 500,
+                        "data": {
+                            "skill_id": skill_id
+                        },
+                        "message": "An error occurred updating the skill."
+                    }
+                ), 500
+
+            return jsonify(
+                {
+                    "code": 200,
+                    "data": skill.json()
+                }
+            )
+        else:
+            return jsonify(
+                {
+                    "code": 200,
+                    "data": skill.json()
+                }
+            )
+    # return these if job role not found
+    return jsonify(
+        {
+            "code": 404,
+            "data": {
+                "skill_id": skill_id
+            },
+            "message": "skill_id not found."
+        }
+    ), 404
 
 #Run flask app
 if __name__ == "__main__":
