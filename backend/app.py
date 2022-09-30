@@ -21,6 +21,12 @@ class JobRole(db.Model):
     job_role_desc = db.Column(db.String(255), nullable=False)
     job_role_status = db.Column(db.Integer, nullable=False)
     def __init__(self, job_role_name,  job_role_desc, job_role_status):
+        if not isinstance(job_role_name, str):
+            raise TypeError("job_role_name must be a string")
+        if not isinstance(job_role_desc, str):
+            raise TypeError("job_role_desc must be a string")
+        if not isinstance(job_role_status, int):
+            raise TypeError("job_role_status must be a integer")
         self.job_role_name = job_role_name
         self.job_role_desc= job_role_desc
         self.job_role_status = job_role_status
@@ -53,6 +59,12 @@ class Skill(db.Model):
     skill_desc = db.Column(db.String(255), nullable=False)
     skill_status = db.Column(db.Integer, nullable=False)
     def __init__(self, skill_name, skill_desc, skill_status):
+        if not isinstance(skill_name, str):
+            raise TypeError("skill_name must be a string")
+        if not isinstance(skill_desc, str):
+            raise TypeError("skill_desc must be a string")
+        if not isinstance(skill_status, int):
+            raise TypeError("skill_status must be a integer")
         self.skill_name = skill_name
         self.skill_status = skill_status
         self.skill_desc = skill_desc
@@ -71,6 +83,10 @@ class role_map(db.Model):
     job_role_id = db.Column(db.Integer, primary_key=True,nullable=False)
     skill_id = db.Column(db.Integer, primary_key=True, nullable=False)
     def __init__(self, job_role_id, skill_id):
+        if not isinstance(job_role_id, int):
+            raise TypeError("job_role_id must be a integer")
+        if not isinstance(skill_id, int):
+            raise TypeError("skill_id must be a integer")
         self.job_role_id = job_role_id
         self.skill_id = skill_id
 
