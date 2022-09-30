@@ -54,32 +54,44 @@ def home():
 #Takes in job_role_name and job_role_desc
 # job_role_status 0 means active
 @app.route("/createJobRole", methods=['POST'])
-def create_job_role():
-    data = request.get_json()
-    print(data)
-    new_job_role = JobRole(data['job_role_name'], data['job_role_desc'],0)
-    try:
-        db.session.add(new_job_role)
-        db.session.commit()
-    except Exception as e:
-        print(e)
+def create_job_role(test_data = ''):
+    data = None
+    if test_data == '':
+        data = request.get_json()
+        new_job_role = JobRole(data['job_role_name'], data['job_role_desc'],0)
+        try:
+            db.session.add(new_job_role)
+            db.session.commit()
+        except Exception as e:
+            print(e)
+            return jsonify(
+                {
+                    "code": 500,
+                    "data": {
+                        "job_role_name": data['job_role_name']
+                    },
+                    "message": "An error occurred creating the job role."
+                }
+            ), 500
+
         return jsonify(
             {
-                "code": 500,
-                "data": {
-                    "job_role_name": data['job_role_name']
-                },
-                "message": "An error occurred creating the job role."
+                "code": 201,
+                "data": new_job_role.json(),
+                "message": "Job Role successfully created"
             }
-        ), 500
-
-    return jsonify(
-        {
-            "code": 201,
-            "data": new_job_role.json(),
-            "message": "Job Role successfully created"
-        }
-    ), 201
+        ), 201
+    else:
+        new_job_role = JobRole(test_data['job_role_name'], test_data['job_role_desc'],0)
+        return jsonify(
+                {
+                    "code": 201,
+                    "data": new_job_role.json(),
+                    "message": "Job Role successfully created"
+                }
+            ), 201
+    
+    
 #=========================================================================
 
 
