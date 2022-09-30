@@ -76,3 +76,58 @@ def getskills(test_data= ""):
 
 if __name__ == "__main__":
     app.run()
+#This segment of code is update details of a selected skill
+#=============== Update Skill details by skill_id======================================
+@app.route("/createSkills", methods=['POST'])
+def createSkills(test_data=""):
+    data = None
+    if test_data == "":
+        data = request.get_json()
+    else:
+        data = test_data
+    skill_name, skill_desc, skill_status = "", "", ""
+    if data['skill_name']:
+        skill_name = data['skill_name']
+    if data['skill_desc']:
+        skill_desc = data['skill_desc']
+    if data['skill_status']:
+        skill_status = int(data['skill_status'])
+    if (skill_name == "") or (skill_desc == "") or (skill_status == ""):
+        return jsonify(
+            {
+                "code": 500,
+                "message": "Skill name or Skill desc is empty"
+            }
+        ) 
+    skill = Skill(skill_name=skill_name, skill_desc=skill_desc, skill_status=skill_status)
+    if test_data == "":
+        try:
+            db.session.add(skill)
+            db.session.commit()
+        except Exception as e:
+            print(e)
+            return jsonify(
+                {
+                    "code": 500,
+                    "message": "An error occurred updating the skill."
+                }
+            ), 500
+
+        return jsonify(
+            {
+                "code": 200,
+                "data": skill.json()
+            }
+        )
+    else:
+        return jsonify(
+            {
+                "code": 200,
+                "data": skill.json()
+            }
+        )
+
+
+#Run flask app
+if __name__ == "__main__":
+    app.run(debug=True)

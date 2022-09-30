@@ -1,4 +1,4 @@
-from backend.app import Skill, getskills
+from backend.app import Skill, getskills, createSkills
 from flask import Flask
 import json
 import pytest 
@@ -78,3 +78,31 @@ def test_get_skills_success():
                 assert result_data.json['data'][i]['skill_name'] == test_data[i][0]
                 assert result_data.json['data'][i]['skill_desc'] == test_data[i][1]
                 assert result_data.json['data'][i]['skill_status'] == test_data[i][2]
+
+#-------------------------test function createSkills-----------------------------------
+def test_new_skill():
+    """
+    GIVEN a Skill model
+    WHEN a new Skill is created
+    THEN check the skil_id, skill_name, skill_status are defined correctly
+    """
+
+    app = Flask(__name__)
+
+    test_data = {
+        "skill_name": "Python",
+        "skill_desc": "Python is a programming language",
+        "skill_status": 1
+    }
+
+    with app.app_context():
+        result_data = createSkills(test_data)
+        assert result_data.json['code'] == 200
+        assert result_data.json['data']['skill_status'] == 1
+        assert result_data.json['data']['skill_name'] == "Python"
+        assert result_data.json['data']['skill_desc'] == "Python is a programming language"
+
+
+
+
+    
