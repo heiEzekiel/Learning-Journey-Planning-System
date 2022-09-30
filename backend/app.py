@@ -47,24 +47,27 @@ def home():
 
 #This segment of code is update details of a selected skill
 #=============== Update Skill details by skill_id======================================
-@app.route("/createSkill", methods=['POST'])
-def change_apt():
+@app.route("/createSkills", methods=['POST'])
+def createSkills():
     data = request.get_json()
-    skill_name, skill_desc = "", ""
+    skill_name, skill_desc, skill_status = "", "", ""
     if data['skill_name']:
         skill_name = data['skill_name']
     if data['skill_desc']:
         skill_desc = data['skill_desc']
-    if (skill_name == "") or (skill_desc == ""):
+    if data['skill_status']:
+        skill_status = int(data['skill_status'])
+    if (skill_name == "") or (skill_desc == "") or (skill_status == ""):
         return jsonify(
             {
                 "code": 500,
                 "message": "Skill name or Skill desc is empty"
             }
         ) 
-    skill = Skill(skill_id="", skill_name=skill_name, skill_desc=skill_desc, skill_status=1)
+    skill = Skill(skill_name=skill_name, skill_desc=skill_desc, skill_status=skill_status)
     try:
-        db.session.commit(skill)
+        db.session.add(skill)
+        db.session.commit()
     except Exception as e:
         print(e)
         return jsonify(
