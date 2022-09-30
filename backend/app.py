@@ -80,6 +80,40 @@ def change_apt(skill_id):
         }
     ), 404
 
+
+#  get skills 
+
+@app.route("/getSkills")
+def getSkills(test_data= ""):
+    skills = None
+    if test_data == "":
+        skills = Skill.query.all()
+    if test_data != "":
+        return jsonify (
+            {
+                "code": 200,
+                "data": 
+                [skill.json() for skill in test_data]
+            }
+        )
+    elif skills != None:
+        return jsonify(
+                {
+                    "code": 200,
+                    "data": {
+                        "skill": [skill.json() for skill in skills]
+                    }
+                }
+            )
+    else:
+        return jsonify(
+            {
+                "code": 404,
+                "message": "No skills found."
+            }
+        )
+
+
 #Run flask app
 if __name__ == "__main__":
     app.run(debug=True)
