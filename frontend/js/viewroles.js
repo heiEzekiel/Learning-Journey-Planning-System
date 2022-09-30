@@ -1,5 +1,6 @@
 backendUrl = "http://127.0.0.1:5000";
 getAllJobRole = "getAllJobRole";
+getSkillsForJob= "getSkillsForJob"
 
 async function getAllRole() {
 	const response = await fetch(`${backendUrl}/${getAllJobRole}`)
@@ -24,8 +25,7 @@ async function getAllRole() {
 								<th scope="row">${role["job_role_id"]}</th>
 								<td>${role["job_role_name"]}</td>
 								<td class="text-wrap w-50">${role["job_role_desc"]}</td>
-								<td> <button type="button" class="btn btn-primary">View skills</button> </td>
-
+								<td> <button type="button" class="btn btn-primary" onClick="location.href='./role_skills.html?job=${role['job_role_name']}&id=${role['job_role_id']}'">View skills</button> </td>
 							</tr>
 						</tbody>
 						`;
