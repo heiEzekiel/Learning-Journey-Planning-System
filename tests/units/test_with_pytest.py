@@ -1,5 +1,4 @@
 from backend.app import Skill
-<<<<<<< HEAD
 import pytest 
 
 
