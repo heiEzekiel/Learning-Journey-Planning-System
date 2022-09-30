@@ -13,6 +13,37 @@ app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {'pool_recycle': 299}
 CORS(app)
 
 db = SQLAlchemy(app)
+#Job Role (For LJPS)
+class JobRole(db.Model):
+    __tablename__ = 'job_role'
+    job_role_id = db.Column(db.Integer, primary_key=True, nullable=False)
+    job_role_name = db.Column(db.String(50), nullable=False)
+    job_role_desc = db.Column(db.String(255), nullable=False)
+    job_role_status = db.Column(db.Integer, nullable=False)
+    def __init__(self, job_role_name,  job_role_desc, job_role_status):
+        self.job_role_name = job_role_name
+        self.job_role_desc= job_role_desc
+        self.job_role_status = job_role_status
+
+    def json(self):
+        return  {
+            "job_role_id": self.job_role_id, 
+            "job_role_name": self.job_role_name, 
+            "job_role_desc":self.job_role_desc,
+            "job_role_status": self.job_role_status
+        }
+
+#This segment of code is to do retrieval of all the existing roles. Used by both HR and Learner.
+@app.route("/getAllJobRole")
+def getAllJobRole():
+    jobRoles = JobRole.query.all()
+    return jsonify(
+            {
+                "code": 200,
+                "data": 
+                   [roles.json() for roles in jobRoles]
+            }
+        )
 
 #Skill Table
 class Skill(db.Model):
@@ -71,7 +102,7 @@ def getSkillsForJob(job_role_id):
             skill_list = [s.json() for s in skill]
             for i in skill_list:
                 if i['skill_id'] in list_of_skill:
-                    skillName.append([i['skill_id'], i['skill_name']])
+                    skillName.append([i['skill_name'], i['skill_desc']])
             return jsonify(
     {
             "code": 200,
