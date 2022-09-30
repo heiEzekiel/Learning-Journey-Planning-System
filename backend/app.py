@@ -22,6 +22,12 @@ class Skill(db.Model):
     skill_desc = db.Column(db.String(255), nullable=False)
     skill_status = db.Column(db.Integer, nullable=False)
     def __init__(self, skill_name, skill_desc, skill_status):
+        if not isinstance(skill_name, str):
+            raise TypeError("skill_name must be a string")
+        if not isinstance(skill_desc, str):
+            raise TypeError("skill_desc must be a string")
+        if not isinstance(skill_status, int):
+            raise TypeError("skill_status must be an integer")
         self.skill_name = skill_name
         self.skill_desc = skill_desc
         self.skill_status = skill_status
