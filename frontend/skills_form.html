@@ -77,36 +77,9 @@
       </div>
     </div>
 
-    <script>
-
-      backendUrl = 'http://127.0.0.1:5000';
-      create_skills = 'createSkills';
-      async function createSkills(){
-        skillName = document.getElementById("skillName")
-        skillStatus = document.getElementById("skillStatus")
-        skillDescription = document.getElementById("skillDescription")
-        fetch(`${backendUrl}/${create_skills}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({"skill_name": skillName,"skill_status": skillStatus,"skill_desc":skillDescription}),
-        })
-        .then(response => response.json())
-        .then(data => {
-          console.log('Success:', data);
-          if (data.code == 200) {
-            skillName, skillDescription, skillStatus= "", "", 0
-          }
-          
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-        });
-      }
-
-    </script>
+    
     <!-- Javascript-->
+    <script src="js/createSkills.js"></script>
     <script src="js/core.min.js"></script>
     <script src="js/script.js"></script>
     <!-- coded by Himic-->
