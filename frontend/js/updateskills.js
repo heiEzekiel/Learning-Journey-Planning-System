@@ -1,24 +1,22 @@
 backendUrl = "http://127.0.0.1:5000";
-skill_id = 2; // hard code for now, JY or me will change later on // rmb to update based on the selected skill
+skill_id = 1; // hard code for now, JY or me will change later on // rmb to update based on the selected skill
 updateSkill = "updateSkill/" + skill_id;
-getSkills = "getSkills";
-skillinfo='getSpecificJobRole'
-
+getSkills = "getskills";
+skillinfo = "getSkillsForJob";
 
 const skill_Name = document.getElementById("skill_Name");
 const skill_Description = document.getElementById("skill_Description");
 const btn = document.getElementById("btn");
-
 
 //  put skill info inside the fields first
 async function getSkillInfo() {
 	fetch(`${backendUrl}/${skillinfo}/${skill_id}`)
 		.then((response) => response.json())
 		.then((data) => {
-			
+			console.log(data);
 			if (data.code == 200) {
-				skill_Name.value=data.data[0]['skill_name'];
-				skill_Description.value=data.data[0]['skill_desc'];
+				skill_Name.value = data.data[0]["skill_name"];
+				skill_Description.value = data.data[0]["skill_desc"];
 			}
 		})
 		.catch((error) => {
@@ -50,7 +48,6 @@ async function updateSkills() {
 }
 
 getSkillInfo();
-
 
 // const myData = function (getAllSkills) {
 // 	getid = 1;

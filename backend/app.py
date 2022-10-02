@@ -210,6 +210,7 @@ def getSkillsForJob(job_role_id, test_data_role_map="", test_data_skill="", test
             skill = test_data_skill
         if skill:
             skill_list = [s.json() for s in skill]
+
             for i in skill_list:
                 if i['skill_id'] in list_of_skill:
                     skillName.append([i['skill_name'], i['skill_desc']])
@@ -479,34 +480,29 @@ def updateSkill(skill_id, test_data="", new_data=""):
         }
     ), 404
 
-#This segment of code is to get the skill info based on id
-@app.route("/getSpecificJobRole/<int:skill_id>")
-def getAllJobRole(skill_id,test_data= ""):
-    skill = None
+
+#This segment of code is to do retrieval of all the existing roles. Used by both HR and Learner.
+@app.route("/getAllJobRole")
+def getAllJobRole(test_data= ""):
+    jobRoles = None
     if test_data == "":
-        skill = Skill.query.filter_by(skill_id=skill_id).all()
+        jobRoles = JobRole.query.all()
     if test_data != "": 
-        return (         
+        return jsonify(
                 {
                     "code": 200,
-                      "data": [s.json() for s in skill]
+                    "data": 
+                    [roles.json() for roles in test_data]
                 }
             )
-    elif skill != None:
-       return jsonify(
-           {
-               "code": 200,
-               "data": [s.json() for s in skill]
-           }
-       )
-    else:
+    elif jobRoles != None:
         return jsonify(
-            {
-                "code": 404,
-                "message": "There are no skill found."
-            }
-        )        
-
+                {
+                    "code": 200,
+                    "data": 
+                    [roles.json() for roles in jobRoles]
+                }
+            )
 
 #Run flask app
 if __name__ == "__main__":
