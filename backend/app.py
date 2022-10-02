@@ -271,6 +271,25 @@ def getSkillID(skill_name):
            "message": "Not Found"
        }
    ), 404
+   
+# Get skill ID using skill id
+@app.route("/getSkillById/<int:skill_id>/", methods=['GET'])
+def getSkillById(skill_id):
+   skill = Skill.query.filter_by(skill_id=skill_id)
+   if skill:
+       return jsonify(
+           {
+               "code": 200,
+               "message" :  [s.json() for s in skill]
+           }
+       )
+   return jsonify(
+       {
+           "code": 404,
+
+           "message": "Not Found"
+       }
+   ), 404
 
 
 @app.route("/getskills")

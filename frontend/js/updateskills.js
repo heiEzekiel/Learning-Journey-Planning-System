@@ -1,8 +1,10 @@
 backendUrl = "http://127.0.0.1:5000";
-skill_id = 1; // hard code for now, JY or me will change later on // rmb to update based on the selected skill
+const queryString = window.location.search
+const urlParams = new URLSearchParams(queryString)
+const skill_id = urlParams.get('id')
 updateSkill = "updateSkill/" + skill_id;
 getSkills = "getskills";
-skillinfo = "getSkillsForJob";
+skillinfo = "getSkillById";
 
 const skill_Name = document.getElementById("skill_Name");
 const skill_Description = document.getElementById("skill_Description");
@@ -15,8 +17,8 @@ async function getSkillInfo() {
 		.then((data) => {
 			console.log(data);
 			if (data.code == 200) {
-				skill_Name.value = data.data[0]["skill_name"];
-				skill_Description.value = data.data[0]["skill_desc"];
+				skill_Name.value = data.message[0]["skill_name"];
+				skill_Description.value = data.message[0]["skill_desc"];
 			}
 		})
 		.catch((error) => {
