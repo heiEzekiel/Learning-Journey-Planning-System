@@ -236,11 +236,6 @@ def updateRole(job_role_id, test_data="", new_data=""):
 
         pre_change = jobrole.job_role_name
 
-        if data['job_role_name']:
-            jobrole.job_role_name = data['job_role_name']
-        if data['job_role_desc']:
-            jobrole.job_role_desc = data['job_role_desc']
-
         #check if Job Role  Already Exist
         #Note that this codes allows updating role name to the same role name we are updating
         jobRoles = JobRole.query.all()
@@ -265,6 +260,13 @@ def updateRole(job_role_id, test_data="", new_data=""):
                     "message": "Job role already exist!"
                 }
             ), 500
+
+        
+        if data['job_role_name']:
+            jobrole.job_role_name = data['job_role_name']
+        if data['job_role_desc']:
+            jobrole.job_role_desc = data['job_role_desc']
+
 
 
          #If don't exist run these
