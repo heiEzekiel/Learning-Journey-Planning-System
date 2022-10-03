@@ -1,23 +1,23 @@
 var backendUrl = 'http://127.0.0.1:5000';
 var getskills = '/getskills';
 
-$(document).ready(function() {
-    $.ajax({ 
-        type: 'GET',
-        url: backendUrl + getskills,
-        crossDomain: true,
-        dataType: 'json',
-        success: function(responseData) {
-            console.log(responseData.data);
-            resdata = responseData.data.skill
-            console.log(resdata)
-            buildHtmlTable("#skill", resdata)
-        },
-        error: function(responseData, textStatus, errorThrown) {
-            alert('GET failed.');
-        }
-    })
-})
+// $(document).ready(function() {
+//     $.ajax({ 
+//         type: 'GET',
+//         url: backendUrl + getskills,
+//         crossDomain: true,
+//         dataType: 'json',
+//         success: function(responseData) {
+//             console.log(responseData.data);
+//             resdata = responseData.data.skill
+//             console.log(resdata)
+//             buildHtmlTable("#skill", resdata)
+//         },
+//         error: function(responseData, textStatus, errorThrown) {
+//             alert('GET failed.');
+//         }
+//     })
+// })
 
 // Builds the HTML Table out of myList.
 function buildHtmlTable(selector, myList) {
