@@ -233,11 +233,44 @@ def updateRole(job_role_id, test_data="", new_data=""):
             data = request.get_json()
         else:
             data = new_data
+
+        pre_change = jobrole.job_role_name
+
+
+
+
         if data['job_role_name']:
             jobrole.job_role_name = data['job_role_name']
         if data['job_role_desc']:
             jobrole.job_role_desc = data['job_role_desc']
-        
+
+        #check if Job Role  Already Exist
+        #Note that this codes allows updating role name to the same role name we are updating
+        jobRoles = JobRole.query.all()
+        if jobRoles != None:
+            res =  (
+           {
+               "code": 200,
+               "data":  [roles.json() for roles in jobRoles]
+           }
+       )
+            roles = res['data']
+            for i in range(len(roles)):
+                if (roles[i]['job_role_name'].replace(" ","").lower())==pre_change.replace(" ","").lower():
+                    continue
+                if (roles[i]['job_role_name'].replace(" ","").lower())==data['job_role_name'].replace(" ","").lower():
+                    return jsonify(
+                {
+                    "code": 400,
+                    "data": {
+                        "job_role_name": data['job_role_name']
+                    },
+                    "message": "Job role already exist!"
+                }
+            ), 500
+
+
+         #If don't exist run these
         if test_data == "" and new_data == "":
             try:
                 db.session.commit()
