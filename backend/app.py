@@ -644,7 +644,26 @@ def updateSkill(skill_id, test_data="", new_data=""):
         }
     ), 404
 
-
+#This segment of code is update details of a selected skill
+#=============== Update Skill details by skill_id======================================
+@app.route("/deleteSkill/<int:skill_id>", methods=['DELETE'])
+def deleteSkill(skill_id, test_data="", new_data=""):
+    skill = Skill.query.filter_by(skill_id=skill_id).first()
+    if skill:
+        db.session.delete(skill)
+        db.session.commit()
+        return jsonify(
+            {
+                "code": 200,
+                "message" : "Skill removed successfully"
+            }
+        )
+    return jsonify(
+        {
+            "code": 404,
+            "message": "Skill not found."
+        }
+    ), 404
 
 
 #Run flask app
