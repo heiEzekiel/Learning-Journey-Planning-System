@@ -96,7 +96,49 @@ class Skill(db.Model):
 def home():
     pass
 
+#=======================================================================================Job Role Related=======================================================================#
+#This segment of code is to do creation of roles. Only used by HR/admin.
+#Create Job Role
+@app.route("/createJobRole", methods=['POST'])
+def create_job_role(test_data = ''):
+    data = None
+    if test_data == '':
+        data = request.get_json()
+        new_job_role = JobRole(data['job_role_name'], data['job_role_desc'],1)
+        try:
+            db.session.add(new_job_role)
+            db.session.commit()
+        except Exception as e:
+            print(e)
+            return jsonify(
+                {
+                    "code": 500,
+                    "data": {
+                        "job_role_name": data['job_role_name']
+                    },
+                    "message": "An error occurred creating the job role."
+                }
+            ), 500
+
+        return jsonify(
+            {
+                "code": 201,
+                "data": new_job_role.json(),
+                "message": "Job Role successfully created"
+            }
+        ), 201
+    else:
+        new_job_role = JobRole(test_data['job_role_name'], test_data['job_role_desc'],0)
+        return jsonify(
+                {
+                    "code": 201,
+                    "data": new_job_role.json(),
+                    "message": "Job Role successfully created"
+                }
+            ), 201
+
 #This segment of code is to get a specific job role. Used by both HR and Learner.
+#=============== Get Job Role details by job_role_id======================================
 @app.route("/getSpecificJobRole/<int:job_role_id>")
 def getSpecificJobRole(job_role_id,test_data= ""):
     jobRoles = None
@@ -124,6 +166,30 @@ def getSpecificJobRole(job_role_id,test_data= ""):
                 "message": "There are no job roles found."
             }
         )
+
+
+#This segment of code is to do retrieval of all the existing roles. Used by both HR and Learner.
+@app.route("/getAllJobRole")
+def getAllJobRole(test_data= ""):
+    jobRoles = None
+    if test_data == "":
+        jobRoles = JobRole.query.all()
+    if test_data != "": 
+        return jsonify(
+                {
+                    "code": 200,
+                    "data": 
+                    [roles.json() for roles in test_data]
+                }
+            )
+    elif jobRoles != None:
+        return jsonify(
+                {
+                    "code": 200,
+                    "data": 
+                    [roles.json() for roles in jobRoles]
+                }
+            )
 
 
 #This segment of code is update details of a selected role
@@ -187,7 +253,36 @@ def updateRole(job_role_id, test_data="", new_data=""):
     ), 404
 
 
-# Get skills required for the selected job role
+
+#=======================================================================================Role-Skill Related=======================================================================#
+#==============================Create job to role mapping===================================
+#Used when updating role information, or mapping role information
+@app.route("/createRoleMap/<int:job_role_id>/<int:skill_id>", methods=['POST'])
+def createRoleMap(job_role_id,skill_id):
+    data = request.get_json()
+    new_map = role_map(data['job_role_id'], data['skill_id'])
+    try:
+        db.session.add(new_map)
+        db.session.commit()
+    except Exception as e:
+        print(e)
+        return jsonify(
+            {
+                "code": 500,
+                "message": "An error occurred creating the record."
+            }
+        ), 500
+
+    return jsonify(
+        {
+            "code": 201,
+            "data": new_map.json(),
+            "message": "Success"
+        }
+    ), 201
+
+#==============================Retrieve Skill for job role with job_role_id===================================
+# Get skills required for the selected job role using job_role_id
 @app.route("/getSkillsForJob/<int:job_role_id>")
 def getSkillsForJob(job_role_id, test_data_role_map="", test_data_skill="", test_data_job_role=""):
     # Get a list of skill_id required for the job
@@ -231,9 +326,9 @@ def getSkillsForJob(job_role_id, test_data_role_map="", test_data_skill="", test
    ), 404
 
 
-
-
-@app.route("/removeRole/<int:job_role_id>/<int:skill_id>", methods=['DELETE'])
+#==============================Remove Skill from Job Role===================================
+# Remove a skill from a job role 
+@app.route("/removeSkillFromJobRole/<int:job_role_id>/<int:skill_id>", methods=['DELETE'])
 def del_role(job_role_id,skill_id):
    role = role_map.query.filter_by(job_role_id=job_role_id, skill_id=skill_id).first()
    if role:
@@ -253,6 +348,8 @@ def del_role(job_role_id,skill_id):
        }
    ), 404
 
+
+#=======================================================================================Skill Related=======================================================================#
 # Get skill ID using skill name
 @app.route("/getSkillID/<string:skill_name>/", methods=['GET'])
 def getSkillID(skill_name):
@@ -272,7 +369,7 @@ def getSkillID(skill_name):
        }
    ), 404
    
-# Get skill ID using skill id
+# =================================Get skill ID using skill id=================
 @app.route("/getSkillById/<int:skill_id>/", methods=['GET'])
 def getSkillById(skill_id):
    skill = Skill.query.filter_by(skill_id=skill_id)
@@ -291,6 +388,7 @@ def getSkillById(skill_id):
        }
    ), 404
 
+# =================================Get a list of skills=================
 
 @app.route("/getskills")
 def getskills(test_data= ""):
@@ -322,74 +420,8 @@ def getskills(test_data= ""):
             }
         )
 
-
-@app.route("/createRoleMap/<int:job_role_id>/<int:skill_id>", methods=['POST'])
-def createRoleMap(job_role_id,skill_id):
-    data = request.get_json()
-    new_map = role_map(data['job_role_id'], data['skill_id'])
-    try:
-        db.session.add(new_map)
-        db.session.commit()
-    except Exception as e:
-        print(e)
-        return jsonify(
-            {
-                "code": 500,
-                "message": "An error occurred creating the record."
-            }
-        ), 500
-
-    return jsonify(
-        {
-            "code": 201,
-            "data": new_map.json(),
-            "message": "Success"
-        }
-    ), 201
-
-#This segment of code is to do creation of roles. Only used by HR/admin.
-#Takes in job_role_name and job_role_desc
-# job_role_status 0 means active
-@app.route("/createJobRole", methods=['POST'])
-def create_job_role(test_data = ''):
-    data = None
-    if test_data == '':
-        data = request.get_json()
-        new_job_role = JobRole(data['job_role_name'], data['job_role_desc'],0)
-        try:
-            db.session.add(new_job_role)
-            db.session.commit()
-        except Exception as e:
-            print(e)
-            return jsonify(
-                {
-                    "code": 500,
-                    "data": {
-                        "job_role_name": data['job_role_name']
-                    },
-                    "message": "An error occurred creating the job role."
-                }
-            ), 500
-
-        return jsonify(
-            {
-                "code": 201,
-                "data": new_job_role.json(),
-                "message": "Job Role successfully created"
-            }
-        ), 201
-    else:
-        new_job_role = JobRole(test_data['job_role_name'], test_data['job_role_desc'],0)
-        return jsonify(
-                {
-                    "code": 201,
-                    "data": new_job_role.json(),
-                    "message": "Job Role successfully created"
-                }
-            ), 201
-
 #This segment of code is to create skill
-#=============== Create skill======================================
+#=========================================== Create skill======================================
 @app.route("/createSkills", methods=['POST'])
 def createSkills(test_data=""):
     data = None
@@ -500,28 +532,7 @@ def updateSkill(skill_id, test_data="", new_data=""):
     ), 404
 
 
-#This segment of code is to do retrieval of all the existing roles. Used by both HR and Learner.
-@app.route("/getAllJobRole")
-def getAllJobRole(test_data= ""):
-    jobRoles = None
-    if test_data == "":
-        jobRoles = JobRole.query.all()
-    if test_data != "": 
-        return jsonify(
-                {
-                    "code": 200,
-                    "data": 
-                    [roles.json() for roles in test_data]
-                }
-            )
-    elif jobRoles != None:
-        return jsonify(
-                {
-                    "code": 200,
-                    "data": 
-                    [roles.json() for roles in jobRoles]
-                }
-            )
+
 
 #Run flask app
 if __name__ == "__main__":
