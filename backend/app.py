@@ -576,7 +576,10 @@ def updateSkill(skill_id, test_data="", new_data=""):
         
 
      #check is existing role is there
-        skills = Skill.query.all()
+        if test_data == "":
+            skills = Skill.query.all()
+        else:
+            skills = test_data
         if skills != None:
             res =  (
            {
