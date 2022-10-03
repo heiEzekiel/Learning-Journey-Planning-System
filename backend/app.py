@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from os import environ
-
+import json
 # Flask App and DB connection is done here.
 app = Flask(__name__)   
 # ---for windows---
@@ -105,6 +105,29 @@ def create_job_role(test_data = ''):
     if test_data == '':
         data = request.get_json()
         new_job_role = JobRole(data['job_role_name'], data['job_role_desc'],1)
+        #check is existing role is there
+        jobRoles = JobRole.query.all()
+        if jobRoles != None:
+            res =  (
+           {
+               "code": 200,
+               "data":  [roles.json() for roles in jobRoles]
+           }
+       )
+            roles = res['data']
+            for i in range(len(roles)):
+                if (roles[i]['job_role_name'].replace(" ","").lower())==data['job_role_name'].replace(" ","").lower():
+                    return jsonify(
+                {
+                    "code": 400,
+                    "data": {
+                        "job_role_name": data['job_role_name']
+                    },
+                    "message": "Job role already exist!"
+                }
+            ), 500
+
+        # if don't exist then execute these codes
         try:
             db.session.add(new_job_role)
             db.session.commit()
@@ -127,6 +150,8 @@ def create_job_role(test_data = ''):
                 "message": "Job Role successfully created"
             }
         ), 201
+
+        #andy to change later on
     else:
         new_job_role = JobRole(test_data['job_role_name'], test_data['job_role_desc'],0)
         return jsonify(
@@ -434,17 +459,39 @@ def createSkills(test_data=""):
         skill_name = data['skill_name']
     if data['skill_desc']:
         skill_desc = data['skill_desc']
-    if data['skill_status']:
-        skill_status = int(data['skill_status'])
-    if (skill_name == "") or (skill_desc == "") or (skill_status == ""):
+    # if data['skill_status']:
+    #     skill_status = int(data['skill_status'])
+    if (skill_name == "") or (skill_desc == ""):
         return jsonify(
             {
                 "code": 500,
                 "message": "Skill name or Skill desc is empty"
             }
         ) 
-    skill = Skill(skill_name=skill_name, skill_desc=skill_desc, skill_status=skill_status)
+    skill = Skill(skill_name=skill_name, skill_desc=skill_desc, skill_status=1)
     if test_data == "":
+                #check is existing role is there
+        skills = Skill.query.all()
+        if skills != None:
+            res =  (
+           {
+               "code": 200,
+               "data":  [s.json() for s in skills]
+           }
+       )
+            s = res['data']
+            for i in range(len(s)):
+                if (s[i]['skill_name'].replace(" ","").lower())==data['skill_name'].replace(" ","").lower():
+                    return jsonify(
+                {
+                    "code": 400,
+                    "data": {
+                        "skill_name": data['skill_name']
+                    },
+                    "message": "Skill name already exist!"
+                }
+            ), 500
+            # if no duplicate skill then run these codes
         try:
             db.session.add(skill)
             db.session.commit()
