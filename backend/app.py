@@ -202,6 +202,7 @@ def getAllJobRole(test_data= ""):
     jobRoles = None
     if test_data == "":
         jobRoles = JobRole.query.all()
+        return
     if test_data != "": 
         return jsonify(
                 {
@@ -223,7 +224,7 @@ def getAllJobRole(test_data= ""):
 #This segment of code is update details of a selected role
 #=============== Update Job Role details by job_role_id======================================
 @app.route("/updateRole/<int:job_role_id>", methods=['PUT'])
-def updateRole(job_role_id, test_data="", new_data=""):
+def updateRole(job_role_id, test_data="", new_data="",test_data_2=""):
     jobrole = None
     if test_data == "":
         jobrole = JobRole.query.filter_by(job_role_id=job_role_id).first()
@@ -244,7 +245,7 @@ def updateRole(job_role_id, test_data="", new_data=""):
         if test_data == "":
             jobRoles = JobRole.query.all()
         else:
-            jobrole = test_data
+            jobRoles = test_data_2
         if jobRoles != None:
             res =  (
            {
@@ -559,7 +560,7 @@ def createSkills(test_data=""):
 #This segment of code is update details of a selected skill
 #=============== Update Skill details by skill_id======================================
 @app.route("/updateSkill/<int:skill_id>", methods=['PUT'])
-def updateSkill(skill_id, test_data="", new_data=""):
+def updateSkill(skill_id, test_data="", new_data="",test_data2=""):
     skill = None
     if test_data == "":
         skill = Skill.query.filter_by(skill_id=skill_id).first()
@@ -579,7 +580,7 @@ def updateSkill(skill_id, test_data="", new_data=""):
         if test_data == "":
             skills = Skill.query.all()
         else:
-            skills = test_data
+            skills = test_data2
         if skills != None:
             res =  (
            {

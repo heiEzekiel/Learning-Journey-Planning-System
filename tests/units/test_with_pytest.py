@@ -195,8 +195,10 @@ def test_update_role_success():
         'job_role_name' : 'Software Developer',
         'job_role_desc' : 'SD',
     }
+
+    existing_data= [JobRole('Teacher', 'TR', 0),JobRole('Developer', 'Dev', 0)]
     with app.app_context():
-        result_data = updateRole(2, test_data_jobrole2, new_data)
+        result_data = updateRole(2, test_data_jobrole2, new_data, existing_data)
         assert result_data.status_code == 200
         assert result_data.get_json()['data']['job_role_name'] == 'Software Developer'
         assert result_data.get_json()['data']['job_role_desc'] == 'SD'
@@ -312,8 +314,13 @@ def test_update_skill_success():
         'skill_name' : 'Python',
         'skill_desc' : 'Python is a programming language',
     }
+
+    test_data_existing=[Skill(skill_name="C sharp", skill_desc="C sharp is a programming language", skill_status=1),Skill(skill_name="Android Studio", skill_desc="This is an IDE", skill_status=1)]
+
+
+
     with app.app_context():
-        result_data = updateSkill(2, test_data_skill2, new_data)
+        result_data = updateSkill(2, test_data_skill2, new_data,test_data_existing)
         assert result_data.status_code == 200
         assert result_data.get_json()['data']['skill_name'] == 'Python'
         assert result_data.get_json()['data']['skill_desc'] == 'Python is a programming language'
