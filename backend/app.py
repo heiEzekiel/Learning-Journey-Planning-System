@@ -579,7 +579,7 @@ def updateSkill(skill_id, test_data="", new_data=""):
         if test_data == "":
             skills = Skill.query.all()
         else:
-            skill = test_data
+            skills = test_data
         if skills != None:
             res =  (
            {
