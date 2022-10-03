@@ -316,6 +316,26 @@ def updateRole(job_role_id, test_data="", new_data="",test_data_2=""):
         }
     ), 404
 
+#This segment of code is delete a selected role
+#=============== Delete Role details by job_role_id======================================
+@app.route("/deleteRole/<int:job_role_id>", methods=['DELETE'])
+def deleteRole(job_role_id, test_data="", new_data=""):
+    job = JobRole.query.filter_by(job_role_id=job_role_id).first()
+    if job:
+        db.session.delete(job)
+        db.session.commit()
+        return jsonify(
+            {
+                "code": 200,
+                "message" : "Job removed successfully"
+            }
+        )
+    return jsonify(
+        {
+            "code": 404,
+            "message": "Job not found."
+        }
+    ), 404
 
 
 #=======================================================================================Role-Skill Related=======================================================================#
@@ -648,8 +668,8 @@ def updateSkill(skill_id, test_data="", new_data="",test_data2=""):
         }
     ), 404
 
-#This segment of code is update details of a selected skill
-#=============== Update Skill details by skill_id======================================
+#This segment of code is delete a selected skill
+#=============== Delete Skill details by skill_id======================================
 @app.route("/deleteSkill/<int:skill_id>", methods=['DELETE'])
 def deleteSkill(skill_id, test_data="", new_data=""):
     skill = Skill.query.filter_by(skill_id=skill_id).first()
