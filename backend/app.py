@@ -236,14 +236,6 @@ def updateRole(job_role_id, test_data="", new_data=""):
 
         pre_change = jobrole.job_role_name
 
-
-
-
-        if data['job_role_name']:
-            jobrole.job_role_name = data['job_role_name']
-        if data['job_role_desc']:
-            jobrole.job_role_desc = data['job_role_desc']
-
         #check if Job Role  Already Exist
         #Note that this codes allows updating role name to the same role name we are updating
         jobRoles = JobRole.query.all()
@@ -268,6 +260,13 @@ def updateRole(job_role_id, test_data="", new_data=""):
                     "message": "Job role already exist!"
                 }
             ), 500
+
+        
+        if data['job_role_name']:
+            jobrole.job_role_name = data['job_role_name']
+        if data['job_role_desc']:
+            jobrole.job_role_desc = data['job_role_desc']
+
 
 
          #If don't exist run these
@@ -383,7 +382,6 @@ def getSkillsForJob(job_role_id, test_data_role_map="", test_data_skill="", test
        }
    ), 404
 
-
 #==============================Remove Skill from Job Role===================================
 # Remove a skill from a job role 
 @app.route("/removeSkillFromJobRole/<int:job_role_id>/<int:skill_id>", methods=['DELETE'])
@@ -492,6 +490,7 @@ def createSkills(test_data=""):
         skill_name = data['skill_name']
     if data['skill_desc']:
         skill_desc = data['skill_desc']
+    #ignored until future feature comes in
     # if data['skill_status']:
     #     skill_status = int(data['skill_status'])
     if (skill_name == "") or (skill_desc == ""):
@@ -566,12 +565,40 @@ def updateSkill(skill_id, test_data="", new_data=""):
             data = request.get_json()
         else:
             data = new_data
+
+        preskill = skill.skill_name
         
+
+     #check is existing role is there
+        skills = Skill.query.all()
+        if skills != None:
+            res =  (
+           {
+               "code": 200,
+               "data":  [s.json() for s in skills]
+           }
+       )
+            s = res['data']
+            for i in range(len(s)):
+                if (preskill.replace(" ","").lower()==s[i]['skill_name'].replace(" ","").lower()):
+                    continue
+                if (s[i]['skill_name'].replace(" ","").lower())==data['skill_name'].replace(" ","").lower():
+                    return jsonify(
+                {
+                    "code": 400,
+                    "data": {
+                        "skill_name": data['skill_name']
+                    },
+                    "message": "Skill name already exist!"
+                }
+            ), 500
+            
         if data['skill_name']:
             skill.skill_name = data['skill_name']
         if data['skill_desc']:
             skill.skill_desc = data['skill_desc']
 
+        # if no duplicate skill then run these codes
         if test_data =="" and new_data=="":
             try:
                 db.session.commit()
