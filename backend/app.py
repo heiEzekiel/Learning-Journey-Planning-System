@@ -106,7 +106,10 @@ def create_job_role(test_data = ''):
         data = request.get_json()
         new_job_role = JobRole(data['job_role_name'], data['job_role_desc'],1)
         #check is existing role is there
-        jobRoles = JobRole.query.all()
+        if test_data == "":
+            jobRoles = JobRole.query.all()
+        else:
+            jobRoles = test_data
         if jobRoles != None:
             res =  (
            {
@@ -151,7 +154,7 @@ def create_job_role(test_data = ''):
             }
         ), 201
 
-        #andy to change later on
+      
     else:
         new_job_role = JobRole(test_data['job_role_name'], test_data['job_role_desc'],0)
         return jsonify(
@@ -238,7 +241,10 @@ def updateRole(job_role_id, test_data="", new_data=""):
 
         #check if Job Role  Already Exist
         #Note that this codes allows updating role name to the same role name we are updating
-        jobRoles = JobRole.query.all()
+        if test_data == "":
+            jobRoles = JobRole.query.all()
+        else:
+            jobrole = test_data
         if jobRoles != None:
             res =  (
            {
