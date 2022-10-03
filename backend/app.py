@@ -202,7 +202,13 @@ def getAllJobRole(test_data= ""):
     jobRoles = None
     if test_data == "":
         jobRoles = JobRole.query.all()
-        return
+        return jsonify (
+            {
+                "code": 200,
+                "data": 
+                [r.json() for r in jobRoles]
+            }
+        )
     if test_data != "": 
         return jsonify(
                 {

@@ -79,7 +79,7 @@
         message_str = `
               <thead>
                 <tr class="bg-light">
-                <th>Job Role Id</th>
+                
                 <th>Job Role Name</th>
                 <th>Job Role Description</th>
                 <th>Click for more info</th>
@@ -90,7 +90,7 @@
             message_str += `
               <tbody>
                 <tr>
-                  <th scope="row">${role["job_role_id"]}</th>
+                 
                   <td>${role["job_role_name"]}</td>
                   <td class="text-wrap w-50">${role["job_role_desc"]}</td>
                   <td> <button type="button" class="btn btn-primary" onClick="location.href='./role_skills.html?job=${role['job_role_name']}&id=${role['job_role_id']}'">View skills</button> </td>
@@ -99,6 +99,7 @@
               `;
           }
         }
+         // <th scope="row">${role["job_role_id"]}</th> removed
         document.getElementById("table").innerHTML = message_str;
         return data.roles;
       })
