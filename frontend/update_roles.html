@@ -123,8 +123,8 @@
         <script>
             var current_skill = [];
             // Assume we clicked on a button from 'view list of roles page, which brings us to do this'
-            // Assume the role we clicked is id 2 
-            role_id = 1 // to make it dynamic later on
+            // Assume the role we clicked is id 201 
+            role_id = 602 // to make it dynamic later on
             backendUrl = 'http://127.0.0.1:5000';
             update_role = 'updateRole/' + role_id;
             get_skill = 'getSkillsForJob/' + role_id;
@@ -258,6 +258,7 @@
                     .then(data => {
                         console.log('Success:', data);
                         if (data.code == 200) {
+                            alert("Updated succesfully!");
                             location.reload();
                         }
 
@@ -319,6 +320,7 @@
                     })
                     .then((response) => response.json())
                     .then((data) => {
+                        alert("Deleted skill from job successfully");
                         location.reload();
 
                     })
@@ -342,6 +344,7 @@
                     })
                     .then((response) => response.json())
                     .then((data) => {
+                        alert("Added skill to job successfully");
                         location.reload();
                     })
                     .catch((error) => {

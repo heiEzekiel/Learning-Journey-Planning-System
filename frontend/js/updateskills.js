@@ -41,6 +41,7 @@ async function updateSkills() {
 		.then((data) => {
 			console.log("Success:", data);
 			if (data.code == 200) {
+				alert('Update successful')
 				location.reload();
 			}
 		})

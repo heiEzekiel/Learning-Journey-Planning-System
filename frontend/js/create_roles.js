@@ -22,6 +22,7 @@ btn.addEventListener("click", () => {
 				job_role_desc: desc,
 			})
 			.then((response) => console.log(response))
+			.then(alert(name+" role successfully created!"))
 			.catch((err) => console.log(err));
 	}
 });

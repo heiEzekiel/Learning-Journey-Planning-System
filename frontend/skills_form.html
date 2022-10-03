@@ -72,7 +72,7 @@
               <label for="skillDescription">Skill Description</label>
               <textarea class="form-control" id="skillDescription" rows="3" placeholder="Enter Description" required></textarea>
           </div>
-            <button type="submit" class="btn btn-primary" onclick="createSkills()">Submit</button>
+            <button type="submit" class="btn btn-primary" onclick="createSkills()">Create</button>
         </form>
       </div>
     </div>
@@ -105,10 +105,11 @@
             }
         
             const result = await response.json();
+            alert(skillName.value +" skill successfully created");
             skillName.value=""
             skillDescription.value=""
             skillStatus="0"
-            alert("Skill successfully created")
+            
             return result;
           } catch (err) {
             console.log(err);
