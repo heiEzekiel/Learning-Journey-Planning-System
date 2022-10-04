@@ -13,10 +13,10 @@
     <link rel="stylesheet" href="css/fonts.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/index.css">
-    <style>.ie-panel{display: none;background: #212121;padding: 10px 0;box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3);clear: both;text-align:center;position: relative;z-index: 1;} html.ie-10 .ie-panel, html.lt-ie-10 .ie-panel {display: block;}</style>
+    <!-- <style>.ie-panel{display: none;background: #212121;padding: 10px 0;box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3);clear: both;text-align:center;position: relative;z-index: 1;} html.ie-10 .ie-panel, html.lt-ie-10 .ie-panel {display: block;}</style> -->
   </head>
   <body>
-    <div class="ie-panel"><a href="http://windows.microsoft.com/en-US/internet-explorer/"><img src="images/ie8-panel/warning_bar_0000_us.jpg" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today."></a></div>
+    <!-- <div class="ie-panel"><a href="http://windows.microsoft.com/en-US/internet-explorer/"><img src="images/ie8-panel/warning_bar_0000_us.jpg" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today."></a></div> -->
     <div class="preloader">
       <div class="preloader-body">
         <div class="cssload-container">
@@ -60,11 +60,13 @@
 <div class="container mt-3 mb-5">
     <h3>List of roles</h3>
 
+    <div class="mb-0 d-flex justify-content-end">
+      <button type="button" class="btn btn-primary" onclick="window.location.href='./create_role.html'">Create
+        New Role</button>
+    </div>
+
     <table class="table borderless table-hover mt-5" id="table">
-    </table>
-
-
-    
+    </table> 
 </div>
     <script>
       backendUrl = "http://127.0.0.1:5000";

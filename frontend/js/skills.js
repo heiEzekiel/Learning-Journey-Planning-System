@@ -42,7 +42,7 @@ async function getAllSkills(){
                                 <th scope="row">${skill['skill_name']}</th>
                                 <td class="text-wrap w-50">${skill['skill_desc']}
                                 <td class="text-wrap w-25"> 
-                                <button type="button" class="btn btn-primary" onClick="location.href='./updateskills.html?id=${skill['skill_id']}'">Edit</button>
+                                <button type="button" class="btn btn-success" onClick="location.href='./updateskills.html?id=${skill['skill_id']}'">Edit</button>
                                 <button type="button" class="btn btn-danger" onClick="removeSkill(${skill['skill_id']})" >Delete</button>
                                 </td>
                             </tr>
