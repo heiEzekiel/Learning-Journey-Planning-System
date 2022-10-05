@@ -439,7 +439,7 @@ def getSkillsForJob(job_role_id, test_data_role_map="", test_data_skill="", test
         rolemapping = role_map.query.filter_by(rm_fk_job_role_id=job_role_id).all()
         
     else:
-        rolemapping = [role for role in test_data_role_map if int(role.job_role_id) == job_role_id]
+        rolemapping = [role for role in test_data_role_map if int(role.rm_fk_job_role_id) == job_role_id]
     if rolemapping:
         role = [r.json() for r in rolemapping]
         list_of_skill = []

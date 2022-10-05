@@ -332,8 +332,8 @@ def test_class_role_map_suceess():
     THEN check the job_role_id and skill_id are an valid integer
     """
     role_map1 = role_map(1, 1)
-    assert role_map1.job_role_id == 1
-    assert role_map1.skill_id == 1
+    assert role_map1.rm_fk_job_role_id == 1
+    assert role_map1.rm_fk_skill_id == 1
 
 def test_class_role_map_fail():
     """
@@ -492,13 +492,13 @@ def test_new_skill():
     test_data = {
         "skill_name": "Python",
         "skill_desc": "Python is a programming language",
-        "skill_status": 1
+        "skill_status": 0
     }
 
     with app.app_context():
         result_data = createSkills(test_data)
         assert result_data.json['code'] == 200
-        assert result_data.json['data']['skill_status'] == 1
+        assert result_data.json['data']['skill_status'] == 0
         assert result_data.json['data']['skill_name'] == "Python"
         assert result_data.json['data']['skill_desc'] == "Python is a programming language"
 
