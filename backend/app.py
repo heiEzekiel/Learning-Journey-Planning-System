@@ -46,7 +46,7 @@ class JobRole(db.Model):
         }
 
 
- #Role_Map Table
+#Role_Map Table
 class role_map(db.Model):
     __tablename__ = 'role_map'
     rm_fk_job_role_id = db.Column(db.Integer, primary_key=True,nullable=False)
@@ -65,10 +65,10 @@ class role_map(db.Model):
             "skill_id": self.rm_fk_skill_id           
         }
 
- #Course Map Table
+#Course Map Table
 class course_map(db.Model):
     __tablename__ = 'course_map'
-    cm_fk_course_id = db.Column(db.Integer, primary_key=True,nullable=False)
+    cm_fk_course_id = db.Column(db.String(20), primary_key=True,nullable=False)
     cm_fk_skill_id = db.Column(db.Integer, primary_key=True, nullable=False)
     def __init__(self, cm_fk_course_id, cm_fk_skill_id):
         if not isinstance(cm_fk_course_id, str):
@@ -80,14 +80,14 @@ class course_map(db.Model):
 
     def json(self):
         return  {
-             "cm_fk_course_id": self.cm_fk_course_id,
+            "cm_fk_course_id": self.cm_fk_course_id,
             "cm_fk_skill_id": self.cm_fk_skill_id           
         }
 
 #Course  Table
 class Course(db.Model):
     __tablename__ = 'course'
-    course_id = db.Column(db.Integer, primary_key=True, nullable=False)
+    course_id = db.Column(db.String(20), primary_key=True, nullable=False)
     course_name = db.Column(db.String(50), nullable=False)
     course_desc = db.Column(db.String(255), nullable=False)
     course_status = db.Column(db.String(15), nullable=False)
@@ -406,7 +406,7 @@ def deleteRole(job_role_id, test_data="", new_data=""):
 #==============================Create job to role mapping===================================
 #Used when updating role information, or mapping role information
 @app.route("/createRoleMap/<int:job_role_id>/<int:skill_id>", methods=['POST'])
-def createRoleMap(job_role_id,skill_id):
+def createRoleMap(job_role_id, skill_id):
     data = request.get_json()
     new_map = role_map(data['job_role_id'], data['skill_id'])
     try:
@@ -436,7 +436,7 @@ def getSkillsForJob(job_role_id, test_data_role_map="", test_data_skill="", test
     # Get a list of skill_id required for the job
     rolemapping = None
     if test_data_role_map == "" and test_data_skill == "" and test_data_job_role == "":
-        rolemapping = role_map.query.filter_by(job_role_id=job_role_id).all()
+        rolemapping = role_map.query.filter_by(rm_fk_job_role_id=job_role_id).all()
     else:
         rolemapping = [role for role in test_data_role_map if int(role.job_role_id) == job_role_id]
     if rolemapping:
@@ -477,7 +477,7 @@ def getSkillsForJob(job_role_id, test_data_role_map="", test_data_skill="", test
 # Remove a skill from a job role 
 @app.route("/removeSkillFromJobRole/<int:job_role_id>/<int:skill_id>", methods=['DELETE'])
 def del_role(job_role_id,skill_id):
-   role = role_map.query.filter_by(job_role_id=job_role_id, skill_id=skill_id).first()
+   role = role_map.query.filter_by(rm_fk_job_role_id=job_role_id, rm_fk_skill_id=skill_id).first()
    if role:
        db.session.delete(role)
        db.session.commit()
