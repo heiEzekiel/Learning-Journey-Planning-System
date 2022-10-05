@@ -496,6 +496,44 @@ def del_role(job_role_id,skill_id):
    ), 404
 
 
+
+ #=======================================================================================Skill-Course Related=======================================================================#  
+# Get courses available for the selected skill using skill_id
+@app.route("/getCoursesForSkill/<int:skill_id>")
+def getCoursesForSkill(skill_id):
+    # Get a list of courses related to this job
+    coursemapping = course_map.query.filter_by(cm_fk_skill_id=skill_id).all()
+    if coursemapping:
+        c = [c.json() for c in coursemapping]
+        list_of_course = []
+        for i in (c):
+            list_of_course.append(i['cm_fk_course_id'])
+        skillName =[]
+
+        # For each course_id, find the name of course
+        course = Course.query.all()
+        if course:
+            course_list = [course.json() for course in course]
+            for i in course_list:
+                if i['course_id'] in list_of_course:
+                    # skillName.append([i['skill_name'], i['skill_desc']])
+                    skillName.append(i)
+            return jsonify(
+                {
+            "code": 200,
+            "data": skillName
+            }, 200
+
+            )   
+                
+
+    return jsonify(
+       {
+           "code": 404,
+           "message": "No records found."
+       }
+   ), 404
+
 #=======================================================================================Skill Related=======================================================================#
 # Get skill ID using skill name
 @app.route("/getSkillID/<string:skill_name>/", methods=['GET'])
@@ -591,7 +629,7 @@ def createSkills(test_data=""):
                 "message": "Skill name or Skill desc is empty"
             }
         ) 
-    skill = Skill(skill_name=skill_name, skill_desc=skill_desc, skill_status=1)
+    skill = Skill(skill_name=skill_name, skill_desc=skill_desc, skill_status=0)
     if test_data == "":
                 #check is existing role is there
         skills = Skill.query.all()
