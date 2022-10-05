@@ -76,11 +76,16 @@
                                 <div class="rd-navbar-main-element">
                                     <div class="rd-navbar-nav-wrap">
                                         <ul class="rd-navbar-nav">
-                                            <li class="rd-nav-item active"><a class="rd-nav-link text-decoration-none" href="HR_roles.html">HR Roles</a></li>
-                                            <li class="rd-nav-item"><a class="rd-nav-link text-decoration-none" href="skills.html">Skills</a></li>
-                                            <li class="rd-nav-item"><a class="rd-nav-link text-decoration-none" href="">Courses</a></li>
-                                            <li class="rd-nav-item"><a class="rd-nav-link text-decoration-none" href="learner_view_roles.html">Learners</a></li>
-                                            <li class="rd-nav-item"><a class="rd-nav-link text-decoration-none" href="">Profile</a></li>
+                                            <li class="rd-nav-item active"><a class="rd-nav-link text-decoration-none"
+                                                    href="HR_roles.html">HR Roles</a></li>
+                                            <li class="rd-nav-item"><a class="rd-nav-link text-decoration-none"
+                                                    href="skills.html">Skills</a></li>
+                                            <li class="rd-nav-item"><a class="rd-nav-link text-decoration-none"
+                                                    href="">Courses</a></li>
+                                            <li class="rd-nav-item"><a class="rd-nav-link text-decoration-none"
+                                                    href="learner_view_roles.html">Learners</a></li>
+                                            <li class="rd-nav-item"><a class="rd-nav-link text-decoration-none"
+                                                    href="">Profile</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -89,7 +94,42 @@
                     </nav>
                 </div>
             </header>
-            <div class="container text-left">
+
+
+            <div class="container py-5 h-100">
+                <div class="row justify-content-center align-items-center h-100">
+                  <div class="col-12 col-lg-9 col-xl-7">
+                    <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                      <div class="card-body p-4 p-md-5">
+                          
+                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Update Role Details</h3>
+                        <form>
+                            <div class="form-group mb-3 w-100">
+                              </div>
+                            <div class="form-group mb-3 w-100">
+                              <label for="skill_Name">Role Name</label>
+                              <input type="text" class="form-control" id="rname" placeholder="" required>
+                            </div>
+                            <div class="form-group mb-3 w-100">
+                              <label for="skill_Description">Role Description</label>
+                              <textarea class="form-control" id="roledesc" rows="3" placeholder="Enter Description" required></textarea>
+                          </div>
+                            <!-- <button type="submit" class="btn btn-primary" id="btn">Update</button> -->
+                            <button type="button" class="btn btn-primary" onclick="updateRole()">Update</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="container mt-5 mb-2">
+                    <h3 id="r_name">Update Skills required for </h3>
+                    <table class="table borderless table-hover mt-2" id="table_new">
+                    </table>
+
+                </div>
+                  </div>
+                </div>
+              </div>
+
+            <!-- <div class="container text-left">
                 <h2 class="mb-5">Update Role Details</h2>
                 <form>
                     <div class="form-group mb-3">
@@ -111,15 +151,17 @@
 
                     </div>
                 </form>
-            </div>
+            </div> -->
 
         </div>
 
         <script>
             var current_skill = [];
-            // Assume we clicked on a button from 'view list of roles page, which brings us to do this'
-            // Assume the role we clicked is id 201 
-            role_id = 602 // to make it dynamic later on
+            // We clicked on a button from 'view list of roles page, which brings us to do this'
+            // Dynamic
+            const queryString = window.location.search
+            const urlParams = new URLSearchParams(queryString)
+            role_id = urlParams.get('id')
             backendUrl = 'http://127.0.0.1:5000';
             update_role = 'updateRole/' + role_id;
             get_skill = 'getSkillsForJob/' + role_id;
@@ -150,7 +192,10 @@
                     .then((data) => {
                         var skills = data[0]['data'];
                         for (s of skills) {
-                            current_skill.push(s[0]);
+                            if(data[0]['code']!=209){
+                                current_skill.push(s[0]);
+                            }
+                           
                         }
 
                         allSkill();
@@ -182,7 +227,7 @@
                   <tr>
                     <th scope="row">${skills[s].skill_name}</th>
                     <td>${skills[s].skill_desc}</td>
-                    <td> <button type="button" onclick="del(this)" class="btn btn-danger">Remove skill</button> </td>
+                    <td> <button type="button" onclick="del(this)" class="btn btn-danger">Remove</button> </td>
                   </tr>
                 `;
                                 continue;
@@ -217,7 +262,7 @@
                     <th scope="row">${skills[s].skill_name}</th>
                     <td>${skills[s].skill_desc}</td>
         
-                    <td> <button type="button" onclick="add(this)" class="btn btn-success">Add skill</button> </td>
+                    <td> <button type="button" onclick="add(this)" class="btn btn-success">Add</button> </td>
                   </tr>
               
                 `;
@@ -327,14 +372,16 @@
             }
 
             async function addJobRoleMap(id) {
+                rid = parseInt(role_id);
+              
                 fetch(`${backendUrl}/${addRole}/${id}`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                         },
                         body: JSON.stringify({
-                            "job_role_id": role_id,
-                            "skill_id": id
+                            "rm_fk_job_role_id": rid,
+                            "rm_fk_skill_id": id
                         }),
                     })
                     .then((response) => response.json())
@@ -348,13 +395,13 @@
                         console.log(error);
                     });
             }
-
-
         </script>
         <!-- Javascript-->
         <script src="js/core.min.js"></script>
         <script src="js/script.js"></script>
         <!-- coded by Himic-->
+        </div>
+        
 </body>
 
 </html>

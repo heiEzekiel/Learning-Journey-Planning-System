@@ -106,6 +106,26 @@
             console.log(data[0].data)
             // console.log(JSON.parse(JSON.stringify(data.data)));
             result = JSON.parse(JSON.stringify(data[0].data));
+            if(data[0]['code']==209){
+              
+              message_str =`
+              <div class="d-flex justify-content-start">
+              <h3> ${job} </h3> 
+            </div>
+            <br><br>
+          <h4>    No Skills associated with this job yet </h4>
+          <br>
+          <a href="./update_roles.html?id=${id}">   <button type="button" class="btn btn-primary""> Assign skills now</button> </a>
+              
+            `
+            document.getElementById("job_skills").innerHTML = message_str;
+          }
+
+            else{
+
+          
+
+
             message_str = `
             <div class="d-flex justify-content-start">
               <h3> ${job} </h3>
@@ -131,7 +151,7 @@
             </tbody>
             </table>`
             document.getElementById("job_skills").innerHTML = message_str;
-            return data.data;
+            return data.data;  }
           })
           .catch((error) => {
             // Errors when calling the service; such as network error,

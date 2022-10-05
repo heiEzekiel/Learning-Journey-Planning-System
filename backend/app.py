@@ -61,8 +61,8 @@ class role_map(db.Model):
 
     def json(self):
         return  {
-             "job_role_id": self.rm_fk_job_role_id,
-            "skill_id": self.rm_fk_skill_id           
+             "rm_fk_job_role_id": self.rm_fk_job_role_id,
+            "rm_fk_skill_id": self.rm_fk_skill_id           
         }
 
 #Course Map Table
@@ -405,10 +405,10 @@ def deleteRole(job_role_id, test_data="", new_data=""):
 #=======================================================================================Role-Skill Related=======================================================================#
 #==============================Create job to role mapping===================================
 #Used when updating role information, or mapping role information
-@app.route("/createRoleMap/<int:job_role_id>/<int:skill_id>", methods=['POST'])
-def createRoleMap(job_role_id, skill_id):
+@app.route("/createRoleMap/<int:rm_fk_job_role_id>/<int:rm_fk_skill_id>", methods=['POST'])
+def createRoleMap(rm_fk_job_role_id,rm_fk_skill_id):
     data = request.get_json()
-    new_map = role_map(data['job_role_id'], data['skill_id'])
+    new_map = role_map(data['rm_fk_job_role_id'], data['rm_fk_skill_id'])
     try:
         db.session.add(new_map)
         db.session.commit()
@@ -437,13 +437,14 @@ def getSkillsForJob(job_role_id, test_data_role_map="", test_data_skill="", test
     rolemapping = None
     if test_data_role_map == "" and test_data_skill == "" and test_data_job_role == "":
         rolemapping = role_map.query.filter_by(rm_fk_job_role_id=job_role_id).all()
+        
     else:
         rolemapping = [role for role in test_data_role_map if int(role.job_role_id) == job_role_id]
     if rolemapping:
         role = [r.json() for r in rolemapping]
         list_of_skill = []
         for i in (role):
-            list_of_skill.append(i['skill_id'])
+            list_of_skill.append(i['rm_fk_skill_id'])
         skillName =[]
         # For each skill_id, find the name of skill
         skill = None
@@ -464,7 +465,25 @@ def getSkillsForJob(job_role_id, test_data_role_map="", test_data_skill="", test
             }, 200
 
             )   
-                
+    else:
+        skillName =[]
+        # For each skill_id, find the name of skill
+        skill = None
+        if test_data_skill == "":
+            skill = Skill.query.all()
+        else:
+            skill = test_data_skill
+        if skill:
+            skill_list = [s.json() for s in skill]
+
+            for i in skill_list:
+                    skillName.append([i['skill_name'], i['skill_desc']])
+            return jsonify(
+                {
+            "code": 209,
+            "data": skillName
+            }, 200)        
+
 
     return jsonify(
        {
