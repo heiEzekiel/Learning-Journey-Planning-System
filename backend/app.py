@@ -49,20 +49,78 @@ class JobRole(db.Model):
  #Role_Map Table
 class role_map(db.Model):
     __tablename__ = 'role_map'
-    job_role_id = db.Column(db.Integer, primary_key=True,nullable=False)
-    skill_id = db.Column(db.Integer, primary_key=True, nullable=False)
-    def __init__(self, job_role_id, skill_id):
-        if not isinstance(job_role_id, int):
-            raise TypeError("job_role_id must be a integer")
-        if not isinstance(skill_id, int):
-            raise TypeError("skill_id must be a integer")
-        self.job_role_id = job_role_id
-        self.skill_id = skill_id
+    rm_fk_job_role_id = db.Column(db.Integer, primary_key=True,nullable=False)
+    rm_fk_skill_id = db.Column(db.Integer, primary_key=True, nullable=False)
+    def __init__(self, rm_fk_job_role_id, rm_fk_skill_id):
+        if not isinstance(rm_fk_job_role_id, int):
+            raise TypeError("rm_fk_job_role_id must be a integer")
+        if not isinstance(rm_fk_skill_id, int):
+            raise TypeError("rm_fk_skill_id must be a integer")
+        self.rm_fk_job_role_id = rm_fk_job_role_id
+        self.rm_fk_skill_id = rm_fk_skill_id
 
     def json(self):
         return  {
-             "job_role_id": self.job_role_id,
-            "skill_id": self.skill_id           
+             "job_role_id": self.rm_fk_job_role_id,
+            "skill_id": self.rm_fk_skill_id           
+        }
+
+ #Course Map Table
+class course_map(db.Model):
+    __tablename__ = 'course_map'
+    cm_fk_course_id = db.Column(db.Integer, primary_key=True,nullable=False)
+    cm_fk_skill_id = db.Column(db.Integer, primary_key=True, nullable=False)
+    def __init__(self, cm_fk_course_id, cm_fk_skill_id):
+        if not isinstance(cm_fk_course_id, str):
+            raise TypeError("cm_fk_course_id must be a String")
+        if not isinstance(cm_fk_skill_id, int):
+            raise TypeError("cm_fk_skill_id must be a integer")
+        self.cm_fk_course_id = cm_fk_course_id
+        self.cm_fk_skill_id = cm_fk_skill_id
+
+    def json(self):
+        return  {
+             "cm_fk_course_id": self.cm_fk_course_id,
+            "cm_fk_skill_id": self.cm_fk_skill_id           
+        }
+
+#Course  Table
+class Course(db.Model):
+    __tablename__ = 'course'
+    course_id = db.Column(db.Integer, primary_key=True, nullable=False)
+    course_name = db.Column(db.String(50), nullable=False)
+    course_desc = db.Column(db.String(255), nullable=False)
+    course_status = db.Column(db.String(15), nullable=False)
+    course_type = db.Column(db.String(10), nullable=False)
+    course_category = db.Column(db.String(50), nullable=False)
+    def __init__(self, course_id,course_name, course_desc,course_status,course_type,course_category):
+        if not isinstance(course_id, str):
+            raise TypeError("course_id must be a String")
+        if not isinstance(course_name, str):
+            raise TypeError("course_name must be a String")
+        if not isinstance(course_desc, str):
+            raise TypeError("course_desc must be a String")
+        if not isinstance(course_status, str):
+            raise TypeError("course_status must be a String")
+        if not isinstance(course_type, str):
+            raise TypeError("course_type must be a String")
+        if not isinstance(course_category, str):
+            raise TypeError("course_category must be a String")
+        self.course_id = course_id
+        self.course_name = course_name
+        self.course_desc = course_desc
+        self.course_status = course_status
+        self.course_type = course_type
+        self.course_category = course_category
+
+    def json(self):
+        return  {
+             "course_id": self.course_id,
+            "course_name": self.course_name   ,
+       "course_desc": self.course_desc,
+            "course_status": self.course_status ,
+       "course_type": self.course_type,
+            "course_category": self.course_category         
         }
 
 #Skill Table
