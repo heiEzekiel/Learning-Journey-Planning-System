@@ -20,8 +20,8 @@ CORS(app)
 db = SQLAlchemy(app)
 
 #Job Role (For LJPS)
-class JobRole(db.Model):
-    __tablename__ = 'job_role'
+class Job_Role(db.Model):
+    __tablename__ = 'Job_Role'
     job_role_id = db.Column(db.Integer, primary_key=True, nullable=False)
     job_role_name = db.Column(db.String(50), nullable=False)
     job_role_desc = db.Column(db.String(255), nullable=False)
@@ -47,8 +47,8 @@ class JobRole(db.Model):
 
 
 #Role_Map Table
-class role_map(db.Model):
-    __tablename__ = 'role_map'
+class Role_Map(db.Model):
+    __tablename__ = 'Role_Map'
     rm_fk_job_role_id = db.Column(db.Integer, primary_key=True,nullable=False)
     rm_fk_skill_id = db.Column(db.Integer, primary_key=True, nullable=False)
     def __init__(self, rm_fk_job_role_id, rm_fk_skill_id):
@@ -66,8 +66,8 @@ class role_map(db.Model):
         }
 
 #Course Map Table
-class course_map(db.Model):
-    __tablename__ = 'course_map'
+class Course_Map(db.Model):
+    __tablename__ = 'Course_Map'
     cm_fk_course_id = db.Column(db.String(20), primary_key=True,nullable=False)
     cm_fk_skill_id = db.Column(db.Integer, primary_key=True, nullable=False)
     def __init__(self, cm_fk_course_id, cm_fk_skill_id):
@@ -86,7 +86,7 @@ class course_map(db.Model):
 
 #Course  Table
 class Course(db.Model):
-    __tablename__ = 'course'
+    __tablename__ = 'Course'
     course_id = db.Column(db.String(20), primary_key=True, nullable=False)
     course_name = db.Column(db.String(50), nullable=False)
     course_desc = db.Column(db.String(255), nullable=False)
@@ -115,11 +115,11 @@ class Course(db.Model):
 
     def json(self):
         return  {
-             "course_id": self.course_id,
+            "course_id": self.course_id,
             "course_name": self.course_name   ,
-       "course_desc": self.course_desc,
+            "course_desc": self.course_desc,
             "course_status": self.course_status ,
-       "course_type": self.course_type,
+            "course_type": self.course_type,
             "course_category": self.course_category         
         }
 
@@ -149,6 +149,50 @@ class Skill(db.Model):
             "skill_status": self.skill_status
         }
         
+#Journey Table
+class Journey(db.Model):
+    __tablename__ = 'Journey'
+    journey_id = db.Column(db.Integer, primary_key=True,nullable=False)
+    journey_status = db.Column(db.String(100), nullable=False)
+    j_fk_staff_id = db.Column(db.Integer, nullable=False)
+    j_fk_job_role_id = db.Column(db.Integer, nullable=False)
+    def __init__(self, journey_status, j_fk_staff_id, j_fk_job_role_id):
+        if not isinstance(journey_status, str):
+            raise TypeError("journey_status must be a string")
+        if not isinstance(j_fk_staff_id, int):
+            raise TypeError("j_fk_staff_id must be an integer")
+        if not isinstance(j_fk_job_role_id, int):
+            raise TypeError("j_fk_job_role_id must be an integer")
+        self.journey_status = journey_status
+        self.j_fk_staff_id = j_fk_staff_id
+        self.j_fk_job_role_id = j_fk_job_role_id
+
+    def json(self):
+        return  {
+            "journey_id": self.journey_id, 
+            "journey_status": self.journey_status, 
+            "j_fk_staff_id": self.j_fk_staff_id,
+            "j_fk_job_role_id": self.j_fk_job_role_id         
+        }
+        
+#Journey Map Table
+class Journey_Map(db.Model):
+    __tablename__ = 'Journey_Map'
+    jm_fk_journey_id = db.Column(db.Integer, primary_key=True,nullable=False)
+    jm_fk_course_id = db.Column(db.String(20), primary_key=True, nullable=False)
+    def __init__(self, jm_fk_journey_id, jm_fk_course_id):
+        if not isinstance(jm_fk_journey_id, str):
+            raise TypeError("jm_fk_journey_id must be an Integer")
+        if not isinstance(jm_fk_course_id, int):
+            raise TypeError("jm_fk_course_id must be a String")
+        self.jm_fk_journey_id = jm_fk_journey_id
+        self.jm_fk_course_id = jm_fk_course_id
+
+    def json(self):
+        return  {
+            "jm_fk_journey_id": self.jm_fk_journey_id,
+            "jm_fk_course_id": self.jm_fk_course_id           
+        }
         
 @app.route("/")
 def home():
@@ -162,10 +206,10 @@ def create_job_role(test_data = ''):
     data = None
     if test_data == '':
         data = request.get_json()
-        new_job_role = JobRole(data['job_role_name'], data['job_role_desc'],1)
+        new_job_role = Job_Role(data['job_role_name'], data['job_role_desc'],1)
         #check is existing role is there
         if test_data == "":
-            jobRoles = JobRole.query.all()
+            jobRoles = Job_Role.query.all()
         else:
             jobRoles = test_data
         if jobRoles != None:
@@ -214,7 +258,7 @@ def create_job_role(test_data = ''):
 
       
     else:
-        new_job_role = JobRole(test_data['job_role_name'], test_data['job_role_desc'],0)
+        new_job_role = Job_Role(test_data['job_role_name'], test_data['job_role_desc'],0)
         return jsonify(
                 {
                     "code": 201,
@@ -229,7 +273,7 @@ def create_job_role(test_data = ''):
 def getSpecificJobRole(job_role_id,test_data= ""):
     jobRoles = None
     if test_data == "":
-        jobRoles = JobRole.query.filter_by(job_role_id=job_role_id).all()
+        jobRoles = Job_Role.query.filter_by(job_role_id=job_role_id).all()
     if test_data != "": 
         return jsonify(
                 {
@@ -259,7 +303,7 @@ def getSpecificJobRole(job_role_id,test_data= ""):
 def getAllJobRole(test_data= ""):
     jobRoles = None
     if test_data == "":
-        jobRoles = JobRole.query.all()
+        jobRoles = Job_Role.query.all()
         return jsonify (
             {
                 "code": 200,
@@ -291,7 +335,7 @@ def getAllJobRole(test_data= ""):
 def updateRole(job_role_id, test_data="", new_data="",test_data_2=""):
     jobrole = None
     if test_data == "":
-        jobrole = JobRole.query.filter_by(job_role_id=job_role_id).first()
+        jobrole = Job_Role.query.filter_by(job_role_id=job_role_id).first()
     else:
         jobrole = test_data
     if jobrole:
@@ -307,7 +351,7 @@ def updateRole(job_role_id, test_data="", new_data="",test_data_2=""):
         #check if Job Role  Already Exist
         #Note that this codes allows updating role name to the same role name we are updating
         if test_data == "":
-            jobRoles = JobRole.query.all()
+            jobRoles = Job_Role.query.all()
         else:
             jobRoles = test_data_2
         if jobRoles != None:
@@ -384,7 +428,7 @@ def updateRole(job_role_id, test_data="", new_data="",test_data_2=""):
 #=============== Delete Role details by job_role_id======================================
 @app.route("/deleteRole/<int:job_role_id>", methods=['DELETE'])
 def deleteRole(job_role_id, test_data="", new_data=""):
-    job = JobRole.query.filter_by(job_role_id=job_role_id).first()
+    job = Job_Role.query.filter_by(job_role_id=job_role_id).first()
     if job:
         db.session.delete(job)
         db.session.commit()
@@ -408,7 +452,7 @@ def deleteRole(job_role_id, test_data="", new_data=""):
 @app.route("/createRoleMap/<int:rm_fk_job_role_id>/<int:rm_fk_skill_id>", methods=['POST'])
 def createRoleMap(rm_fk_job_role_id,rm_fk_skill_id):
     data = request.get_json()
-    new_map = role_map(data['rm_fk_job_role_id'], data['rm_fk_skill_id'])
+    new_map = Role_Map(data['rm_fk_job_role_id'], data['rm_fk_skill_id'])
     try:
         db.session.add(new_map)
         db.session.commit()
@@ -436,7 +480,7 @@ def getSkillsForJob(job_role_id, test_data_role_map="", test_data_skill="", test
     # Get a list of skill_id required for the job
     rolemapping = None
     if test_data_role_map == "" and test_data_skill == "" and test_data_job_role == "":
-        rolemapping = role_map.query.filter_by(rm_fk_job_role_id=job_role_id).all()
+        rolemapping = Role_Map.query.filter_by(rm_fk_job_role_id=job_role_id).all()
         
     else:
         rolemapping = [role for role in test_data_role_map if int(role.rm_fk_job_role_id) == job_role_id]
@@ -496,7 +540,7 @@ def getSkillsForJob(job_role_id, test_data_role_map="", test_data_skill="", test
 # Remove a skill from a job role 
 @app.route("/removeSkillFromJobRole/<int:job_role_id>/<int:skill_id>", methods=['DELETE'])
 def del_role(job_role_id,skill_id):
-   role = role_map.query.filter_by(rm_fk_job_role_id=job_role_id, rm_fk_skill_id=skill_id).first()
+   role = Role_Map.query.filter_by(rm_fk_job_role_id=job_role_id, rm_fk_skill_id=skill_id).first()
    if role:
        db.session.delete(role)
        db.session.commit()
@@ -519,7 +563,7 @@ def del_role(job_role_id,skill_id):
 @app.route("/getCoursesForSkill/<int:skill_id>")
 def getCoursesForSkill(skill_id):
     # Get a list of courses related to this job
-    coursemapping = course_map.query.filter_by(cm_fk_skill_id=skill_id).all()
+    coursemapping = Course_Map.query.filter_by(cm_fk_skill_id=skill_id).all()
     if coursemapping:
         c = [c.json() for c in coursemapping]
         list_of_course = []
@@ -807,6 +851,49 @@ def deleteSkill(skill_id, test_data="", new_data=""):
         }
     ), 404
 
+
+#This segment of code is for learning journey
+#=========================================== journey======================================
+@app.route("/createJourney", methods=['POST'])
+def createJourney(test_data=""):
+    data = None
+    if test_data == "":
+        data = request.get_json()
+    else:
+        data = test_data
+    journey_status, j_fk_staff_id, j_fk_job_role_id = "", "", ""
+    if data['journey_status']:
+        journey_status = data['journey_status']
+    if data['j_fk_staff_id']:
+        j_fk_staff_id = data['j_fk_staff_id']
+    if data['j_fk_job_role_id']:
+        j_fk_job_role_id = data['j_fk_job_role_id']
+    pass
+
+
+@app.route("/createJourneyMap/<int:jm_fk_journey_id>/<int:jm_fk_course_id>", methods=['POST'])
+def createJourneyMap(jm_fk_journey_id,jm_fk_course_id):
+    data = request.get_json()
+    new_map = Journey_Map(data['jm_fk_journey_id'], data['jm_fk_course_id'])
+    try:
+        db.session.add(new_map)
+        db.session.commit()
+    except Exception as e:
+        print(e)
+        return jsonify(
+            {
+                "code": 500,
+                "message": "An error occurred creating the record."
+            }
+        ), 500
+
+    return jsonify(
+        {
+            "code": 201,
+            "data": new_map.json(),
+            "message": "Success"
+        }
+    ), 201
 
 #Run flask app
 if __name__ == "__main__":
