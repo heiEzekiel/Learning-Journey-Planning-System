@@ -404,7 +404,7 @@ def deleteRole(job_role_id, test_data="", new_data=""):
 
 #=======================================================================================Role-Skill Related=======================================================================#
 #==============================Create job to role mapping===================================
-#Used when updating role information, or mapping role information
+#Used when updating role information, or mapping role information. Used in assign skill to role and update.
 @app.route("/createRoleMap/<int:rm_fk_job_role_id>/<int:rm_fk_skill_id>", methods=['POST'])
 def createRoleMap(rm_fk_job_role_id,rm_fk_skill_id):
     data = request.get_json()
@@ -514,8 +514,6 @@ def del_role(job_role_id,skill_id):
        }
    ), 404
 
-
-
  #=======================================================================================Skill-Course Related=======================================================================#  
 # Get courses available for the selected skill using skill_id
 @app.route("/getCoursesForSkill/<int:skill_id>")
@@ -544,7 +542,6 @@ def getCoursesForSkill(skill_id):
             }, 200
 
             )   
-                
 
     return jsonify(
        {

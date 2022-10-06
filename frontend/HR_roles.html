@@ -87,6 +87,7 @@
       deleteRole = "deleteRole";
 
       // function to remove roles based on selection
+      // to do soft delete later on
       async function removeRole(id) {
         fetch(`${backendUrl}/${deleteRole}/${id}`, {
             method: 'DELETE'
