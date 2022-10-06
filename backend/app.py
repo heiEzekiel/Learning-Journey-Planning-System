@@ -872,7 +872,7 @@ def createJourney(test_data=""):
 
 
 @app.route("/createJourneyMap/<int:jm_fk_journey_id>/<int:jm_fk_course_id>", methods=['POST'])
-def createRoleMap(jm_fk_journey_id,jm_fk_course_id):
+def createJourneyMap(jm_fk_journey_id,jm_fk_course_id):
     data = request.get_json()
     new_map = Journey_Map(data['jm_fk_journey_id'], data['jm_fk_course_id'])
     try:
