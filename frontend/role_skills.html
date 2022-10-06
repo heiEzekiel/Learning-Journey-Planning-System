@@ -73,11 +73,11 @@
                 <div class="rd-navbar-main-element">
                   <div class="rd-navbar-nav-wrap">
                     <ul class="rd-navbar-nav">
-                        <li class="rd-nav-item"><a class="rd-nav-link text-decoration-none" href="HR_roles.html">HR Roles</a></li>
-                        <li class="rd-nav-item active"><a class="rd-nav-link text-decoration-none" href="skills.html">Skills</a></li>
-                        <li class="rd-nav-item"><a class="rd-nav-link text-decoration-none" href="">Courses</a></li>
-                        <li class="rd-nav-item"><a class="rd-nav-link text-decoration-none" href="learner_view_roles.html">Learners</a></li>
-                        <li class="rd-nav-item"><a class="rd-nav-link text-decoration-none" href="">Profile</a></li>
+                      <li class="rd-nav-item active"><a class="rd-nav-link" href="">HR Roles</a></li>
+                      <li class="rd-nav-item"><a class="rd-nav-link" href="">Skills</a></li>
+                      <li class="rd-nav-item"><a class="rd-nav-link" href="">Courses</a></li>
+                      <li class="rd-nav-item"><a class="rd-nav-link" href="">Learners</a></li>
+                      <li class="rd-nav-item"><a class="rd-nav-link" href="">Profile</a></li>
                     </ul>
                   </div>
                 </div>
@@ -93,48 +93,21 @@
 
 
     <script>
-      var current_skill = [];
+      backendUrl = "http://127.0.0.1:5000";
+      getSkillsForJob = "getSkillsForJob"
       const queryString = window.location.search
       const urlParams = new URLSearchParams(queryString)
-      role_id = urlParams.get('id')
-      job = urlParams.get('job')
-      backendUrl = "http://127.0.0.1:5000";
-      get_skill = 'getSkillsForJob/' + role_id;
-      get_skill_id = 'getSkillID/';
-      get_all_skill = 'getskills';
-      get_role = 'getSpecificJobRole/' + role_id;
-      removeRole = 'removeSkillFromJobRole/' + role_id;
-       addRole = 'createRoleMap/' + role_id;
-
-      async function getSkills() {
-                const response = await fetch(`${backendUrl}/${get_skill}`)
-                    .then((response) => response.json())
-                    .then((data) => {
-                        var skills = data[0]['data'];
-                        for (s of skills) {
-                            if(data[0]['code']!=209){
-                                current_skill.push(s[0]);
-                            }
-                           
-                        }
-
-                        allSkill();
-                    })
-                    .catch((error) => {
-                        // Errors when calling the service; such as network error,
-                        // service offline, etc
-                        console.log(error);
-                    });
-            }
-
-            getSkills();
-
-            async function allSkill() {
-                const response = await fetch(`${backendUrl}/${get_all_skill}`)
-                    .then((response) => response.json())
-                    .then((data) => {
-                        message_str = `
-                        <div class="d-flex justify-content-start">
+      const job = urlParams.get('job')
+      const id = urlParams.get('id')
+      async function getRoleSkills(id, job) {
+        const response = await fetch(`${backendUrl}/${getSkillsForJob}/${id}`)
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data[0].data)
+            // console.log(JSON.parse(JSON.stringify(data.data)));
+            result = JSON.parse(JSON.stringify(data[0].data));
+            message_str = `
+            <div class="d-flex justify-content-start">
               <h3> ${job} </h3>
             </div>
             <table class="table borderless table-hover mt-5" id="table">
@@ -142,223 +115,33 @@
                 <tr class="bg-light">
                 <th>Skill Name</th>
                 <th>Skill Description</th>
-                <th>Skill Action</th>
+                <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-              `;
-                        console.log(data.data.skill);
-                        var skills = data.data.skill;
-                        for (s in skills) {
-                            if (current_skill.includes(skills[s].skill_name)) {
-                                message_str += `
-                  <tr>
-                    <th scope="row">${skills[s].skill_name}</th>
-                    <td>${skills[s].skill_desc}</td>
-                    <td> <button type="button" onclick="del(this)" class="btn btn-danger">Remove</button> </td>
-                  </tr>
-                `;
-                                continue;
-                            }
-
-                            message_str += `
-                `;
-                        }
-                        message_str += `  </tbody>`;
-                        document.getElementById("table_new").innerHTML = message_str;
-                    })
-                    .catch((error) => {
-                        // Errors when calling the service; such as network error,
-                        // service offline, etc
-                        console.log(error);
-                    });
-
-                const response2 = await fetch(`${backendUrl}/${get_all_skill}`)
-                    .then((response2) => response2.json())
-                    .then((data) => {
-                        message_str += ``;
-                        console.log(data.data.skill);
-                        var skills = data.data.skill;
-                        for (s in skills) {
-                            if (current_skill.includes(skills[s].skill_name)) {
-
-                                continue;
-                            }
-
-                            message_str += `
-                  <tr>
-                    <th scope="row">${skills[s].skill_name}</th>
-                    <td>${skills[s].skill_desc}</td>
-        
-                    <td> <button type="button" onclick="add(this)" class="btn btn-success">Add</button> </td>
-                  </tr>
-              
-                `;
-                        }
-                        message_str += `    </tbody>
-            </table>`;
-                        document.getElementById("job_skills").innerHTML = message_str;
-                    })
-                    .catch((error) => {
-                        // Errors when calling the service; such as network error,
-                        // service offline, etc
-                        console.log(error);
-                    });
+            `
+            for (const skill of result) {
+              message_str += `
+              <tr>
+								<th scope="row">${skill[0]}</th>
+								<td>${skill[1]}</td>
+                <td> <button type="button" class="btn btn-primary">View Courses</button> </td>
+							</tr>
+              `
             }
-
-                        // get parent Node of the del utton
-                        function del(a) {
-                var text = a.parentNode.parentNode.innerHTML;
-                text = text.split('"row">').pop().split('</th>')[0]; // returns 'two'
-                getId(text);
-            }
-
-            // get parent Node of the add button
-            function add(a) {
-                var text = a.parentNode.parentNode.innerHTML;
-                text = text.split('"row">').pop().split('</th>')[0]; // returns 'two'
-                getIdToAdd(text);
-            }
-
-            // for add
-            async function getIdToAdd(text) {
-                const response = await fetch(`${backendUrl}/${get_skill_id}/${text}`)
-                    .then((response) => response.json())
-                    .then((data) => {
-                        var id = data.message[0].skill_id;
-                        addJobRoleMap(id);
-                    })
-                    .catch((error) => {
-                        // Errors when calling the service; such as network error,
-                        // service offline, etc
-                        console.log(error);
-                    });
-            }
-
-
-                        // for delete
-                        async function getId(text) {
-                const response = await fetch(`${backendUrl}/${get_skill_id}/${text}`)
-                    .then((response) => response.json())
-                    .then((data) => {
-                        var id = data.message[0].skill_id;
-                        removeJobRoleMap(id);
-
-                    })
-                    .catch((error) => {
-                        // Errors when calling the service; such as network error,
-                        // service offline, etc
-                        console.log(error);
-                    });
-            }
-
-            async function removeJobRoleMap(id) {
-                console.log(`${backendUrl}/${removeRole}/${id}`);
-                fetch(`${backendUrl}/${removeRole}/${id}`, {
-                        method: 'DELETE'
-                    })
-                    .then((response) => response.json())
-                    .then((data) => {
-                        alert("Deleted skill from job successfully");
-                        location.reload();
-
-                    })
-                    .catch((error) => {
-                        // Errors when calling the service; such as network error,
-                        // service offline, etc
-                        console.log(error);
-                    });
-            }
-
-            async function addJobRoleMap(id) {
-                rid = parseInt(role_id);
-              
-                fetch(`${backendUrl}/${addRole}/${id}`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            "rm_fk_job_role_id": rid,
-                            "rm_fk_skill_id": id
-                        }),
-                    })
-                    .then((response) => response.json())
-                    .then((data) => {
-                        alert("Added skill to job successfully");
-                        location.reload();
-                    })
-                    .catch((error) => {
-                        // Errors when calling the service; such as network error,
-                        // service offline, etc
-                        console.log(error);
-                    });
-            }
-
-      // async function getRoleSkills() {
-      //   const response = await fetch(`${backendUrl}/${getSkillsForJob}/${id}`)
-      //     .then((response) => response.json())
-      //     .then((data) => {
-      //       console.log(data[0].data)
-      //       result = JSON.parse(JSON.stringify(data[0].data));
-      //       if(data[0]['code']==209){
-              
-      //         message_str =`
-      //         <div class="d-flex justify-content-start">
-      //         <h3> ${job} </h3> 
-      //       </div>
-      //       <br><br>
-      //     <h4>    No Skills associated with this job yet </h4>
-      //     <br>
-      //     <a href="./update_roles.html?id=${id}">   <button type="button" class="btn btn-primary""> Assign skills now</button> </a>
-              
-      //       `
-      //       document.getElementById("job_skills").innerHTML = message_str;
-      //     }
-
-      //       else{
-
-          
-
-
-      //       message_str = `
-      //       <div class="d-flex justify-content-start">
-      //         <h3> ${job} </h3>
-      //       </div>
-
-
-
-
-
-      //       <table class="table borderless table-hover mt-5" id="table">
-      //         <thead>
-      //           <tr class="bg-light">
-      //           <th>Skill Name</th>
-      //           <th>Skill Description</th>
-      //           </tr>
-      //         </thead>
-      //         <tbody>
-      //       `
-      //       for (const skill of result) {
-      //         message_str += `
-      //         <tr>
-			// 					<th scope="row">${skill[0]}</th>
-			// 					<td>${skill[1]}</td>
-			// 				</tr>
-      //         `
-      //       }
-      //       message_str += `
-      //       </tbody>
-      //       </table>`
-      //       document.getElementById("job_skills").innerHTML = message_str;
-      //       return data.data;  }
-      //     })
-      //     .catch((error) => {
-      //       // Errors when calling the service; such as network error,
-      //       // service offline, etc
-      //       console.log(error);
-      //     });
-      // }
+            message_str += `
+            </tbody>
+            </table>`
+            document.getElementById("job_skills").innerHTML = message_str;
+            return data.data;
+          })
+          .catch((error) => {
+            // Errors when calling the service; such as network error,
+            // service offline, etc
+            console.log(error);
+          });
+      }
+      getRoleSkills(id, job)
     </script>
     <!-- Javascript-->
     <script src="js/core.min.js"></script>

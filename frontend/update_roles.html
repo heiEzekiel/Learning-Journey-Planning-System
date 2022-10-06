@@ -9,12 +9,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-
-    <link rel="stylesheet" href="css/fonts.css">
-    <link rel="stylesheet" href="css/style.css">
-
+    <link rel="stylesheet" type="text/css"
+        href="//fonts.googleapis.com/css?family=Poppins:400,500,600%7CTeko:300,400,500%7CMaven+Pro:500">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/fonts.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/index.css">
 </head>
 <style>
     .ie-panel {
@@ -36,10 +37,7 @@
 </head>
 
 <body>
-    <div class="ie-panel"><a href="http://windows.microsoft.com/en-US/internet-explorer/"><img
-                src="images/ie8-panel/warning_bar_0000_us.jpg" height="42" width="820"
-                alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today."></a>
-    </div>
+
     <div class="preloader">
         <div class="preloader-body">
             <div class="cssload-container"><span></span><span></span><span></span><span></span>
@@ -68,18 +66,19 @@
                                     <button class="rd-navbar-toggle"
                                         data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
                                     <!-- RD Navbar Brand-->
-                                    <div class="rd-navbar-brand"><a class="brand text-decoration-none"
-                                            href="index.html">
-                                            <h3>LJPS</h3>
+                                    <div class="rd-navbar-brand"><a class="brand" href="index.html">
+                                            <h3 style="margin-left: 80px;">LJPS</h3>
                                         </a></div>
                                 </div>
                                 <div class="rd-navbar-main-element">
                                     <div class="rd-navbar-nav-wrap">
                                         <ul class="rd-navbar-nav">
                                             <li class="rd-nav-item active"><a class="rd-nav-link text-decoration-none"
-                                                    href="HR_roles.html">HR Roles</a></li>
+                                                    href="HR_roles.html">HR
+                                                    Roles</a></li>
                                             <li class="rd-nav-item"><a class="rd-nav-link text-decoration-none"
-                                                    href="skills.html">Skills</a></li>
+                                                    href="skills.html">Skills</a>
+                                            </li>
                                             <li class="rd-nav-item"><a class="rd-nav-link text-decoration-none"
                                                     href="">Courses</a></li>
                                             <li class="rd-nav-item"><a class="rd-nav-link text-decoration-none"
@@ -94,42 +93,70 @@
                     </nav>
                 </div>
             </header>
+        </div>
 
+        <div class="container mt-3 mb-5" id="rolediv">
 
-            <div class="container py-5 h-100">
-                <div class="row justify-content-center align-items-center h-100">
-                  <div class="col-12 col-lg-9 col-xl-7">
+            <div class="d-flex justify-content-center">
+                <h3 id="r_name2"> </h3>
+         
+            </div>
+            <div class="d-flex justify-content-center ms-0">
+                <div class="btn-group border btn-toggle mt-3">
+                    <button class="btn btn-default" id="editrole" onclick="showrole(this)">Edit Role</button>
+                    <button class="btn btn-primary" id="assignskill" onclick="showskill(this)">Assign Skill</button>
+                </div>
+         
+            </div>
+
+     
+
+            <div class="row justify-content-center align-items-center h-100">
+                <div class="col-12 col-lg-9 col-xl-7">
                     <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
-                      <div class="card-body p-4 p-md-5">
-                          
-                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Update Role Details</h3>
-                        <form>
-                            <div class="form-group mb-3 w-100">
-                              </div>
-                            <div class="form-group mb-3 w-100">
-                              <label for="skill_Name">Role Name</label>
-                              <input type="text" class="form-control" id="rname" placeholder="" required>
-                            </div>
-                            <div class="form-group mb-3 w-100">
-                              <label for="skill_Description">Role Description</label>
-                              <textarea class="form-control" id="roledesc" rows="3" placeholder="Enter Description" required></textarea>
-                          </div>
-                            <!-- <button type="submit" class="btn btn-primary" id="btn">Update</button> -->
-                            <button type="button" class="btn btn-primary" onclick="updateRole()">Update</button>
-                        </form>
+                        <div class="card-body p-4 p-md-5">
+                            <form>
+                                <div class="form-group mb-3 w-100">
+                                    <label for="skill_Name">Role Name</label>
+                                    <input type="text" class="form-control" id="rname" placeholder="" required>
+                                </div>
+                                <div class="form-group mb-3 w-100">
+                                    <label for="skill_Description">Role Description</label>
+                                    <textarea class="form-control" id="roledesc" rows="3"
+                                        placeholder="Enter Description" required></textarea>
+                                </div>
+                                <!-- <button type="submit" class="btn btn-primary" id="btn">Update</button> -->
+                                <button type="button" class="btn btn-primary" onclick="updateRole()">Update</button>
+                            </form>
+                    </div>
                     </div>
                 </div>
-                <div class="container mt-5 mb-2">
-                    <h3 id="r_name">Update Skills required for </h3>
-                    <table class="table borderless table-hover mt-2" id="table_new">
-                    </table>
+            </div>
+        </div>
 
-                </div>
-                  </div>
-                </div>
-              </div>
 
-            <!-- <div class="container text-left">
+
+        <div class="container mt-3 mb-5" id="skilldiv">
+            <div class="d-flex justify-content-center">
+                <h3 id="r_name"></h3>
+  
+            </div>
+
+            <div class="d-flex justify-content-center ms-0 mt-3">
+                <div class="btn-group border btn-toggle">
+                    <button class="btn btn-default" id="editrole" onclick="showrole(this)">Edit Role</button>
+                    <button class="btn btn-primary" id="assignskill" onclick="showskill(this)">Assign Skill</button>
+                </div>
+         
+            </div>
+
+            <table class="table borderless table-hover mt-5" id="table_new">
+            </table>
+
+        </div>
+
+
+        <!-- <div class="container text-left">
                 <h2 class="mb-5">Update Role Details</h2>
                 <form>
                     <div class="form-group mb-3">
@@ -153,65 +180,94 @@
                 </form>
             </div> -->
 
-        </div>
+    </div>
 
-        <script>
-            var current_skill = [];
-            // We clicked on a button from 'view list of roles page, which brings us to do this'
-            // Dynamic
-            const queryString = window.location.search
-            const urlParams = new URLSearchParams(queryString)
-            role_id = urlParams.get('id')
-            backendUrl = 'http://127.0.0.1:5000';
-            update_role = 'updateRole/' + role_id;
-            get_skill = 'getSkillsForJob/' + role_id;
-            get_skill_id = 'getSkillID/';
-            get_all_skill = 'getskills';
-            get_role = 'getSpecificJobRole/' + role_id;
-            removeRole = 'removeSkillFromJobRole/' + role_id;
-            addRole = 'createRoleMap/' + role_id;
 
-            async function getRoleDetails() {
-                const response = await fetch(`${backendUrl}/${get_role}`)
-                    .then((response) => response.json())
-                    .then((data) => {
-                        document.getElementById("rname").value = data.data[0].job_role_name;
-                        document.getElementById("r_name").innerText += " " + data.data[0].job_role_name;
-                        document.getElementById("roledesc").value = data.data[0].job_role_desc;
-                    })
-                    .catch((error) => {
-                        // Errors when calling the service; such as network error,
-                        // service offline, etc
-                        console.log(error);
-                    });
-            }
+    <script>
+        document.getElementById("skilldiv").style.display = 'none';
+        document.getElementById("rolediv").style.display = 'block';
+        document.getElementById("editrole").className = "btn btn-primary"
+        document.getElementById("assignskill").className = "btn btn-default"
 
-            async function getSkills() {
-                const response = await fetch(`${backendUrl}/${get_skill}`)
-                    .then((response) => response.json())
-                    .then((data) => {
-                        var skills = data[0]['data'];
-                        for (s of skills) {
-                            if(data[0]['code']!=209){
-                                current_skill.push(s[0]);
-                            }
-                           
+        function showskill(a) {
+            document.getElementById("skilldiv").style.display = 'block';
+            document.getElementById("rolediv").style.display = 'none';
+            document.getElementById("editrole").className = "btn btn-default";
+            document.getElementById("assignskill").className = "btn btn-primary"
+        }
+
+        function showrole(a) {
+            document.getElementById("skilldiv").style.display = 'none';
+            document.getElementById("rolediv").style.display = 'block';
+            document.getElementById("editrole").className = "btn btn-primary"
+            document.getElementById("assignskill").className = "btn btn-default"
+
+        }
+
+
+
+
+
+        var current_skill = [];
+        // We clicked on a button from 'view list of roles page, which brings us to do this'
+        // Dynamic
+        const queryString = window.location.search
+        const urlParams = new URLSearchParams(queryString)
+        role_id = urlParams.get('id')
+        backendUrl = 'http://127.0.0.1:5000';
+        update_role = 'updateRole/' + role_id;
+        get_skill = 'getSkillsForJob/' + role_id;
+        get_skill_id = 'getSkillID/';
+        get_all_skill = 'getskills';
+        get_role = 'getSpecificJobRole/' + role_id;
+        removeRole = 'removeSkillFromJobRole/' + role_id;
+        addRole = 'createRoleMap/' + role_id;
+
+        async function getRoleDetails() {
+            const response = await fetch(`${backendUrl}/${get_role}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    document.getElementById("rname").value = data.data[0].job_role_name;
+                    document.getElementById("r_name").innerText += " " + data.data[0].job_role_name;
+                    document.getElementById("r_name2").innerText += " " + data.data[0].job_role_name;
+                   
+                    document.getElementById("roledesc").value = data.data[0].job_role_desc;
+                })
+                .catch((error) => {
+                    // Errors when calling the service; such as network error,
+                    // service offline, etc
+                    console.log(error);
+                });
+        }
+
+        async function getSkills() {
+            current_skill = [];
+            document.getElementById("table_new").innerHTML = "";
+            const response = await fetch(`${backendUrl}/${get_skill}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    var skills = data[0]['data'];
+                    for (s of skills) {
+                        if (data[0]['code'] != 209) {
+                            current_skill.push(s[0]);
                         }
 
-                        allSkill();
-                    })
-                    .catch((error) => {
-                        // Errors when calling the service; such as network error,
-                        // service offline, etc
-                        console.log(error);
-                    });
-            }
+                    }
 
-            async function allSkill() {
-                const response = await fetch(`${backendUrl}/${get_all_skill}`)
-                    .then((response) => response.json())
-                    .then((data) => {
-                        message_str = `
+                    allSkill();
+                })
+                .catch((error) => {
+                    // Errors when calling the service; such as network error,
+                    // service offline, etc
+                    console.log(error);
+                });
+        }
+
+        async function allSkill() {
+            const response = await fetch(`${backendUrl}/${get_all_skill}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    message_str = `
                   <thead>
                     <tr class="bg-light">
                     <th>Skill Name</th>
@@ -219,45 +275,45 @@
                     <th>Action</th>
                     </tr>
                   </thead>     <tbody>`;
-                        console.log(data.data.skill);
-                        var skills = data.data.skill;
-                        for (s in skills) {
-                            if (current_skill.includes(skills[s].skill_name)) {
-                                message_str += `
+                    console.log(data.data.skill);
+                    var skills = data.data.skill;
+                    for (s in skills) {
+                        if (current_skill.includes(skills[s].skill_name)) {
+                            message_str += `
                   <tr>
                     <th scope="row">${skills[s].skill_name}</th>
                     <td>${skills[s].skill_desc}</td>
                     <td> <button type="button" onclick="del(this)" class="btn btn-danger">Remove</button> </td>
                   </tr>
                 `;
-                                continue;
-                            }
-
-                            message_str += `
-                `;
+                            continue;
                         }
-                        message_str += `  </tbody>`;
-                        document.getElementById("table_new").innerHTML = message_str;
-                    })
-                    .catch((error) => {
-                        // Errors when calling the service; such as network error,
-                        // service offline, etc
-                        console.log(error);
-                    });
 
-                const response2 = await fetch(`${backendUrl}/${get_all_skill}`)
-                    .then((response2) => response2.json())
-                    .then((data) => {
-                        message_str += ``;
-                        console.log(data.data.skill);
-                        var skills = data.data.skill;
-                        for (s in skills) {
-                            if (current_skill.includes(skills[s].skill_name)) {
+                        message_str += `
+                `;
+                    }
+                    message_str += `  </tbody>`;
+                    document.getElementById("table_new").innerHTML = message_str;
+                })
+                .catch((error) => {
+                    // Errors when calling the service; such as network error,
+                    // service offline, etc
+                    console.log(error);
+                });
 
-                                continue;
-                            }
+            const response2 = await fetch(`${backendUrl}/${get_all_skill}`)
+                .then((response2) => response2.json())
+                .then((data) => {
+                    message_str += ``;
+                    console.log(data.data.skill);
+                    var skills = data.data.skill;
+                    for (s in skills) {
+                        if (current_skill.includes(skills[s].skill_name)) {
 
-                            message_str += `
+                            continue;
+                        }
+
+                        message_str += `
                   <tr>
                     <th scope="row">${skills[s].skill_name}</th>
                     <td>${skills[s].skill_desc}</td>
@@ -266,142 +322,142 @@
                   </tr>
               
                 `;
-                        }
-                        message_str += `  </tbody>`;
-                        document.getElementById("table_new").innerHTML = message_str;
-                    })
-                    .catch((error) => {
-                        // Errors when calling the service; such as network error,
-                        // service offline, etc
-                        console.log(error);
-                    });
-            }
+                    }
+                    message_str += `  </tbody>`;
+                    document.getElementById("table_new").innerHTML = message_str;
+                })
+                .catch((error) => {
+                    // Errors when calling the service; such as network error,
+                    // service offline, etc
+                    console.log(error);
+                });
+        }
 
 
-            // get Role details and put it in the input
-            getRoleDetails();
-            // Get skills associated with the role
-            getSkills();
+        // get Role details and put it in the input
+        getRoleDetails();
+        // Get skills associated with the role
+        getSkills();
 
-            async function updateRole() {
-                fetch(`${backendUrl}/${update_role}`, {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            "job_role_name": document.getElementById("rname").value,
-                            "job_role_desc": document.getElementById("roledesc").value
-                        }),
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log('Success:', data);
-                        if (data.code == 200) {
-                            alert("Updated succesfully!");
-                            location.reload();
-                        }
-
-                    })
-                    .catch((error) => {
-                        console.error('Error:', error);
-                    });
-            }
-            // get parent Node of the del utton
-            function del(a) {
-                var text = a.parentNode.parentNode.innerHTML;
-                text = text.split('"row">').pop().split('</th>')[0]; // returns 'two'
-                getId(text);
-            }
-
-            // get parent Node of the add button
-            function add(a) {
-                var text = a.parentNode.parentNode.innerHTML;
-                text = text.split('"row">').pop().split('</th>')[0]; // returns 'two'
-                getIdToAdd(text);
-            }
-
-            // for add
-            async function getIdToAdd(text) {
-                const response = await fetch(`${backendUrl}/${get_skill_id}/${text}`)
-                    .then((response) => response.json())
-                    .then((data) => {
-                        var id = data.message[0].skill_id;
-                        addJobRoleMap(id);
-                    })
-                    .catch((error) => {
-                        // Errors when calling the service; such as network error,
-                        // service offline, etc
-                        console.log(error);
-                    });
-            }
-
-
-            // for delete
-            async function getId(text) {
-                const response = await fetch(`${backendUrl}/${get_skill_id}/${text}`)
-                    .then((response) => response.json())
-                    .then((data) => {
-                        var id = data.message[0].skill_id;
-                        removeJobRoleMap(id);
-
-                    })
-                    .catch((error) => {
-                        // Errors when calling the service; such as network error,
-                        // service offline, etc
-                        console.log(error);
-                    });
-            }
-
-            async function removeJobRoleMap(id) {
-                console.log(`${backendUrl}/${removeRole}/${id}`);
-                fetch(`${backendUrl}/${removeRole}/${id}`, {
-                        method: 'DELETE'
-                    })
-                    .then((response) => response.json())
-                    .then((data) => {
-                        alert("Deleted skill from job successfully");
+        async function updateRole() {
+            fetch(`${backendUrl}/${update_role}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        "job_role_name": document.getElementById("rname").value,
+                        "job_role_desc": document.getElementById("roledesc").value
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                    if (data.code == 200) {
+                        alert("Updated succesfully!");
                         location.reload();
+                    }
 
-                    })
-                    .catch((error) => {
-                        // Errors when calling the service; such as network error,
-                        // service offline, etc
-                        console.log(error);
-                    });
-            }
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        }
+        // get parent Node of the del utton
+        function del(a) {
+            var text = a.parentNode.parentNode.innerHTML;
+            text = text.split('"row">').pop().split('</th>')[0]; // returns 'two'
+            getId(text);
+        }
 
-            async function addJobRoleMap(id) {
-                rid = parseInt(role_id);
-              
-                fetch(`${backendUrl}/${addRole}/${id}`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            "rm_fk_job_role_id": rid,
-                            "rm_fk_skill_id": id
-                        }),
-                    })
-                    .then((response) => response.json())
-                    .then((data) => {
-                        alert("Added skill to job successfully");
-                        location.reload();
-                    })
-                    .catch((error) => {
-                        // Errors when calling the service; such as network error,
-                        // service offline, etc
-                        console.log(error);
-                    });
-            }
-        </script>
-        <!-- Javascript-->
-        <script src="js/core.min.js"></script>
-        <script src="js/script.js"></script>
-        <!-- coded by Himic-->
-        </div>
-        
+        // get parent Node of the add button
+        function add(a) {
+            var text = a.parentNode.parentNode.innerHTML;
+            text = text.split('"row">').pop().split('</th>')[0]; // returns 'two'
+            getIdToAdd(text);
+        }
+
+        // for add
+        async function getIdToAdd(text) {
+            const response = await fetch(`${backendUrl}/${get_skill_id}/${text}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    var id = data.message[0].skill_id;
+                    addJobRoleMap(id);
+                })
+                .catch((error) => {
+                    // Errors when calling the service; such as network error,
+                    // service offline, etc
+                    console.log(error);
+                });
+        }
+
+
+        // for delete
+        async function getId(text) {
+            const response = await fetch(`${backendUrl}/${get_skill_id}/${text}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    var id = data.message[0].skill_id;
+                    removeJobRoleMap(id);
+
+                })
+                .catch((error) => {
+                    // Errors when calling the service; such as network error,
+                    // service offline, etc
+                    console.log(error);
+                });
+        }
+
+        async function removeJobRoleMap(id) {
+            console.log(`${backendUrl}/${removeRole}/${id}`);
+            fetch(`${backendUrl}/${removeRole}/${id}`, {
+                    method: 'DELETE'
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                    alert("Deleted skill from job successfully");
+                    getSkills();
+
+                })
+                .catch((error) => {
+                    // Errors when calling the service; such as network error,
+                    // service offline, etc
+                    console.log(error);
+                });
+        }
+
+        async function addJobRoleMap(id) {
+            rid = parseInt(role_id);
+
+            fetch(`${backendUrl}/${addRole}/${id}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        "rm_fk_job_role_id": rid,
+                        "rm_fk_skill_id": id
+                    }),
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                    alert("Added skill to job successfully");
+                    getSkills();
+                })
+                .catch((error) => {
+                    // Errors when calling the service; such as network error,
+                    // service offline, etc
+                    console.log(error);
+                });
+        }
+    </script>
+    <!-- Javascript-->
+    <script src="js/core.min.js"></script>
+    <script src="js/script.js"></script>
+    <!-- coded by Himic-->
+    </div>
+
 </body>
 
 </html>
