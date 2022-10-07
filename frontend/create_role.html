@@ -90,7 +90,7 @@
                   <div class="col-md mb-1">
                     <div class="form-outline">
                       Role Name
-                      <input type="text" id="role_name" class="form-control form-control-lg" />
+                      <input type="text" id="role_name" class="form-control form-control-lg" required/>
                     </div>
                   </div>
                 </div>
@@ -99,7 +99,7 @@
                   <div class="col-md mb-1">
                     <div class="form-outline">
                       Description
-                      <textarea class="form-control" id="role_desc" rows="3"></textarea>
+                      <textarea class="form-control" id="role_desc" rows="3" required></textarea>
                     </div>
                   </div>
 
@@ -133,8 +133,39 @@
       </div>
     </div>
     <!-- Javascript-->
+      <script>
+        backendUrl = "http://127.0.0.1:5000";
+        createJobRole = "createJobRole";
+
+        const role_name = document.getElementById("role_name");
+        const role_desc = document.getElementById("role_desc");
+        const btn = document.getElementById("btn");
+
+        btn.addEventListener("click", () => {
+          const name = role_name.value;
+          const desc = role_desc.value;
+
+          if ((name == "") & (desc == "")) {
+            alert("Input Role Name and Description!");
+          } else if (name == "") {
+            alert("Input Role Name!");
+          } else if (desc == "") {
+            alert("Input Role Description!");
+          } else {
+            axios
+              .post(`${backendUrl}/${createJobRole}`, {
+                job_role_name: name,
+                job_role_desc: desc,
+              })
+              .then((response) => console.log(response))
+              .then(alert(name+" role successfully created!"))
+              .catch((err) => console.log(err));
+          }
+        });
+
+      </script>
+
     <script src="js/core.min.js"></script>
-    <script src="js/create_roles.js"></script>
     <script src="js/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous">
