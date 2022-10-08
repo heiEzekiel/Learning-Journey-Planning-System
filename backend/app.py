@@ -181,9 +181,9 @@ class Journey_Map(db.Model):
     jm_fk_journey_id = db.Column(db.Integer, primary_key=True,nullable=False)
     jm_fk_course_id = db.Column(db.String(20), primary_key=True, nullable=False)
     def __init__(self, jm_fk_journey_id, jm_fk_course_id):
-        if not isinstance(jm_fk_journey_id, str):
+        if not isinstance(jm_fk_journey_id, int):
             raise TypeError("jm_fk_journey_id must be an Integer")
-        if not isinstance(jm_fk_course_id, int):
+        if not isinstance(jm_fk_course_id, str):
             raise TypeError("jm_fk_course_id must be a String")
         self.jm_fk_journey_id = jm_fk_journey_id
         self.jm_fk_course_id = jm_fk_course_id
@@ -258,14 +258,14 @@ def create_job_role(test_data = ''):
 
       
     else:
-        new_job_role = Job_Role(test_data['job_role_name'], test_data['job_role_desc'],0)
+        new_job_role = Job_Role(test_data['job_role_name'], test_data['job_role_desc'],test_data['job_role_status'])
         return jsonify(
                 {
                     "code": 201,
                     "data": new_job_role.json(),
                     "message": "Job Role successfully created"
                 }
-            ), 201
+            )
 
 #This segment of code is to get a specific job role. Used by both HR and Learner.
 #=============== Get Job Role details by job_role_id======================================
@@ -274,7 +274,9 @@ def getSpecificJobRole(job_role_id,test_data= ""):
     jobRoles = None
     if test_data == "":
         jobRoles = Job_Role.query.filter_by(job_role_id=job_role_id).all()
-    if test_data != "": 
+    else:
+        jobRoles = test_data
+    if test_data == "": 
         return jsonify(
                 {
                     "code": 200,
@@ -427,9 +429,15 @@ def updateRole(job_role_id, test_data="", new_data="",test_data_2=""):
 #This segment of code is delete a selected role
 #=============== Delete Role details by job_role_id======================================
 @app.route("/deleteRole/<int:job_role_id>", methods=['DELETE'])
-def deleteRole(job_role_id, test_data="", new_data=""):
-    job = Job_Role.query.filter_by(job_role_id=job_role_id).first()
-    if job:
+def deleteRole(job_role_id, test_data="", existing_data=""):
+    all_job = None
+    job = None
+    if test_data == "":
+        job = Job_Role.query.filter_by(job_role_id=job_role_id).first()
+    else:
+        job = test_data
+        all_job = existing_data 
+    if job and test_data == "":
         db.session.delete(job)
         db.session.commit()
         return jsonify(
@@ -438,40 +446,64 @@ def deleteRole(job_role_id, test_data="", new_data=""):
                 "message" : "Job removed successfully"
             }
         )
+    elif job and test_data != "":
+        for job in all_job:
+            if job.job_role_id == job_role_id:
+                all_job.remove(job)
+                return jsonify(
+                    {
+                        "code": 200,
+                        "message" : "Job removed successfully"
+                    }
+                )
     return jsonify(
         {
             "code": 404,
             "message": "Job not found."
         }
-    ), 404
+    )
 
 
 #=======================================================================================Role-Skill Related=======================================================================#
 #==============================Create job to role mapping===================================
 #Used when updating role information, or mapping role information. Used in assign skill to role and update.
 @app.route("/createRoleMap/<int:rm_fk_job_role_id>/<int:rm_fk_skill_id>", methods=['POST'])
-def createRoleMap(rm_fk_job_role_id,rm_fk_skill_id):
-    data = request.get_json()
-    new_map = Role_Map(data['rm_fk_job_role_id'], data['rm_fk_skill_id'])
-    try:
-        db.session.add(new_map)
-        db.session.commit()
-    except Exception as e:
-        print(e)
+def createRoleMap(test_data=""):
+    if test_data == "":
+        data = request.get_json()
+        new_map = Role_Map(data['rm_fk_job_role_id'], data['rm_fk_skill_id'])
+    else:
+        new_map = test_data
+    
+    if test_data == "":
+        try:
+            db.session.add(new_map)
+            db.session.commit()
+        except Exception as e:
+            print(e)
+            return jsonify(
+                {
+                    "code": 500,
+                    "message": "An error occurred creating the record."
+                }
+            ), 500
+
         return jsonify(
             {
-                "code": 500,
-                "message": "An error occurred creating the record."
+                "code": 201,
+                "data": new_map.json(),
+                "message": "Success"
             }
-        ), 500
-
-    return jsonify(
-        {
-            "code": 201,
-            "data": new_map.json(),
-            "message": "Success"
-        }
-    ), 201
+        ), 201
+    else:
+        return jsonify(
+            {
+                "code": 201,
+                "data": new_map.json(),
+                "message": "Success"
+            }
+        )
+        
 
 #==============================Retrieve Skill for job role with job_role_id===================================
 # Get skills required for the selected job role using job_role_id
@@ -539,31 +571,54 @@ def getSkillsForJob(job_role_id, test_data_role_map="", test_data_skill="", test
 #==============================Remove Skill from Job Role===================================
 # Remove a skill from a job role 
 @app.route("/removeSkillFromJobRole/<int:job_role_id>/<int:skill_id>", methods=['DELETE'])
-def del_role(job_role_id,skill_id):
-   role = Role_Map.query.filter_by(rm_fk_job_role_id=job_role_id, rm_fk_skill_id=skill_id).first()
-   if role:
-       db.session.delete(role)
-       db.session.commit()
-       return jsonify(
-           {
-               "code": 200,
-               "message" : "Skill removed successfully"
-           }
-       )
-   return jsonify(
-       {
-           "code": 404,
+def del_role(job_role_id,skill_id, test_data="", existing_data=""):
+    all_role = None
+    role = None
+    if test_data=="":   
+        role = Role_Map.query.filter_by(rm_fk_job_role_id=job_role_id, rm_fk_skill_id=skill_id).first()
+    else:
+        role = test_data
+        all_role = existing_data
+    if role and test_data=="":
+        db.session.delete(role)
+        db.session.commit()
+        return jsonify(
+            {
+                "code": 200,
+                "message" : "Skill removed successfully"
+            }
+        )
+    elif role and test_data!="":
+        for role in all_role:
+            if role.rm_fk_job_role_id == job_role_id and role.rm_fk_skill_id == skill_id:
+                all_role.remove(role)
+                return jsonify(
+                    {
+                        "code": 200,
+                        "message" : "Skill removed successfully"
+                    }
+                )
+    return jsonify(
+        {
+            "code": 404,
 
-           "message": "Skill and Role not found."
-       }
-   ), 404
+            "message": "Skill and Role not found."
+        }
+    ), 404
+
+    
+
 
  #=======================================================================================Skill-Course Related=======================================================================#  
 # Get courses available for the selected skill using skill_id
 @app.route("/getCoursesForSkill/<int:skill_id>")
-def getCoursesForSkill(skill_id):
+def getCoursesForSkill(skill_id, test_data_course_map="", test_data_course="", test_data_skill=""):
     # Get a list of courses related to this job
-    coursemapping = Course_Map.query.filter_by(cm_fk_skill_id=skill_id).all()
+    coursemapping = None
+    if test_data_course_map == "" and test_data_course == "" and test_data_skill == "":
+        coursemapping = Course_Map.query.filter_by(cm_fk_skill_id=skill_id).all()
+    else:
+        coursemapping = test_data_course_map
     if coursemapping:
         c = [c.json() for c in coursemapping]
         list_of_course = []
@@ -572,7 +627,11 @@ def getCoursesForSkill(skill_id):
         skillName =[]
 
         # For each course_id, find the name of course
-        course = Course.query.all()
+        course = None
+        if test_data_course == "":
+            course = Course.query.all()
+        else:
+            course = test_data_course
         if course:
             course_list = [course.json() for course in course]
             for i in course_list:
@@ -597,41 +656,67 @@ def getCoursesForSkill(skill_id):
 #=======================================================================================Skill Related=======================================================================#
 # Get skill ID using skill name
 @app.route("/getSkillID/<string:skill_name>/", methods=['GET'])
-def getSkillID(skill_name):
-   role = Skill.query.filter_by(skill_name=skill_name)
-   if role:
-       return jsonify(
-           {
-               "code": 200,
-               "message" :  [r.json() for r in role]
-           }
-       )
-   return jsonify(
-       {
-           "code": 404,
+def getSkillID(skill_name, test_data=""):
+    role = None
+    if test_data == "":
+        role = Skill.query.filter_by(skill_name=skill_name)
+    else:
+        role = test_data
+    if role and test_data == "":
+        return jsonify(
+            {
+                "code": 200,
+                "message" :  [r.json() for r in role]
+            }
+        )
+    elif role and test_data != "":
+        for r in role:
+            if r.skill_name == skill_name:
+                return jsonify(
+                    {
+                        "code": 200,
+                        "message" : r.json()
+                    }
+                )
+    return jsonify(
+        {
+            "code": 404,
 
-           "message": "Not Found"
-       }
-   ), 404
+            "message": "Not Found"
+        }
+    ), 404
    
 # =================================Get skill ID using skill id=================
 @app.route("/getSkillById/<int:skill_id>/", methods=['GET'])
-def getSkillById(skill_id):
-   skill = Skill.query.filter_by(skill_id=skill_id)
-   if skill:
-       return jsonify(
-           {
-               "code": 200,
-               "message" :  [s.json() for s in skill]
-           }
-       )
-   return jsonify(
-       {
-           "code": 404,
+def getSkillById(skill_id, test_data=""):
+    skill = None
+    if test_data == "":
+        skill = Skill.query.filter_by(skill_id=skill_id)
+    else:
+        skill = test_data
+    if skill and test_data == "":
+        return jsonify(
+            {
+                "code": 200,
+                "message" :  [s.json() for s in skill]
+            }
+        )
+    elif skill and test_data != "":
+        for s in skill:
+            if s.skill_id == skill_id:
+                return jsonify(
+                    {
+                        "code": 200,
+                        "message" : s.json()
+                    }
+                )
+    return jsonify(
+        {
+            "code": 404,
 
-           "message": "Not Found"
-       }
-   ), 404
+            "message": "Not Found"
+        }
+    )
 
 # =================================Get a list of skills=================
 
@@ -833,11 +918,26 @@ def updateSkill(skill_id, test_data="", new_data="",test_data2=""):
 #This segment of code is delete a selected skill
 #=============== Delete Skill details by skill_id======================================
 @app.route("/deleteSkill/<int:skill_id>", methods=['DELETE'])
-def deleteSkill(skill_id, test_data="", new_data=""):
-    skill = Skill.query.filter_by(skill_id=skill_id).first()
-    if skill:
+def deleteSkill(skill_id, test_data=""):
+    skill = None
+    if test_data == "":
+        skill = Skill.query.filter_by(skill_id=skill_id).first()
+    else:
+        skill = test_data
+    if skill and test_data == "":
         db.session.delete(skill)
         db.session.commit()
+        return jsonify(
+            {
+                "code": 200,
+                "message" : "Skill removed successfully"
+            }
+        )
+    elif skill and test_data != "":
+        for i in skill:
+            if i.skill_id == skill_id:
+                skill.remove(i)
+                break
         return jsonify(
             {
                 "code": 200,
@@ -872,28 +972,42 @@ def createJourney(test_data=""):
 
 
 @app.route("/createJourneyMap/<int:jm_fk_journey_id>/<int:jm_fk_course_id>", methods=['POST'])
-def createJourneyMap(jm_fk_journey_id,jm_fk_course_id):
-    data = request.get_json()
-    new_map = Journey_Map(data['jm_fk_journey_id'], data['jm_fk_course_id'])
-    try:
-        db.session.add(new_map)
-        db.session.commit()
-    except Exception as e:
-        print(e)
+def createJourneyMap(test_data=""):
+    data = None
+    new_map = None
+    if test_data=="":
+        data = request.get_json()
+        new_map = Journey_Map(data['jm_fk_journey_id'], data['jm_fk_course_id'])
+    else:
+        new_map = test_data
+    if test_data =="" and data and new_map:
+        try:
+            db.session.add(new_map)
+            db.session.commit()
+        except Exception as e:
+            print(e)
+            return jsonify(
+                {
+                    "code": 500,
+                    "message": "An error occurred creating the record."
+                }
+            ), 500
+
         return jsonify(
             {
-                "code": 500,
-                "message": "An error occurred creating the record."
+                "code": 201,
+                "data": new_map.json(),
+                "message": "Success"
             }
-        ), 500
-
-    return jsonify(
-        {
-            "code": 201,
-            "data": new_map.json(),
-            "message": "Success"
-        }
-    ), 201
+        ), 201
+    else:
+        return jsonify(
+            {
+                "code": 201,
+                "data": new_map.json(),
+                "message": "Success"
+            }
+        )
 
 #Run flask app
 if __name__ == "__main__":
