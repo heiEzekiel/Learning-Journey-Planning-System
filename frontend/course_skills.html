@@ -125,7 +125,6 @@
             <div class="container mt-3 mb-5" id="table">
             </div>
 		<!-- Javascript-->
-
 		<script>
 			var backendUrl = "http://127.0.0.1:5000";
 			var getCourse = "getCoursesForSkill";
@@ -161,21 +160,26 @@
                                             <tbody>
                                             `;
 						for (const course of result) {
-							console.log(course);
-							message_str += `
-                                                <tr>
-                                                    <th scope="row">${course["course_category"]}</th>
-                                                    <td>${course["course_id"]}</td>
-                                                    <td>${course["course_name"]}</td>
-                                                    <td>${course["course_desc"]}</td>
-                                                    <td>${course["course_type"]}</td>
-                                                    <td> <button type="button" class="btn btn-primary">Add to learning journey</button> </td>
-                                                </tr>
-                                                `;
-						}
-						message_str += `
-                                                </tbody>
-                                                </table>`;
+                            if(course['course_status'] == 'Active'){
+
+                                // console.log(course);
+                                message_str += `
+                                                    <tr>
+                                                        <th scope="row">${course["course_category"]}</th>
+                                                        <td>${course["course_id"]}</td>
+                                                        <td>${course["course_name"]}</td>
+                                                        <td>${course["course_desc"]}</td>
+                                                        <td>${course["course_type"]}</td>
+                                                        <td> <button type="button" class="btn btn-primary">Add to learning journey</button> </td>
+                                                    </tr>
+                                                    `;
+                            }
+                            message_str += `
+                                                    </tbody>
+                                                    </table>`;
+
+                            }
+
 						document.getElementById("table").innerHTML = message_str;
 						return data.data;
 					})
@@ -189,6 +193,5 @@
 		</script>
 		<script src="js/core.min.js"></script>
 		<script src="js/script.js"></script>
-		<!-- coded by Himic-->
 	</body>
 </html>
