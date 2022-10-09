@@ -611,7 +611,7 @@ def del_role(job_role_id,skill_id, test_data="", existing_data=""):
 
  #=======================================================================================Skill-Course Related=======================================================================#  
 # Get courses available for the selected skill using skill_id
-@app.route("/getCoursesForSkill/<int:skill_id>")
+@app.route("/getCoursesForSkill/<int:skill_id>", methods=['GET'])
 def getCoursesForSkill(skill_id, test_data_course_map="", test_data_course="", test_data_skill=""):
     # Get a list of courses related to this job
     coursemapping = None
