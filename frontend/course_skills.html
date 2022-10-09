@@ -122,9 +122,8 @@
 				</header>
 			</div>
 			<!-- Main content starts here  -->
-
             <div class="container mt-3 mb-5" id="table">
-		    </div>
+            </div>
 		<!-- Javascript-->
 
 		<script>
@@ -143,11 +142,11 @@
 						console.log(data[0].data);
 						result = JSON.parse(JSON.stringify(data[0].data));
 						message_str = `
+                                    <div class="d-flex justify-content-center">
                                         <br>
                                         <h3>${name} Courses</h3>
                                         <br>
-                                            <div class="d-flex justify-content-start">
-                                        
+                                    </div>
                                             <table class="table borderless table-hover mt-5">
                                             <thead>
                                                 <tr class="bg-light">
@@ -156,7 +155,7 @@
                                                 <th>Course Name</th>
                                                 <th>Course Description</th>
                                                 <th>Course Type</th>
-                                                <th></th>
+                                                <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
