@@ -107,9 +107,11 @@
             // console.log(JSON.parse(JSON.stringify(data.data)));
             result = JSON.parse(JSON.stringify(data[0].data));
             message_str = `
-            <div class="d-flex justify-content-start">
+            <br>
+            <div class="d-flex justify-content-center">
               <h3> ${job} </h3>
             </div>
+            <br>
             <table class="table borderless table-hover mt-5" id="table">
               <thead>
                 <tr class="bg-light">
@@ -125,7 +127,7 @@
               <tr>
 								<th scope="row">${skill[0]}</th>
 								<td>${skill[1]}</td>
-                <td> <button type="button" class="btn btn-primary" onClick="location.href='./course_skills.html?skill=${skill[0]}'"> View Courses</button> </td>
+                <td> <button type="button" class="btn btn-primary" onClick="location.href='./course_skills.html?id=${skill[2]}&name=${skill[0]}'"> View Courses</button> </td>
 							</tr>
               `
             }
