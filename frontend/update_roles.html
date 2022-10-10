@@ -101,8 +101,7 @@
                 <h3 id="r_name2"> </h3>
          
             </div>
-            <br>
-            <br>
+      
             <div class="d-flex justify-content-center ms-0">
                 <div class="btn-group border btn-toggle mt-3">
                     <button class="btn btn-default" id="editrole" onclick="showrole(this)">Edit Role</button>
@@ -229,6 +228,7 @@
             const response = await fetch(`${backendUrl}/${get_role}`)
                 .then((response) => response.json())
                 .then((data) => {
+                    console.log(data.data[0]);
                     document.getElementById("rname").value = data.data[0].job_role_name;
                     document.getElementById("r_name").innerText += " " + data.data[0].job_role_name;
                     document.getElementById("r_name2").innerText += " " + data.data[0].job_role_name;
