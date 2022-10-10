@@ -70,17 +70,6 @@
                           </div>
                         </div>
                       </div>
-                      <div class="row">
-                        <div class="col-md mb-1">
-                          <div class="form-outline">
-                            <label for="skillStatus">Skill Status</label>
-                            <select class="form-control p-2" id="skillStatus">
-                              <option value="0">Active</option> 
-                              <option value="1">Inactive</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
 
                       <div class="row">
                         <div class="col-md mb-1">
@@ -131,7 +120,6 @@
       const backendUrl = 'http://127.0.0.1:5000';
       const create_skills = 'createSkills';
       var skillName = document.getElementById("skillName")
-      var skillStatus = document.getElementById("skillStatus")
       var skillDescription = document.getElementById("skillDescription")
       async function createSkills(){
         event.preventDefault();
@@ -146,14 +134,14 @@
               body: JSON.stringify({
                 skill_name: skillName.value,
                 skill_desc: skillDescription.value,
-                skill_status: skillStatus.value
+                skill_status: 1
               })
             });
-            if (!response.ok) {
-              throw new Error(`Error! status: ${response.status}`);
-            }
-        
             const result = await response.json();
+            if (result.code == 400){
+              alert("Skill already exists. Skill creation unsuccessful.")
+              return result
+            }
             alert(skillName.value +" skill successfully created");
             skillName.value=""
             skillDescription.value=""
