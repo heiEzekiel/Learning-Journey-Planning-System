@@ -468,7 +468,7 @@ def deleteRole(job_role_id, test_data="", existing_data=""):
 #==============================Create job to role mapping===================================
 #Used when updating role information, or mapping role information. Used in assign skill to role and update.
 @app.route("/createRoleMap/<int:rm_fk_job_role_id>/<int:rm_fk_skill_id>", methods=['POST'])
-def createRoleMap(test_data=""):
+def createRoleMap(rm_fk_job_role_id, rm_fk_skill_id,test_data=""):
     if test_data == "":
         data = request.get_json()
         new_map = Role_Map(data['rm_fk_job_role_id'], data['rm_fk_skill_id'])
