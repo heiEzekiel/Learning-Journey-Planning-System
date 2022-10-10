@@ -421,7 +421,7 @@ def test_create_role_map_success():
     role_map1 = Role_Map(1, 1)
 
     with app.app_context():
-        result_data = createRoleMap(role_map1)
+        result_data = createRoleMap(1,1,role_map1)
         assert result_data.json['code'] == 201
         assert result_data.json['message'] == "Success"
         assert result_data.json['data']['rm_fk_job_role_id'] == 1
@@ -472,9 +472,9 @@ def test_get_skills_for_job_success():
         assert result_data.json == [{
             "code": 200,
             "data": [
-                ['skill1', 'desc1'],
-                ['skill2', 'desc2'],
-                ['skill3', 'desc3']
+                ['skill1', 'desc1',1],
+                ['skill2', 'desc2',2],
+                ['skill3', 'desc3',3]
             ]
         }, 200]
 
