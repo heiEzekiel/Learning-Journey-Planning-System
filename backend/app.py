@@ -281,14 +281,14 @@ def getSpecificJobRole(job_role_id,test_data= ""):
                 {
                     "code": 200,
                     "data": 
-                    [roles.json() for roles in test_data]
+                    [roles.json() for roles in jobRoles]
                 }
             )
     elif jobRoles != None:
        return jsonify(
            {
                "code": 200,
-               "data": [jr.json() for jr in jobRoles]
+               "data": [jr.json() for jr in test_data]
            }
        )
     else:
