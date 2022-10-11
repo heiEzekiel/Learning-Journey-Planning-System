@@ -513,7 +513,6 @@ def getSkillsForJob(job_role_id, test_data_role_map="", test_data_skill="", test
     rolemapping = None
     if test_data_role_map == "" and test_data_skill == "" and test_data_job_role == "":
         rolemapping = Role_Map.query.filter_by(rm_fk_job_role_id=job_role_id).all()
-        
     else:
         rolemapping = [role for role in test_data_role_map if int(role.rm_fk_job_role_id) == job_role_id]
     if rolemapping:
@@ -542,23 +541,25 @@ def getSkillsForJob(job_role_id, test_data_role_map="", test_data_skill="", test
 
             )   
     else:
-        skillName =[]
-        # For each skill_id, find the name of skill
-        skill = None
-        if test_data_skill == "":
-            skill = Skill.query.all()
-        else:
-            skill = test_data_skill
-        if skill:
-            skill_list = [s.json() for s in skill]
+        # skillName =[]
+        # # For each skill_id, find the name of skill
+        # skill = None
+        # if test_data_skill == "":
+        #     skill = Skill.query.all()
+        # else:
+        #     skill = test_data_skill
+        # if skill:
+        #     skill_list = [s.json() for s in skill]
 
-            for i in skill_list:
-                    skillName.append([i['skill_name'], i['skill_desc']])
+        #     for i in skill_list:
+        #             skillName.append([i['skill_name'], i['skill_desc']])
             return jsonify(
                 {
-            "code": 209,
-            "data": skillName
-            }, 200)        
+            "code": 404,
+            "data": "No records found"
+            }, 404)        
+
+            
 
 
     return jsonify(

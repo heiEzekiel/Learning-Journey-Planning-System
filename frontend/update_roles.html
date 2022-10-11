@@ -157,29 +157,6 @@
         </div>
 
 
-        <!-- <div class="container text-left">
-                <h2 class="mb-5">Update Role Details</h2>
-                <form>
-                    <div class="form-group mb-3">
-                        <label for="lab1">Role Name</label>
-
-                        <input type="text" class="form-control" id="rname" placeholder="" required>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="lab2">Role Description</label>
-                        <textarea class="form-control" id="roledesc" rows="3" placeholder="" required></textarea>
-                    </div>
-
-                    <button type="button" class="btn btn-primary" onclick="updateRole()">Update</button>
-                    <br> <br> <br> <br>
-                    <div class="container mt-1 mb-2">
-                        <h3 id="r_name">List of skills required for </h3>
-                        <table class="table borderless table-hover mt-2" id="table_new">
-                        </table>
-
-                    </div>
-                </form>
-            </div> -->
 
     </div>
 
@@ -252,7 +229,6 @@
                         if (data[0]['code'] != 209) {
                             current_skill.push(s[0]);
                         }
-
                     }
 
                     allSkill();
@@ -341,6 +317,14 @@
         getSkills();
 
         async function updateRole() {
+            var a=document.getElementById("rname").value
+    var b=document.getElementById("roledesc").value
+
+            if(a=='' || b==''){
+                alert("Please fill in all details")
+            }
+            else{
+         
             fetch(`${backendUrl}/${update_role}`, {
                     method: 'PUT',
                     headers: {
@@ -355,14 +339,18 @@
                 .then(data => {
                     console.log('Success:', data);
                     if (data.code == 200) {
-                        alert("Updated succesfully!");
+                        alert("Updated successfully!");
                         location.reload();
+                    }
+                    else{
+                        alert("Role name already exists!");
                     }
 
                 })
                 .catch((error) => {
                     console.error('Error:', error);
                 });
+            }
         }
         // get parent Node of the del utton
         function del(a) {

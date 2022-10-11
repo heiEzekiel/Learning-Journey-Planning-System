@@ -93,10 +93,20 @@
         const response = await fetch(`${backendUrl}/${getSkillsForJob}/${id}`)
           .then((response) => response.json())
           .then((data) => {
-            console.log(data[0].data)
+            document.getElementById('title').innerHTML= "List of skills for " + job
+            console.log(data[0].data);
+            if (data[0].code==404){
+
+              message_str = `<br><br> <h4> No skills associated with  ${job} </h4>`;
+              document.getElementById("job_skills").innerHTML = message_str;
+            }
+
+            else{
+
+        
             // console.log(JSON.parse(JSON.stringify(data.data)));
             result = JSON.parse(JSON.stringify(data[0].data));
-            document.getElementById('title').innerHTML= "List of skills for " + job
+           
             message_str = `
             
             <br>
@@ -124,13 +134,14 @@
             </table>`
             document.getElementById("job_skills").innerHTML = message_str;
             return data.data;
-          })
+          }    })
           .catch((error) => {
             // Errors when calling the service; such as network error,
             // service offline, etc
             console.log(error);
           });
       }
+      
       getRoleSkills(id, job)
     </script>
     <!-- Javascript-->
