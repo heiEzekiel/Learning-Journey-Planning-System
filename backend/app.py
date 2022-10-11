@@ -559,8 +559,6 @@ def getSkillsForJob(job_role_id, test_data_role_map="", test_data_skill="", test
             "data": "No records found"
             }, 404)        
 
-            
-
 
     return jsonify(
        {
@@ -607,10 +605,59 @@ def del_role(job_role_id,skill_id, test_data="", existing_data=""):
         }
     ), 404
 
-    
 
 
  #=======================================================================================Skill-Course Related=======================================================================#  
+#==============================Create course to skill mapping===================================
+#Used when updating course information, or mapping course information to skill. Used in assign skill to course
+@app.route("/createSkillMap/<string:cm_fk_course_id>/<int:cm_fk_skill_id>", methods=['POST'])
+#Andy to create test case
+def createSkillMap(cm_fk_course_id, cm_fk_skill_id,test_data=""):
+    if test_data == "":
+        data = request.get_json()
+        new_map = Course_Map(data['cm_fk_course_id'], data['cm_fk_skill_id'])
+    else:
+        new_map = test_data
+    
+    if test_data == "":
+        try:
+            db.session.add(new_map)
+            db.session.commit()
+        except Exception as e:
+            print(e)
+            return jsonify(
+                {
+                    "code": 500,
+                    "message": "An error occurred creating the record."
+                }
+            ), 500
+
+        return jsonify(
+            {
+                "code": 201,
+                "data": new_map.json(),
+                "message": "Success"
+            }
+        ), 201
+    else:
+        return jsonify(
+            {
+                "code": 201,
+                "data": new_map.json(),
+                "message": "Success"
+            }
+        )
+        
+
+
+
+
+
+
+
+
+
+
 # Get courses available for the selected skill using skill_id
 @app.route("/getCoursesForSkill/<int:skill_id>", methods=['GET'])
 def getCoursesForSkill(skill_id, test_data_course_map="", test_data_course="", test_data_skill=""):
