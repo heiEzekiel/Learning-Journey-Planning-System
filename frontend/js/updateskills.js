@@ -17,6 +17,7 @@ async function getSkillInfo() {
 		.then((data) => {
 			console.log(data);
 			if (data.code == 200) {
+				document.getElementById("s_name2").innerText = " " + data.message[0].skill_name;
 				skill_Name.value = data.message[0]["skill_name"];
 				skill_Description.value = data.message[0]["skill_desc"];
 			}
@@ -27,6 +28,15 @@ async function getSkillInfo() {
 }
 
 async function updateSkills() {
+
+	var a=document.getElementById("skill_Name").value
+    var b=document.getElementById("skill_Description").value
+
+            if(a=='' || b==''){
+                alert("Please fill in all details")
+            }
+
+else{
 	fetch(`${backendUrl}/${updateSkill}`, {
 		method: "PUT",
 		headers: {
@@ -44,10 +54,14 @@ async function updateSkills() {
 				alert('Update successful')
 				location.reload();
 			}
+			else{
+				alert("Skill name already exists!");
+			}
 		})
 		.catch((error) => {
 			console.error("Error:", error);
 		});
+	}
 }
 
 getSkillInfo();
