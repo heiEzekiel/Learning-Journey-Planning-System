@@ -104,7 +104,7 @@
                   </div>
                 </div>
                 <div class="mt-4 pt-2">
-                  <button class="btn btn-primary btn-md" id="btn">Create</button>
+                  <button class="btn btn-primary btn-md" onclick="createRoles()"id="btn">Create</button>
                 </div>
                 <br>
             
@@ -119,32 +119,64 @@
       <script>
         backendUrl = "http://127.0.0.1:5000";
         createJobRole = "createJobRole";
-
-        const role_name = document.getElementById("role_name");
-        const role_desc = document.getElementById("role_desc");
-        const btn = document.getElementById("btn");
-
-        btn.addEventListener("click", () => {
-          const name = role_name.value;
-          const desc = role_desc.value;
-
-          if ((name == "") & (desc == "")) {
-            alert("Input Role Name and Description!");
-          } else if (name == "") {
-            alert("Input Role Name!");
-          } else if (desc == "") {
-            alert("Input Role Description!");
-          } else {
-            axios
-              .post(`${backendUrl}/${createJobRole}`, {
-                job_role_name: name,
-                job_role_desc: desc,
+        const roleName = document.getElementById("role_name");
+        const roleDesc = document.getElementById("role_desc");
+        // const btn = document.getElementById("btn");
+        async function createRoles(){
+        event.preventDefault();
+        if (roleName.value != "" && roleDesc.value!=""){
+          try {
+            const response = await fetch(`${backendUrl}/${createJobRole}`, {
+              method: 'POST',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                job_role_name: roleName.value,
+                job_role_desc: roleDesc.value,
+                job_role_status: 1
               })
-              .then((response) => console.log(response))
-              .then(alert(name+" role successfully created!"))
-              .catch((err) => console.log(err));
+            });
+            const result = await response.json();
+            if (result.code == 400){
+              alert("Role already created. Role creation unsuccessful.")
+              return result
+            }
+            alert(roleName.value +" Role successfully created");
+            roleName.value=""
+            roleDesc.value=""
+            
+            return result;
+          } catch (err) {
+            console.log(err);
           }
-        });
+        }else{
+          alert("Fill up all inputs!")
+        }
+      }
+
+        // btn.addEventListener("click", () => {
+        //   const name = role_name.value;
+        //   const desc = role_desc.value;
+
+        //   if ((name == "") & (desc == "")) {
+        //     alert("Input Role Name and Description!");
+        //   } else if (name == "") {
+        //     alert("Input Role Name!");
+        //   } else if (desc == "") {
+        //     alert("Input Role Description!");
+        //   } else {
+        //     axios
+        //       .post(`${backendUrl}/${createJobRole}`, {
+        //         job_role_name: name,
+        //         job_role_desc: desc,
+        //       })
+        //       .then((response) => console.log(response))
+        //       .then(alert(name+" role successfully created!"))
+        //       .catch((err) => console.log(err));
+        //   }
+        // });
 
       </script>
 
