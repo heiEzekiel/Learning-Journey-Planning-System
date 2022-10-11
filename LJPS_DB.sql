@@ -117,8 +117,8 @@ CREATE TABLE IF NOT EXISTS `Journey` (
   `j_fk_staff_id` INT,
   `j_fk_job_role_id` INT,
   PRIMARY KEY (`journey_id`),
-  CONSTRAINT `j_fk_staff_id` FOREIGN KEY (`j_fk_staff_id`) REFERENCES `Staff` (`staff_id`),
-  CONSTRAINT `j_fk_job_role_id` FOREIGN KEY (`j_fk_job_role_id`) REFERENCES `Job_Role` (`job_role_id`)
+  CONSTRAINT `j_fk_staff_id` FOREIGN KEY (`j_fk_staff_id`) REFERENCES `Staff` (`staff_id`) ON DELETE CASCADE,
+  CONSTRAINT `j_fk_job_role_id` FOREIGN KEY (`j_fk_job_role_id`) REFERENCES `Job_Role` (`job_role_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `Journey` (`journey_id`, `journey_status`, `j_fk_staff_id`, `j_fk_job_role_id`) VALUES
@@ -130,10 +130,11 @@ select * from LJPS_DB.Journey;
 #Role_Map
 DROP TABLE IF EXISTS `Role_Map`;
 CREATE TABLE IF NOT EXISTS `Role_Map` (
-  `rm_fk_job_role_id` INT,
-  `rm_fk_skill_id` INT,
+  `rm_fk_job_role_id` INT NOT NULL,
+  `rm_fk_skill_id` INT NOT NULL,
   CONSTRAINT `rm_fk_job_role_id` FOREIGN KEY (`rm_fk_job_role_id`) REFERENCES `Job_Role` (`job_role_id`) ON DELETE CASCADE,
-  CONSTRAINT `rm_fk_skill_id` FOREIGN KEY (`rm_fk_skill_id`) REFERENCES `Skill` (`skill_id`) ON DELETE CASCADE
+  CONSTRAINT `rm_fk_skill_id` FOREIGN KEY (`rm_fk_skill_id`) REFERENCES `Skill` (`skill_id`) ON DELETE CASCADE,
+  PRIMARY KEY (`rm_fk_job_role_id`, `rm_fk_skill_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `Role_Map` (`rm_fk_job_role_id`, `rm_fk_skill_id`) VALUES
@@ -146,10 +147,11 @@ select * from LJPS_DB.Role_Map;
 #Journey_Map
 DROP TABLE IF EXISTS `Journey_Map`;
 CREATE TABLE IF NOT EXISTS `Journey_Map` (
-  `jm_fk_journey_id` INT,
+  `jm_fk_journey_id` INT NOT NULL AUTO_INCREMENT,
   `jm_fk_course_id` VARCHAR(20) NOT NULL,
   CONSTRAINT `jm_fk_journey_id` FOREIGN KEY (`jm_fk_journey_id`) REFERENCES `Journey` (`journey_id`) ON DELETE CASCADE,
-  CONSTRAINT `jm_fk_course_id` FOREIGN KEY (`jm_fk_course_id`) REFERENCES `Course` (`course_id`) ON DELETE CASCADE
+  CONSTRAINT `jm_fk_course_id` FOREIGN KEY (`jm_fk_course_id`) REFERENCES `Course` (`course_id`) ON DELETE CASCADE,
+  PRIMARY KEY (`jm_fk_journey_id`, `jm_fk_course_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `Journey_Map` (`jm_fk_journey_id`, `jm_fk_course_id`) VALUES
@@ -165,7 +167,8 @@ CREATE TABLE IF NOT EXISTS `Course_Map` (
   `cm_fk_course_id` VARCHAR(20) NOT NULL,
   `cm_fk_skill_id` INT NOT NULL,
   CONSTRAINT `cm_fk_course_id` FOREIGN KEY (`cm_fk_course_id`) REFERENCES `Course` (`course_id`) ON DELETE CASCADE,
-  CONSTRAINT `cm_fk_skill_id` FOREIGN KEY (`cm_fk_skill_id`) REFERENCES `Skill` (`skill_id`) ON DELETE CASCADE
+  CONSTRAINT `cm_fk_skill_id` FOREIGN KEY (`cm_fk_skill_id`) REFERENCES `Skill` (`skill_id`) ON DELETE CASCADE,
+  PRIMARY KEY (`cm_fk_course_id`, `cm_fk_skill_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `Course_Map` (`cm_fk_course_id`, `cm_fk_skill_id`) VALUES
