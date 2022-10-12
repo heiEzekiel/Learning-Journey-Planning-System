@@ -653,6 +653,57 @@ def createSkillMap(cm_fk_course_id, cm_fk_skill_id,test_data=""):
 
 
 
+# Get skills required for the course using course id
+#Andy to create test case
+@app.route("/getSkillsForCourse/<string:cm_fk_course_id>")
+def getSkillsForCourse(cm_fk_course_id, test_data_role_map="", test_data_skill="", test_data_job_role=""):
+    # Get a list of skill for the course
+    coursemapping = None
+    if test_data_role_map == "" and test_data_skill == "" and test_data_job_role == "":
+        coursemapping = Course_Map.query.filter_by(cm_fk_course_id=cm_fk_course_id).all()
+    else:
+        coursemapping = [c for c in test_data_role_map if int(role.rm_fk_job_role_id) == job_role_id]
+    if coursemapping:
+        role = [r.json() for r in coursemapping]
+        list_of_skill = []
+        for i in (role):
+            list_of_skill.append(i['cm_fk_skill_id'])
+        skillName =[]
+        # For each skill_id, find the name of skill
+        skill = None
+        if test_data_skill == "":
+            skill = Skill.query.all()
+        else:
+            skill = test_data_skill
+        if skill:
+            skill_list = [s.json() for s in skill]
+
+            for i in skill_list:
+                if i['skill_id'] in list_of_skill:
+                    skillName.append([i['skill_name'], i['skill_desc'],i['skill_id']])
+            return jsonify(
+                {
+            "code": 200,
+            "data": skillName
+            }, 200
+
+            )   
+    else:
+            return jsonify(
+                {
+            "code": 404,
+            "data": "No records found"
+            }, 404)        
+
+
+    return jsonify(
+       {
+           "code": 404,
+           "message": "No records found."
+       }
+   ), 404
+
+
 
 
 
@@ -697,9 +748,9 @@ def getCoursesForSkill(skill_id, test_data_course_map="", test_data_course="", t
     return jsonify(
        {
            "code": 404,
-           "message": "No records found."
-       }
-   ), 404
+           "data": "No records found."
+       }, 404
+   )
 
 #=======================================================================================Skill Related=======================================================================#
 # Get skill ID using skill name

@@ -137,9 +137,9 @@
 				const response = await fetch(`${backendUrl}/${getCourse}/${id}`)
 					.then((response) => response.json())
 					.then((data) => {
-						// result =JSON.parse(JSON.stringify(data.data.skill))
-						console.log(data[0].data);
-						result = JSON.parse(JSON.stringify(data[0].data));
+						console.log(data[0])
+										if (data[0].code==200){
+							result = JSON.parse(JSON.stringify(data[0].data));
 						message_str = `
                                     <div class="d-flex justify-content-center">
                                         <br>
@@ -161,7 +161,6 @@
                                             `;
 						for (const course of result) {
                             if(course['course_status'] == 'Active'){
-
                                 // console.log(course);
                                 message_str += `
                                                     <tr>
@@ -174,14 +173,21 @@
                                                     </tr>
                                                     `;
                             }
-                            message_str += `
-                                                    </tbody>
-                                                    </table>`;
+             
 
                             }
-
+							message_str += `
+                                                    </tbody>
+                                                    </table>`;
 						document.getElementById("table").innerHTML = message_str;
 						return data.data;
+						}
+						else{
+							document.getElementById("table").innerHTML = "<br> <br> <br> <h3> No courses found associated with this skill </h3>";
+						}
+						// result =JSON.parse(JSON.stringify(data.data.skill))
+						
+	
 					})
 					.catch((error) => {
 						// Errors when calling the service; such as network error,
