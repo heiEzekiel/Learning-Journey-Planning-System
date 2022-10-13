@@ -113,6 +113,7 @@ select * from LJPS_DB.Job_Role;
 DROP TABLE IF EXISTS `Journey`;
 CREATE TABLE IF NOT EXISTS `Journey` (
   `journey_id` INT NOT NULL AUTO_INCREMENT,
+  `journey_name` VARCHAR(100) NOT NULL,
   `journey_status` VARCHAR(100) NOT NULL,
   `j_fk_staff_id` INT,
   `j_fk_job_role_id` INT,
@@ -121,9 +122,9 @@ CREATE TABLE IF NOT EXISTS `Journey` (
   CONSTRAINT `j_fk_job_role_id` FOREIGN KEY (`j_fk_job_role_id`) REFERENCES `Job_Role` (`job_role_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `Journey` (`journey_id`, `journey_status`, `j_fk_staff_id`, `j_fk_job_role_id`) VALUES
-('701','In-Progress','130001','601'),
-('702','In-Progress','140001','602');
+INSERT INTO `Journey` (`journey_id`, `journey_name`, `journey_status`, `j_fk_staff_id`, `j_fk_job_role_id`) VALUES
+('701','Learning Journey test','In-Progress','130001','601'),
+('702','Learning Journey testers','In-Progress','140001','602');
 COMMIT;
 select * from LJPS_DB.Journey;
 

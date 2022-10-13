@@ -153,16 +153,20 @@ class Skill(db.Model):
 class Journey(db.Model):
     __tablename__ = 'Journey'
     journey_id = db.Column(db.Integer, primary_key=True,nullable=False)
+    journey_name = db.Column(db.String(100), nullable=False)
     journey_status = db.Column(db.String(100), nullable=False)
     j_fk_staff_id = db.Column(db.Integer, nullable=False)
     j_fk_job_role_id = db.Column(db.Integer, nullable=False)
-    def __init__(self, journey_status, j_fk_staff_id, j_fk_job_role_id):
+    def __init__(self, journey_name, journey_status, j_fk_staff_id, j_fk_job_role_id):
+        if not isinstance(journey_name, str):
+            raise TypeError("journey_name must be a string")
         if not isinstance(journey_status, str):
             raise TypeError("journey_status must be a string")
         if not isinstance(j_fk_staff_id, int):
             raise TypeError("j_fk_staff_id must be an integer")
         if not isinstance(j_fk_job_role_id, int):
             raise TypeError("j_fk_job_role_id must be an integer")
+        self.journey_name = journey_name
         self.journey_status = journey_status
         self.j_fk_staff_id = j_fk_staff_id
         self.j_fk_job_role_id = j_fk_job_role_id
@@ -170,6 +174,7 @@ class Journey(db.Model):
     def json(self):
         return  {
             "journey_id": self.journey_id, 
+            "journey_name": self.journey_name,
             "journey_status": self.journey_status, 
             "j_fk_staff_id": self.j_fk_staff_id,
             "j_fk_job_role_id": self.j_fk_job_role_id         
@@ -1060,7 +1065,9 @@ def createJourney(test_data=""):
         data = request.get_json()
     else:
         data = test_data
-    journey_status, j_fk_staff_id, j_fk_job_role_id = "", "", ""
+    journey_name, journey_status, j_fk_staff_id, j_fk_job_role_id = "", "", "", ""
+    if data['journey_name']:
+        journey_name = data['journey_name']
     if data['journey_status']:
         journey_status = data['journey_status']
     if data['j_fk_staff_id']:
