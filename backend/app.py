@@ -335,6 +335,36 @@ def getAllJobRole(test_data= ""):
                 }
             )
 
+#Get all courses
+@app.route("/getAllCourses")
+def getAllCourses(test_data= ""):
+    courses = None
+    if test_data == "":
+        courses = Course.query.all()
+        return jsonify (
+            {
+                "code": 200,
+                "data": 
+                [course.json() for course in courses]
+            }
+        )
+    if test_data != "": 
+        return jsonify(
+                {
+                    "code": 200,
+                    "data": 
+                    [course.json() for course in test_data]
+                }
+            )
+    elif courses != None:
+        return jsonify(
+                {
+                    "code": 200,
+                    "data": 
+                    [course.json() for course in courses]
+                }
+            )
+
 
 #This segment of code is update details of a selected role
 #=============== Update Job Role details by job_role_id======================================
@@ -611,6 +641,44 @@ def del_role(job_role_id,skill_id, test_data="", existing_data=""):
     ), 404
 
 
+#==============================Remove Skill from Course===================================
+# Remove a skill from a course
+@app.route("/removeSkillFromCourse/<int:job_role_id>/<int:skill_id>", methods=['DELETE'])
+def deleteSkillFromCourse(cm_fk_course_id,cm_fk_skill_id, test_data="", existing_data=""):
+    all_courses = None
+    course = None
+    if test_data=="":   
+        course = Course_Map.query.filter_by(cm_fk_course_id=cm_fk_course_id, cm_fk_skill_id=cm_fk_skill_id).first()
+    else:
+        course = test_data
+        all_courses = existing_data
+    if course and test_data=="":
+        db.session.delete(course)
+        db.session.commit()
+        return jsonify(
+            {
+                "code": 200,
+                "message" : "Course removed successfully"
+            }
+        )
+    elif role and test_data!="":
+        for role in all_courses:
+            if course.cm_fk_course_id == cm_fk_course_id and course.cm_fk_skill_id == cm_fk_skill_id:
+                all_courses.remove(course)
+                return jsonify(
+                    {
+                        "code": 200,
+                        "message" : "Course removed successfully"
+                    }
+                )
+    return jsonify(
+        {
+            "code": 404,
+
+            "message": "Course and Skill not found."
+        }
+    ), 404
+
 
  #=======================================================================================Skill-Course Related=======================================================================#  
 #==============================Create course to skill mapping===================================
@@ -707,11 +775,6 @@ def getSkillsForCourse(cm_fk_course_id, test_data_role_map="", test_data_skill="
            "message": "No records found."
        }
    ), 404
-
-
-
-
-
 
 
 # Get courses available for the selected skill using skill_id
