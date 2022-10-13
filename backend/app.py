@@ -1108,6 +1108,40 @@ def createJourneyMap(test_data=""):
             }
         )
 
+@app.route("/deleteJourneyMap/<int:jm_fk_journey_id>/<int:jm_fk_course_id>", methods=['DELETE'])
+def createJourneyMap(jm_fk_journey_id,jm_fk_course_id, test_data=""):
+    new_map = None
+    if test_data=="":
+        new_map = Journey_Map.query.filter_by(jm_fk_journey_id = jm_fk_journey_id, jm_fk_course_id = jm_fk_course_id).first()
+    else:
+        new_map = test_data
+    if new_map and test_data == "":
+        db.session.delete(new_map)
+        db.session.commit()
+        return jsonify(
+            {
+                "code": 200,
+                "message" : "Journey Map removed successfully"
+            }
+        )
+    elif new_map and test_data != "":
+        for i in new_map:
+            if i.jm_fk_journey_id == jm_fk_journey_id and i.jm_fk_course_id == jm_fk_course_id :
+                new_map.remove(i)
+                break
+        return jsonify(
+            {
+                "code": 200,
+                "message" : "Journey Map removed successfully"
+            }
+        )
+    return jsonify(
+        {
+            "code": 404,
+            "message": "Journey Map not found."
+        }
+    ), 404
+
 #Run flask app
 if __name__ == "__main__":
     app.run(debug=True)
