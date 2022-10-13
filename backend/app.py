@@ -9,6 +9,8 @@ import json
 app = Flask(__name__)   
 # ---for windows---
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL') or 'mysql+mysqlconnector://root@localhost:3306/LJPS_DB'
+# For conn
+#app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL') or 'mysql+mysqlconnector://admin:SoftwareProject@spm.czdb9a0r4ea9.ap-southeast-1.rds.amazonaws.com:3306/LJPS_DB'
 # ---for mac---
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root@localhost:3306/LJPS_DB'
 
@@ -335,6 +337,7 @@ def getAllJobRole(test_data= ""):
                 }
             )
 
+#Andy to create test case
 #Get all courses
 @app.route("/getAllCourses")
 def getAllCourses(test_data= ""):
@@ -602,6 +605,7 @@ def getSkillsForJob(job_role_id, test_data_role_map="", test_data_skill="", test
        }
    ), 404
 
+#Andy to create test case
 #==============================Remove Skill from Job Role===================================
 # Remove a skill from a job role 
 @app.route("/removeSkillFromJobRole/<int:job_role_id>/<int:skill_id>", methods=['DELETE'])
@@ -720,10 +724,6 @@ def createSkillMap(cm_fk_course_id, cm_fk_skill_id,test_data=""):
                 "message": "Success"
             }
         )
-        
-
-
-
 
 
 # Get skills required for the course using course id
@@ -1139,7 +1139,7 @@ def createJourney(test_data=""):
         j_fk_job_role_id = data['j_fk_job_role_id']
     pass
 
-
+#Andy to create test case
 @app.route("/createJourneyMap/<int:jm_fk_journey_id>/<int:jm_fk_course_id>", methods=['POST'])
 def createJourneyMap(test_data=""):
     data = None
@@ -1178,6 +1178,8 @@ def createJourneyMap(test_data=""):
             }
         )
 
+
+#Andy to create test case
 @app.route("/deleteJourneyMap/<int:jm_fk_journey_id>/<int:jm_fk_course_id>", methods=['DELETE'])
 def deleteJourneyMap(jm_fk_journey_id,jm_fk_course_id, test_data=""):
     new_map = None
