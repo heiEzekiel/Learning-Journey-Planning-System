@@ -2,7 +2,7 @@
 <html class="wide wow-animation" lang="en">
 
 <head>
-  <title>HR view Roles</title>
+  <title>HR view Courses</title>
   <meta name="format-detection" content="telephone=no">
   <meta name="viewport"
     content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -111,9 +111,7 @@
                     <td class="text-wrap">${course["course_category"]}</td>
                     <td class="text-wrap">${course["course_desc"]}</td>
                     <td class="text-wrap">${course["course_status"]}</td>
-                
-                    <td><button type="button" class="btn btn-primary onClick="location.href='./course_assign.html?job=${course['course_name']}&id=${course['course_id']}'">Assign</button></a>
-                    </td>
+                    <td><a href="./course_assign.html?job=${course['course_name']}&id=${course['course_id']}"><button type="button" class="btn btn-primary">Assign</button></a></td>
                   </tr>
                 </tbody>
                 `;

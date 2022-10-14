@@ -2,7 +2,7 @@
 <html class="wide wow-animation" lang="en">
 
 <head>
-  <title>HR view Roles</title>
+  <title>Assign</title>
   <meta name="format-detection" content="telephone=no">
   <meta name="viewport"
     content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -85,10 +85,10 @@
         course_id = urlParams.get('id')
         backendUrl = 'http://127.0.0.1:5000';
         get_skill = 'getSkillsForCourse/' + course_id;
-        get_skill_id = 'getSkillID/';
+        get_skill_id = 'getSkillID';
         get_all_skill = 'getskills';
-        removeCourse = 'removeSkillFromCourse/' + course_id;
-        addCourse = 'createCourseMap/' + course_id;
+        removeCourse = 'removeSkillFromCourse'
+        addCourse = 'createSkillMap';
         
         async function getSkills() {
             current_skill = [];
@@ -197,6 +197,7 @@
         function add(a) {
             var text = a.parentNode.parentNode.innerHTML;
             text = text.split('"row">').pop().split('</th>')[0]; // returns 'two'
+            console.log(text)
             getIdToAdd(text);
         }
 
@@ -218,10 +219,12 @@
 
         // for delete
         async function getId(text) {
+          //console.log(`${backendUrl}/${get_skill_id}/${text}`)
             const response = await fetch(`${backendUrl}/${get_skill_id}/${text}`)
                 .then((response) => response.json())
                 .then((data) => {
                     var id = data.message[0].skill_id;
+                    //console.log(id)
                     removeCourseMap(id);
 
                 })
@@ -233,14 +236,14 @@
         }
 
         async function removeCourseMap(id) {
-            console.log(`${backendUrl}/${removeCourse}/${id}`);
-            fetch(`${backendUrl}/${removeRole}/${id}`, {
+            console.log(`${backendUrl}/${removeCourse}/${course_id}/${id}`);
+            fetch(`${backendUrl}/${removeCourse}/${course_id}/${id}`, {
                     method: 'DELETE'
                 })
                 .then((response) => response.json())
                 .then((data) => {
                     alert("Deleted skill from course successfully");
-                    getSkills();
+                    location.reload();
 
                 })
                 .catch((error) => {
@@ -251,14 +254,14 @@
         }
 
         async function addCourseMap(id) {
-            fetch(`${backendUrl}/${addCourse}/${id}`, {
+            fetch(`${backendUrl}/${addCourse}/${course_id}/${id}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        "rm_fk_course_id": course_id,
-                        "rm_fk_skill_id": id
+                        "cm_fk_course_id": course_id,
+                        "cm_fk_skill_id": id
                     }),
                 })
                 .then((response) => response.json())
