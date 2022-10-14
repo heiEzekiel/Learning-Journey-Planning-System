@@ -647,12 +647,12 @@ def del_role(job_role_id,skill_id, test_data="", existing_data=""):
 
 #==============================Remove Skill from Course===================================
 # Remove a skill from a course
-@app.route("/removeSkillFromCourse/<int:job_role_id>/<int:skill_id>", methods=['DELETE'])
-def deleteSkillFromCourse(cm_fk_course_id,cm_fk_skill_id, test_data="", existing_data=""):
+@app.route("/removeSkillFromCourse/<string:course_id>/<int:skill_id>", methods=['DELETE'])
+def deleteSkillFromCourse(course_id, skill_id, test_data="", existing_data=""):
     all_courses = None
     course = None
     if test_data=="":   
-        course = Course_Map.query.filter_by(cm_fk_course_id=cm_fk_course_id, cm_fk_skill_id=cm_fk_skill_id).first()
+        course = Course_Map.query.filter_by(cm_fk_course_id=course_id, cm_fk_skill_id=skill_id).first()
     else:
         course = test_data
         all_courses = existing_data
@@ -667,7 +667,7 @@ def deleteSkillFromCourse(cm_fk_course_id,cm_fk_skill_id, test_data="", existing
         )
     elif role and test_data!="":
         for role in all_courses:
-            if course.cm_fk_course_id == cm_fk_course_id and course.cm_fk_skill_id == cm_fk_skill_id:
+            if course.cm_fk_course_id == course_id and course.cm_fk_skill_id == skill_id:
                 all_courses.remove(course)
                 return jsonify(
                     {
