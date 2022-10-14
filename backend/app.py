@@ -1180,7 +1180,7 @@ def createJourneyMap(test_data=""):
 
 
 #Andy to create test case
-@app.route("/deleteJourneyMap/<int:jm_fk_journey_id>/<int:jm_fk_course_id>", methods=['DELETE'])
+@app.route("/deleteJourneyMap/<int:jm_fk_journey_id>/<string:jm_fk_course_id>", methods=['DELETE'])
 def deleteJourneyMap(jm_fk_journey_id,jm_fk_course_id, test_data=""):
     new_map = None
     if test_data=="":
@@ -1213,6 +1213,38 @@ def deleteJourneyMap(jm_fk_journey_id,jm_fk_course_id, test_data=""):
             "message": "Journey Map not found."
         }
     ), 404
+    
+# =================================Get a list of journey maps=================
+
+@app.route("/getJourneyMaps")
+def getJourneyMaps(test_data= ""):
+    journeyMaps = None
+    if test_data == "":
+        journeyMaps = Journey_Map.query.all()
+    if test_data != "":
+        return jsonify (
+            {
+                "code": 200,
+                "data": 
+                [journeyMap.json() for journeyMap in test_data]
+            }
+        )
+    elif journeyMaps != None:
+        return jsonify(
+                {
+                    "code": 200,
+                    "data": {
+                        "journeyMaps": [journeyMap.json() for journeyMap in journeyMaps]
+                    }
+                }
+            )
+    else:
+        return jsonify(
+            {
+                "code": 404,
+                "message": "No journey maps found."
+            }
+        )
 
 #Run flask app
 if __name__ == "__main__":
