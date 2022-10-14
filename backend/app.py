@@ -8,9 +8,9 @@ import json
 # Flask App and DB connection is done here.
 app = Flask(__name__)   
 # ---for windows---
-#app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL') or 'mysql+mysqlconnector://root@localhost:3306/LJPS_DB'
+app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL') or 'mysql+mysqlconnector://root@localhost:3306/LJPS_DB'
 # For connection to online db
-app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL') or 'mysql+mysqlconnector://admin:SoftwareProject@spm.czdb9a0r4ea9.ap-southeast-1.rds.amazonaws.com:3306/LJPS_DB'
+# app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL') or 'mysql+mysqlconnector://admin:SoftwareProject@spm.czdb9a0r4ea9.ap-southeast-1.rds.amazonaws.com:3306/LJPS_DB'
 # ---for mac---
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root@localhost:3306/LJPS_DB'
 
@@ -1121,6 +1121,7 @@ def deleteSkill(skill_id, test_data=""):
 
 #This segment of code is for learning journey
 #=========================================== journey======================================
+#Andy to update test
 @app.route("/createJourney", methods=['POST'])
 def createJourney(test_data=""):
     data = None
@@ -1129,6 +1130,15 @@ def createJourney(test_data=""):
     else:
         data = test_data
     journey_name, journey_status, j_fk_staff_id, j_fk_job_role_id = "", "", "", ""
+    journey = Journey.query.filter_by(j_fk_staff_id = data['j_fk_staff_id'], j_fk_job_role_id = data['j_fk_job_role_id']).first()
+    if journey: #if exist
+        print(journey)
+        return jsonify(
+            {
+                "code": 404
+            }
+        )
+
     if data['journey_name']:
         journey_name = data['journey_name']
     if data['journey_status']:
@@ -1137,11 +1147,30 @@ def createJourney(test_data=""):
         j_fk_staff_id = data['j_fk_staff_id']
     if data['j_fk_job_role_id']:
         j_fk_job_role_id = data['j_fk_job_role_id']
-    pass
+    
+    journey = Journey(journey_name=journey_name, journey_status=journey_status, j_fk_staff_id=j_fk_staff_id, j_fk_job_role_id=j_fk_job_role_id)
+    if test_data == "":
+        try:
+            db.session.add(journey)
+            db.session.commit()
+        except Exception as e:
+            return jsonify(
+                {
+                    "code": 500,
+                    "message": "An error occurred updating the journey."
+                }
+            ), 500
+
+        return jsonify(
+            {
+                "code": 211,
+                "data": journey.json()
+            }
+        )
 
 #Andy to create test case
-@app.route("/createJourneyMap/<int:jm_fk_journey_id>/<int:jm_fk_course_id>", methods=['POST'])
-def createJourneyMap(test_data=""):
+@app.route("/createJourneyMap/<int:jm_fk_journey_id>/<string:jm_fk_course_id>", methods=['POST'])
+def createJourneyMap(jm_fk_journey_id, jm_fk_course_id,test_data=""):
     data = None
     new_map = None
     if test_data=="":
@@ -1177,7 +1206,6 @@ def createJourneyMap(test_data=""):
                 "message": "Success"
             }
         )
-
 
 #Andy to create test case
 @app.route("/deleteJourneyMap/<int:jm_fk_journey_id>/<int:jm_fk_course_id>", methods=['DELETE'])
