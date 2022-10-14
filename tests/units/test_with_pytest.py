@@ -725,7 +725,7 @@ def test_create_journey_map_success():
 
 
     with app.app_context():
-        result_data = createJourneyMap(journey_map)
+        result_data = createJourneyMap(None,None,journey_map)
         assert result_data.json['code'] == 201
         assert result_data.json['data']['jm_fk_journey_id'] == 1
         assert result_data.json['data']['jm_fk_course_id'] == "1"
