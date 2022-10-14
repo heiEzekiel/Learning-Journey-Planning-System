@@ -1,4 +1,4 @@
-var backendUrl = 'http://127.0.0.1:5000';
+var backendUrl = 'http://testforljps-blqi.vercel.app';
 var getskills = 'getskills';
 var deleteSkill = 'deleteSkill';
 
