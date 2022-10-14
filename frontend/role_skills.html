@@ -80,14 +80,46 @@
     <!-- Main content starts here  -->
     <div class="container mt-3 mb-5">
       <h3 id="title">List of skills</h3>
+      <div class="d-flex justify-content-end mt-3">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+          id="modal_btn">
+          Add to Learning Journey
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create Learning Journey</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="form-outline">
+                  <label for="skillName">Learning Journey Name</label>
+                  <input type="text" class="form-control" id="learningJourneyName" placeholder="Enter name" required>
+                </div>
+                <div id="modal_courses">
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="create_lj()">Create</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div id="job_skills"></div>
     </div>
 
   </div>
   <script>
     backendUrl = "http://127.0.0.1:5000";
-    getSkillsForJob = "getSkillsForJob"
-    var getCourse = "getCoursesForSkill";
+    const getSkillsForJob = "getSkillsForJob"
+    const getCourse = "getCoursesForSkill";
+    const createJourney = "createJourney"
+    const createJourneyMap = "createJourneyMap"
     const queryString = window.location.search
     const urlParams = new URLSearchParams(queryString)
     const job = urlParams.get('job')
@@ -101,11 +133,6 @@
           result = JSON.parse(JSON.stringify(data[0].data));
           document.getElementById('title').innerHTML = "List of skills for " + job
           message_str = `
-            
-            <br>
-            <div class="d-flex justify-content-end">
-              <button type="button" class="btn btn-primary">Add to learning journey</button>
-            </div>
             <table class="table borderless table-hover mt-5" id="table">
               <thead>
                 <tr class="bg-light">
@@ -142,13 +169,13 @@
           // result =JSON.parse(JSON.stringify(data.data.skill))
           console.log(data[0].data);
           result = JSON.parse(JSON.stringify(data[0].data));
-          msg_str += `<td>`
+          msg_str += `<td class="h-25 overflow-scroll">`
           for (var i = 0; i < result.length; i++) {
-            console.log(result[i]['course_name'])
+            //console.log(result[i]['course_name'])
             msg_str += `
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value=" ${result[i]['course_id']}" id="course">
-                  <label class="form-check-label" for="flexCheckDefault">
+                  <input class="form-check-input" type="checkbox" value="${result[i]['course_id']}?${result[i]['course_name']}">
+                  <label class="form-check-label">
                     ${result[i]['course_name']}
                   </label>
                 </div>
@@ -169,6 +196,101 @@
           console.log(error);
         });
     }
+    document.getElementById("modal_btn").onclick = function () {
+      msg_str = `
+      <br>
+      <p class="font-weight-bold">Course Summary
+      <p>
+      <ul>
+      `
+      checkboxes = document.getElementsByClassName('form-check-input')
+      empty = true
+      for (i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+          empty = false
+        }
+      }
+      if (!empty) {
+        for (i = 0; i < checkboxes.length; i++) {
+          if (checkboxes[i].checked) {
+            msg_str += `
+            <li class= 'font-weight-light'>- ${checkboxes[i].value.split('?')[1]}</li>
+            `
+          }
+        }
+        msg_str += `</ul>`
+      } else {
+        msg_str += "<p class='text-danger'> No course added</p>"
+      }
+      console.log(checkboxes)
+      document.getElementById("modal_courses").innerHTML = msg_str
+
+    }
+
+    async function create_lj() {
+      event.preventDefault();
+      journeyStatus = "In-Progress"
+      staff_id = 150001
+      lj_name = document.getElementById("learningJourneyName").value
+      checkboxes = document.getElementsByClassName('form-check-input')
+      empty = true
+      courses = []
+      for (i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+          courses.push(checkboxes[i].value.split("?")[0])
+          empty = false
+        }
+      }
+      if (!empty && lj_name.value != "") {
+/*        fetch(`${backendUrl}/${createJourney}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            "journey_status": journeyStatus,
+            "j_fk_staff_id": staff_id,
+            "j_fk_job_role_id": id 
+          }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            alert("Learning Journey created!");
+            return data
+          })
+          .catch((error) => {
+            // Errors when calling the service; such as network error,
+            // service offline, etc
+            console.log(error);
+          });
+*/
+        alert("Learning Journey created!");
+      } else {
+        alert("Fill up all inputs!")
+      }
+    }
+
+//    async function create_lj_map(lj_id, course_id) {
+//      try {
+//        const response = await fetch(`${backendUrl}/${createJourneyMap}/${lj_id}/${course_id}`, {
+//          method: 'POST',
+//          headers: {
+//            'Accept': 'application/json',
+//            'Content-Type': 'application/json',
+//            'Access-Control-Allow-Origin': '*',
+//          },
+//          body: JSON.stringify({
+//            jm_fk_journey_id: lj_id,
+//            jm_fk_course_id: course_id
+//          })
+//        });
+//        const result = await response.json();
+//        return result;
+//      } catch (err) {
+//        console.log(err);
+//      }
+//    }
+
   </script>
   <!-- Javascript-->
   <script src="js/core.min.js"></script>
