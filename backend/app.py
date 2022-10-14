@@ -8,7 +8,9 @@ import json
 # Flask App and DB connection is done here.
 app = Flask(__name__)   
 # ---for windows---
-app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL') or 'mysql+mysqlconnector://root@localhost:3306/LJPS_DB'
+#app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL') or 'mysql+mysqlconnector://root@localhost:3306/LJPS_DB'
+# For connection to online db
+app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL') or 'mysql+mysqlconnector://admin:SoftwareProject@spm.czdb9a0r4ea9.ap-southeast-1.rds.amazonaws.com:3306/LJPS_DB'
 # ---for mac---
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root@localhost:3306/LJPS_DB'
 
@@ -153,16 +155,20 @@ class Skill(db.Model):
 class Journey(db.Model):
     __tablename__ = 'Journey'
     journey_id = db.Column(db.Integer, primary_key=True,nullable=False)
+    journey_name = db.Column(db.String(100), nullable=False)
     journey_status = db.Column(db.String(100), nullable=False)
     j_fk_staff_id = db.Column(db.Integer, nullable=False)
     j_fk_job_role_id = db.Column(db.Integer, nullable=False)
-    def __init__(self, journey_status, j_fk_staff_id, j_fk_job_role_id):
+    def __init__(self, journey_name, journey_status, j_fk_staff_id, j_fk_job_role_id):
+        if not isinstance(journey_name, str):
+            raise TypeError("journey_name must be a string")
         if not isinstance(journey_status, str):
             raise TypeError("journey_status must be a string")
         if not isinstance(j_fk_staff_id, int):
             raise TypeError("j_fk_staff_id must be an integer")
         if not isinstance(j_fk_job_role_id, int):
             raise TypeError("j_fk_job_role_id must be an integer")
+        self.journey_name = journey_name
         self.journey_status = journey_status
         self.j_fk_staff_id = j_fk_staff_id
         self.j_fk_job_role_id = j_fk_job_role_id
@@ -170,6 +176,7 @@ class Journey(db.Model):
     def json(self):
         return  {
             "journey_id": self.journey_id, 
+            "journey_name": self.journey_name,
             "journey_status": self.journey_status, 
             "j_fk_staff_id": self.j_fk_staff_id,
             "j_fk_job_role_id": self.j_fk_job_role_id         
@@ -327,6 +334,37 @@ def getAllJobRole(test_data= ""):
                     "code": 200,
                     "data": 
                     [roles.json() for roles in jobRoles]
+                }
+            )
+
+#Andy to create test case
+#Get all courses
+@app.route("/getAllCourses")
+def getAllCourses(test_data= ""):
+    courses = None
+    if test_data == "":
+        courses = Course.query.all()
+        return jsonify (
+            {
+                "code": 200,
+                "data": 
+                [course.json() for course in courses]
+            }
+        )
+    if test_data != "": 
+        return jsonify(
+                {
+                    "code": 200,
+                    "data": 
+                    [course.json() for course in test_data]
+                }
+            )
+    elif courses != None:
+        return jsonify(
+                {
+                    "code": 200,
+                    "data": 
+                    [course.json() for course in courses]
                 }
             )
 
@@ -567,6 +605,7 @@ def getSkillsForJob(job_role_id, test_data_role_map="", test_data_skill="", test
        }
    ), 404
 
+#Andy to create test case
 #==============================Remove Skill from Job Role===================================
 # Remove a skill from a job role 
 @app.route("/removeSkillFromJobRole/<int:job_role_id>/<int:skill_id>", methods=['DELETE'])
@@ -605,6 +644,44 @@ def del_role(job_role_id,skill_id, test_data="", existing_data=""):
         }
     ), 404
 
+
+#==============================Remove Skill from Course===================================
+# Remove a skill from a course
+@app.route("/removeSkillFromCourse/<int:job_role_id>/<int:skill_id>", methods=['DELETE'])
+def deleteSkillFromCourse(cm_fk_course_id,cm_fk_skill_id, test_data="", existing_data=""):
+    all_courses = None
+    course = None
+    if test_data=="":   
+        course = Course_Map.query.filter_by(cm_fk_course_id=cm_fk_course_id, cm_fk_skill_id=cm_fk_skill_id).first()
+    else:
+        course = test_data
+        all_courses = existing_data
+    if course and test_data=="":
+        db.session.delete(course)
+        db.session.commit()
+        return jsonify(
+            {
+                "code": 200,
+                "message" : "Course removed successfully"
+            }
+        )
+    elif role and test_data!="":
+        for role in all_courses:
+            if course.cm_fk_course_id == cm_fk_course_id and course.cm_fk_skill_id == cm_fk_skill_id:
+                all_courses.remove(course)
+                return jsonify(
+                    {
+                        "code": 200,
+                        "message" : "Course removed successfully"
+                    }
+                )
+    return jsonify(
+        {
+            "code": 404,
+
+            "message": "Course and Skill not found."
+        }
+    ), 404
 
 
  #=======================================================================================Skill-Course Related=======================================================================#  
@@ -647,10 +724,6 @@ def createSkillMap(cm_fk_course_id, cm_fk_skill_id,test_data=""):
                 "message": "Success"
             }
         )
-        
-
-
-
 
 
 # Get skills required for the course using course id
@@ -702,11 +775,6 @@ def getSkillsForCourse(cm_fk_course_id, test_data_role_map="", test_data_skill="
            "message": "No records found."
        }
    ), 404
-
-
-
-
-
 
 
 # Get courses available for the selected skill using skill_id
@@ -1060,7 +1128,9 @@ def createJourney(test_data=""):
         data = request.get_json()
     else:
         data = test_data
-    journey_status, j_fk_staff_id, j_fk_job_role_id = "", "", ""
+    journey_name, journey_status, j_fk_staff_id, j_fk_job_role_id = "", "", "", ""
+    if data['journey_name']:
+        journey_name = data['journey_name']
     if data['journey_status']:
         journey_status = data['journey_status']
     if data['j_fk_staff_id']:
@@ -1069,7 +1139,7 @@ def createJourney(test_data=""):
         j_fk_job_role_id = data['j_fk_job_role_id']
     pass
 
-
+#Andy to create test case
 @app.route("/createJourneyMap/<int:jm_fk_journey_id>/<int:jm_fk_course_id>", methods=['POST'])
 def createJourneyMap(test_data=""):
     data = None
@@ -1107,6 +1177,42 @@ def createJourneyMap(test_data=""):
                 "message": "Success"
             }
         )
+
+
+#Andy to create test case
+@app.route("/deleteJourneyMap/<int:jm_fk_journey_id>/<int:jm_fk_course_id>", methods=['DELETE'])
+def deleteJourneyMap(jm_fk_journey_id,jm_fk_course_id, test_data=""):
+    new_map = None
+    if test_data=="":
+        new_map = Journey_Map.query.filter_by(jm_fk_journey_id = jm_fk_journey_id, jm_fk_course_id = jm_fk_course_id).first()
+    else:
+        new_map = test_data
+    if new_map and test_data == "":
+        db.session.delete(new_map)
+        db.session.commit()
+        return jsonify(
+            {
+                "code": 200,
+                "message" : "Journey Map removed successfully"
+            }
+        )
+    elif new_map and test_data != "":
+        for i in new_map:
+            if i.jm_fk_journey_id == jm_fk_journey_id and i.jm_fk_course_id == jm_fk_course_id :
+                new_map.remove(i)
+                break
+        return jsonify(
+            {
+                "code": 200,
+                "message" : "Journey Map removed successfully"
+            }
+        )
+    return jsonify(
+        {
+            "code": 404,
+            "message": "Journey Map not found."
+        }
+    ), 404
 
 #Run flask app
 if __name__ == "__main__":

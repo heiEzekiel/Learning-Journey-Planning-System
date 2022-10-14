@@ -235,9 +235,10 @@ def test_class_journey_success():
     """
     GIVEN a Journey model
     WHEN a new Journey is created
-    THEN check the journey_status, j_fk_staff_id, j_fk_job_role_id are defined correctly
+    THEN check the journey_name, journey_status, j_fk_staff_id, j_fk_job_role_id are defined correctly
     """
-    journey = Journey(journey_status="1", j_fk_staff_id=1, j_fk_job_role_id=1)
+    journey = Journey(journey_name = "1",journey_status="1", j_fk_staff_id=1, j_fk_job_role_id=1)
+    assert journey.journey_name == "1"
     assert journey.journey_status == "1"
     assert journey.j_fk_staff_id == 1
     assert journey.j_fk_job_role_id == 1
@@ -249,7 +250,7 @@ def test_class_journey_fail():
     THEN check the journey_status is an valid string
     """
     with pytest.raises(TypeError):
-        Journey(journey_status=1, j_fk_staff_id=1, j_fk_job_role_id=1)
+        Journey(journey_name = "1",journey_status=1, j_fk_staff_id=1, j_fk_job_role_id=1)
 
 def test_class_journey_fail1():
     """
@@ -258,7 +259,7 @@ def test_class_journey_fail1():
     THEN check the j_fk_staff_id is an valid string
     """
     with pytest.raises(TypeError):
-        Journey(journey_status="1", j_fk_staff_id="1", j_fk_job_role_id=1)
+        Journey(journey_name = "1",journey_status="1", j_fk_staff_id="1", j_fk_job_role_id=1)
 
 def test_class_journey_fail2():
     """
@@ -267,7 +268,7 @@ def test_class_journey_fail2():
     THEN check the j_fk_job_role_id is an valid string
     """
     with pytest.raises(TypeError):
-        Journey(journey_status="1", j_fk_staff_id=1, j_fk_job_role_id="1")
+        Journey(journey_name = "1",journey_status="1", j_fk_staff_id=1, j_fk_job_role_id="1")
 
 #-------------------------test class Journey_Map---------------------------
 def test_class_journey_map_success():
