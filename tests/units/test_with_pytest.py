@@ -1,7 +1,8 @@
 from backend.app import Job_Role, Role_Map, Course_Map, Course, Skill, Journey, Journey_Map, \
 deleteRole, create_job_role, getSpecificJobRole, getSkillsForJob, updateRole, createSkills, \
 getAllJobRole, getskills, updateSkill, createRoleMap, del_role, getCoursesForSkill, getSkillID, \
-getSkillById, getSkillById, deleteSkill, createJourneyMap
+getSkillById, getSkillById, deleteSkill, createJourneyMap, getAllCourses, deleteSkillFromCourse, \
+createSkillMap, getSkillsForCourse, deleteJourneyMap, createJourney\
     
 from flask import Flask
 import json
@@ -364,6 +365,38 @@ def test_view_job_role_success():
             assert result_data.json['data'][i]['job_role_name'] == test_data[i][0]
             assert result_data.json['data'][i]['job_role_desc'] == test_data[i][1]
             assert result_data.json['data'][i]['job_role_status'] == test_data[i][2]
+
+#----------------------test function getAllCourses----------------------
+def test_getAllCourses_success():
+    """
+    GIVEN a function getAllCourses
+    WHEN get all courses
+    THEN check the courses are retrieved successfully
+    """
+    test_data = [
+        ['COR5001', 'Introduction to Python', 'Python is a programming language', '0', 'Online', 'Programming'],
+        ['COR5002', 'Introduction to Java', 'Java is a programming language', '0', 'Online', 'Programming'],
+        ['COR5003', 'Introduction to C++', 'C++ is a programming language', '0', 'Online', 'Programming']
+    ]
+
+    app = Flask(__name__)
+
+    with app.app_context():
+        result_data = getAllCourses([ 
+            Course(test_data[0][0], test_data[0][1], test_data[0][2], test_data[0][3], test_data[0][4], test_data[0][5]),
+            Course(test_data[1][0], test_data[1][1], test_data[1][2], test_data[1][3], test_data[1][4], test_data[1][5]),
+            Course(test_data[2][0], test_data[2][1], test_data[2][2], test_data[2][3], test_data[2][4], test_data[2][5])
+        ])
+
+        assert result_data.json['code'] == 200
+        assert len(result_data.json['data']) == 3
+        for i in range(len(test_data)):
+            assert result_data.json['data'][i]['course_id'] == test_data[i][0]
+            assert result_data.json['data'][i]['course_name'] == test_data[i][1]
+            assert result_data.json['data'][i]['course_desc'] == test_data[i][2]
+            assert result_data.json['data'][i]['course_status'] == test_data[i][3]
+            assert result_data.json['data'][i]['course_type'] == test_data[i][4]
+            assert result_data.json['data'][i]['course_category'] == test_data[i][5]
     
 #----------------------test function updateRole----------------------
 def test_update_role_success():
@@ -710,7 +743,22 @@ def test_delete_skill_success():
 
 #-------------------------test function createJourney-----------------------------------
 def test_create_journey_success():
-    pass
+    """
+    GIVEN a Journey model
+    WHEN a new Journey is created
+    THEN check the journey_status, journey_name, j_fk_staff_id, j_fk_job_role_id are defined correctly
+    """
+    app = Flask(__name__)
+
+    test_data = {
+        "journey_name": "Python",
+        "journey_desc": "Python is a programming language",
+        "journey_status": 0
+    }
+
+    with app.app_context():
+        result_data = createJourney(test_data)
+        assert result_data.json['code'] == 200
 
 #-------------------------test function createJourneyMap-----------------------------------
 def test_create_journey_map_success():
@@ -731,5 +779,77 @@ def test_create_journey_map_success():
         assert result_data.json['data']['jm_fk_course_id'] == "1"
         assert result_data.json['message'] == 'Success'
 
+#-------------------------test function createSkillMap-----------------------------------
+def test_create_skill_map_success():
+    """
+    GIVEN a Course_Map model
+    WHEN a new Course_Map is created
+    THEN check the cm_fk_course_id and cm_fk_skill_id are defined correctly
+    """
+    app = Flask(__name__)
 
+    course_map = Course_Map(cm_fk_course_id='1', cm_fk_skill_id=1)
+
+    with app.app_context():
+        result_data = createSkillMap(None,None,course_map)
+        assert result_data.json['code'] == 201
+        assert result_data.json['data']['cm_fk_course_id'] == '1'
+        assert result_data.json['data']['cm_fk_skill_id'] == 1
+        assert result_data.json['message'] == 'Success'
+
+#-------------------------test function getSkillsForCourse-----------------------------------
+def test_get_skills_for_course_success():
+    """
+    GIVEN a Course_Map model
+    WHEN a new Course_Map is created
+    THEN check the cm_fk_course_id and cm_fk_skill_id are defined correctly
+    """
+    app = Flask(__name__)
+
+    course_map = [
+        Course_Map(cm_fk_course_id='1', cm_fk_skill_id=1),
+        Course_Map(cm_fk_course_id='1', cm_fk_skill_id=2),
+        Course_Map(cm_fk_course_id='1', cm_fk_skill_id=3)
+    ]
+    skill1 = Skill(skill_name="Java", skill_desc="Java is a programming language", skill_status=1)
+    skill1.skill_id = 1
+    skill2 = Skill(skill_name="Python", skill_desc="Python is a programming language", skill_status=1)
+    skill2.skill_id = 2
+    skill3 = Skill(skill_name="C sharp", skill_desc="C sharp is a programming language", skill_status=1)
+    skill3.skill_id = 3
+    skills = [
+        skill1,
+        skill2,
+        skill3
+    ]
+    with app.app_context():
+        result_data = getSkillsForCourse('1',course_map, skills)
+        assert result_data.json[0]['code'] == 200
+
+#-------------------------test function deleteJourneyMap-----------------------------------
+def test_delete_journey_map_success():
+    """
+    GIVEN a Journey_Map model
+    WHEN a new Journey_Map is deleted
+    THEN check the journey_status is changed to 1
+    """
+    app = Flask(__name__)
+    test_data_journey_map1 = Journey_Map(jm_fk_journey_id=1, jm_fk_course_id="1")
+    test_data_journey_map1.jm_id = 1
+    test_data_journey_map2 = Journey_Map(jm_fk_journey_id=2, jm_fk_course_id="2")
+    test_data_journey_map2.jm_id = 2
+    test_data_journey_map3 = Journey_Map(jm_fk_journey_id=3, jm_fk_course_id="3")
+    test_data_journey_map3.jm_id = 3
+
+    test_data_existing=[
+        test_data_journey_map1,
+        test_data_journey_map2,
+        test_data_journey_map3
+    ]
+
+    with app.app_context():
+        result_data = deleteJourneyMap(1, "1", test_data_existing)
+        assert result_data.status_code == 200
+        assert result_data.get_json()['code'] == 200
+        assert result_data.get_json()['message'] == 'Journey Map removed successfully'
 

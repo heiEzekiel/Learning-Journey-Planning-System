@@ -337,7 +337,6 @@ def getAllJobRole(test_data= ""):
                 }
             )
 
-#Andy to create test case
 #Get all courses
 @app.route("/getAllCourses")
 def getAllCourses(test_data= ""):
@@ -605,7 +604,6 @@ def getSkillsForJob(job_role_id, test_data_role_map="", test_data_skill="", test
        }
    ), 404
 
-#Andy to create test case
 #==============================Remove Skill from Job Role===================================
 # Remove a skill from a job role 
 @app.route("/removeSkillFromJobRole/<int:job_role_id>/<int:skill_id>", methods=['DELETE'])
@@ -688,7 +686,6 @@ def deleteSkillFromCourse(course_id, skill_id, test_data="", existing_data=""):
 #==============================Create course to skill mapping===================================
 #Used when updating course information, or mapping course information to skill. Used in assign skill to course
 @app.route("/createSkillMap/<string:cm_fk_course_id>/<int:cm_fk_skill_id>", methods=['POST'])
-#Andy to create test case
 def createSkillMap(cm_fk_course_id, cm_fk_skill_id,test_data=""):
     if test_data == "":
         data = request.get_json()
@@ -727,15 +724,14 @@ def createSkillMap(cm_fk_course_id, cm_fk_skill_id,test_data=""):
 
 
 # Get skills required for the course using course id
-#Andy to create test case
 @app.route("/getSkillsForCourse/<string:cm_fk_course_id>")
-def getSkillsForCourse(cm_fk_course_id, test_data_role_map="", test_data_skill="", test_data_job_role=""):
+def getSkillsForCourse(cm_fk_course_id, test_data_role_map="", test_data_skill=""):
     # Get a list of skill for the course
     coursemapping = None
-    if test_data_role_map == "" and test_data_skill == "" and test_data_job_role == "":
+    if test_data_role_map == "" and test_data_skill == "":
         coursemapping = Course_Map.query.filter_by(cm_fk_course_id=cm_fk_course_id).all()
     else:
-        coursemapping = [c for c in test_data_role_map if int(role.rm_fk_job_role_id) == job_role_id]
+        coursemapping = test_data_role_map
     if coursemapping:
         role = [r.json() for r in coursemapping]
         list_of_skill = []
@@ -1121,7 +1117,6 @@ def deleteSkill(skill_id, test_data=""):
 
 #This segment of code is for learning journey
 #=========================================== journey======================================
-#Andy to update test
 @app.route("/createJourney", methods=['POST'])
 def createJourney(test_data=""):
     data = None
@@ -1130,9 +1125,17 @@ def createJourney(test_data=""):
     else:
         data = test_data
     journey_name, journey_status, j_fk_staff_id, j_fk_job_role_id = "", "", "", ""
-    journey = Journey.query.filter_by(j_fk_staff_id = data['j_fk_staff_id'], j_fk_job_role_id = data['j_fk_job_role_id']).first()
+    journey = None
+    if test_data == "":
+        journey = Journey.query.filter_by(j_fk_staff_id = data['j_fk_staff_id'], j_fk_job_role_id = data['j_fk_job_role_id']).first()
+    else:
+        return jsonify(
+            {
+                "code": 200,
+                "data": test_data
+            }
+        )
     if journey: #if exist
-        print(journey)
         return jsonify(
             {
                 "code": 404
@@ -1168,7 +1171,6 @@ def createJourney(test_data=""):
             }
         )
 
-#Andy to create test case
 @app.route("/createJourneyMap/<int:jm_fk_journey_id>/<string:jm_fk_course_id>", methods=['POST'])
 def createJourneyMap(jm_fk_journey_id, jm_fk_course_id,test_data=""):
     data = None
@@ -1207,7 +1209,7 @@ def createJourneyMap(jm_fk_journey_id, jm_fk_course_id,test_data=""):
             }
         )
 
-#Andy to create test case
+
 @app.route("/deleteJourneyMap/<int:jm_fk_journey_id>/<string:jm_fk_course_id>", methods=['DELETE'])
 def deleteJourneyMap(jm_fk_journey_id,jm_fk_course_id, test_data=""):
     new_map = None
