@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html class="wide wow-animation" lang="en">
+  <head>
+    <title>Skills required for role</title>
+    <meta name="format-detection" content="telephone=no" />
+    <meta
+      name="viewport"
+      content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="utf-8" />
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+    <!-- Stylesheets-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="//fonts.googleapis.com/css?family=Poppins:400,500,600%7CTeko:300,400,500%7CMaven+Pro:500"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../css/fonts.css" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/index.css" />
+  
+  </head>
+
+  <body>
+    <div class="preloader">
+      <div class="preloader-body">
+        <div class="cssload-container"></div>
+      </div>
+    </div>
+    <div class="page">
+      <div id="home">
+        <!-- Page Header-->
+        <header class="section page-header">
+          <!-- RD Navbar-->
+          <div class="rd-navbar-wrap">
+            <nav
+              class="rd-navbar rd-navbar-classic"
+              data-layout="rd-navbar-fixed"
+              data-sm-layout="rd-navbar-fixed"
+              data-md-layout="rd-navbar-fixed"
+              data-md-device-layout="rd-navbar-fixed"
+              data-lg-layout="rd-navbar-static"
+              data-lg-device-layout="rd-navbar-fixed"
+              data-xl-layout="rd-navbar-static"
+              data-xl-device-layout="rd-navbar-static"
+              data-xxl-layout="rd-navbar-static"
+              data-xxl-device-layout="rd-navbar-static"
+              data-lg-stick-up-offset="46px"
+              data-xl-stick-up-offset="46px"
+              data-xxl-stick-up-offset="46px"
+              data-lg-stick-up="true"
+              data-xl-stick-up="true"
+              data-xxl-stick-up="true"
+            >
+              <div class="rd-navbar-main-outer">
+                <div class="rd-navbar-main">
+                  <!-- RD Navbar Panel-->
+                  <div class="rd-navbar-panel">
+                    <!-- RD Navbar Toggle-->
+                    <button
+                      class="rd-navbar-toggle"
+                      data-rd-navbar-toggle=".rd-navbar-nav-wrap"
+                    >
+                      <span></span>
+                    </button>
+                    <!-- RD Navbar Brand-->
+                    <div class="rd-navbar-brand">
+                      <a class="brand" href="index.html">
+                        <h3 style="margin-left: 80px">LJPS</h3>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="rd-navbar-main-element">
+                    <div class="rd-navbar-nav-wrap">
+                      <ul class="rd-navbar-nav">
+  
+                        <li class="rd-nav-item">
+                          <a class="rd-nav-link" href="learner_profile.html">Profile</a>
+                        </li>
+  
+                        <li class="rd-nav-item">
+                          <a class="rd-nav-link" href="">Start Learning Journey</a>
+                        </li>
+  
+                        <li class="rd-nav-item active">
+                          <a
+                            class="rd-nav-link text-decoration-none"
+                            href="learner_view_roles.html"
+                            >Roles</a
+                          >
+                        </li>
+                        <li class="rd-nav-item">
+                          <a
+                            class="rd-nav-link text-decoration-none"
+                            href="skills.html"
+                            >Skills</a
+                          >
+                        </li>
+                        <li class="rd-nav-item">
+                          <a
+                            class="rd-nav-link text-decoration-none"
+                            href="view_course.html"
+                            >Courses</a
+                          >
+                        </li>
+                  
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </header>
+      </div>
+      <!-- Main content starts here  -->
+      <div class="container mt-3 mb-5">
+        <h3 id="title">List of skills</h3>
+        <div class="d-flex justify-content-end mt-3">
+          <!-- Button trigger modal -->
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            id="modal_btn"
+          >
+            Add to Learning Journey
+          </button>
+          <!-- Modal -->
+          <div
+            class="modal fade"
+            id="exampleModal"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">
+                    Create Learning Journey
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <div class="form-outline">
+                    <label for="skillName">Learning Journey Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="learningJourneyName"
+                      placeholder="Enter name"
+                      required
+                    />
+                  </div>
+                  <div id="modal_courses"></div>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    onclick="create_lj()"
+                  >
+                    Create
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="job_skills"></div>
+      </div>
+    </div>
+    <script>
+      backendUrl = "http://127.0.0.1:5000";
+      const getSkillsForJob = "getSkillsForJob";
+      const getCourse = "getCoursesForSkill";
+      const createJourney = "createJourney";
+      const createJourneyMap = "createJourneyMap";
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      const job = urlParams.get("job");
+      var id = parseInt(urlParams.get("id"));
+      async function getRoleSkills(id, job) {
+        const response = await fetch(`${backendUrl}/${getSkillsForJob}/${id}`)
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data[0].data);
+            // console.log(JSON.parse(JSON.stringify(data.data)));
+            result = JSON.parse(JSON.stringify(data[0].data));
+            document.getElementById("title").innerHTML =
+              "List of skills for " + job;
+            message_str = `
+            <table class="table borderless table-hover mt-5" id="table">
+              <thead>
+                <tr class="bg-light">
+                <th>Skill Name</th>
+                <th>Skill Description</th>
+                <th>Courses</th>
+                </tr>
+              </thead>
+              <tbody>
+            `;
+            for (const skill of result) {
+              message_str += `
+              <tr>
+								<th scope="row">${skill[0]}</th>
+								<td>${skill[1]}</td>
+                `;
+              getCourses(skill[2], message_str);
+            }
+            return data.data;
+          })
+          .catch((error) => {
+            // Errors when calling the service; such as network error,
+            // service offline, etc
+            console.log(error);
+          });
+      }
+      getRoleSkills(id, job);
+
+      async function getCourses(id, msg_str) {
+        const response = await fetch(`${backendUrl}/${getCourse}/${id}`)
+          .then((response) => response.json())
+          .then((data) => {
+            // result =JSON.parse(JSON.stringify(data.data.skill))
+            console.log(data[0].data);
+            result = JSON.parse(JSON.stringify(data[0].data));
+            msg_str += `<td class="h-25 overflow-scroll">`;
+            for (var i = 0; i < result.length; i++) {
+              //console.log(result[i]['course_name'])
+              msg_str += `
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="${result[i]["course_id"]}?${result[i]["course_name"]}">
+                  <label class="form-check-label">
+                    ${result[i]["course_name"]}
+                  </label>
+                </div>
+                <br>
+              `;
+            }
+            msg_str += `</td>
+                    </tbody>
+                  </table>`;
+
+            document.getElementById("job_skills").innerHTML = msg_str;
+            return data.data;
+          })
+          .catch((error) => {
+            // Errors when calling the service; such as network error,
+            // service offline, etc
+            console.log(error);
+          });
+      }
+      document.getElementById("modal_btn").onclick = function () {
+        msg_str = `
+      <br>
+      <p class="font-weight-bold">Course Summary
+      <p>
+      <ul>
+      `;
+        checkboxes = document.getElementsByClassName("form-check-input");
+        empty = true;
+        for (i = 0; i < checkboxes.length; i++) {
+          if (checkboxes[i].checked) {
+            empty = false;
+          }
+        }
+        if (!empty) {
+          for (i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+              msg_str += `
+            <li class= 'font-weight-light'>- ${
+              checkboxes[i].value.split("?")[1]
+            }</li>
+            `;
+            }
+          }
+          msg_str += `</ul>`;
+        } else {
+          msg_str += "<p class='text-danger'> No course added</p>";
+        }
+        console.log(checkboxes);
+        document.getElementById("modal_courses").innerHTML = msg_str;
+      };
+
+      async function create_lj() {
+        event.preventDefault();
+        journeyStatus = "In-Progress";
+        staff_id = 140001; //temp
+        lj_name = document.getElementById("learningJourneyName").value;
+        checkboxes = document.getElementsByClassName("form-check-input");
+        empty = true;
+        courses = [];
+        for (i = 0; i < checkboxes.length; i++) {
+          if (checkboxes[i].checked) {
+            courses.push(checkboxes[i].value.split("?")[0]);
+            empty = false;
+          }
+        }
+        if (!empty && lj_name.value != "") {
+          fetch(`${backendUrl}/${createJourney}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              journey_name: lj_name,
+              journey_status: journeyStatus,
+              j_fk_staff_id: staff_id,
+              j_fk_job_role_id: id,
+            }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log(data);
+              if (data.code == 404) {
+                alert("A similar learning journey existed already!");
+              } else {
+                alert("Learning Journey created successfully!");
+                for (i = 0; i < checkboxes.length; i++) {
+                  if (checkboxes[i].checked) {
+                    create_lj_map(data.data.journey_id,checkboxes[i].value.split("?")[0])                   
+                  }
+                }
+              }
+    
+              return data;
+            })
+            .catch((error) => {
+              // Errors when calling the service; such as network error,
+              // service offline, etc
+              console.log(error);
+            });
+        } else {
+          alert("Fill up all inputs!");
+        }
+      }
+
+         async function create_lj_map(lj_id, course_id) {
+           try {
+             const response = await fetch(`${backendUrl}/${createJourneyMap}/${lj_id}/${course_id}`, {
+               method: 'POST',
+               headers: {
+                 'Accept': 'application/json',
+                 'Content-Type': 'application/json',
+                 'Access-Control-Allow-Origin': '*',
+               },
+               body: JSON.stringify({
+                 jm_fk_journey_id: lj_id,
+                 jm_fk_course_id: course_id
+               })
+             });
+             const result = await response.json();
+             return result;
+           } catch (err) {
+             console.log(err);
+           }
+         }
+    </script>
+    <!-- Javascript-->
+    <script src="../js/core.min.js"></script>
+    <script src="../js/script.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </body>
+</html>

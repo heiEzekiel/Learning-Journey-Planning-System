@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="../css/fonts.css">
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/index.css">
+  <link rel="stylesheet" href="../css/ljcss.css">
 </head>
 
 <body>
@@ -76,11 +77,11 @@
                         <a class="rd-nav-link" href="learner_profile.html">Profile</a>
                       </li>
 
-                      <li class="rd-nav-item">
+                      <li class="rd-nav-item active">
                         <a class="rd-nav-link" href="">Start Learning Journey</a>
                       </li>
 
-                      <li class="rd-nav-item active">
+                      <li class="rd-nav-item">
                         <a
                           class="rd-nav-link text-decoration-none"
                           href="learner_view_roles.html"
@@ -114,7 +115,27 @@
     <!-- Main content starts here  -->
     <div class="container mt-3 mb-5">
 
-      <h3>List of roles available</h3>
+      <h3> <span class="text-primary">Step One: </span> Select a job role that interests you</h3>
+      <div class="stepper-wrapper mt-5 text-white">
+        <div class="stepper-item completed">
+          <div class="step-counter">1</div>
+          <div class="step-name text-dark">Choose a job</div>
+        </div>
+        <div class="stepper-item">
+          <div class="step-counter">2</div>
+          <div class="step-name text-dark">View Skill</div>
+        </div>
+        <div class="stepper-item">
+          <div class="step-counter">3</div>
+          <div class="step-name text-dark">Add courses</div>
+        </div>
+
+        <div class="stepper-item">
+          <div class="step-counter">4</div>
+          <div class="step-name text-dark">Complete</div>
+        </div>
+      </div>
+
       <table class="table borderless table-hover mt-5" id="table">
       </table>
 
@@ -148,7 +169,7 @@
                 <tr>
                   <td>${role["job_role_name"]}</td>
                   <td class="text-wrap w-50">${role["job_role_desc"]}</td>
-                  <td> <button type="button" class="btn btn-primary" onClick="location.href='./role_skills.html?job=${role['job_role_name']}&id=${role['job_role_id']}'">View skills</button> </td>
+                  <td> <button type="button" class="btn btn-primary" onClick="location.href='./journey_step_two.html?job=${role['job_role_name']}&id=${role['job_role_id']}'">Select Role</button> </td>
                 </tr>
               </tbody>
               `;
