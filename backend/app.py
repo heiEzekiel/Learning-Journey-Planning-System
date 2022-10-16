@@ -88,7 +88,7 @@ class Course_Map(db.Model):
 
 #Course  Table
 class Course(db.Model):
-    __tablename__ = 'Course'
+    __tablename__ = 'Courses'
     course_id = db.Column(db.String(20), primary_key=True, nullable=False)
     course_name = db.Column(db.String(50), nullable=False)
     course_desc = db.Column(db.String(255), nullable=False)
