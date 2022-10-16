@@ -2,8 +2,8 @@ CREATE DATABASE IF NOT EXISTS `LJPS_DB` DEFAULT CHARACTER SET utf8 COLLATE utf8_
 USE `LJPS_DB`;
 
 #Courses
-DROP TABLE IF EXISTS `Course`;
-CREATE TABLE IF NOT EXISTS `Course` (
+DROP TABLE IF EXISTS `Courses`;
+CREATE TABLE IF NOT EXISTS `Courses` (
   `course_id` VARCHAR(20) NOT NULL,
   `course_name` VARCHAR(50) NOT NULL,
   `course_desc` VARCHAR(255) NOT NULL,
@@ -13,12 +13,12 @@ CREATE TABLE IF NOT EXISTS `Course` (
   PRIMARY KEY (`course_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `Course` (`course_id`, `course_name`, `course_desc`, `course_status`, `course_type`, `course_category`) VALUES
+INSERT INTO `Courses` (`course_id`, `course_name`, `course_desc`, `course_status`, `course_type`, `course_category`) VALUES
 ('COR001', 'Systems Thinking and Design', 'This foundation module aims to introduce students to the fundamental concepts and underlying principles of systems thinking,', 'Active', 'Internal', 'Core'),
 ('COR006', 'Manage Change', 'Identify risks associated with change and develop risk mitigation plans.', 'Retired', 'External', 'Core'),
 ('FIN001', 'Data Collection and Analysis', 'Data is meaningless unless insights and analysis can be drawn to provide useful information for business decision-making. It is imperative that data quality, integrity and security ', 'Active', 'External', 'Finance');
 COMMIT;
-select * from LJPS_DB.Course;
+select * from LJPS_DB.Courses;
 
 #Role
 DROP TABLE IF EXISTS `Role`;
@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `Registration` (
   `reg_status` VARCHAR(20) NOT NULL,
   `completion_status` VARCHAR(20),
   PRIMARY KEY (`reg_id`),
-  CONSTRAINT `course_id` FOREIGN KEY (`course_id`) REFERENCES `Course` (`course_id`)  ON DELETE CASCADE,
+  CONSTRAINT `course_id` FOREIGN KEY (`course_id`) REFERENCES `Courses` (`course_id`)  ON DELETE CASCADE,
   CONSTRAINT `staff_id` FOREIGN KEY (`staff_id`) REFERENCES `Staff` (`staff_id`)  ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -151,7 +151,7 @@ CREATE TABLE IF NOT EXISTS `Journey_Map` (
   `jm_fk_journey_id` INT NOT NULL AUTO_INCREMENT,
   `jm_fk_course_id` VARCHAR(20) NOT NULL,
   CONSTRAINT `jm_fk_journey_id` FOREIGN KEY (`jm_fk_journey_id`) REFERENCES `Journey` (`journey_id`) ON DELETE CASCADE,
-  CONSTRAINT `jm_fk_course_id` FOREIGN KEY (`jm_fk_course_id`) REFERENCES `Course` (`course_id`) ON DELETE CASCADE,
+  CONSTRAINT `jm_fk_course_id` FOREIGN KEY (`jm_fk_course_id`) REFERENCES `Courses` (`course_id`) ON DELETE CASCADE,
   PRIMARY KEY (`jm_fk_journey_id`, `jm_fk_course_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -167,7 +167,7 @@ DROP TABLE IF EXISTS `Course_Map`;
 CREATE TABLE IF NOT EXISTS `Course_Map` (
   `cm_fk_course_id` VARCHAR(20) NOT NULL,
   `cm_fk_skill_id` INT NOT NULL,
-  CONSTRAINT `cm_fk_course_id` FOREIGN KEY (`cm_fk_course_id`) REFERENCES `Course` (`course_id`) ON DELETE CASCADE,
+  CONSTRAINT `cm_fk_course_id` FOREIGN KEY (`cm_fk_course_id`) REFERENCES `Courses` (`course_id`) ON DELETE CASCADE,
   CONSTRAINT `cm_fk_skill_id` FOREIGN KEY (`cm_fk_skill_id`) REFERENCES `Skill` (`skill_id`) ON DELETE CASCADE,
   PRIMARY KEY (`cm_fk_course_id`, `cm_fk_skill_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
