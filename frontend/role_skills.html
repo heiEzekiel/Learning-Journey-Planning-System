@@ -148,13 +148,8 @@
             for (var i = 0; i < result.length; i++) {
               console.log(result[i]['course_name'])
               msg_str += `
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value=" ${result[i]['course_id']}" id="course">
-                    <label class="form-check-label" for="flexCheckDefault">
-                      ${result[i]['course_name']}
-                    </label>
-                  </div>
-                  <br>
+                      ${i+1}. ${result[i]['course_name']}
+                      <br>
                 `
   
             }
