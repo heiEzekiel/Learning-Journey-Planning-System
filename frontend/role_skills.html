@@ -100,15 +100,14 @@
           // console.log(JSON.parse(JSON.stringify(data.data)));
           result = JSON.parse(JSON.stringify(data[0].data));
           document.getElementById('title').innerHTML = "List of skills for " + job
-          message_str = `
-            
+          message_str = `  
             <br>
             <table class="table borderless table-hover mt-5" id="table">
               <thead>
                 <tr class="bg-light">
                 <th>Skill Name</th>
-                <th>Skill Description</th>
-                <th>Courses</th>
+                <th class="w-50">Skill Description</th>
+                <th class="w-25">Courses</th>
                 </tr>
               </thead>
               <tbody>
@@ -116,14 +115,7 @@
           if (result== "No records found"){
             document.getElementById("job_skills").innerHTML= `<h5 class ="text-danger mt-5">No Skills found</h5>`
           }else{
-            for (const skill of result) {
-              message_str += `
-                <tr>
-                  <th scope="row">${skill[0]}</th>
-                  <td>${skill[1]}</td>
-                  `
-              getCourses(skill[2], message_str)
-            }
+            getCourses(result, message_str)
           }
           return data.data;
         })
@@ -136,8 +128,14 @@
     getRoleSkills(id, job)
 
 
-    async function getCourses(id, msg_str) {
-      const response = await fetch(`${backendUrl}/${getCourse}/${id}`)
+    async function getCourses(skills, msg_str) {
+      for (skill of skills){
+        msg_str += `
+        <tr class="border border-bottom ">
+          <th scope="row">${skill[0]}</th>
+          <td>${skill[1]}</td>
+          `
+        const response = await fetch(`${backendUrl}/${getCourse}/${skill[2]}`)
         .then((response) => response.json())
         .then((data) => {
           //result =JSON.parse(JSON.stringify(data.data.skill))
@@ -156,11 +154,7 @@
           }else{
             msg_str += '<span class="text-danger">No courses available</span>'
           }
-          msg_str += `</td>
-                    </tbody>
-                  </table>`
-
-          document.getElementById("job_skills").innerHTML = msg_str;
+          msg_str += `</td>`
           return data.data;
         })
         .catch((error) => {
@@ -168,7 +162,16 @@
           // service offline, etc
           console.log(error);
         });
+        
+      }
+      msg_str += `
+          </tbody>
+        </table>
+      `
+      document.getElementById("job_skills").innerHTML= msg_str
+      
     }
+
   </script>
   <!-- Javascript-->
   <script src="js/core.min.js"></script>

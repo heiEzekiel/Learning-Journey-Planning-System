@@ -123,7 +123,7 @@
       </div>
       <!-- Main content starts here  -->
       <div class="container mt-3 mb-5">
-        <h3> <span class="text-primary">Step Two: </span> View skill and add course</h3>
+        <h3> <span class="text-primary">Step Three: </span> View skill and add course</h3>
         <div class="stepper-wrapper mt-5 text-white">
           <div class="stepper-item completed">
             <div class="step-counter">1</div>
@@ -230,25 +230,21 @@
             console.log(data[0].data);
             // console.log(JSON.parse(JSON.stringify(data.data)));
             result = JSON.parse(JSON.stringify(data[0].data));
-           
             message_str = `
-            <table class="table borderless table-hover mt-5" id="table">
-              <thead>
-                <tr class="bg-light">
-                <th>Skill Name</th>
-                <th>Skill Description</th>
-                <th>Courses</th>
-                </tr>
-              </thead>
-              <tbody>
-            `;
-            for (const skill of result) {
-              message_str += `
-              <tr>
-								<th scope="row">${skill[0]}</th>
-								<td>${skill[1]}</td>
-                `;
-              getCourses(skill[2], message_str);
+              <table class="table borderless table-hover mt-5" id="table">
+                <thead>
+                  <tr class="bg-light">
+                  <th>Skill Name</th>
+                  <th class="w-50">Skill Description</th>
+                  <th class="w-25">Courses</th>
+                  </tr>
+                </thead>
+                <tbody>
+              `;
+            if (result == "No records found") {
+              document.getElementById("job_skills").innerHTML = `<h5 class ="text-danger mt-5">No Skills found</h5>`
+            } else {
+              getCourses(result, message_str)
             }
             return data.data;
           })
@@ -259,32 +255,37 @@
           });
       }
       getRoleSkills(id, job);
-
-      async function getCourses(id, msg_str) {
-        const response = await fetch(`${backendUrl}/${getCourse}/${id}`)
+  
+      async function getCourses(skills, msg_str) {
+        for (skill of skills){
+          msg_str += `
+          <tr class="border border-bottom ">
+            <th scope="row">${skill[0]}</th>
+            <td>${skill[1]}</td>
+            `
+          const response = await fetch(`${backendUrl}/${getCourse}/${skill[2]}`)
           .then((response) => response.json())
           .then((data) => {
-            // result =JSON.parse(JSON.stringify(data.data.skill))
+            //result =JSON.parse(JSON.stringify(data.data.skill))
             console.log(data[0].data);
             result = JSON.parse(JSON.stringify(data[0].data));
-            msg_str += `<td class="h-25 overflow-scroll">`;
-            for (var i = 0; i < result.length; i++) {
-              //console.log(result[i]['course_name'])
-              msg_str += `
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="${result[i]["course_id"]}?${result[i]["course_name"]}">
-                  <label class="form-check-label">
+            msg_str += `<td>`
+            if (result !="No records found."){
+              for (var i = 0; i < result.length; i++) {
+                console.log(result[i]['course_name'])
+                msg_str += `
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="${result[i]["course_id"]}?${result[i]["course_name"]}">
                     ${result[i]["course_name"]}
-                  </label>
-                </div>
-                <br>
-              `;
+                  </div>
+                  <br>
+                  `
+    
+              }
+            }else{
+              msg_str += '<span class="text-danger">No courses available</span>'
             }
-            msg_str += `</td>
-                    </tbody>
-                  </table>`;
-
-            document.getElementById("job_skills").innerHTML = msg_str;
+            msg_str += `</td>`
             return data.data;
           })
           .catch((error) => {
@@ -292,14 +293,22 @@
             // service offline, etc
             console.log(error);
           });
+          
+        }
+        msg_str += `
+            </tbody>
+          </table>
+        `
+        document.getElementById("job_skills").innerHTML= msg_str
+        
       }
       document.getElementById("modal_btn").onclick = function () {
         msg_str = `
-      <br>
-      <p class="font-weight-bold">Course Summary
-      <p>
-      <ul>
-      `;
+        <br>
+        <p class="font-weight-bold">Course Summary
+        <p>
+        <ul>
+        `;
         checkboxes = document.getElementsByClassName("form-check-input");
         empty = true;
         for (i = 0; i < checkboxes.length; i++) {
@@ -307,14 +316,17 @@
             empty = false;
           }
         }
+        tempList = []
         if (!empty) {
           for (i = 0; i < checkboxes.length; i++) {
             if (checkboxes[i].checked) {
-              msg_str += `
-            <li class= 'font-weight-light'>- ${
-              checkboxes[i].value.split("?")[1]
-            }</li>
-            `;
+              if (tempList.indexOf(checkboxes[i].value.split("?")[1]) == -1) {
+                tempList.push(checkboxes[i].value.split("?")[1])
+                msg_str += `
+                    <li class= 'font-weight-light'>- ${checkboxes[i].value.split("?")[1]
+                  }</li>
+                    `;
+              }
             }
           }
           msg_str += `</ul>`;
@@ -324,7 +336,7 @@
         console.log(checkboxes);
         document.getElementById("modal_courses").innerHTML = msg_str;
       };
-
+  
       async function create_lj() {
         event.preventDefault();
         journeyStatus = "In-Progress";
@@ -335,7 +347,9 @@
         courses = [];
         for (i = 0; i < checkboxes.length; i++) {
           if (checkboxes[i].checked) {
-            courses.push(checkboxes[i].value.split("?")[0]);
+            if (courses.indexOf(checkboxes[i].value.split("?")[0]) == -1){
+              courses.push(checkboxes[i].value.split("?")[0]);
+            }
             empty = false;
           }
         }
@@ -361,11 +375,11 @@
                 alert("Learning Journey created successfully!");
                 for (i = 0; i < checkboxes.length; i++) {
                   if (checkboxes[i].checked) {
-                    create_lj_map(data.data.journey_id,checkboxes[i].value.split("?")[0])                   
+                    create_lj_map(data.data.journey_id, checkboxes[i].value.split("?")[0])
                   }
                 }
               }
-    
+  
               return data;
             })
             .catch((error) => {
@@ -377,27 +391,27 @@
           alert("Fill up all inputs!");
         }
       }
-
-         async function create_lj_map(lj_id, course_id) {
-           try {
-             const response = await fetch(`${backendUrl}/${createJourneyMap}/${lj_id}/${course_id}`, {
-               method: 'POST',
-               headers: {
-                 'Accept': 'application/json',
-                 'Content-Type': 'application/json',
-                 'Access-Control-Allow-Origin': '*',
-               },
-               body: JSON.stringify({
-                 jm_fk_journey_id: lj_id,
-                 jm_fk_course_id: course_id
-               })
-             });
-             const result = await response.json();
-             return result;
-           } catch (err) {
-             console.log(err);
-           }
-         }
+  
+      async function create_lj_map(lj_id, course_id) {
+        try {
+          const response = await fetch(`${backendUrl}/${createJourneyMap}/${lj_id}/${course_id}`, {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': '*',
+            },
+            body: JSON.stringify({
+              jm_fk_journey_id: lj_id,
+              jm_fk_course_id: course_id
+            })
+          });
+          const result = await response.json();
+          return result;
+        } catch (err) {
+          console.log(err);
+        }
+      }
     </script>
     <!-- Javascript-->
     <script src="../js/core.min.js"></script>
