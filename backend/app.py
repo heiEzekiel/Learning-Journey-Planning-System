@@ -1295,18 +1295,10 @@ def createJourneyMap(jm_fk_journey_id, jm_fk_course_id, test_data=""):
 
 
 @app.route("/deleteJourneyMap/<int:jm_fk_journey_id>/<string:jm_fk_course_id>", methods=['DELETE'])
-<<<<<<< HEAD
-def deleteJourneyMap(jm_fk_journey_id, jm_fk_course_id, test_data=""):
-    new_map = None
-    if test_data == "":
-        new_map = Journey_Map.query.filter_by(
-            jm_fk_journey_id=jm_fk_journey_id, jm_fk_course_id=jm_fk_course_id).first()
-=======
 def deleteJourneyMap(jm_fk_journey_id,jm_fk_course_id, test_data=""):
-    del_map = None
+    new_map = None
     if test_data=="":
-        del_map = Journey_Map.query.filter_by(jm_fk_journey_id = jm_fk_journey_id, jm_fk_course_id = jm_fk_course_id).first()
->>>>>>> 234fbcc3ced3c5bee9f45a2f53d5776da43de1e4
+        new_map = Journey_Map.query.filter_by(jm_fk_journey_id = jm_fk_journey_id, jm_fk_course_id = jm_fk_course_id).first()
     else:
         del_map = test_data
     if del_map and test_data == "":
@@ -1318,17 +1310,10 @@ def deleteJourneyMap(jm_fk_journey_id,jm_fk_course_id, test_data=""):
                 "message": "Journey Map removed successfully"
             }
         )
-<<<<<<< HEAD
     elif new_map and test_data != "":
         for i in new_map:
-            if i.jm_fk_journey_id == jm_fk_journey_id and i.jm_fk_course_id == jm_fk_course_id:
-                new_map.remove(i)
-=======
-    elif del_map and test_data != "":
-        for i in del_map:
             if i.jm_fk_journey_id == jm_fk_journey_id and i.jm_fk_course_id == jm_fk_course_id :
-                del_map.remove(i)
->>>>>>> 234fbcc3ced3c5bee9f45a2f53d5776da43de1e4
+                new_map.remove(i)
                 break
         return jsonify(
             {
