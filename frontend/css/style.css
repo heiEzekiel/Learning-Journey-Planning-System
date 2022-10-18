@@ -4033,6 +4033,24 @@ hr {
 	text-transform: uppercase;
 	transition: 0.33s;
 }
+.btn-danger {
+	border-radius: 3px;
+	font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+		"Helvetica Neue", Arial, sans-serif;
+	font-weight: 500;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	transition: 0.33s;
+}
+.btn-success {
+	border-radius: 3px;
+	font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+		"Helvetica Neue", Arial, sans-serif;
+	font-weight: 500;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	transition: 0.33s;
+}
 
 .btn-primary,
 .btn-primary:active,
@@ -21162,72 +21180,68 @@ disabled look for disabled choices in the results dropdown
 	border: none;
 }
 
-
-p{
-    text-align: center;
+p {
+	text-align: center;
 }
 
 #landingpagehead {
-    position: absolute;
-    width: 55%;
-    left: 23%;
-    top: 10vw;
-    font-weight: 700;
-    font-size: 3.9vw;
-    line-height: 5.5vw;
-} 
+	position: absolute;
+	width: 55%;
+	left: 23%;
+	top: 10vw;
+	font-weight: 700;
+	font-size: 3.9vw;
+	line-height: 5.5vw;
+}
 
 #landpagedesc {
-    position: absolute;
-    width: 50%;
-    height: 57px;
-    left: 25%;
-    top: 21vw;
-    font-weight: 400;
-    font-size: 1.5vw;
-    line-height: 2vw;
-} 
+	position: absolute;
+	width: 50%;
+	height: 57px;
+	left: 25%;
+	top: 21vw;
+	font-weight: 400;
+	font-size: 1.5vw;
+	line-height: 2vw;
+}
 
 .button-login {
-    border-radius: 30px;
-    width: 12.5vw;
-    height: 4vw;
-    border:0px;
-    font-size:1.6vw;
-    font-weight: 500;
-  }
+	border-radius: 30px;
+	width: 12.5vw;
+	height: 4vw;
+	border: 0px;
+	font-size: 1.6vw;
+	font-weight: 500;
+}
 
-
-
-  .divider-custom {
+.divider-custom {
 	margin: 1.25rem 0 1.5rem;
 	width: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-  }
-  .divider-custom .divider-custom-line {
+}
+.divider-custom .divider-custom-line {
 	width: 100%;
 	max-width: 7rem;
 	height: 0.25rem;
 	background-color: #2c3e50;
 	border-radius: 1rem;
 	border-color: #2c3e50;
-  }
-  .divider-custom .divider-custom-line:first-child {
+}
+.divider-custom .divider-custom-line:first-child {
 	margin-right: 1rem;
-  }
-  .divider-custom .divider-custom-line:last-child {
+}
+.divider-custom .divider-custom-line:last-child {
 	margin-left: 1rem;
-  }
-  .divider-custom .divider-custom-icon {
+}
+.divider-custom .divider-custom-icon {
 	color: #2c3e50;
 	font-size: 2rem;
-  }
-  .divider-custom.divider-light .divider-custom-line {
+}
+.divider-custom.divider-light .divider-custom-line {
 	background-color: #fff;
-  }
-  .divider-custom.divider-light .divider-custom-icon {
+}
+.divider-custom.divider-light .divider-custom-icon {
 	color: #fff;
-  }
-  
+}
