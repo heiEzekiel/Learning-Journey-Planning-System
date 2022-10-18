@@ -372,12 +372,17 @@
               if (data.code == 404) {
                 alert("A similar learning journey existed already!");
               } else {
-                alert("Learning Journey created successfully!");
+               
                 for (i = 0; i < checkboxes.length; i++) {
                   if (checkboxes[i].checked) {
                     create_lj_map(data.data.journey_id, checkboxes[i].value.split("?")[0])
                   }
                 }
+                alert("Learning Journey created successfully!");
+                window.location.href = "http://www.w3schools.com";
+
+
+
               }
   
               return data;
