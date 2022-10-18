@@ -1253,6 +1253,39 @@ def getJourney(j_fk_staff_id):
             }
         )
 
+@app.route("/deleteJourney/<int:journey_id>", methods=['DELETE'])
+def deleteJourney(journey_id, test_data=""):
+    del_lj = None
+    if test_data == "":
+        del_lj = Journey.query.filter_by(journey_id = journey_id).first()
+    else:
+        del_lj = test_data
+    if del_lj and test_data == "":
+        db.session.delete(del_lj)
+        db.session.commit()
+        return jsonify(
+            {
+                "code": 200,
+                "message" : "Journey removed successfully"
+            }
+        )
+    elif del_lj and test_data != "":
+        for i in del_lj:
+            if i.journey_id == journey_id:
+                del_lj.remove(i)
+                break
+        return jsonify(
+            {
+                "code": 200,
+                "message" : "Journey removed successfully"
+            }
+        )
+    return jsonify(
+        {
+            "code": 404,
+            "message": "Journey not found."
+        }
+    ), 404
 
 @app.route("/createJourneyMap/<int:jm_fk_journey_id>/<string:jm_fk_course_id>", methods=['POST'])
 def createJourneyMap(jm_fk_journey_id, jm_fk_course_id, test_data=""):
