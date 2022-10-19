@@ -32,7 +32,7 @@ async function getLJ(staff_id) {
                 message_str += `                      
                 <div class="card mt-3">
 <div class="card-body">
-  <h5 class="card-title fs-6">Learning Journey ${lj.journey_name}    
+  <h5 class="card-title fs-6 fw-bold">${lj.journey_name}    
   <span  onClick="removeJourney(${lj.journey_id})" class="mt-1 mx-1 btn btn-danger text-white float-end" style="font-size:10px;" >
   Remove learning journey
   </span>
@@ -43,9 +43,9 @@ async function getLJ(staff_id) {
 
 </h5>
   
-<h5 class="text-start"> Skills needed: A,B,C (static)
+<h6 class="text-start"> Skills needed: A,B,C (static)
 
-</h5>
+</h6>
 
 </div>
 </div>`

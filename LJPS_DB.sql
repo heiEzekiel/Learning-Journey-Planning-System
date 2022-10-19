@@ -71,7 +71,11 @@ CREATE TABLE IF NOT EXISTS `Registration` (
 
 INSERT INTO `Registration` (`reg_id`, `course_id`, `staff_id`, `reg_status`, `completion_status`) VALUES
 ('245', 'COR001', '130001', 'Registered', 'Completed'),
-('246', 'COR006', '140001', 'Waitlist', '');
+('246', 'COR006', '140001', 'Rejected', 'Completed'),
+('247', 'COR001', '140001', 'Registered', 'Ongoing'),
+('248', 'FIN001', '140001', 'Registered', 'Ongoing');
+('249', 'COR006', '140001', 'Waitlist', '');
+
 COMMIT;
 select * from LJPS_DB.Registration;
 

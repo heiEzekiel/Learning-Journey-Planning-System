@@ -86,11 +86,11 @@
                           <a class="rd-nav-link" href="learner_profile.html">Profile</a>
                         </li>
   
-                        <li class="rd-nav-item">
+                        <li class="rd-nav-item active">
                           <a class="rd-nav-link" href="">Start Learning Journey</a>
                         </li>
   
-                        <li class="rd-nav-item active">
+                        <li class="rd-nav-item ">
                           <a
                             class="rd-nav-link text-decoration-none"
                             href="learner_view_roles.html"
@@ -123,7 +123,7 @@
       </div>
       <!-- Main content starts here  -->
       <div class="container mt-3 mb-5">
-        <h3> <span class="text-primary">Step Three: </span> View skill and add course</h3>
+        <h3> <span class="text-primary">Step Three: </span> Browse & add courses for <span id="step3"></span></h3>
         <div class="stepper-wrapper mt-5 text-white">
           <div class="stepper-item completed">
             <div class="step-counter">1</div>
@@ -223,6 +223,7 @@
       const urlParams = new URLSearchParams(queryString);
       const job = urlParams.get("job");
       var id = parseInt(urlParams.get("id"));
+      document.getElementById("step3").innerHTML+=job;
       async function getRoleSkills(id, job) {
         const response = await fetch(`${backendUrl}/${getSkillsForJob}/${id}`)
           .then((response) => response.json())
