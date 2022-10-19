@@ -213,6 +213,9 @@ CREATE TABLE IF NOT EXISTS `Skill_Map` (
 INSERT INTO `Skill_Map` (`sm_fk_skill_id`, `sm_fk_staff_id`) VALUES
 ('501','130001'),
 ('502','130001'),
-('501','140001');
+('501','140001'),
+('502','140001'),
+('503','140001'),
+('504','140001');
 COMMIT;
 select * from LJPS_DB.Skill_Map;

@@ -95,6 +95,29 @@ class Course_Map(db.Model):
             "cm_fk_skill_id": self.cm_fk_skill_id
         }
 
+
+# Course Map Table
+
+#Andy to test this new DB
+class Skill_Map(db.Model):
+    __tablename__ = 'skill_map'
+    sm_fk_skill_id = db.Column(
+        db.Integer, primary_key=True, nullable=False)
+    sm_fk_staff_id = db.Column(db.Integer, primary_key=True, nullable=False)
+    def __init__(self, sm_fk_skill_id, sm_fk_staff_id):
+        if not isinstance(sm_fk_skill_id, int):
+            raise TypeError("sm_fk_skill_id must be a integer")
+        if not isinstance(sm_fk_staff_id, int):
+            raise TypeError("sm_fk_staff_id must be a integer")
+        self.sm_fk_skill_id = sm_fk_skill_id
+        self.sm_fk_staff_id = sm_fk_staff_id
+
+    def json(self):
+        return {
+            "sm_fk_skill_id": self.sm_fk_skill_id,
+            "sm_fk_staff_id": self.sm_fk_staff_id
+        }
+
 # Course  Table
 
 
@@ -222,6 +245,33 @@ class Journey_Map(db.Model):
             "jm_fk_journey_id": self.jm_fk_journey_id,
             "jm_fk_course_id": self.jm_fk_course_id
         }
+
+
+# Registration Table
+class Registration(db.Model):
+    #Andy test case
+    __tablename__ = 'registration'
+    reg_id = db.Column(db.Integer, primary_key=True, nullable=False)
+    course_id = db.Column(db.String(20), nullable=False)
+    staff_id = db.Column(db.Integer, nullable=False)
+    reg_status = db.Column(db.String(20), nullable=False)
+    completion_status = db.Column(db.String(20), nullable=False)
+
+    def __init__(self, course_id, staff_id, reg_status,completion_status):
+      
+        self.course_id = course_id
+        self.staff_id = staff_id
+        self.reg_status = reg_status
+        self.completion_status = completion_status
+
+    def json(self):
+        return {
+            "course_id": self.course_id,
+            "staff_id": self.staff_id,
+            "reg_status": self.reg_status,
+            "completion_status": self.completion_status
+        }
+
 
 
 @app.route("/")
@@ -1326,7 +1376,6 @@ def createJourneyMap(jm_fk_journey_id, jm_fk_course_id, test_data=""):
             }
         )
 
-
 @app.route("/deleteJourneyMap/<int:jm_fk_journey_id>/<string:jm_fk_course_id>", methods=['DELETE'])
 def deleteJourneyMap(jm_fk_journey_id,jm_fk_course_id, test_data=""):
     del_map = None
@@ -1395,6 +1444,51 @@ def getJourneyMaps(test_data=""):
         )
 
 
+# =================================Course Registration Related ===============================
+#Get courses of each staff
+#Andy add test case
+@app.route("/getCourseReg/<int:staff_id>")
+def getCoursesRegistration(staff_id):
+
+    cs_reg = Registration.query.filter_by(staff_id=staff_id).all()
+    if cs_reg:
+        return jsonify(
+            {
+                "code": 200,
+                "data": [jn.json() for jn in cs_reg]
+            }
+        )
+    else:
+        return jsonify(
+            {
+                "code": 404,
+                "message": "There are no records found."
+            }
+        )
+#========================================End========================================
+
+
+# =================================Skill Map Related ===============================
+#Get skills of each staff
+#Andy add test case
+@app.route("/getSkillStaff/<int:sm_fk_staff_id>")
+def getStaffSkills(sm_fk_staff_id):
+    skill = Skill_Map.query.filter_by(sm_fk_staff_id=sm_fk_staff_id).all()
+    if skill:
+        return jsonify(
+            {
+                "code": 200,
+                "data": [s.json() for s in skill]
+            }
+        )
+    else:
+        return jsonify(
+            {
+                "code": 404,
+                "message": "There are no records found."
+            }
+        )
+    
 # Run flask app
 if __name__ == "__main__":
     app.run(debug=True)

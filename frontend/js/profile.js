@@ -1,7 +1,50 @@
 var backendUrl = 'http://127.0.0.1:5000';
 var getJourney = 'getJourney';
 var deleteJourney = 'deleteJourney';
+var getCourse ='getCourseReg'
+var getSkillStaff='getSkillStaff'
 staff_id = 140001 // dynamic later
+
+async function getCoursesRegistration(id){
+  await fetch(`${backendUrl}/${getCourse}/${id}`)
+  .then(response => response.json())
+  .then(data => {
+    records = data.data
+    var complete=0
+    var ongoing=0
+    for (c of records){
+      if (c.completion_status=='Completed'){
+        complete+=1
+      }
+      else if (c.completion_status=='Ongoing'){
+        ongoing+=1
+      }
+    }
+    document.getElementById("completedC").innerText = complete;
+    document.getElementById("ongoingC").innerText = ongoing;
+  })
+  .catch(error => {
+      // Errors when calling the service; such as network error, 
+      // service offline, etc
+      console.log(error);
+  });
+}
+
+async function getStaffSkill(id){
+  await fetch(`${backendUrl}/${getSkillStaff}/${id}`)
+  .then(response => response.json())
+  .then(data => {
+    records = data.data
+    var count = (records.length)
+    document.getElementById("skillsattained").innerText = count;
+
+  })
+  .catch(error => {
+      // Errors when calling the service; such as network error, 
+      // service offline, etc
+      console.log(error);
+  });
+}
 
 async function removeJourney(id) {
   fetch(`${backendUrl}/${deleteJourney}/${id}`, {
@@ -26,7 +69,7 @@ async function getLJ(staff_id) {
         .then(response => response.json())
         .then(data => {
             result = JSON.parse(JSON.stringify(data.data))
-            console.log(result)
+          
             var message_str=""
             for (lj of result) {
                 message_str += `                      
@@ -62,3 +105,5 @@ async function getLJ(staff_id) {
 
 
 getLJ(staff_id);
+getCoursesRegistration(staff_id);
+getStaffSkill(staff_id);
