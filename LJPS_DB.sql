@@ -134,8 +134,9 @@ CREATE TABLE IF NOT EXISTS `Journey` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `Journey` (`journey_id`, `journey_name`, `journey_status`, `j_fk_staff_id`, `j_fk_job_role_id`) VALUES
-('701','Learning Journey test','In-Progress','130001','601'),
-('702','Learning Journey testers','In-Progress','140001','602');
+('700','ML Engineer Journey','Completed','140001','605'),
+('701','Software Developer Journey','In-Progress','130001','601'),
+('702','Road to Data Analyst','In-Progress','140001','602');
 COMMIT;
 select * from LJPS_DB.Journey;
 

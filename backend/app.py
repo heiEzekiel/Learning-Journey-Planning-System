@@ -1223,7 +1223,7 @@ def deleteSkill(skill_id, test_data=""):
 
 
 # This segment of code is for learning journey
-# =========================================== journey======================================
+# =========================================== Journey============================================
 @app.route("/createJourney", methods=['POST'])
 def createJourney(test_data=""):
     data = None
@@ -1285,7 +1285,6 @@ def createJourney(test_data=""):
 # Andy add test case
 @app.route("/getJourney/<int:j_fk_staff_id>")
 def getJourney(j_fk_staff_id):
-
     journeys = Journey.query.filter_by(j_fk_staff_id=j_fk_staff_id).all()
 
     if journeys:
