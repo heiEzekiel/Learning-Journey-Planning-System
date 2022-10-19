@@ -238,39 +238,7 @@
             console.log(error);
           });
       }
-      document.getElementById("modal_btn").onclick = function () {
-        msg_str = `
-      <br>
-      <p class="font-weight-bold">Course Summary
-      <p>
-      <ul>
-      `;
-        checkboxes = document.getElementsByClassName("form-check-input");
-        empty = true;
-        for (i = 0; i < checkboxes.length; i++) {
-          if (checkboxes[i].checked) {
-            empty = false;
-          }
-        }
-        if (!empty) {
-          for (i = 0; i < checkboxes.length; i++) {
-            if (checkboxes[i].checked) {
-              msg_str += `
-            <li class= 'font-weight-light'>- ${
-              checkboxes[i].value.split("?")[1]
-            }</li>
-            `;
-            }
-          }
-          msg_str += `</ul>`;
-        } else {
-          msg_str += "<p class='text-danger'> No course added</p>";
-        }
-        console.log(checkboxes);
-        document.getElementById("modal_courses").innerHTML = msg_str;
-      };
-
-     
+    
         
     </script>
     <!-- Javascript-->

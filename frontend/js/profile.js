@@ -67,9 +67,20 @@ async function getLJ(staff_id) {
     await fetch(`${backendUrl}/${getJourney}/${staff_id}`)
     .then(response => response.json())
     .then(data => {
+
+      if (data.code ==404){
+        document.getElementById("no_lj").innerHTML=" <span class=\"text-danger\">No ongoing Learning Journey </span>"
+      }
+
+      else{
+
+     
       result = JSON.parse(JSON.stringify(data.data))
       var count=0
       var message_str = ""
+      
+  
+
       for (lj of result) {
 
         if (lj.journey_status == 'Completed') {
@@ -100,7 +111,7 @@ async function getLJ(staff_id) {
 
       }
       document.getElementById("completedlj").innerText = count
-      document.getElementById("lj").innerHTML += message_str
+      document.getElementById("lj").innerHTML += message_str }
     })
     .catch(error => {
       // Errors when calling the service; such as network error, 
