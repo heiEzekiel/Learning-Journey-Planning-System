@@ -400,13 +400,23 @@ def getAllJobRole(test_data=""):
     jobRoles = None
     if test_data == "":
         jobRoles = Job_Role.query.all()
-        return jsonify(
-            {
-                "code": 200,
-                "data":
-                [r.json() for r in jobRoles]
-            }
-        )
+        if jobRoles:
+            return jsonify(
+                {
+                    "code": 200,
+                    "data":
+                    [r.json() for r in jobRoles]
+                }
+            )
+        else:
+                        return jsonify(
+                {
+                    "code": 404,
+                    "data": 'No records found'
+                   
+                }
+            )
+            
     if test_data != "":
         return jsonify(
             {
@@ -990,16 +1000,8 @@ def getskills(test_data=""):
     skills = None
     if test_data == "":
         skills = Skill.query.all()
-    if test_data != "":
-        return jsonify(
-            {
-                "code": 200,
-                "data":
-                [skill.json() for skill in test_data]
-            }
-        )
-    elif skills != None:
-        return jsonify(
+        if skills:
+                    return jsonify(
             {
                 "code": 200,
                 "data": {
@@ -1007,13 +1009,32 @@ def getskills(test_data=""):
                 }
             }
         )
-    else:
-        return jsonify(
+        else:
+                    return jsonify(
             {
                 "code": 404,
                 "message": "No skills found."
             }
         )
+
+    if test_data != "":
+        if skills:
+            return jsonify(
+                {
+                    "code": 200,
+                    "data":
+                    [skill.json() for skill in test_data]
+                }
+            )
+        else:
+            return jsonify(
+                {
+                    "code":404,
+                    "data": 'No record found'
+                }
+            )
+
+
 
 # This segment of code is to create skill
 # =========================================== Create skill======================================

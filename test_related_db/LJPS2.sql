@@ -95,10 +95,7 @@ CREATE TABLE IF NOT EXISTS `Skill` (
 INSERT INTO `Skill` (`skill_id`, `skill_name`, `skill_desc`, `skill_status`) VALUES
 ('501','Python 3','Python 3 is the latest programming language that you should know.','0'),
 ('502','Data Analytics','Data Analytics refers to the ability to derive insights from data, using analytical tools.','0'),
-('503','Machine learning','Machine learning trains models using data','0'),
-('504','HTML','Hyper-text Markup Language for web dev','0'),
-('505','Javascript','Used in web development','0'),
-('506','CSS','Cascading Style Sheet, used in designing for web dev','0');
+('503','Time Management','Time management involves managing time and looking at gantt charts.','0');
 COMMIT;
 select * from LJPS_DB.Skill;
 
@@ -114,10 +111,7 @@ CREATE TABLE IF NOT EXISTS `Job_Role` (
 
 INSERT INTO `Job_Role` (`job_role_id`, `job_role_name`,`job_role_desc`, `job_role_status`) VALUES
 ('601','Software Developer','Full Stack Software developer with MERN stack','0'),
-('602','Data Analyst','Use your analytical skills and tools to derive new insights for our company','0'),
-('603','Frontend Developer','Use frontend skills and tools in web design','0'),
-('604','Full Stack Developer','Use web development skills and tools in web development','0'),
-('605','Machine Learning Engineer','Leverage machine learning models to derive new insights','0');
+('602','Data Analyst','Use your analytical skills and tools to derive new insights for our company','0');
 COMMIT;
 select * from LJPS_DB.Job_Role;
 
@@ -135,7 +129,6 @@ CREATE TABLE IF NOT EXISTS `Journey` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `Journey` (`journey_id`, `journey_name`, `journey_status`, `j_fk_staff_id`, `j_fk_job_role_id`) VALUES
-('700','ML Engineer Journey','Completed','140001','605'),
 ('701','Software Developer Journey','In-Progress','130001','601'),
 ('702','Road to Data Analyst','In-Progress','140001','602');
 COMMIT;
@@ -154,17 +147,7 @@ CREATE TABLE IF NOT EXISTS `Role_Map` (
 INSERT INTO `Role_Map` (`rm_fk_job_role_id`, `rm_fk_skill_id`) VALUES
 ('601','501'),
 ('602','501'),
-('602','502'),
-('603','504'),
-('603','505'),
-('603','506'),
-('604','501'),
-('604','504'),
-('604','505'),
-('604','506'),
-('605','501'),
-('605','502'),
-('605','503');
+('602','502');
 COMMIT;
 select * from LJPS_DB.Role_Map;
 
@@ -216,8 +199,6 @@ INSERT INTO `Skill_Map` (`sm_fk_skill_id`, `sm_fk_staff_id`) VALUES
 ('501','130001'),
 ('502','130001'),
 ('501','140001'),
-('502','140001'),
-('503','140001'),
-('504','140001');
+('502','140001');
 COMMIT;
 select * from LJPS_DB.Skill_Map;

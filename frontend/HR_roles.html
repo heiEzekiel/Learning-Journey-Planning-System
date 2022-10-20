@@ -133,7 +133,9 @@
 						</button></a
 					>
 				</div>
-
+				<div class="alert alert-danger mt-5" id="res" role="alert">
+					
+				  </div>
 				<table class="table borderless table-hover mt-5" id="table"></table>
 			</div>
 		</div>
@@ -164,7 +166,15 @@
 				const response = await fetch(`${backendUrl}/${getAllJobRole}`)
 					.then((response) => response.json())
 					.then((data) => {
-						// console.log(JSON.parse(JSON.stringify(data.data)));
+						console.log(JSON.parse(JSON.stringify(data)));
+						if (JSON.parse(JSON.stringify(data.code)==404)){
+							document.getElementById("res").innerText="No records found"
+						}
+
+						else{
+							document.getElementById("res").style.display= "none";
+					
+			
 						result = JSON.parse(JSON.stringify(data.data));
 						message_str = `
                   <thead>
@@ -200,7 +210,7 @@
 
 						// <th scope="row">${role["job_role_id"]}</th>
 						document.getElementById("table").innerHTML = message_str;
-						return data.roles;
+						return data.roles;	}
 					})
 					.catch((error) => {
 						// Errors when calling the service; such as network error,

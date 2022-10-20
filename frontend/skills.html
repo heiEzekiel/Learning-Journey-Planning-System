@@ -80,7 +80,9 @@
             <button type="button" class="btn btn-primary" onclick="window.location.href='./skills_form.html'">Create
               New Skill</button>
           </div>
-    
+          <div class="alert alert-danger mt-5" id="res" role="alert">
+					
+				  </div>
           <table class="table borderless table-hover mt-5" id="table">
           </table>
       
@@ -113,6 +115,14 @@
                   await fetch(`${backendUrl}/${getskills}`)
                       .then(response => response.json())
                       .then(data => {
+                        console.log(data)
+                        if (JSON.parse(JSON.stringify(data.code)==404)){
+							document.getElementById("res").innerText="No records found"
+						}
+
+            else{
+
+           document.getElementById("res").style.display= "none";
                           result =JSON.parse(JSON.stringify(data.data.skill))
                           message_str =  `
                           <thead>
@@ -140,7 +150,7 @@
                               }
                           }
                           document.getElementById('table').innerHTML = message_str
-                          return data.data.skill
+                          return data.data.skill }
                       })
                       .catch(error => {
                           // Errors when calling the service; such as network error, 
