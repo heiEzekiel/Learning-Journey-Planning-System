@@ -1017,7 +1017,8 @@ def getskills(test_data=""):
             }
         )
 
-    if test_data != "":
+    else:
+        skills=test_data
         if skills:
             return jsonify(
                 {
@@ -1029,7 +1030,7 @@ def getskills(test_data=""):
         else:
             return jsonify(
                 {
-                    "code":404,
+                    "code":424,
                     "data": 'No record found'
                 }
             )
