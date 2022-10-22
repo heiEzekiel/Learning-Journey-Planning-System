@@ -197,7 +197,7 @@
                     document.getElementById("r_name").innerText += " " + data.data[0].job_role_name;
                     document.getElementById("r_name2").innerText = data.data[0].job_role_name;
                     document.getElementById("roledesc").value = data.data[0].job_role_desc;
-                    if (data.data[0].job_role_status == 1){
+                    if (data.data[0].job_role_status == 0){
                         document.getElementById('inlineRadio1').checked= true
                     }else{
                         document.getElementById('inlineRadio2').checked= true
@@ -305,9 +305,9 @@
             var b = document.getElementById("roledesc").value
             var active = document.getElementById('inlineRadio1')
             if( active.checked){
-                var status = 1
-            }else{
                 var status = 0
+            }else{
+                var status = 1
             }
             console.log(status)
             if (a == '' || b == '') {
