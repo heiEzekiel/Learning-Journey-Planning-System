@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html class="wide wow-animation" lang="en">
+
 <head>
-  <title>List of Roles</title>
+  <title>LJ Courses</title>
   <meta name="format-detection" content="telephone=no">
   <meta name="viewport"
     content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -72,15 +73,15 @@
                   <div class="rd-navbar-nav-wrap">
                     <ul class="rd-navbar-nav">
 
-                      <li class="rd-nav-item">
-                        <a class="rd-nav-link" href="learner_profile.html">Profile</a>
-                      </li>
-
-                      <li class="rd-nav-item">
-                        <a class="rd-nav-link" href="">Start Learning Journey</a>
-                      </li>
-
                       <li class="rd-nav-item active">
+                        <a class="rd-nav-link" href="">Profile</a>
+                      </li>
+
+                      <li class="rd-nav-item">
+                        <a class="rd-nav-link" href="journey_step_one.html">Start Learning Journey</a>
+                      </li>
+
+                      <li class="rd-nav-item">
                         <a
                           class="rd-nav-link text-decoration-none"
                           href="learner_view_roles.html"
@@ -112,51 +113,46 @@
       </header>
     </div>
     <!-- Main content starts here  -->
-    <div class="container mt-3 mb-5">
+    <div class="container mt-5 mb-5">
+      <h3>My Learning Journey</h3>
 
-      <h3>List of roles available</h3>
       <table class="table borderless table-hover mt-5" id="table">
       </table>
-
-
-
-    </div>
     </div>
     <script>
-      var backendUrl = "http://127.0.0.1:5000";
-      var getAllJobRole = "getAllJobRole";
+      backendUrl = "http://127.0.0.1:5000";
+      get_journey_maps = "getJourneyMaps";
+      remove_journey_maps ="deleteJourneyMap"
 
-      async function getAllRole() {
-        const response = await fetch(`${backendUrl}/${getAllJobRole}`)
+      async function getJourneyMaps() {
+        const response = await fetch(`${backendUrl}/${get_journey_maps}`)
           .then((response) => response.json())
           .then((data) => {
             // console.log(JSON.parse(JSON.stringify(data.data)));
             result = JSON.parse(JSON.stringify(data.data));
             message_str = `
-              <thead>
-                <tr class="bg-light">
-                
-                <th>Job Role Name</th>
-                <th>Job Role Description</th>
-                <th>Action</th>
-                </tr>
-              </thead>`;
-            for (const role of result) {
-              if (role["job_role_status"] == 0) {
-                message_str += `
-              <tbody>
-                <tr>
-                  <td>${role["job_role_name"]}</td>
-                  <td class="text-wrap w-50">${role["job_role_desc"]}</td>
-                  <td> <button type="button" class="btn btn-primary" onClick="location.href='./role_skills.html?job=${role['job_role_name']}&id=${role['job_role_id']}'">View skills</button> </td>
-                </tr>
-              </tbody>
-              `;
-              }
+                  <thead>
+                    <tr class="bg-light">
+                    
+                    <th>Journey Map ID</th>
+                    <th>Course ID</th>
+                    <th>Action</th>
+                    </tr>
+                  </thead>`;
+            for (const journeyMap of result['journeyMaps']) {
+              message_str += `
+                <tbody>
+                  <tr>
+                    <td>${journeyMap["jm_fk_journey_id"]}</td>
+                    <td class="text-wrap w-50">${journeyMap["jm_fk_course_id"]}</td>
+                    <td><button type="button" class="btn btn-danger" onclick="removeJourneyMaps(this.id)" id="${journeyMap["jm_fk_journey_id"]}?${journeyMap["jm_fk_course_id"]}">Remove</button></td>
+                  </tr>
+                </tbody>
+                `;
             }
-            // <th scope="row">${role["job_role_id"]}</th> removed
+            // <th scope="row">${role["job_role_id"]}</th>
             document.getElementById("table").innerHTML = message_str;
-            return data.roles;
+            return data.data;
           })
           .catch((error) => {
             // Errors when calling the service; such as network error,
@@ -165,7 +161,26 @@
           });
       }
 
-      getAllRole();
+      getJourneyMaps();
+      async function removeJourneyMaps(a){
+        //console.log(a)
+        journey_id= a.split('?')[0]
+        course_id= a.split('?')[1]
+        fetch(`${backendUrl}/${remove_journey_maps}/${journey_id}/${course_id}`, {
+          method: 'DELETE'
+        })
+        .then((response) => response.json())
+        .then((data) => {
+          alert("Deleted course successfully");
+          location.reload();
+
+        })
+        .catch((error) => {
+          // Errors when calling the service; such as network error,
+          // service offline, etc
+          console.log(error);
+        });
+      }
     </script>
     <!-- Javascript-->
     <script src="../js/core.min.js"></script>
