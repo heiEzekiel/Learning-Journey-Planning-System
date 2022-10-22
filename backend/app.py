@@ -434,9 +434,62 @@ def getAllJobRole(test_data=""):
             }
         )
 
+#Update Job Role
+@app.route("/updateJobRole/<int:job_role_id>", methods=['PUT'])
+def update_job_role(job_role_id, test_data=''):
+    data = None
+    if test_data == '':
+        data = request.get_json()
+        job_role = Job_Role.query.filter_by(job_role_id=job_role_id).first()
+        if job_role:
+            job_role.job_role_name = data['job_role_name']
+            job_role.job_role_desc = data['job_role_desc']
+            job_role.job_role_status = data['job_role_status']
+            try:
+                db.session.commit()
+            except:
+                return jsonify(
+                    {
+                        "code": 500,
+                        "data": {
+                            "job_role_id": job_role_id
+                        },
+                        "message": "An error occurred updating the job role."
+                    }
+                ), 500
+
+            return jsonify(
+                {
+                    "code": 200,
+                    "data": job_role.json(),
+                    "message": "Job Role successfully updated"
+                }
+            ), 200
+        else:
+            return jsonify(
+                {
+                    "code": 404,
+                    "data": {
+                        "job_role_id": job_role_id
+                    },
+                    "message": "Job Role not found."
+                }
+            ), 404
+    else:
+        job_role = Job_Role.query.filter_by(job_role_id=job_role_id).first()
+        job_role.job_role_name = test_data['job_role_name']
+        job_role.job_role_desc = test_data['job_role_desc']
+        job_role.job_role_status = test_data['job_role_status']
+        return jsonify(
+            {
+                "code": 200,
+                "data": job_role.json(),
+                "message": "Job Role successfully updated"
+            }
+        ), 200
+
+
 # Get all courses
-
-
 @app.route("/getAllCourses")
 def getAllCourses(test_data=""):
     courses = None
@@ -1207,8 +1260,6 @@ def updateSkill(skill_id, test_data="", new_data="", test_data2=""):
 
 # This segment of code is delete a selected skill
 # =============== Delete Skill details by skill_id======================================
-
-
 @app.route("/deleteSkill/<int:skill_id>", methods=['DELETE'])
 def deleteSkill(skill_id, test_data=""):
     skill = None
@@ -1243,6 +1294,46 @@ def deleteSkill(skill_id, test_data=""):
         }
     ), 404
 
+#Update skills status
+@app.route("/updateSkillStatus/<int:skill_id>", methods=['PUT'])
+def updateSkillStatus(skill_id):
+    skill = Skill.query.filter_by(skill_id=skill_id).first()
+    if skill:
+        data = request.get_json()
+        if data['skill_status']:
+            skill.skill_name = str(data['skill_name'])
+            skill.skill_desc = str(data['skill_desc'])
+            skill.skill_status = int(data['skill_status'])
+        try:
+            db.session.commit()
+        except Exception as e:
+            print(e)
+            return jsonify(
+                {
+                    "code": 500,
+                    "data": {
+                        "skill_id": skill_id
+                    },
+                    "message": "An error occurred updating the skill."
+                }
+            ), 500
+
+        return jsonify(
+            {
+                "code": 200,
+                "data": skill.json()
+            }
+        )
+    # return these if skill not found
+    return jsonify(
+        {
+            "code": 404,
+            "data": {
+                "skill_id": skill_id
+            },
+            "message": "skill_id not found."
+        }
+    ), 404
 
 # This segment of code is for learning journey
 # =========================================== Journey============================================
