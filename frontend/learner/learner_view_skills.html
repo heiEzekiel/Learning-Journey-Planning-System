@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="wide wow-animation" lang="en">
 	<head>
-		<title>List of Roles</title>
+		<title>List of SKills</title>
 		<meta name="format-detection" content="telephone=no" />
 		<meta
 			name="viewport"
@@ -86,19 +86,19 @@
 												</li>
 
 												<li class="rd-nav-item">
-													<a class="rd-nav-link" href=""
+													<a class="rd-nav-link" href="journey_step_one.html"
 														>Start Learning Journey</a
 													>
 												</li>
 
-												<li class="rd-nav-item active">
+												<li class="rd-nav-item">
 													<a
 														class="rd-nav-link text-decoration-none"
 														href="learner_view_roles.html"
 														>Roles</a
 													>
 												</li>
-												<li class="rd-nav-item">
+												<li class="rd-nav-item active">
 													<a
 														class="rd-nav-link text-decoration-none"
 														href="learner_view_skills.html"
@@ -123,54 +123,72 @@
 			</div>
 			<!-- Main content starts here  -->
 			<div class="container mt-3 mb-5">
-				<h3>List of roles available</h3>
-				<table class="table borderless table-hover mt-5" id="table"></table>
+				<h3>List of skills available</h3>
+				<div id="role_skills"></div>
 			</div>
 		</div>
 		<script>
-			var backendUrl = "http://127.0.0.1:5000";
-			var getAllJobRole = "getAllJobRole";
+			// get role ID
 
-			async function getAllRole() {
-				const response = await fetch(`${backendUrl}/${getAllJobRole}`)
+			// get skills based on id
+
+			const backendUrl = "http://127.0.0.1:5000";
+			const getSkillsForRole = "getSkillsForJob";
+			const getCourse = "getCoursesForSkill";
+			const queryString = window.location.search;
+			const urlParams = new URLSearchParams(queryString);
+			const job = urlParams.get("job");
+			const id = urlParams.get("id");
+			// console.log(id);
+
+			async function getRoleSkillsforLeaner(id, job) {
+				const response = await fetch(`${backendUrl}/${getSkillsForRole}/${id}`)
 					.then((response) => response.json())
 					.then((data) => {
-						// console.log(JSON.parse(JSON.stringify(data.data)));
-						result = JSON.parse(JSON.stringify(data.data));
-						message_str = `
-              <thead>
-                <tr class="bg-light">
-                
-                <th>Job Role Name</th>
-                <th>Job Role Description</th>
-                <th>Action</th>
-                </tr>
-              </thead>`;
-						for (const role of result) {
-							if (role["job_role_status"] == 0) {
-								message_str += `
-              <tbody>
-                <tr>
-                  <td>${role["job_role_name"]}</td>
-                  <td class="text-wrap w-50">${role["job_role_desc"]}</td>
-                  <td> <button type="button" class="btn btn-primary" onClick="location.href='./learner_view_skills.html?job=${role["job_role_name"]}&id=${role["job_role_id"]}'">View skills</button> </td>
-                </tr>
-              </tbody>
-              `;
+						result = JSON.parse(JSON.stringify(data[0].data));
+						// console.log(result);
+						if (result == "No records found") {
+							document.getElementById(
+								"job_skills"
+							).innerHTML = `<h5 class ="text-danger mt-5">No Skills found</h5>`;
+						} else {
+							message_str = `
+                                    <br>
+                                    <table class="table borderless table-hover mt-5" id="table">
+                                    <thead>
+                                        <tr class="bg-light">
+                                        <th>Skill Name</th>
+                                        <th class="w-50">Skill Description</th>
+                                        <th class="w-25">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    `;
+							// console.log(result);
+							for (skill of result) {
+								console.log(skill);
+								if (skill[3] == 0) {
+									message_str += `
+                                                <tr class="border border-bottom ">
+                                                <th scope="row">${skill[0]}</th>
+                                                <td>${skill[1]}</td>
+                                                <td> <button type="button" class="btn btn-primary" onClick="location.href='./learner_view_course.html?ID=${skill[2]}'">View courses</button> </td>
+                                                `;
+								}
 							}
 						}
-						// <th scope="row">${role["job_role_id"]}</th> removed
-						document.getElementById("table").innerHTML = message_str;
-						return data.roles;
+						message_str += `</tbody> </table>`;
+						document.getElementById("role_skills").innerHTML = message_str;
+						return data.data;
 					})
 					.catch((error) => {
 						// Errors when calling the service; such as network error,
 						// service offline, etc
 						console.log(error);
 					});
+				document.getElementById("role_skills").innerHTML = message_str;
 			}
-
-			getAllRole();
+			getRoleSkillsforLeaner(id, job);
 		</script>
 		<!-- Javascript-->
 		<script src="../js/core.min.js"></script>

@@ -93,7 +93,7 @@ def get_skills_for_job(job_role_id, test_data_role_map="", test_data_skill="", t
             for i in skill_list:
                 if i['skill_id'] in list_of_skill:
                     skillName.append(
-                        [i['skill_name'], i['skill_desc'], i['skill_id']])
+                        [i['skill_name'], i['skill_desc'], i['skill_id'], i['skill_status']])
             return jsonify(
                 {
                     "code": 200,
