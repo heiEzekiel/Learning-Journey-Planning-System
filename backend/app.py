@@ -8,11 +8,11 @@ import Job_Role as jr
 import Role_Map as rm
 import Courses as c
 import Course_Map as cm
+import Registration as r
 import Skills as s
+import Skill_Map as sm
 import Journey as j
 import Journey_Map as jm
-import Registration as r
-import Skill_Map as sm
 
 # Flask App and DB connection is done here.
 app = Flask(__name__)
