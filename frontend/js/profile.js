@@ -99,10 +99,6 @@ async function getLJ(staff_id) {
   
 
 </h5>
-  
-<h6 class="text-start"> Skills needed: A,B,C (static)
-
-</h6>
 
 </div>
 </div>`
