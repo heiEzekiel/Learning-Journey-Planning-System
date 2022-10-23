@@ -21185,13 +21185,13 @@ p {
 }
 
 #landingpagehead {
-	position: absolute;
-	width: 55%;
-	left: 23%;
+	position: absolute; 
+	
+	left: 23%; 
 	top: 10vw;
 	font-weight: 700;
 	font-size: 3.9vw;
-	line-height: 5.5vw;
+	line-height: 5.5vw; 
 }
 
 #landpagedesc {
@@ -21199,7 +21199,7 @@ p {
 	width: 50%;
 	height: 57px;
 	left: 25%;
-	top: 21vw;
+	top: 20vw;
 	font-weight: 400;
 	font-size: 1.5vw;
 	line-height: 2vw;
@@ -21210,7 +21210,7 @@ p {
 	width: 12.5vw;
 	height: 4vw;
 	border: 0px;
-	font-size: 1.6vw;
+	font-size: 1vw;
 	font-weight: 500;
 }
 
