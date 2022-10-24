@@ -5,7 +5,7 @@ db = db_connector.db_connector()
 # Registration Table
 class Registration(db.Model):
     #Andy test case
-    __tablename__ = 'registration'
+    __tablename__ = 'Registration'
     reg_id = db.Column(db.Integer, primary_key=True, nullable=False)
     course_id = db.Column(db.String(20), nullable=False)
     staff_id = db.Column(db.Integer, nullable=False)

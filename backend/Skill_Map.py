@@ -5,7 +5,7 @@ db = db_connector.db_connector()
 # Andy to test this new DB
 # Skill Map Table
 class Skill_Map(db.Model):
-    __tablename__ = 'skill_map'
+    __tablename__ = 'Skill_Map'
     sm_fk_skill_id = db.Column(
         db.Integer, primary_key=True, nullable=False)
     sm_fk_staff_id = db.Column(db.Integer, primary_key=True, nullable=False)
