@@ -8,3 +8,8 @@ gunicorn==20.1.0
 
 # new
 Werkzeug==2.0.3
+Flask-MySQLdb==1.0.1
+mysql-connector==2.2.9
+mysql-connector-python==8.0.31
+mysqlclient==2.1.1
+py==1.11.0
