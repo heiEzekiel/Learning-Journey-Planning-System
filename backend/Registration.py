@@ -13,7 +13,14 @@ class Registration(db.Model):
     completion_status = db.Column(db.String(20), nullable=False)
 
     def __init__(self, course_id, staff_id, reg_status,completion_status):
-      
+        if not isinstance (course_id, str):
+            raise TypeError('course_id must be a string')
+        if not isinstance (staff_id, int):
+            raise TypeError('staff_id must be an integer')
+        if not isinstance (reg_status, str):
+            raise TypeError('reg_status must be a string')
+        if not isinstance (completion_status, str):
+            raise TypeError('completion_status must be a string')
         self.course_id = course_id
         self.staff_id = staff_id
         self.reg_status = reg_status

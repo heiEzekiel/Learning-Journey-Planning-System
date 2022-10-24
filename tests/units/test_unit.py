@@ -1,4 +1,12 @@
-from backend.app import Job_Role, Role_Map, Course_Map, Course, Skill, Journey, Journey_Map
+from backend.Job_Role import Job_Role 
+from backend.Role_Map import Role_Map
+from backend.Course_Map import Course_Map
+from backend.Courses import Course
+from backend.Skills import Skill
+from backend.Journey import Journey
+from backend.Journey_Map import Journey_Map
+from backend.Registration import Registration
+from backend.Skill_Map import Skill_Map
 import pytest 
 
 #----------- test Class Job_Role ------------------
@@ -292,3 +300,83 @@ def test_class_journey_map_fail1():
     """
     with pytest.raises(TypeError):
         Journey_Map(jm_fk_journey_id=1, jm_fk_course_id=1)
+
+
+#-------------------------test class Registration-----------------------------------
+def test_class_registration_success():
+    """
+    GIVEN a Registration model
+    WHEN a new Registration is created
+    THEN check the course_id, staff_id, reg_status, completion_status are defined correctly
+    """
+    registration = Registration(course_id="1", staff_id=1, reg_status="1", completion_status="1")
+    assert registration.course_id == "1"
+    assert registration.staff_id == 1
+    assert registration.reg_status == "1"
+    assert registration.completion_status == "1"
+
+def test_class_registration_fail():
+    """
+    GIVEN a Registration model
+    WHEN a new Registration is created
+    THEN check the course_id is an valid string
+    """
+    with pytest.raises(TypeError):
+        Registration(course_id=1, staff_id=1, reg_status="1", completion_status="1")
+
+def test_class_registration_fail1():
+    """
+    GIVEN a Registration model
+    WHEN a new Registration is created
+    THEN check the staff_id is an valid string
+    """
+    with pytest.raises(TypeError):
+        Registration(course_id="1", staff_id="1", reg_status="1", completion_status="1")
+    
+def test_class_registration_fail2():
+    """
+    GIVEN a Registration model
+    WHEN a new Registration is created
+    THEN check the reg_status is an valid string
+    """
+    with pytest.raises(TypeError):
+        Registration(course_id="1", staff_id=1, reg_status=1, completion_status="1")
+
+def test_class_registration_fail3():
+    """
+    GIVEN a Registration model
+    WHEN a new Registration is created
+    THEN check the completion_status is an valid string
+    """
+    with pytest.raises(TypeError):
+        Registration(course_id="1", staff_id=1, reg_status="1", completion_status=1)
+
+
+#-------------------------test class Skill_Map-----------------------------------
+def test_class_skill_map_success():
+    """
+    GIVEN a Skill_Map model
+    WHEN a new Skill_Map is created
+    THEN check the sm_fk_skill_id, sm_fk_staff_id are defined correctly
+    """
+    skill_map = Skill_Map(sm_fk_skill_id=1, sm_fk_staff_id=1)
+    assert skill_map.sm_fk_skill_id == 1
+    assert skill_map.sm_fk_staff_id == 1
+
+def test_class_skill_map_fail():
+    """
+    GIVEN a Skill_Map model
+    WHEN a new Skill_Map is created
+    THEN check the sm_fk_skill_id is an valid integer
+    """
+    with pytest.raises(TypeError):
+        Skill_Map(sm_fk_skill_id="1", sm_fk_staff_id=1)
+
+def test_class_skill_map_fail1():
+    """
+    GIVEN a Skill_Map model
+    WHEN a new Skill_Map is created
+    THEN check the sm_fk_staff_id is an valid integer
+    """
+    with pytest.raises(TypeError):
+        Skill_Map(sm_fk_skill_id=1, sm_fk_staff_id="1")
