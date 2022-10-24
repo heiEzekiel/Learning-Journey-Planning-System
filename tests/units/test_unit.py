@@ -1,382 +1,229 @@
+import unittest
 from backend.Job_Role import Job_Role 
-from backend.Role_Map import Role_Map
-from backend.Course_Map import Course_Map
-from backend.Courses import Course
-from backend.Skills import Skill
-from backend.Journey import Journey
-from backend.Journey_Map import Journey_Map
-from backend.Registration import Registration
-from backend.Skill_Map import Skill_Map
-import pytest 
+from backend.Role_Map import Role_Map 
+from backend.Course_Map import Course_Map 
+from backend.Courses import Course 
+from backend.Skills import Skill 
+from backend.Journey import Journey 
+from backend.Journey_Map import Journey_Map 
+from backend.Registration import Registration 
+from backend.Skill_Map import Skill_Map 
 
 #----------- test Class Job_Role ------------------
-def test_job_role_success():
-    """
-    GIVEN a Job_Role model
-    WHEN a new Job_Role is created
-    THEN check the job_role_name, job_role_desc, job_role_status are defined correctly
-    """
-    test_job_role = Job_Role('Human Resource', 'HR', 0)
-    assert test_job_role.job_role_name == 'Human Resource'
-    assert test_job_role.job_role_desc == 'HR'
-    assert test_job_role.job_role_status == 0
+class TestJobRole(unittest.TestCase):
+    def test_job_role_success(self):
+        job_role = Job_Role("Human Resource", "HR's job role", 1)
+        self.assertEqual(job_role.job_role_name, "Human Resource")
+        self.assertEqual(job_role.job_role_desc, "HR's job role")
+        self.assertEqual(job_role.job_role_status, 1)
 
-def test_job_role_invalid_name():
-    """
-    GIVEN a Job_Role model
-    WHEN a new Job_Role is created with an invalid job_role_name
-    THEN check the TypeError is raised
-    """
-    with pytest.raises(TypeError):
-        Job_Role(123, 'HR', 0)
+    def test_job_role_invalid_name(self):
+        try:
+            Job_Role(1, "HR's job role", 1)
+        except Exception as e:
+            self.assertEqual(str(e), 'job_role_name must be a string')
 
-def test_job_role_invalid_desc():
-    """
-    GIVEN a Job_Role model
-    WHEN a new Job_Role is created with an invalid job_role_desc
-    THEN check the TypeError is raised
-    """
-    with pytest.raises(TypeError):
-        Job_Role('Human Resource', 123, 0)
+    def test_job_role_invalid_desc(self):
+        try:
+            Job_Role("Human Resource", 1, 1)
+        except Exception as e:
+            self.assertEqual(str(e), 'job_role_desc must be a string')
+    
+    def test_job_role_invalid_status(self):
+        try:
+            Job_Role("Human Resource", "HR's job role", "1")
+        except Exception as e:
+            self.assertEqual(str(e), 'job_role_status must be an integer')
 
-def test_job_role_invalid_status():
-    """
-    GIVEN a Job_Role model
-    WHEN a new Job_Role is created with an invalid job_role_status
-    THEN check the TypeError is raised
-    """
-    with pytest.raises(TypeError):
-        Job_Role('Human Resource', 'HR', '0')\
+# #----------------------test Class Role_map----------------------
+class TestRoleMap(unittest.TestCase):
+    def test_class_role_map_suceess(self):
+        role_map1 = Role_Map(1, 1)
+        self.assertEqual(role_map1.rm_fk_job_role_id, 1)
+        self.assertEqual(role_map1.rm_fk_skill_id, 1)
 
-def test_job_role_invalid_parameters():
-    """
-    GIVEN a Job_Role model
-    WHEN a new Job_Role is created with invalid amount of parameters
-    THEN check the TypeError is raised
-    """
-    with pytest.raises(Exception):
-        Job_Role(0, 'Human Resource', 'HR', 0)
+    def test_class_role_map_fail(self):
+        try:
+            Role_Map("1", 1)
+        except Exception as e:
+            self.assertEqual(str(e), 'rm_fk_job_role_id must be a integer')
 
-#----------------------test Class Role_map----------------------
-def test_class_role_map_suceess():
-    """
-    GIVEN a role_map class
-    WHEN a new role_map is created
-    THEN check the job_role_id and skill_id are an valid integer
-    """
-    role_map1 = Role_Map(1, 1)
-    assert role_map1.rm_fk_job_role_id == 1
-    assert role_map1.rm_fk_skill_id == 1
-
-def test_class_role_map_fail():
-    """
-    GIVEN a role_map class
-    WHEN a new role_map is created
-    THEN check the job_role_id are an valid integer
-    """
-    with pytest.raises(TypeError):
-        Role_Map('1', 1)
-
-def test_class_role_map_fail1():
-    """
-    GIVEN a role_map class
-    WHEN a new role_map is created
-    THEN check the skill_id are an valid integer
-    """
-    with pytest.raises(TypeError):
-        Role_Map(1, '1')
+    def test_class_role_map_fail1(self):
+        try:
+            Role_Map(1, "1")
+        except Exception as e:
+            self.assertEqual(str(e), 'rm_fk_skill_id must be a integer')
 
 #----------------------test Class course_map----------------------
-def test_course_map_suceess():
-    """
-    GIVEN a course_map class
-    WHEN a new course_map is created
-    THEN check the course_id and skill_id are an valid integer
-    """
-    course_map1 = Course_Map('1', 1)
-    assert course_map1.cm_fk_course_id == '1'
-    assert course_map1.cm_fk_skill_id == 1
-
-def test_course_map_fail():
-    """
-    GIVEN a course_map class
-    WHEN a new course_map is created
-    THEN check the course_id is an valid string
-    """
-    with pytest.raises(TypeError):
-        Course_Map(1, 1)
-
-def test_course_map_fail1():
-    """
-    GIVEN a course_map class
-    WHEN a new course_map is created
-    THEN check the skill_id is an valid integer
-    """
-    with pytest.raises(TypeError):
-        Course_Map('1', '1')
+class TestCourseMap(unittest.TestCase):
+    def test_class_course_map_suceess(self):
+        course_map1 = Course_Map('1', 1)
+        self.assertEqual(course_map1.cm_fk_course_id, '1')
+        self.assertEqual(course_map1.cm_fk_skill_id, 1)
+    def test_course_map_fail(self):
+        try:
+            Course_Map(1, 1)
+        except Exception as e:
+            self.assertEqual(str(e), 'cm_fk_course_id must be a String')
+    def test_course_map_fail1(self):
+        try:
+            Course_Map('1', "1")
+        except Exception as e:
+            self.assertEqual(str(e), 'cm_fk_skill_id must be a integer')
 
 #----------------------test Class Course----------------------
-def test_class_course_suceess():
-    """
-    GIVEN a course class
-    WHEN a new course is created
-    THEN check the course_id, course_name, course_desc, course_status, course_tyep, course_category are of valid type
-    """
-    course1 = Course('1', 'Human Resource', 'HR', '0', '1', '1')
-    assert course1.course_id == '1'
-    assert course1.course_name == 'Human Resource'
-    assert course1.course_desc == 'HR'
-    assert course1.course_status == '0'
-    assert course1.course_type == '1'
-    assert course1.course_category == '1'
-
-def test_class_course_fail():
-    """
-    GIVEN a course class
-    WHEN a new course is created
-    THEN check the course_id is an valid string
-    """
-    with pytest.raises(TypeError):
-        Course(1, 'Human Resource', 'HR', '0', '1', '1')
-
-def test_class_course_fail1():
-    """
-    GIVEN a course class
-    WHEN a new course is created
-    THEN check the course_name is an valid string
-    """
-    with pytest.raises(TypeError):
-        Course('1', 1, 'HR', '0', '1', '1')
-    
-def test_class_course_fail2():
-    """
-    GIVEN a course class
-    WHEN a new course is created
-    THEN check the course_desc is an valid string
-    """
-    with pytest.raises(TypeError):
-        Course('1', 'Human Resource', 1, '0', '1', '1')
-    
-def test_class_course_fail3():
-    """
-    GIVEN a course class
-    WHEN a new course is created
-    THEN check the course_status is an valid string
-    """
-    with pytest.raises(TypeError):
-        Course('1', 'Human Resource', 'HR', 1, '1', '1')
-
-def test_class_course_fail4():
-    """
-    GIVEN a course class
-    WHEN a new course is created
-    THEN check the course_type is an valid string
-    """
-    with pytest.raises(TypeError):
-        Course('1', 'Human Resource', 'HR', '0', 1, '1')
-    
-def test_class_course_fail5():
-    """
-    GIVEN a course class
-    WHEN a new course is created
-    THEN check the course_category is an valid string
-    """
-    with pytest.raises(TypeError):
-        Course('1', 'Human Resource', 'HR', '0', '1', 1)
+class TestCourseMap(unittest.TestCase):
+    def test_class_course_suceess(self):
+        course1 = Course('1', 'Human Resource', 'HR', '0', '1', '1')
+        self.assertEqual(course1.course_id, '1')
+        self.assertEqual(course1.course_name, 'Human Resource')
+        self.assertEqual(course1.course_desc, 'HR')
+        self.assertEqual(course1.course_status, '0')
+        self.assertEqual(course1.course_type, '1')
+        self.assertEqual(course1.course_category, '1')
+    def test_course_fail(self):
+        try:
+            Course(1, 'Human Resource', 'HR', '0', '1', '1')
+        except Exception as e:
+            self.assertEqual(str(e), 'course_id must be a String')
+    def test_course_fail1(self):
+        try:
+            Course('1', 1, 'HR', '0', '1', '1')
+        except Exception as e:
+            self.assertEqual(str(e), 'course_name must be a String')
+    def test_course_fail2(self):
+        try:
+            Course('1', 'Human Resource', 1, '0', '1', '1')
+        except Exception as e:
+            self.assertEqual(str(e), 'course_desc must be a String')
+    def test_course_fail3(self):
+        try:
+            Course('1', 'Human Resource', 'HR', 1, '1', '1')
+        except Exception as e:
+            self.assertEqual(str(e), 'course_status must be a String')
+    def test_course_fail4(self):
+        try:
+            Course('1', 'Human Resource', 'HR', '0', 1, '1')
+        except Exception as e:
+            self.assertEqual(str(e), 'course_type must be a String')
+    def test_course_fail5(self):
+        try:
+            Course('1', 'Human Resource', 'HR', '0', '1', 1)
+        except Exception as e:
+            self.assertEqual(str(e), 'course_category must be a String')
 
 #-------------------------test class Skill-----------------------------------
-def test_class_skill_success():
-    """
-    GIVEN a Skill model
-    WHEN a new Skill is created
-    THEN check the skill_name, skill_desc, skill_status are defined correctly
-    """
-    skill = Skill(skill_name="Python", skill_desc="Python is a programming language", skill_status=1)
-    assert skill.skill_name == "Python"
-    assert skill.skill_desc == "Python is a programming language"
-    assert skill.skill_status == 1
-
-def test_class_skill_invalid_skill_name():
-    """
-    GIVEN a Skill model
-    WHEN a new Skill is created with an invalid skill_name
-    THEN check the skill_name, skill_desc, skill_status are defined correctly
-    """
-    with pytest.raises(TypeError):
-        Skill(skill_name=0, skill_desc="Python is a programming language", skill_status=1)
-
-def test_class_skill_invalid_skill_desc():
-    """
-    GIVEN a Skill model
-    WHEN a new Skill is created with an invalid skill_desc
-    THEN check the skill_name, skill_desc, skill_status are defined correctly
-    """
-    with pytest.raises(TypeError):
-        Skill(skill_name="Python", skill_desc=0, skill_status=1)
-
-def test_class_skill_invalid_skill_status():
-    """
-    GIVEN a Skill model
-    WHEN a new Skill is created with an invalid skill_status
-    THEN check the skill_name, skill_desc, skill_status are defined correctly
-    """
-    with pytest.raises(TypeError):
-        Skill(skill_name="Python", skill_desc="Python is a programming language", skill_status="1")
-
-def test_class_skill_invalid_parameters():
-    """
-    GIVEN a Skill model
-    WHEN a new Skill is created with invalid amount of parameters parameters
-    THEN check the Exception is raised
-    """
-    with pytest.raises(Exception):
-        Skill(skill_id=0, skill_name=0, skill_desc=0, skill_status="1")
+class TestSkill(unittest.TestCase):
+    def test_class_skill_suceess(self):
+        skill1 = Skill('Human Resource', 'HR', 1)
+        self.assertEqual(skill1.skill_name, 'Human Resource')
+        self.assertEqual(skill1.skill_desc, 'HR')
+        self.assertEqual(skill1.skill_status, 1)
+    def test_skill_fail(self):
+        try:
+            Skill(1, 'HR', 1)
+        except Exception as e:
+            self.assertEqual(str(e), 'skill_name must be a string')
+    def test_skill_fail1(self):
+        try:
+            Skill('Human Resource', 1, 1)
+        except Exception as e:
+            self.assertEqual(str(e), 'skill_desc must be a string')
+    def test_skill_fail2(self):
+        try:
+            Skill('Human Resource', 'HR', "1")
+        except Exception as e:
+            self.assertEqual(str(e), 'skill_status must be an integer')
 
 #-------------------------test class Journey-----------------------------------
-def test_class_journey_success():
-    """
-    GIVEN a Journey model
-    WHEN a new Journey is created
-    THEN check the journey_name, journey_status, j_fk_staff_id, j_fk_job_role_id are defined correctly
-    """
-    journey = Journey(journey_name = "1",journey_status="1", j_fk_staff_id=1, j_fk_job_role_id=1)
-    assert journey.journey_name == "1"
-    assert journey.journey_status == "1"
-    assert journey.j_fk_staff_id == 1
-    assert journey.j_fk_job_role_id == 1
-
-def test_class_journey_fail():
-    """
-    GIVEN a Journey model
-    WHEN a new Journey is created
-    THEN check the journey_status is an valid string
-    """
-    with pytest.raises(TypeError):
-        Journey(journey_name = "1",journey_status=1, j_fk_staff_id=1, j_fk_job_role_id=1)
-
-def test_class_journey_fail1():
-    """
-    GIVEN a Journey model
-    WHEN a new Journey is created
-    THEN check the j_fk_staff_id is an valid string
-    """
-    with pytest.raises(TypeError):
-        Journey(journey_name = "1",journey_status="1", j_fk_staff_id="1", j_fk_job_role_id=1)
-
-def test_class_journey_fail2():
-    """
-    GIVEN a Journey model
-    WHEN a new Journey is created
-    THEN check the j_fk_job_role_id is an valid string
-    """
-    with pytest.raises(TypeError):
-        Journey(journey_name = "1",journey_status="1", j_fk_staff_id=1, j_fk_job_role_id="1")
+class TestJourney(unittest.TestCase):
+    def test_class_journey_suceess(self):
+        journey = Journey(journey_name = "1",journey_status="1", j_fk_staff_id=1, j_fk_job_role_id=1)
+        self.assertEqual(journey.journey_name, "1")
+        self.assertEqual(journey.journey_status, "1")
+        self.assertEqual(journey.j_fk_staff_id, 1)
+        self.assertEqual(journey.j_fk_job_role_id, 1)
+    def test_journey_fail(self):
+        try:
+            Journey(journey_name = 1,journey_status="1", j_fk_staff_id=1, j_fk_job_role_id=1)
+        except Exception as e:
+            self.assertEqual(str(e), 'journey_name must be a string')
+    def test_journey_fail1(self):
+        try:
+            Journey(journey_name = "1",journey_status=1, j_fk_staff_id=1, j_fk_job_role_id=1)
+        except Exception as e:
+            self.assertEqual(str(e), 'journey_status must be a string')
+    def test_journey_fail2(self):
+        try:
+            Journey(journey_name = "1",journey_status="1", j_fk_staff_id="1", j_fk_job_role_id=1)
+        except Exception as e:
+            self.assertEqual(str(e), 'j_fk_staff_id must be an integer')
+    def test_journey_fail3(self):
+        try:
+            Journey(journey_name = "1",journey_status="1", j_fk_staff_id=1, j_fk_job_role_id="1")
+        except Exception as e:
+            self.assertEqual(str(e), 'j_fk_job_role_id must be an integer')
 
 #-------------------------test class Journey_Map---------------------------
-def test_class_journey_map_success():
-    """
-    GIVEN a Journey_Map model
-    WHEN a new Journey_Map is created
-    THEN check the jm_fk_journey_id, jm_fk_course_id, jm_fk_skill_id are defined correctly
-    """
-    journey_map = Journey_Map(jm_fk_journey_id=1, jm_fk_course_id="1")
-    assert journey_map.jm_fk_journey_id == 1
-    assert journey_map.jm_fk_course_id == "1"
-
-def test_class_journey_map_fail():
-    """
-    GIVEN a Journey_Map model
-    WHEN a new Journey_Map is created
-    THEN check the jm_fk_journey_id is an valid string
-    """
-    with pytest.raises(TypeError):
-        Journey_Map(jm_fk_journey_id="1", jm_fk_course_id="1")
-
-def test_class_journey_map_fail1():
-    """
-    GIVEN a Journey_Map model
-    WHEN a new Journey_Map is created
-    THEN check the jm_fk_course_id is an valid string
-    """
-    with pytest.raises(TypeError):
-        Journey_Map(jm_fk_journey_id=1, jm_fk_course_id=1)
+class TestJourneyMap(unittest.TestCase):
+    def test_class_journey_map_suceess(self):
+        journey_map = Journey_Map(jm_fk_journey_id=1, jm_fk_course_id="1")
+        self.assertEqual(journey_map.jm_fk_journey_id, 1)
+        self.assertEqual(journey_map.jm_fk_course_id, "1")
+    def test_journey_map_fail(self):
+        try:
+            Journey_Map(jm_fk_journey_id="1", jm_fk_course_id=1)
+        except Exception as e:
+            self.assertEqual(str(e), 'jm_fk_journey_id must be an Integer')
+    def test_journey_map_fail1(self):
+        try:
+            Journey_Map(jm_fk_journey_id=1, jm_fk_course_id="1")
+        except Exception as e:
+            self.assertEqual(str(e), 'jm_fk_course_id must be an integer')
 
 
 #-------------------------test class Registration-----------------------------------
-def test_class_registration_success():
-    """
-    GIVEN a Registration model
-    WHEN a new Registration is created
-    THEN check the course_id, staff_id, reg_status, completion_status are defined correctly
-    """
-    registration = Registration(course_id="1", staff_id=1, reg_status="1", completion_status="1")
-    assert registration.course_id == "1"
-    assert registration.staff_id == 1
-    assert registration.reg_status == "1"
-    assert registration.completion_status == "1"
-
-def test_class_registration_fail():
-    """
-    GIVEN a Registration model
-    WHEN a new Registration is created
-    THEN check the course_id is an valid string
-    """
-    with pytest.raises(TypeError):
-        Registration(course_id=1, staff_id=1, reg_status="1", completion_status="1")
-
-def test_class_registration_fail1():
-    """
-    GIVEN a Registration model
-    WHEN a new Registration is created
-    THEN check the staff_id is an valid string
-    """
-    with pytest.raises(TypeError):
-        Registration(course_id="1", staff_id="1", reg_status="1", completion_status="1")
-    
-def test_class_registration_fail2():
-    """
-    GIVEN a Registration model
-    WHEN a new Registration is created
-    THEN check the reg_status is an valid string
-    """
-    with pytest.raises(TypeError):
-        Registration(course_id="1", staff_id=1, reg_status=1, completion_status="1")
-
-def test_class_registration_fail3():
-    """
-    GIVEN a Registration model
-    WHEN a new Registration is created
-    THEN check the completion_status is an valid string
-    """
-    with pytest.raises(TypeError):
-        Registration(course_id="1", staff_id=1, reg_status="1", completion_status=1)
-
+class TestRegistration(unittest.TestCase):
+    def test_class_registration_suceess(self):
+        registration = Registration(course_id="1", staff_id=1, reg_status="1", completion_status="1")
+        self.assertEqual(registration.course_id, "1")
+        self.assertEqual(registration.staff_id, 1)
+        self.assertEqual(registration.reg_status, "1")
+        self.assertEqual(registration.completion_status, "1")
+    def test_registration_fail(self):
+        try:
+            Registration(course_id=1, staff_id=1, reg_status="1", completion_status="1")
+        except Exception as e:
+            self.assertEqual(str(e), 'course_id must be a string')
+    def test_registration_fail1(self):
+        try:
+            Registration(course_id="1", staff_id="1", reg_status="1", completion_status="1")
+        except Exception as e:
+            self.assertEqual(str(e), 'staff_id must be an integer')
+    def test_registration_fail2(self):
+        try:
+            Registration(course_id="1", staff_id=1, reg_status=1, completion_status="1")
+        except Exception as e:
+            self.assertEqual(str(e), 'reg_status must be a string')
+    def test_registration_fail3(self):
+        try:
+            Registration(course_id="1", staff_id=1, reg_status="1", completion_status=1)
+        except Exception as e:
+            self.assertEqual(str(e), 'completion_status must be a string')
 
 #-------------------------test class Skill_Map-----------------------------------
-def test_class_skill_map_success():
-    """
-    GIVEN a Skill_Map model
-    WHEN a new Skill_Map is created
-    THEN check the sm_fk_skill_id, sm_fk_staff_id are defined correctly
-    """
-    skill_map = Skill_Map(sm_fk_skill_id=1, sm_fk_staff_id=1)
-    assert skill_map.sm_fk_skill_id == 1
-    assert skill_map.sm_fk_staff_id == 1
-
-def test_class_skill_map_fail():
-    """
-    GIVEN a Skill_Map model
-    WHEN a new Skill_Map is created
-    THEN check the sm_fk_skill_id is an valid integer
-    """
-    with pytest.raises(TypeError):
-        Skill_Map(sm_fk_skill_id="1", sm_fk_staff_id=1)
-
-def test_class_skill_map_fail1():
-    """
-    GIVEN a Skill_Map model
-    WHEN a new Skill_Map is created
-    THEN check the sm_fk_staff_id is an valid integer
-    """
-    with pytest.raises(TypeError):
-        Skill_Map(sm_fk_skill_id=1, sm_fk_staff_id="1")
+class TestSkillMap(unittest.TestCase):
+    def test_class_skill_map_suceess(self):
+        skill_map = Skill_Map(sm_fk_skill_id=1, sm_fk_staff_id=1)
+        self.assertEqual(skill_map.sm_fk_skill_id, 1)
+        self.assertEqual(skill_map.sm_fk_staff_id, 1)
+    def test_skill_map_fail(self):
+        try:
+            Skill_Map(sm_fk_skill_id="1", sm_fk_staff_id=1)
+        except Exception as e:
+            self.assertEqual(str(e), 'sm_fk_skill_id must be a integer')
+    def test_skill_map_fail1(self):
+        try:
+            Skill_Map(sm_fk_skill_id=1, sm_fk_staff_id="1")
+        except Exception as e:
+            self.assertEqual(str(e), 'sm_fk_staff_id must be a integer')

@@ -36,8 +36,8 @@ def home():
 # This segment of code is to do creation of roles. Only used by HR/admin.
 # Create Job Role
 @app.route("/createJobRole", methods=['POST'])
-def create_job_role(test_data=''):
-    return jr.create_job_role(test_data)
+def create_job_role():
+    return jr.create_job_role()
 
 # This segment of code is to do retrieval of all the existing roles. Used by both HR and Learner.
 # Get All Job Role

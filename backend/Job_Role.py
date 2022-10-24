@@ -32,71 +32,56 @@ class Job_Role(db.Model):
 #Functions (CRUD)
 # ********************************* Create ********************************* 
 # Create Job Role
-def create_job_role(test_data=''):
-    data = None
-    if test_data == '':
-        data = request.get_json()
-        new_job_role = Job_Role(
-            data['job_role_name'], data['job_role_desc'], 1)
-        # check is existing role is there
-        if test_data == "":
-            jobRoles = Job_Role.query.all()
-        else:
-            jobRoles = test_data
-        if jobRoles != None:
-            res = (
-                {
-                    "code": 200,
-                    "data":  [roles.json() for roles in jobRoles]
-                }
-            )
-            roles = res['data']
-            for i in range(len(roles)):
-                if (roles[i]['job_role_name'].replace(" ", "").lower()) == data['job_role_name'].replace(" ", "").lower():
-                    return jsonify(
-                        {
-                            "code": 400,
-                            "data": {
-                                "job_role_name": data['job_role_name']
-                            },
-                            "message": "Job role already exist!"
-                        }
-                    ), 500
-
-        # if don't exist then execute these codes
-        try:
-            db.session.add(new_job_role)
-            db.session.commit()
-        except Exception as e:
-            print(e)
-            return jsonify(
-                {
-                    "code": 500,
-                    "data": {
-                        "job_role_name": data['job_role_name']
-                    },
-                    "message": "An error occurred creating the job role."
-                }
-            ), 500
-
-        return jsonify(
+def create_job_role():
+    data = request.get_json()
+    new_job_role = Job_Role(
+        data['job_role_name'], data['job_role_desc'], 1)
+    # check is existing role is there
+    jobRoles = Job_Role.query.all()
+    if jobRoles != None:
+        res = (
             {
-                "code": 201,
-                "data": new_job_role.json(),
-                "message": "Job Role successfully created"
-            }
-        ), 201
-
-    else:
-        new_job_role = Job_Role(
-            test_data['job_role_name'], test_data['job_role_desc'], test_data['job_role_status'])
-        return jsonify(
-            {
-                "code": 201,
-                "data": new_job_role.json(),
-                "message": "Job Role successfully created"
+                "code": 200,
+                "data":  [roles.json() for roles in jobRoles]
             }
         )
+        roles = res['data']
+        for i in range(len(roles)):
+            if (roles[i]['job_role_name'].replace(" ", "").lower()) == data['job_role_name'].replace(" ", "").lower():
+                return jsonify(
+                    {
+                        "code": 400,
+                        "data": {
+                            "job_role_name": data['job_role_name']
+                        },
+                        "message": "Job role already exist!"
+                    }
+                ), 500
+
+    # if don't exist then execute these codes
+    try:
+        db.session.add(new_job_role)
+        db.session.commit()
+    except Exception as e:
+        print(e)
+        return jsonify(
+            {
+                "code": 500,
+                "data": {
+                    "job_role_name": data['job_role_name']
+                },
+                "message": "An error occurred creating the job role."
+            }
+        ), 500
+
+    return jsonify(
+        {
+            "code": 201,
+            "data": new_job_role.json(),
+            "message": "Job Role successfully created"
+
+        }
+    ), 201
 
 
 # ********************************* Retrieve ********************************* 
