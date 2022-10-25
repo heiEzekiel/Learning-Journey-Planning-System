@@ -164,41 +164,49 @@
                     if(a=='' || b==''){
                         alert("Please fill in all details")
                     }
-        else{
-          var active= document.getElementById("inlineRadio1");
-          if (active.checked){
-            var status = 0
-          }else{
-            var status = 1
-          }
-          fetch(`${backendUrl}/${updateSkill}`, {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              skill_name: document.getElementById("skill_Name").value,
-              skill_desc: document.getElementById("skill_Description").value,
-              skill_status: status
-            }),
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              console.log("Success:", data);
-              if (data.code == 200) {
-                alert('Update successful')
-                location.reload();
-              }
-              else{
-                alert("Skill name already exists!");
-              }
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-            });
-          }
-        }
-        getSkillInfo();
+                      else{
+                        if (a.length > 50 && b.length > 255){
+                              alert("Both skill name and description has reached the maximum characters.")
+                        }else if(a.length >50){
+                                alert("Update skill name has reached the maximum of 50 characters.")
+                        }else if(b.length >255){
+                                alert("Update skill description has reached the maximum of 255 characters.")
+                        }else{
+                            var active= document.getElementById("inlineRadio1");
+                            if (active.checked){
+                              var status = 0
+                            }else{
+                              var status = 1
+                            }
+                            fetch(`${backendUrl}/${updateSkill}`, {
+                              method: "PUT",
+                              headers: {
+                                "Content-Type": "application/json",
+                              },
+                              body: JSON.stringify({
+                                skill_name: document.getElementById("skill_Name").value,
+                                skill_desc: document.getElementById("skill_Description").value,
+                                skill_status: status
+                              }),
+                            })
+                              .then((response) => response.json())
+                              .then((data) => {
+                                console.log("Success:", data);
+                                if (data.code == 200) {
+                                  alert('Update successful')
+                                  location.reload();
+                                }
+                                else{
+                                  alert("Skill name already exists!");
+                                }
+                              })
+                              .catch((error) => {
+                                console.error("Error:", error);
+                              });
+                            }
+                        }
+                      }
+          getSkillInfo();
 
         // const myData = function (getAllSkills) {
         // 	getid = 1;

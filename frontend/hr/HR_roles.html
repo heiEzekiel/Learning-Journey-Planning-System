@@ -102,9 +102,7 @@
 													>
 												</li>
 												<li class="rd-nav-item">
-													<a
-														class="rd-nav-link text-decoration-none"
-														href="#"
+													<a class="rd-nav-link text-decoration-none" href="#"
 														>Learners</a
 													>
 												</li>
@@ -133,9 +131,7 @@
 						</button></a
 					>
 				</div>
-				<div class="alert alert-danger mt-5" id="res" role="alert">
-					
-				  </div>
+				<div class="alert alert-danger mt-5" id="res" role="alert"></div>
 				<table class="table borderless table-hover mt-5" id="table"></table>
 			</div>
 		</div>
@@ -167,50 +163,48 @@
 					.then((response) => response.json())
 					.then((data) => {
 						console.log(JSON.parse(JSON.stringify(data)));
-						if (JSON.parse(JSON.stringify(data.code)==404)){
-							document.getElementById("res").innerText="No records found"
-						}
+						if (JSON.parse(JSON.stringify(data.code) == 404)) {
+							document.getElementById("res").innerText = "No records found";
+						} else {
+							document.getElementById("res").style.display = "none";
 
-						else{
-							document.getElementById("res").style.display= "none";
-					
-			
-						result = JSON.parse(JSON.stringify(data.data));
-						message_str = `
-                  <thead>
-                    <tr class="bg-light">
-                    <th>Job Role Name</th>
-                    <th>Job Role Description</th>
-                    <th>Job Role Status</th>
-                    <th>Action</th>
-                    </tr>
-                  </thead>`;
-						for (const role of result) {
-							if (role["job_role_status"] == 0) {
-								status = "Active";
-							} else {
-								status = "Inactive";
+							result = JSON.parse(JSON.stringify(data.data));
+							message_str = `
+										<thead>
+											<tr class="bg-light">
+											<th>Job Role Name</th>
+											<th>Job Role Description</th>
+											<th>Job Role Status</th>
+											<th>Action</th>
+											</tr>
+										</thead>`;
+							for (const role of result) {
+								if (role["job_role_status"] == 0) {
+									status = "Active";
+								} else {
+									status = "Inactive";
+								}
+								message_str += `
+										<tbody>
+										<tr>
+										
+											<td class="w-20">${role["job_role_name"]}</td>
+											<td class="text-wrap w-50">${role["job_role_desc"]}</td>
+											<td class="text-wrap">${status}</td>
+										
+											<td class=' text-wrap w-25'> <a href="./role_skills.html?job=${role["job_role_name"]}&id=${role["job_role_id"]}">   <button type="button" class="btn btn-primary">View Skills</button></a>
+											<a href="./update_roles.html?id=${role["job_role_id"]}">   <button type="button" class="btn btn-success">Edit</button></a>  
+											<button type="button" class="btn btn-danger" onClick="removeRole(${role["job_role_id"]})">Remove</button> 
+											</td>
+										</tr>
+										</tbody>
+										`;
 							}
-							message_str += `
-                <tbody>
-                  <tr>
-                  
-                    <td class="w-20">${role["job_role_name"]}</td>
-                    <td class="text-wrap w-30">${role["job_role_desc"]}</td>
-                    <td class="text-wrap">${status}</td>
-                
-                    <td> <a href="./role_skills.html?job=${role["job_role_name"]}&id=${role["job_role_id"]}">   <button type="button" class="btn btn-primary">View Skills</button></a>
-                      <a href="./update_roles.html?id=${role["job_role_id"]}">   <button type="button" class="btn btn-success">Edit</button></a>  
-                      <button type="button" class="btn btn-danger" onClick="removeRole(${role["job_role_id"]})">Remove</button> 
-                    </td>
-                  </tr>
-                </tbody>
-                `;
-						}
 
-						// <th scope="row">${role["job_role_id"]}</th>
-						document.getElementById("table").innerHTML = message_str;
-						return data.roles;	}
+							// <th scope="row">${role["job_role_id"]}</th>
+							document.getElementById("table").innerHTML = message_str;
+							return data.roles;
+						}
 					})
 					.catch((error) => {
 						// Errors when calling the service; such as network error,

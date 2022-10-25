@@ -89,8 +89,8 @@
               <form>
                 <div class="row">
                   <div class="col-md mb-1">
-                    <div class="form-outline">
-                      Role Name
+                    <div class="form-outline" >
+                     Role Name <small style="color: grey;">(max character: 50)</small>
                       <input type="text" id="role_name" class="form-control form-control-lg" required/>
                     </div>
                   </div>
@@ -99,7 +99,7 @@
                 <div class="row">
                   <div class="col-md mb-1">
                     <div class="form-outline">
-                      Description
+                      Description <small style="color: grey;">(max character: 255)</small>
                       <textarea class="form-control" id="role_desc" rows="3" required></textarea>
                     </div>
                   </div>
@@ -126,35 +126,46 @@
         async function createRoles(){
         event.preventDefault();
         if (roleName.value != "" && roleDesc.value!=""){
-          try {
-            const response = await fetch(`${backendUrl}/${createJobRole}`, {
-              method: 'POST',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                job_role_name: roleName.value,
-                job_role_desc: roleDesc.value,
-                job_role_status: 1
-              })
-            });
-            const result = await response.json();
-            if (result.code == 400){
-              alert("Role already created. Role creation unsuccessful.")
-              return result
-            }
-            alert(roleName.value +" Role successfully created");
-            roleName.value=""
-            roleDesc.value=""
-            
-            return result;
-          } catch (err) {
+          // console.log(roleName.value.length)
+          if (roleName.value.length > 50 && roleDesc.value.length > 255){
+            alert("Both Role name and description has reached the maximum characters.")
+          }else if(roleName.value.length >50){
+            alert("Role name has reached the maximum of 50 characters.")
+          }else if(roleDesc.value.length >255){
+            alert("Role description has reached the maximum of 255 characters.")
+          }else{
+            try {
+              const response = await fetch(`${backendUrl}/${createJobRole}`, {
+                method: 'POST',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  job_role_name: roleName.value,
+                  job_role_desc: roleDesc.value,
+                  job_role_status: 0
+                })
+              });
+              const result = await response.json();
+              if (result.code == 400){
+                alert("Role already created. Role creation unsuccessful.")
+                return result
+              }
+              alert(roleName.value +" Role successfully created");
+              roleName.value=""
+              roleDesc.value=""
+              
+              return result;
+            } catch (err) {
+          }
             console.log(err);
+            
           }
         }else{
           alert("Fill up all inputs!")
         }
+        
       }
 
         // btn.addEventListener("click", () => {

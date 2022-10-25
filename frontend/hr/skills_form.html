@@ -79,7 +79,7 @@
                       <div class="row">
                         <div class="col-md mb-1">
                           <div class="form-outline">
-                            <label for="skillName">Skill Name</label>
+                            <label for="skillName">Skill Name</label> <small style="color: grey;">(max character: 50)</small>
                             <input type="text" class="form-control" id="skillName" placeholder="Enter skill" required>
                           </div>
                         </div>
@@ -88,7 +88,7 @@
                       <div class="row">
                         <div class="col-md mb-1">
                           <div class="form-outline">
-                            <label for="skillDescription">Skill Description</label>
+                            <label for="skillDescription">Skill Description</label> <small style="color: grey;">(max character: 255)</small>
                             <textarea class="form-control" id="skillDescription" rows="3" placeholder="Enter Description" required></textarea>
                           </div>
                         </div>
@@ -137,6 +137,13 @@
       async function createSkills(){
         event.preventDefault();
         if (skillName.value != "" && skillDescription.value!=""){
+          if (skillName.value.length > 50 && skillDescription.value.length > 255){
+            alert("Both Skill name and description has reached the maximum characters.")
+          }else if(skillName.value.length >50){
+            alert("Skill name has reached the maximum of 50 characters.")
+          }else if(skillDescription.value.length >255){
+            alert("Skill description has reached the maximum of 255 characters.")
+          }else{
           try {
             const response = await fetch(`${backendUrl}/${create_skills}`, {
               method: 'POST',
@@ -164,6 +171,7 @@
           } catch (err) {
             console.log(err);
           }
+        }
         }else{
           alert("Fill up all inputs!")
         }
