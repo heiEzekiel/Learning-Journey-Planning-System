@@ -111,6 +111,7 @@ def get_skills(test_data=""):
     skills = None
     if test_data == "":
         skills = Skill.query.all()
+        db.session.remove()
         if skills:
                     return jsonify(
             {
@@ -150,6 +151,7 @@ def get_skill_id(skill_name, test_data=""):
     role = None
     if test_data == "":
         role = Skill.query.filter_by(skill_name=skill_name)
+        db.session.remove()
     else:
         role = test_data
     if role and test_data == "":
@@ -180,6 +182,7 @@ def get_skill_by_id(skill_id, test_data=""):
     skill = None
     if test_data == "":
         skill = Skill.query.filter_by(skill_id=skill_id)
+        db.session.remove()
     else:
         skill = test_data
     if skill and test_data == "":
@@ -262,6 +265,7 @@ def update_skill(skill_id, test_data="", new_data="", test_data2=""):
         if test_data == "" and new_data == "":
             try:
                 db.session.commit()
+                db.session.remove()
             except Exception as e:
                 print(e)
                 return jsonify(
@@ -310,6 +314,7 @@ def delete_skill(skill_id, test_data=""):
     if skill and test_data == "":
         db.session.delete(skill)
         db.session.commit()
+        db.session.remove()
         return jsonify(
             {
                 "code": 200,

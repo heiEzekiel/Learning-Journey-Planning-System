@@ -53,6 +53,7 @@ def get_all_courses(test_data=""):
     courses = None
     if test_data == "":
         courses = Course.query.all()
+        db.session.remove()
         return jsonify(
             {
                 "code": 200,

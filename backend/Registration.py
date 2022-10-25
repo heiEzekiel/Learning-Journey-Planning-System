@@ -43,6 +43,7 @@ class Registration(db.Model):
 # Get Courses Registered by Staff
 def get_courses_registration(staff_id):
     cs_reg = Registration.query.filter_by(staff_id=staff_id).all()
+    db.session.remove()
     if cs_reg:
         return jsonify(
             {

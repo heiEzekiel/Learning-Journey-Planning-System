@@ -78,6 +78,7 @@ def create_journey(test_data=""):
         try:
             db.session.add(journey)
             db.session.commit()
+            db.session.remove()
         except Exception as e:
             return jsonify(
                 {
@@ -124,6 +125,7 @@ def delete_journey(journey_id, test_data=""):
     if del_lj and test_data == "":
         db.session.delete(del_lj)
         db.session.commit()
+        db.session.remove()
         return jsonify(
             {
                 "code": 200,

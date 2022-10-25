@@ -131,6 +131,7 @@ def get_specific_job_role_by_id(job_role_id, test_data=""):
     jobRoles = None
     if test_data == "":
         jobRoles = Job_Role.query.filter_by(job_role_id=job_role_id).all()
+        db.session.remove()
     else:
         jobRoles = test_data
     if test_data == "":
@@ -179,6 +180,7 @@ def update_job_role_by_id(job_role_id, test_data=''):
             job_role.job_role_status = data['job_role_status']
             try:
                 db.session.commit()
+                db.session.remove()
             except:
                 return jsonify(
                     {
@@ -209,6 +211,7 @@ def update_job_role_by_id(job_role_id, test_data=''):
             ), 404
     else:
         job_role = Job_Role.query.filter_by(job_role_id=job_role_id).first()
+        db.session.remove()
         job_role.job_role_name = test_data['job_role_name']
         job_role.job_role_desc = test_data['job_role_desc']
         job_role.job_role_status = test_data['job_role_status']
@@ -234,6 +237,7 @@ def delete_job_role_by_id(job_role_id, test_data="", existing_data=""):
     if job and test_data == "":
         db.session.delete(job)
         db.session.commit()
+        db.session.remove()
         return jsonify(
             {
                 "code": 200,

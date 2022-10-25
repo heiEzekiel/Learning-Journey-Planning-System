@@ -39,6 +39,7 @@ def create_course_skill_map(cm_fk_course_id, cm_fk_skill_id, test_data=""):
         try:
             db.session.add(new_map)
             db.session.commit()
+            db.session.remove()
         except Exception as e:
             print(e)
             return jsonify(
@@ -72,6 +73,7 @@ def get_skills_for_course(cm_fk_course_id, test_data_course_map="", test_data_sk
     if test_data_course_map == "" and test_data_skill == "":
         coursemapping = Course_Map.query.filter_by(
             cm_fk_course_id=cm_fk_course_id).all()
+        db.session.remove()
     else:
         coursemapping = test_data_course_map
     if coursemapping:
@@ -84,6 +86,7 @@ def get_skills_for_course(cm_fk_course_id, test_data_course_map="", test_data_sk
         skill = None
         if test_data_skill == "":
             skill = Skill.query.all()
+            db.session.remove()
         else:
             skill = test_data_skill
         if skill:
@@ -121,6 +124,7 @@ def get_courses_for_skill(skill_id, test_data_course_map="", test_data_course=""
     if test_data_course_map == "" and test_data_course == "" and test_data_skill == "":
         coursemapping = Course_Map.query.filter_by(
             cm_fk_skill_id=skill_id).all()
+        db.session.remove()
     else:
         coursemapping = test_data_course_map
     if coursemapping:
@@ -134,6 +138,7 @@ def get_courses_for_skill(skill_id, test_data_course_map="", test_data_course=""
         course = None
         if test_data_course == "":
             course = Course.query.all()
+            db.session.remove()
         else:
             course = test_data_course
         if course:
@@ -175,6 +180,7 @@ def delete_skill_from_course(course_id, skill_id, test_data="", existing_data=""
     if course and test_data == "":
         db.session.delete(course)
         db.session.commit()
+        db.session.remove()
         return jsonify(
             {
                 "code": 200,
@@ -194,7 +200,6 @@ def delete_skill_from_course(course_id, skill_id, test_data="", existing_data=""
     return jsonify(
         {
             "code": 404,
-
             "message": "Course and Skill not found."
         }
     ), 404
