@@ -38,6 +38,7 @@ def create_job_role():
         data['job_role_name'], data['job_role_desc'], 1)
     # check is existing role is there
     jobRoles = Job_Role.query.all()
+    db.session.remove()
     if jobRoles != None:
         res = (
             {
@@ -90,6 +91,7 @@ def get_all_job_role(test_data=""):
     jobRoles = None
     if test_data == "":
         jobRoles = Job_Role.query.all()
+        db.session.remove()
         if jobRoles:
             return jsonify(
                 {
