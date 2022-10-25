@@ -1,9 +1,3 @@
-from flask import Flask
-from flask_cors import CORS
-from os import environ
-from flask_sqlalchemy import SQLAlchemy
-import db_connector
-
 # Function Files
 import Job_Role as jr
 import Role_Map as rm
