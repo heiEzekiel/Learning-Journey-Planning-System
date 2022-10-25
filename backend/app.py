@@ -129,8 +129,8 @@ def get_skill_by_id(skill_id, test_data=""):
 # This segment of code is update details of a selected skill
 # Update Skill details by skill_id
 @app.route("/updateSkill/<int:skill_id>", methods=['PUT'])
-def update_skill(skill_id, test_data="", new_data="", test_data2=""):
-    return s.update_skill(skill_id, test_data, new_data, test_data2)
+def update_skill(skill_id, test_data=""):
+    return s.update_skill(skill_id, test_data)
 
 # This segment of code is delete a selected skill
 # Delete Skill details by skill_id

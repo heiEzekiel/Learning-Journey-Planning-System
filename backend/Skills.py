@@ -206,61 +206,18 @@ def get_skill_by_id(skill_id, test_data=""):
 
 # ********************************* Update ********************************* 
 # Update skill by id
-def update_skill(skill_id, test_data="", new_data="", test_data2=""):
+def update_skill(skill_id, test_data=""):
     skill = None
     if test_data == "":
+        data = request.get_json()
         skill = Skill.query.filter_by(skill_id=skill_id).first()
-    else:
-        skill = test_data
-    if skill:
-        data = None
-        if new_data == "":
-            data = request.get_json()
-        else:
-            data = new_data
-
-        preskill = skill.skill_name
-
-     # check is existing role is there
-        if test_data == "":
-            skills = Skill.query.all()
-        else:
-            skills = test_data2
-        if skills != None:
-            res = (
-                {
-                    "code": 200,
-                    "data":  [s.json() for s in skills]
-                }
-            )
-            s = res['data']
-            for i in range(len(s)):
-                if (preskill.replace(" ", "").lower() == s[i]['skill_name'].replace(" ", "").lower()):
-                    continue
-                if (s[i]['skill_name'].replace(" ", "").lower()) == data['skill_name'].replace(" ", "").lower():
-                    return jsonify(
-                        {
-                            "code": 400,
-                            "data": {
-                                "skill_name": data['skill_name']
-                            },
-                            "message": "Skill name already exist!"
-                        }
-                    ), 500
-
-        if data['skill_name']:
+        if skill:
             skill.skill_name = data['skill_name']
-        if data['skill_desc']:
             skill.skill_desc = data['skill_desc']
-        if data['skill_status']:
             skill.skill_status = data['skill_status']
-
-        # if no duplicate skill then run these codes
-        if test_data == "" and new_data == "":
             try:
                 db.session.commit()
-            except Exception as e:
-                print(e)
+            except:
                 return jsonify(
                     {
                         "code": 500,
@@ -270,31 +227,36 @@ def update_skill(skill_id, test_data="", new_data="", test_data2=""):
                         "message": "An error occurred updating the skill."
                     }
                 ), 500
-
             return jsonify(
                 {
                     "code": 200,
-                    "data": skill.json()
+                    "data": skill.json(),
+                    "message": "Skill successfully updated"
                 }
-            )
+            ), 200
         else:
             return jsonify(
                 {
-                    "code": 200,
-                    "data": skill.json()
+                    "code": 404,
+                    "data": {
+                        "skill_id": skill_id
+                    },
+                    "message": "Skill not found."
                 }
-            )
-    # return these if job role not found
-    return jsonify(
-        {
-            "code": 404,
-            "data": {
-                "skill_id": skill_id
-            },
-            "message": "skill_id not found."
-        }
-    ), 404
-
+            ), 404
+    else:
+        skill = Skill.query.filter_by(skill_id=skill_id).first()
+        db.session.commit()
+        skill.skill_name = data['skill_name']
+        skill.skill_desc = data['skill_desc']
+        skill.skill_status = data['skill_status']
+        return jsonify(
+            {
+                "code": 200,
+                "data": skill.json(),
+                "message": "Skill successfully updated"
+            }
+        ), 200
 
 # ********************************* Delete ********************************* 
 # Delete skill by id
