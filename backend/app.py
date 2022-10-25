@@ -83,7 +83,7 @@ def create_course_skill_map(cm_fk_course_id, cm_fk_skill_id, test_data=""):
 # Get skills required for the course using course id
 @app.route("/getSkillsForCourse/<string:cm_fk_course_id>", methods=['GET'])
 def getSkillsForCourse(cm_fk_course_id, test_data_course_map="", test_data_skill=""):
-    return cm.getSkillsForCourse(cm_fk_course_id, test_data_course_map, test_data_skill)
+    return cm.get_skills_for_course(cm_fk_course_id, test_data_course_map, test_data_skill)
 
 # Get courses available for the selected skill using skill_id
 @app.route("/getCoursesForSkill/<int:skill_id>", methods=['GET'])
