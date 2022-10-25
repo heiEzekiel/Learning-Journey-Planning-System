@@ -37,7 +37,7 @@ def create_job_role():
         data['job_role_name'], data['job_role_desc'], 0)
     # check is existing role is there
     jobRoles = Job_Role.query.all()
-    if jobRoles != None:
+    if jobRoles:
         res = (
             {
                 "code": 200,

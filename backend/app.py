@@ -52,18 +52,18 @@ def delete_job_role_by_id(job_role_id):
 # Create job to role mapping
 # Used when updating role information, or mapping role information. Used in assign skill to role and update.
 @app.route("/createRoleMap/<int:rm_fk_job_role_id>/<int:rm_fk_skill_id>", methods=['POST'])
-def create_role_map(rm_fk_job_role_id, rm_fk_skill_id, test_data=""):
-    return rm.create_role_map(rm_fk_job_role_id, rm_fk_skill_id, test_data)
+def create_role_map(rm_fk_job_role_id, rm_fk_skill_id):
+    return rm.create_role_map(rm_fk_job_role_id, rm_fk_skill_id)
 
 # Get skills required for the selected job role using job_role_id
 @app.route("/getSkillsForJob/<int:job_role_id>", methods=['GET'])
-def get_skills_for_job(job_role_id, test_data_role_map="", test_data_skill="", test_data_job_role=""):
-    return rm.get_skills_for_job(job_role_id, test_data_role_map, test_data_skill, test_data_job_role)
+def get_skills_for_job(job_role_id):
+    return rm.get_skills_for_job(job_role_id)
 
 # Remove a skill from a job role
 @app.route("/removeSkillFromJobRole/<int:job_role_id>/<int:skill_id>", methods=['DELETE'])
-def delete_skill_from_job_role(job_role_id, skill_id, test_data="", existing_data=""):
-    return rm.delete_skill_from_job_role(job_role_id, skill_id, test_data, existing_data)
+def delete_skill_from_job_role(job_role_id, skill_id):
+    return rm.delete_skill_from_job_role(job_role_id, skill_id)
 
 
 # ********************************* Courses Related ******************************************************************
@@ -108,35 +108,35 @@ def get_courses_registration(staff_id):
 # This segment of code is to create skill
 # Create skill
 @app.route("/createSkills", methods=['POST'])
-def create_skills(test_data=""):
-    return s.create_skills(test_data)
+def create_skills():
+    return s.create_skills()
 
 # Get a list of skills
 @app.route("/getskills" , methods=['GET'])
-def get_skills(test_data=""):
-    return s.get_skills(test_data)
+def get_skills():
+    return s.get_skills()
 
 # Get skill ID using skill name
-@app.route("/getSkillID/<string:skill_name>/", methods=['GET'])
-def get_skill_id(skill_name, test_data=""):
-    return s.get_skill_id(skill_name, test_data)
+@app.route("/getSkillID/<string:skill_name>", methods=['GET'])
+def get_skill_id(skill_name):
+    return s.get_skill_id(skill_name)
 
 # Get skill ID using skill id
-@app.route("/getSkillById/<int:skill_id>/", methods=['GET'])
-def get_skill_by_id(skill_id, test_data=""):
-    return s.get_skill_by_id(skill_id, test_data)
+@app.route("/getSkillById/<int:skill_id>", methods=['GET'])
+def get_skill_by_id(skill_id):
+    return s.get_skill_by_id(skill_id)
 
 # This segment of code is update details of a selected skill
 # Update Skill details by skill_id
 @app.route("/updateSkill/<int:skill_id>", methods=['PUT'])
-def update_skill(skill_id, test_data=""):
-    return s.update_skill(skill_id, test_data)
+def update_skill(skill_id):
+    return s.update_skill(skill_id)
 
 # This segment of code is delete a selected skill
 # Delete Skill details by skill_id
 @app.route("/deleteSkill/<int:skill_id>", methods=['DELETE'])
-def delete_skill(skill_id, test_data=""):
-    return s.delete_skill(skill_id, test_data)
+def delete_skill(skill_id):
+    return s.delete_skill(skill_id)
 
 
 # ********************************* Skill Map Related ******************************************************************

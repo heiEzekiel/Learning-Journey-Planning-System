@@ -1,10 +1,11 @@
 from flask import  request, jsonify
 from db_connector import db
 from Skills import Skill
- 
+
 # Role_Map Table
 class Role_Map(db.Model):
     __tablename__ = 'Role_Map'
+    __table_args__ = {'extend_existing': True}
     rm_fk_job_role_id = db.Column(db.Integer, primary_key=True, nullable=False)
     rm_fk_skill_id = db.Column(db.Integer, primary_key=True, nullable=False)
 
@@ -26,54 +27,36 @@ class Role_Map(db.Model):
 #Functions (CRUD)
 # ********************************* Create ********************************* 
 # Create role mapping
-def create_role_map(rm_fk_job_role_id, rm_fk_skill_id, test_data=""):
-    if test_data == "":
-        data = request.get_json()
-        new_map = Role_Map(data['rm_fk_job_role_id'], data['rm_fk_skill_id'])
-    else:
-        new_map = test_data
-
-    if test_data == "":
-        try:
-            db.session.add(new_map)
-            db.session.commit()
-        except Exception as e:
-            print(e)
-            return jsonify(
-                {
-                    "code": 500,
-                    "message": "An error occurred creating the record."
-                }
-            ), 500
-
+def create_role_map(rm_fk_job_role_id, rm_fk_skill_id):
+    data = request.get_json()
+    new_map = Role_Map(data['rm_fk_job_role_id'], data['rm_fk_skill_id'])
+    try:
+        db.session.add(new_map)
+        db.session.commit()
+    except Exception as e:
+        print(e)
         return jsonify(
             {
-                "code": 201,
-                "data": new_map.json(),
-                "message": "Success"
+                "code": 500,
+                "message": "An error occurred creating the record."
             }
-        ), 201
-    else:
-        return jsonify(
-            {
-                "code": 201,
-                "data": new_map.json(),
-                "message": "Success"
-            }
-        )
+        ), 500
+
+    return jsonify(
+        {
+            "code": 201,
+            "data": new_map.json(),
+            "message": "Success"
+        }
+    ), 201
 
 
 # ********************************* Retrieve ********************************* 
 # Get all skills for a job role
-def get_skills_for_job(job_role_id, test_data_role_map="", test_data_skill="", test_data_job_role=""):
+def get_skills_for_job(job_role_id):
     # Get a list of skill_id required for the job
-    rolemapping = None
-    if test_data_role_map == "" and test_data_skill == "" and test_data_job_role == "":
-        rolemapping = Role_Map.query.filter_by(
-            rm_fk_job_role_id=job_role_id).all()
-    else:
-        rolemapping = [role for role in test_data_role_map if int(
-            role.rm_fk_job_role_id) == job_role_id]
+    rolemapping = Role_Map.query.filter_by(
+        rm_fk_job_role_id=job_role_id).all()
     if rolemapping:
         role = [r.json() for r in rolemapping]
         list_of_skill = []
@@ -81,11 +64,7 @@ def get_skills_for_job(job_role_id, test_data_role_map="", test_data_skill="", t
             list_of_skill.append(i['rm_fk_skill_id'])
         skillName = []
         # For each skill_id, find the name of skill
-        skill = None
-        if test_data_skill == "":
-            skill = Skill.query.all()
-        else:
-            skill = test_data_skill
+        skill = Skill.query.all()
         if skill:
             skill_list = [s.json() for s in skill]
 
@@ -120,16 +99,10 @@ def get_skills_for_job(job_role_id, test_data_role_map="", test_data_skill="", t
 
 # ********************************* Delete ********************************* 
 # Delete role mapping
-def delete_skill_from_job_role(job_role_id, skill_id, test_data="", existing_data=""):
-    all_role = None
-    role = None
-    if test_data == "":
-        role = Role_Map.query.filter_by(
-            rm_fk_job_role_id=job_role_id, rm_fk_skill_id=skill_id).first()
-    else:
-        role = test_data
-        all_role = existing_data
-    if role and test_data == "":
+def delete_skill_from_job_role(job_role_id, skill_id):
+    role = Role_Map.query.filter_by(
+        rm_fk_job_role_id=job_role_id, rm_fk_skill_id=skill_id).first()
+    if role:
         db.session.delete(role)
         db.session.commit()
         return jsonify(
@@ -138,16 +111,6 @@ def delete_skill_from_job_role(job_role_id, skill_id, test_data="", existing_dat
                 "message": "Skill removed successfully"
             }
         )
-    elif role and test_data != "":
-        for role in all_role:
-            if role.rm_fk_job_role_id == job_role_id and role.rm_fk_skill_id == skill_id:
-                all_role.remove(role)
-                return jsonify(
-                    {
-                        "code": 200,
-                        "message": "Skill removed successfully"
-                    }
-                )
     return jsonify(
         {
             "code": 404,
