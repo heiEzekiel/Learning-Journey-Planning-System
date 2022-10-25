@@ -88,7 +88,6 @@ def get_all_job_role(test_data=""):
     jobRoles = None
     if test_data == "":
         jobRoles = Job_Role.query.all()
-        db.session.remove()
         if jobRoles:
             return jsonify(
                 {
@@ -128,7 +127,6 @@ def get_specific_job_role_by_id(job_role_id, test_data=""):
     jobRoles = None
     if test_data == "":
         jobRoles = Job_Role.query.filter_by(job_role_id=job_role_id).all()
-        db.session.remove()
     else:
         jobRoles = test_data
     if test_data == "":

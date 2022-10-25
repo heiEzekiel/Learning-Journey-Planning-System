@@ -71,7 +71,6 @@ def get_skills_for_course(cm_fk_course_id, test_data_course_map="", test_data_sk
     if test_data_course_map == "" and test_data_skill == "":
         coursemapping = Course_Map.query.filter_by(
             cm_fk_course_id=cm_fk_course_id).all()
-        db.session.remove()
     else:
         coursemapping = test_data_course_map
     if coursemapping:
@@ -84,7 +83,6 @@ def get_skills_for_course(cm_fk_course_id, test_data_course_map="", test_data_sk
         skill = None
         if test_data_skill == "":
             skill = Skill.query.all()
-            db.session.remove()
         else:
             skill = test_data_skill
         if skill:
@@ -122,7 +120,6 @@ def get_courses_for_skill(skill_id, test_data_course_map="", test_data_course=""
     if test_data_course_map == "" and test_data_course == "" and test_data_skill == "":
         coursemapping = Course_Map.query.filter_by(
             cm_fk_skill_id=skill_id).all()
-        db.session.remove()
     else:
         coursemapping = test_data_course_map
     if coursemapping:
@@ -136,7 +133,6 @@ def get_courses_for_skill(skill_id, test_data_course_map="", test_data_course=""
         course = None
         if test_data_course == "":
             course = Course.query.all()
-            db.session.remove()
         else:
             course = test_data_course
         if course:

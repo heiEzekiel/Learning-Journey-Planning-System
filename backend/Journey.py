@@ -95,7 +95,6 @@ def create_journey(test_data=""):
 # Retrieve all journeys
 def get_journey(j_fk_staff_id):
     journeys = Journey.query.filter_by(j_fk_staff_id=j_fk_staff_id).all()
-    db.session.remove() 
     if journeys:
         return jsonify(
             {
