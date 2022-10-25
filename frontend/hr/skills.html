@@ -129,25 +129,30 @@
                               <tr class="bg-light">
                               <th scope="col">Skill Name</th>
                               <th scope="col">Skill Description</th>
+                              <th scope="col">Skill Status</th>
                               <th scope="col">Action</th>
                               </tr>
                           </thead>`
                           for (const skill of result) {
-                              if (skill['skill_status']==0){
-                                  message_str += `
-                                  <tbody>
-                                      <tr>
-                                          <th scope="row">${skill['skill_name']}</th>
-                                          <td class="text-wrap w-50">${skill['skill_desc']}
-                                          <td class="text-wrap w-25"> 
-                                          <button type="button" class="btn btn-primary" >View Course</button>
-                                          <button type="button" class="btn btn-success" onClick="location.href='./updateskills.html?id=${skill['skill_id']}'">Edit</button>
-                                          <button type="button" class="btn btn-danger" onClick="removeSkill(${skill['skill_id']})" >Delete</button>
-                                          </td>
-                                      </tr>
-                                  </tbody>
+                            if(skill['skill_status'] == 0){
+                              var status = "Active"
+                            }else{
+                              var status = "Inactive"
+                            }
+                            message_str += `
+                            <tbody>
+                                <tr>
+                                    <th scope="row">${skill['skill_name']}</th>
+                                    <td class="text-wrap w-50">${skill['skill_desc']}</td>
+                                    <td class="text-wrap">${status}</td>
+                                    <td class="text-wrap w-25"> 
+                                    <button type="button" class="btn btn-primary" >View Course</button>
+                                    <button type="button" class="btn btn-success" onClick="location.href='./updateskills.html?id=${skill['skill_id']}'">Edit</button>
+                                    <button type="button" class="btn btn-danger" onClick="removeSkill(${skill['skill_id']})" >Delete</button>
+                                    </td>
+                                </tr>
+                            </tbody>
                                   `
-                              }
                           }
                           document.getElementById('table').innerHTML = message_str
                           return data.data.skill }
