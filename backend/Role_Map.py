@@ -1,8 +1,7 @@
 from flask import  request, jsonify
-import db_connector
-db = db_connector.db_connector()
+from db_connector import db
 from Skills import Skill
-
+ 
 # Role_Map Table
 class Role_Map(db.Model):
     __tablename__ = 'Role_Map'
@@ -72,7 +71,6 @@ def get_skills_for_job(job_role_id, test_data_role_map="", test_data_skill="", t
     if test_data_role_map == "" and test_data_skill == "" and test_data_job_role == "":
         rolemapping = Role_Map.query.filter_by(
             rm_fk_job_role_id=job_role_id).all()
-        db.session.remove()
     else:
         rolemapping = [role for role in test_data_role_map if int(
             role.rm_fk_job_role_id) == job_role_id]
@@ -86,7 +84,6 @@ def get_skills_for_job(job_role_id, test_data_role_map="", test_data_skill="", t
         skill = None
         if test_data_skill == "":
             skill = Skill.query.all()
-            db.session.remove()
         else:
             skill = test_data_skill
         if skill:

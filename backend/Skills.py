@@ -1,6 +1,5 @@
 from flask import  request, jsonify
-import db_connector
-db = db_connector.db_connector()
+from db_connector import db
 
 # Skill Table
 class Skill(db.Model):
@@ -109,7 +108,6 @@ def get_skills(test_data=""):
     skills = None
     if test_data == "":
         skills = Skill.query.all()
-        db.session.remove()
         if skills:
                     return jsonify(
             {
@@ -149,7 +147,6 @@ def get_skill_id(skill_name, test_data=""):
     role = None
     if test_data == "":
         role = Skill.query.filter_by(skill_name=skill_name)
-        db.session.remove()
     else:
         role = test_data
     if role and test_data == "":
@@ -180,7 +177,6 @@ def get_skill_by_id(skill_id, test_data=""):
     skill = None
     if test_data == "":
         skill = Skill.query.filter_by(skill_id=skill_id)
-        db.session.remove()
     else:
         skill = test_data
     if skill and test_data == "":

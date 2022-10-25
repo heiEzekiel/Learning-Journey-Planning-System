@@ -1,6 +1,5 @@
 from flask import  request, jsonify
-import db_connector
-db = db_connector.db_connector()
+from db_connector import db
 
 # Andy to test this new DB
 # Skill Map Table
@@ -31,7 +30,6 @@ class Skill_Map(db.Model):
 # Get Staff Skills
 def get_staff_skills(sm_fk_staff_id):
     skill = Skill_Map.query.filter_by(sm_fk_staff_id=sm_fk_staff_id).all()
-    db.session.remove()
     if skill:
         return jsonify(
             {

@@ -1,6 +1,5 @@
 from flask import  request, jsonify
-import db_connector
-db = db_connector.db_connector()
+from db_connector import db
 
 # Journey Map Table
 class Journey_Map(db.Model):

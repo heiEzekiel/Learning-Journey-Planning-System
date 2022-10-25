@@ -1,6 +1,5 @@
 from flask import  request, jsonify
-import db_connector
-db = db_connector.db_connector()
+from db_connector import db
 
 class Job_Role(db.Model):
     __tablename__ = 'Job_Role'
@@ -27,8 +26,7 @@ class Job_Role(db.Model):
             "job_role_desc": self.job_role_desc,
             "job_role_status": self.job_role_status
         }
-
-
+        
 #Functions (CRUD)
 # ********************************* Create ********************************* 
 # Create Job Role
@@ -90,7 +88,6 @@ def get_all_job_role(test_data=""):
     jobRoles = None
     if test_data == "":
         jobRoles = Job_Role.query.all()
-        db.session.remove()
         if jobRoles:
             return jsonify(
                 {
@@ -130,7 +127,6 @@ def get_specific_job_role_by_id(job_role_id, test_data=""):
     jobRoles = None
     if test_data == "":
         jobRoles = Job_Role.query.filter_by(job_role_id=job_role_id).all()
-        db.session.remove()
     else:
         jobRoles = test_data
     if test_data == "":
@@ -189,6 +185,7 @@ def update_job_role_by_id(job_role_id, test_data=''):
                         "message": "An error occurred updating the job role."
                     }
                 ), 500
+                
             return jsonify(
                 {
                     "code": 200,
@@ -208,6 +205,7 @@ def update_job_role_by_id(job_role_id, test_data=''):
             ), 404
     else:
         job_role = Job_Role.query.filter_by(job_role_id=job_role_id).first()
+        db.session.commit()
         job_role.job_role_name = test_data['job_role_name']
         job_role.job_role_desc = test_data['job_role_desc']
         job_role.job_role_status = test_data['job_role_status']
