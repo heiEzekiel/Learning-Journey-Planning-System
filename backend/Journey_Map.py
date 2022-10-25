@@ -39,7 +39,6 @@ def create_journey_map(jm_fk_journey_id, jm_fk_course_id, test_data=""):
         try:
             db.session.add(new_map)
             db.session.commit()
-            db.session.remove()
         except Exception as e:
             print(e)
             return jsonify(
@@ -112,7 +111,6 @@ def delete_journey_map(jm_fk_journey_id,jm_fk_course_id, test_data=""):
     if del_map and test_data == "":
         db.session.delete(del_map)
         db.session.commit()
-        db.session.remove()
         return jsonify(
             {
                 "code": 200,

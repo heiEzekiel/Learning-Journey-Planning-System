@@ -38,7 +38,6 @@ def create_role_map(rm_fk_job_role_id, rm_fk_skill_id, test_data=""):
         try:
             db.session.add(new_map)
             db.session.commit()
-            db.session.remove()
         except Exception as e:
             print(e)
             return jsonify(
@@ -136,7 +135,6 @@ def delete_skill_from_job_role(job_role_id, skill_id, test_data="", existing_dat
     if role and test_data == "":
         db.session.delete(role)
         db.session.commit()
-        db.session.remove()
         return jsonify(
             {
                 "code": 200,

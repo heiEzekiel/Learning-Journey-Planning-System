@@ -56,7 +56,6 @@ def create_skills(test_data=""):
     if test_data == "":
         # check is existing role is there
         skills = Skill.query.all()
-        db.session.remove()
         if skills != None:
             res = (
                 {
@@ -80,7 +79,6 @@ def create_skills(test_data=""):
         try:
             db.session.add(skill)
             db.session.commit()
-            db.session.remove()
         except Exception as e:
             print(e)
             return jsonify(
@@ -265,7 +263,6 @@ def update_skill(skill_id, test_data="", new_data="", test_data2=""):
         if test_data == "" and new_data == "":
             try:
                 db.session.commit()
-                db.session.remove()
             except Exception as e:
                 print(e)
                 return jsonify(
@@ -314,7 +311,6 @@ def delete_skill(skill_id, test_data=""):
     if skill and test_data == "":
         db.session.delete(skill)
         db.session.commit()
-        db.session.remove()
         return jsonify(
             {
                 "code": 200,

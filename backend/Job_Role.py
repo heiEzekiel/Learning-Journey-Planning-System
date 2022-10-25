@@ -38,7 +38,6 @@ def create_job_role():
         data['job_role_name'], data['job_role_desc'], 1)
     # check is existing role is there
     jobRoles = Job_Role.query.all()
-    db.session.remove()
     if jobRoles != None:
         res = (
             {
@@ -180,7 +179,6 @@ def update_job_role_by_id(job_role_id, test_data=''):
             job_role.job_role_status = data['job_role_status']
             try:
                 db.session.commit()
-                db.session.remove()
             except:
                 return jsonify(
                     {
@@ -191,7 +189,6 @@ def update_job_role_by_id(job_role_id, test_data=''):
                         "message": "An error occurred updating the job role."
                     }
                 ), 500
-
             return jsonify(
                 {
                     "code": 200,
@@ -211,7 +208,6 @@ def update_job_role_by_id(job_role_id, test_data=''):
             ), 404
     else:
         job_role = Job_Role.query.filter_by(job_role_id=job_role_id).first()
-        db.session.remove()
         job_role.job_role_name = test_data['job_role_name']
         job_role.job_role_desc = test_data['job_role_desc']
         job_role.job_role_status = test_data['job_role_status']
@@ -237,7 +233,6 @@ def delete_job_role_by_id(job_role_id, test_data="", existing_data=""):
     if job and test_data == "":
         db.session.delete(job)
         db.session.commit()
-        db.session.remove()
         return jsonify(
             {
                 "code": 200,

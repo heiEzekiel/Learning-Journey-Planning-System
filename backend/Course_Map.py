@@ -39,7 +39,6 @@ def create_course_skill_map(cm_fk_course_id, cm_fk_skill_id, test_data=""):
         try:
             db.session.add(new_map)
             db.session.commit()
-            db.session.remove()
         except Exception as e:
             print(e)
             return jsonify(
@@ -180,7 +179,6 @@ def delete_skill_from_course(course_id, skill_id, test_data="", existing_data=""
     if course and test_data == "":
         db.session.delete(course)
         db.session.commit()
-        db.session.remove()
         return jsonify(
             {
                 "code": 200,
