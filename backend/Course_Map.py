@@ -6,6 +6,7 @@ from Skills import Skill
 # Course Map Table
 class Course_Map(db.Model):
     __tablename__ = 'Course_Map'
+    __table_args__ = {'extend_existing': True}
     cm_fk_course_id = db.Column(
         db.String(20), primary_key=True, nullable=False)
     cm_fk_skill_id = db.Column(db.Integer, primary_key=True, nullable=False)

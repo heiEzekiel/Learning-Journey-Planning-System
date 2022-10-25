@@ -4,6 +4,7 @@ from db_connector import db
 # Course  Table
 class Course(db.Model):
     __tablename__ = 'Courses'
+    __table_args__ = {'extend_existing': True}
     course_id = db.Column(db.String(20), primary_key=True, nullable=False)
     course_name = db.Column(db.String(50), nullable=False)
     course_desc = db.Column(db.String(255), nullable=False)
@@ -31,7 +32,7 @@ class Course(db.Model):
         self.course_type = course_type
         self.course_category = course_category
     
-    
+
     def json(self):
         return {
             "course_id": self.course_id,

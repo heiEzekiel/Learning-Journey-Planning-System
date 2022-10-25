@@ -5,6 +5,7 @@ from db_connector import db
 class Registration(db.Model):
     #Andy test case
     __tablename__ = 'Registration'
+    __table_args__ = {'extend_existing': True}
     reg_id = db.Column(db.Integer, primary_key=True, nullable=False)
     course_id = db.Column(db.String(20), nullable=False)
     staff_id = db.Column(db.Integer, nullable=False)

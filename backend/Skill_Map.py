@@ -5,6 +5,7 @@ from db_connector import db
 # Skill Map Table
 class Skill_Map(db.Model):
     __tablename__ = 'Skill_Map'
+    __table_args__ = {'extend_existing': True}
     sm_fk_skill_id = db.Column(
         db.Integer, primary_key=True, nullable=False)
     sm_fk_staff_id = db.Column(db.Integer, primary_key=True, nullable=False)

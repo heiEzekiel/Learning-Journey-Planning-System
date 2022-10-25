@@ -4,6 +4,7 @@ from db_connector import db
 # Journey Table
 class Journey(db.Model):
     __tablename__ = 'Journey'
+    __table_args__ = {'extend_existing': True}
     journey_id = db.Column(db.Integer, primary_key=True, nullable=False)
     journey_name = db.Column(db.String(100), nullable=False)
     journey_status = db.Column(db.String(100), nullable=False)

@@ -4,6 +4,7 @@ from db_connector import db
 # Journey Map Table
 class Journey_Map(db.Model):
     __tablename__ = 'Journey_Map'
+    __table_args__ = {'extend_existing': True}
     jm_fk_journey_id = db.Column(db.Integer, primary_key=True, nullable=False)
     jm_fk_course_id = db.Column(
         db.String(20), primary_key=True, nullable=False)
