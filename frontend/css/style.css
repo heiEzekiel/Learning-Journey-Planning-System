@@ -21185,13 +21185,13 @@ p {
 }
 
 #landingpagehead {
-	position: absolute; 
-	
-	left: 23%; 
+	position: absolute;
+
+	left: 23%;
 	top: 10vw;
 	font-weight: 700;
 	font-size: 3.9vw;
-	line-height: 5.5vw; 
+	line-height: 5.5vw;
 }
 
 #landpagedesc {

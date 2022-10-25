@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Home Page</title>
+		<meta name="format-detection" content="telephone=no" />
+		<meta
+			name="viewport"
+			content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+		/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta charset="utf-8" />
+		<link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+		<!-- Stylesheets and css for this page spef-->
+		<!-- Animation Parallax CSS-->
+		<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+		<script
+			src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
+			crossorigin="anonymous"
+		></script>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+		/>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+			crossorigin="anonymous"
+		/>
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+			crossorigin="anonymous"
+		></script>
+		<link rel="stylesheet" href="../css/style.css" />
+		<style>
+			body {
+				font-family: "Work Sans", sans-serif !important;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container-fluid">
+			<div class="masthead text-center">
+				<p
+					id="landingpagehead"
+					class="text-center justify-content-center w-50 masthead-heading animate__animated animate__fadeInDownBig"
+					style="font-family: Arial, sans-serif"
+				>
+					<span style="color: black">Login to manage </span>
+					<span class="text-primary">learning journey</span>
+					<span style="color: black">with </span
+					><span class="text-primary">LJPS</span>
+				</p>
+
+				<p
+					class="masthead-subheading mb-0 animate__animated animate__fadeInLeftBig animate__delay-1s"
+					id="landpagedesc"
+				>
+					With Learning Journey Planning System, you can determine which classes
+					and training programs would be best for an employee on his or her
+					designated career path.
+				</p>
+			</div>
+
+			<div class="text-center" style="padding-top: 31vw">
+				<button
+					class="button-login btn btn-primary animate__animated animate__fadeIn animate__delay-2s"
+					data-bs-toggle="modal"
+					data-bs-target="#exampleModal"
+				>
+					Enter LJPS
+				</button>
+			</div>
+		</div>
+		<br />
+
+		<!-- Modal For Login-->
+		<div
+			class="modal fade"
+			id="exampleModal"
+			tabindex="-1"
+			aria-labelledby="exampleModalLabel"
+			aria-hidden="true"
+		>
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header text-center">
+						<h4 class="modal-title w-100 font-weight-bold">
+							Sign in (HR/Admin)
+						</h4>
+						<button
+							type="button"
+							class="btn-close"
+							data-bs-dismiss="modal"
+							aria-label="Close"
+						></button>
+					</div>
+					<div class="modal-body mx-3">
+						<div class="md-form mb-3">
+							<i class="fas fa-envelope prefix grey-text"></i>
+							<label>Your username</label>
+							<input type="text" id="" class="form-control validate" />
+						</div>
+
+						<div class="md-form mb-4">
+							<i class="fas fa-lock prefix grey-text"></i>
+							<label>Your password</label>
+							<input type="password" id="" class="form-control validate" />
+						</div>
+					</div>
+					<div class="modal-footer d-flex justify-content-center">
+						<button
+							class="btn btn-primary"
+							onclick="location.href='hr_profile.html';"
+						>
+							Login
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+		<script>
+			AOS.init();
+		</script>
+	</body>
+</html>
