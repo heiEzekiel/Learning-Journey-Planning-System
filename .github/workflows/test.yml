@@ -25,4 +25,7 @@ jobs:
           python -m unittest tests/units/test_unit.py
       - name: Integration test with unittest
         run: | 
-          python -m unittest tests/functional/
+          python -m unittest tests/functional/test_courses.py
+          python -m unittest tests/functional/test_job_role.py
+          python -m unittest tests/functional/test_role_map.py
+          python -m unittest tests/functional/test_skill.py

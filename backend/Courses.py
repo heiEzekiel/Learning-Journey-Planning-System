@@ -50,33 +50,15 @@ class Course(db.Model):
 
 # ********************************* Retrieve ********************************* 
 # Get all courses
-def get_all_courses(test_data=""):
-    courses = None
-    if test_data == "":
-        courses = Course.query.all()
-        return jsonify(
-            {
-                "code": 200,
-                "data":
-                [course.json() for course in courses]
-            }
-        )
-    if test_data != "":
-        return jsonify(
-            {
-                "code": 200,
-                "data":
-                    [course.json() for course in test_data]
-            }
-        )
-    elif courses != None:
-        return jsonify(
-            {
-                "code": 200,
-                "data":
-                    [course.json() for course in courses]
-            }
-        )
+def get_all_courses():
+    courses = Course.query.all()
+    return jsonify(
+        {
+            "code": 200,
+            "data":
+            [course.json() for course in courses]
+        }
+    )
 
 
 # ********************************* Update ********************************* 

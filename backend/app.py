@@ -69,8 +69,8 @@ def delete_skill_from_job_role(job_role_id, skill_id):
 # ********************************* Courses Related ******************************************************************
 # Get all courses
 @app.route("/getAllCourses", methods=['GET'])
-def get_all_courses(test_data=""):
-    return c.get_all_courses(test_data)
+def get_all_courses():
+    return c.get_all_courses()
 
 
 # ********************************* Course Map Related ******************************************************************
