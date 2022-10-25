@@ -1,8 +1,7 @@
 from flask import  request, jsonify
-import db_connector
-db = db_connector.db_connector()
+from db_connector import db
 from Skills import Skill
-
+ 
 # Role_Map Table
 class Role_Map(db.Model):
     __tablename__ = 'Role_Map'
