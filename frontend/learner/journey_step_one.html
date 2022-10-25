@@ -163,9 +163,12 @@
             if (data.code == 404) {
               document.getElementById("res").innerText = "No job roles found";
             } else {
+
+              count=0
+              
               result = JSON.parse(JSON.stringify(data.data));
               console.log(result);
-              document.getElementById("res").style.display = "None";
+              
               message_str = `
               <thead>
                 <tr class="bg-light">
@@ -177,6 +180,7 @@
               </thead>`;
               for (const role of result) {
                 if (role["job_role_status"] == 0) {
+                  count=1
                   message_str += `
               <tbody>
                 <tr>
@@ -188,8 +192,15 @@
               `;
                 }
               }
+              if (count==0){
+                document.getElementById("res").innerText = "No job roles found";
+              }
+              else{
+                document.getElementById("res").style.display = "None";
+                document.getElementById("table").innerHTML = message_str;
+              }
               // <th scope="row">${role["job_role_id"]}</th> removed
-              document.getElementById("table").innerHTML = message_str;
+             
             }
           })
           .catch((error) => {
