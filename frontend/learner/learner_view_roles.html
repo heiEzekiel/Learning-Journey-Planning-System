@@ -138,7 +138,7 @@
           .then((data) => {
 			
             if (data.code == 404) {
-				
+              document.getElementById("res").style.display = "block";
               document.getElementById("res").innerText = "No job roles found";
             } else {
               document.getElementById("res").style.display = "None";
@@ -148,14 +148,18 @@
               message_str = `
               <thead>
                 <tr class="bg-light">
-                
                 <th>Job Role Name</th>
                 <th>Job Role Description</th>
                 <th>Action</th>
                 </tr>
               </thead>`;
+              count=0
               for (const role of result) {
+                console.log(role)
                 if (role["job_role_status"] == 0) {
+                  count=1
+                  console.log("test")
+                  
                   message_str += `
               <tbody>
                 <tr>
@@ -167,8 +171,15 @@
               `;
                 }
               }
+              if (count==0){
+                document.getElementById("res").style.display = "block";
+                document.getElementById("res").innerText = "No job roles found";
+              }
               // <th scope="row">${role["job_role_id"]}</th> removed
-              document.getElementById("table").innerHTML = message_str;
+              else{
+
+              document.getElementById("res").style.display = "None";
+              document.getElementById("table").innerHTML = message_str;}
               return data.roles;
             }
           })

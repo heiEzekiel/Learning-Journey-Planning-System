@@ -161,6 +161,7 @@
           .then((data) => {
             // console.log(JSON.parse(JSON.stringify(data.data)));
             if (data.code == 404) {
+              document.getElementById("res").style.display = "block";
               document.getElementById("res").innerText = "No job roles found";
             } else {
 
@@ -193,6 +194,7 @@
                 }
               }
               if (count==0){
+                document.getElementById("res").style.display = "block";
                 document.getElementById("res").innerText = "No job roles found";
               }
               else{
