@@ -79,12 +79,12 @@ def get_skills_for_job(job_role_id):
                 }, 200
 
             )
-    else:
-        return jsonify(
-            {
-                "code": 404,
-                "data": "No records found"
-            }, 404)
+        else:
+            return jsonify(
+                {
+                    "code": 404,
+                    "data": "No records found"
+                }, 404)
 
     return jsonify(
         {

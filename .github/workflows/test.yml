@@ -23,3 +23,6 @@ jobs:
       - name: Unit test with unittest
         run: | 
           python -m unittest tests/units/test_unit.py
+      - name: Integration test with unittest
+        run: | 
+          python -m unittest tests/functional/

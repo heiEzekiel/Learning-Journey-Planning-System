@@ -20,9 +20,6 @@ class TestApp(flask_testing.TestCase):
 
 class TestRoleMap(TestApp):
     def test_create_skill(self):
-        skill = Skill(skill_name="Java", skill_desc="Java skill", skill_status=1)
-        db.session.add(skill)
-        db.session.commit()
         request_body = {
             "skill_name": "Python",
             "skill_desc": "Python skill",
@@ -34,7 +31,7 @@ class TestRoleMap(TestApp):
             "code" : 200,
             "data": {
                 "skill_desc": "Python skill",
-                "skill_id": 2,
+                "skill_id": 1,
                 "skill_name": "Python",
                 "skill_status": 0
             }})
@@ -129,7 +126,7 @@ class TestRoleMap(TestApp):
             "code" : 200,
             "message": "Skill removed successfully"
         })
-        
+
 if __name__ == '__main__':
     unittest.main()
     

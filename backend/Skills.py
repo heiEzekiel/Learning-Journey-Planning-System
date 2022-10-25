@@ -90,6 +90,18 @@ def create_skills():
             }
         )
     else:
+        try:
+            db.session.add(skill)
+            db.session.commit()
+        except Exception as e:
+            print(e)
+            return jsonify(
+                {
+                    "code": 500,
+                    "message": "An error occurred updating the skill."
+                }
+            ), 500
+
         return jsonify(
             {
                 "code": 200,
