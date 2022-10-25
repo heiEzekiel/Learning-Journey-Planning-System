@@ -30,7 +30,8 @@ class Course(db.Model):
         self.course_status = course_status
         self.course_type = course_type
         self.course_category = course_category
-
+    
+    
     def json(self):
         return {
             "course_id": self.course_id,

@@ -3,6 +3,7 @@ from db_connector import db
 
 class Job_Role(db.Model):
     __tablename__ = 'Job_Role'
+    __table_args__ = {'extend_existing': True}
     job_role_id = db.Column(db.Integer, primary_key=True, nullable=False)
     job_role_name = db.Column(db.String(50), nullable=False)
     job_role_desc = db.Column(db.String(255), nullable=False)

@@ -9,7 +9,7 @@ import Skill_Map as sm
 import Journey as j
 import Journey_Map as jm
 
-from db_connector import app
+from db_connector import app, db
 
 # ================================================================== Routes ==================================================================
 @app.route("/")

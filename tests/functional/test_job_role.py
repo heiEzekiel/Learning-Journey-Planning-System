@@ -33,7 +33,7 @@ class TestJobRole(TestApp):
                 "job_role_desc": "HR's job role",
                 "job_role_id": 1,
                 "job_role_name": "Human Resource",
-                "job_role_status": 1
+                "job_role_status": 0
             },
             "message": "Job Role successfully created",
         })
@@ -50,12 +50,6 @@ class TestJobRole(TestApp):
                 {
                     "job_role_desc": "HR's job role",
                     "job_role_id": 1,
-                    "job_role_name": "Human Resource",
-                    "job_role_status": 1
-                },
-                {
-                    "job_role_desc": "HR's job role",
-                    "job_role_id": 2,
                     "job_role_name": "Human Resource",
                     "job_role_status": 1
                 }
