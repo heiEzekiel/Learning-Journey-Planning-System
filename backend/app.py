@@ -26,26 +26,26 @@ def create_job_role():
 # This segment of code is to do retrieval of all the existing roles. Used by both HR and Learner.
 # Get All Job Role
 @app.route("/getAllJobRole", methods=['GET'])
-def get_all_job_role(test_data=""):
-    return jr.get_all_job_role(test_data)
+def get_all_job_role():
+    return jr.get_all_job_role()
 
 # This segment of code is to get a specific job role. Used by both HR and Learner.
 # Get Job Role details by job_role_id
 @app.route("/getSpecificJobRole/<int:job_role_id>", methods=['GET'])
-def get_specific_job_role_by_id(job_role_id, test_data=""):
-    return jr.get_specific_job_role_by_id(job_role_id, test_data)
+def get_specific_job_role_by_id(job_role_id):
+    return jr.get_specific_job_role_by_id(job_role_id)
 
 # This segment of code is to do update of roles. Only used by HR/admin.
 # Update All Job Role
 @app.route("/updateJobRole/<int:job_role_id>", methods=['PUT'])
-def update_job_role_by_id(job_role_id, test_data=''):
-    return jr.update_job_role_by_id(job_role_id, test_data)
+def update_job_role_by_id(job_role_id):
+    return jr.update_job_role_by_id(job_role_id)
 
 # This segment of code is delete a selected role
 # Delete Role details by job_role_id
 @app.route("/deleteRole/<int:job_role_id>", methods=['DELETE'])
-def delete_job_role_by_id(job_role_id, test_data="", existing_data=""):
-    return jr.delete_job_role_by_id(job_role_id, test_data, existing_data)
+def delete_job_role_by_id(job_role_id):
+    return jr.delete_job_role_by_id(job_role_id)
 
 
 # ********************************* Role Map Related ******************************************************************

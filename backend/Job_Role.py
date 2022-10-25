@@ -84,75 +84,36 @@ def create_job_role():
 
 # ********************************* Retrieve ********************************* 
 # Get all job roles
-def get_all_job_role(test_data=""):
-    jobRoles = None
-    if test_data == "":
-        jobRoles = Job_Role.query.all()
-        if jobRoles:
-            return jsonify(
-                {
-                    "code": 200,
-                    "data":
-                    [r.json() for r in jobRoles]
-                }
-            )
-        else:
-                        return jsonify(
-                {
-                    "code": 404,
-                    "data": 'No records found'
-                   
-                }
-            )
-            
-    if test_data != "":
+def get_all_job_role():
+    jobRoles = Job_Role.query.all()
+    if jobRoles:
         return jsonify(
             {
                 "code": 200,
                 "data":
-                    [roles.json() for roles in test_data]
+                [r.json() for r in jobRoles]
             }
         )
-    elif jobRoles != None:
-        return jsonify(
+    else:
+                    return jsonify(
             {
-                "code": 200,
-                "data":
-                    [roles.json() for roles in jobRoles]
+                "code": 404,
+                "data": 'No records found'
+                
             }
         )
 
 # Get job role by id
-def get_specific_job_role_by_id(job_role_id, test_data=""):
-    jobRoles = None
-    if test_data == "":
-        jobRoles = Job_Role.query.filter_by(job_role_id=job_role_id).all()
-    else:
-        jobRoles = test_data
-    if test_data == "":
+def get_specific_job_role_by_id(job_role_id):
+    jobRoles = Job_Role.query.filter_by(job_role_id=job_role_id).all()
+    if jobRoles:
         return jsonify(
             {
                 "code": 200,
-                "data":
-                    [roles.json() for roles in jobRoles]
+                "data": [jr.json() for jr in jobRoles]
             }
         )
-    elif jobRoles != None:
-        if jobRoles:
-            return jsonify(
-                {
-                    "code": 200,
-                    "data": [jr.json() for jr in test_data]
-                }
-            )
 
-        else:
-            return jsonify(
-                {
-                    "code": 404,
-                    "message": "There are no job roles found."
-                }
-            )
     else:
         return jsonify(
             {
@@ -161,54 +122,28 @@ def get_specific_job_role_by_id(job_role_id, test_data=""):
             }
         )
 
-
 # ********************************* Update ********************************* 
 # Update job role
-def update_job_role_by_id(job_role_id, test_data=''):
-    data = None
-    if test_data == '':
-        data = request.get_json()
-        job_role = Job_Role.query.filter_by(job_role_id=job_role_id).first()
-        if job_role:
-            job_role.job_role_name = data['job_role_name']
-            job_role.job_role_desc = data['job_role_desc']
-            job_role.job_role_status = data['job_role_status']
-            try:
-                db.session.commit()
-            except:
-                return jsonify(
-                    {
-                        "code": 500,
-                        "data": {
-                            "job_role_id": job_role_id
-                        },
-                        "message": "An error occurred updating the job role."
-                    }
-                ), 500
-                
+def update_job_role_by_id(job_role_id):
+    data = request.get_json()
+    job_role = Job_Role.query.filter_by(job_role_id=job_role_id).first()
+    if job_role:
+        job_role.job_role_name = data['job_role_name']
+        job_role.job_role_desc = data['job_role_desc']
+        job_role.job_role_status = data['job_role_status']
+        try:
+            db.session.commit()
+        except:
             return jsonify(
                 {
-                    "code": 200,
-                    "data": job_role.json(),
-                    "message": "Job Role successfully updated"
-                }
-            ), 200
-        else:
-            return jsonify(
-                {
-                    "code": 404,
+                    "code": 500,
                     "data": {
                         "job_role_id": job_role_id
                     },
-                    "message": "Job Role not found."
+                    "message": "An error occurred updating the job role."
                 }
-            ), 404
-    else:
-        job_role = Job_Role.query.filter_by(job_role_id=job_role_id).first()
-        db.session.commit()
-        job_role.job_role_name = test_data['job_role_name']
-        job_role.job_role_desc = test_data['job_role_desc']
-        job_role.job_role_status = test_data['job_role_status']
+            ), 500
+
         return jsonify(
             {
                 "code": 200,
@@ -216,19 +151,23 @@ def update_job_role_by_id(job_role_id, test_data=''):
                 "message": "Job Role successfully updated"
             }
         ), 200
+    else:
+        return jsonify(
+            {
+                "code": 404,
+                "data": {
+                    "job_role_id": job_role_id
+                },
+                "message": "Job Role not found."
+            }
+        ), 404
 
 
 # ********************************* Delete ********************************* 
 # Delete job role
-def delete_job_role_by_id(job_role_id, test_data="", existing_data=""):
-    all_job = None
-    job = None
-    if test_data == "":
-        job = Job_Role.query.filter_by(job_role_id=job_role_id).first()
-    else:
-        job = test_data
-        all_job = existing_data
-    if job and test_data == "":
+def delete_job_role_by_id(job_role_id):
+    job = Job_Role.query.filter_by(job_role_id=job_role_id).first()
+    if job:
         db.session.delete(job)
         db.session.commit()
         return jsonify(
@@ -237,16 +176,6 @@ def delete_job_role_by_id(job_role_id, test_data="", existing_data=""):
                 "message": "Job removed successfully"
             }
         )
-    elif job and test_data != "":
-        for job in all_job:
-            if job.job_role_id == job_role_id:
-                all_job.remove(job)
-                return jsonify(
-                    {
-                        "code": 200,
-                        "message": "Job removed successfully"
-                    }
-                )
     return jsonify(
         {
             "code": 404,
