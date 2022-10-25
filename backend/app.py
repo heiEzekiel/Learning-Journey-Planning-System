@@ -1,8 +1,3 @@
-from flask import Flask
-from flask_cors import CORS
-from os import environ
-from flask_sqlalchemy import SQLAlchemy
-
 # Function Files
 import Job_Role as jr
 import Role_Map as rm
@@ -14,18 +9,7 @@ import Skill_Map as sm
 import Journey as j
 import Journey_Map as jm
 
-# Flask App and DB connection is done here.
-app = Flask(__name__)
-# ---for windows---
-app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL') or 'mysql+mysqlconnector://root@localhost:3306/LJPS_DB'
-# For connection to online db
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://admin:SoftwareProject@spm.czdb9a0r4ea9.ap-southeast-1.rds.amazonaws.com:3306/LJPS_DB'
-# ---for mac---
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root@localhost:3306/LJPS_DB'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {'pool_recycle': 299}
-CORS(app)
-db = SQLAlchemy(app)
+from db_connector import app
 
 # ================================================================== Routes ==================================================================
 @app.route("/")
@@ -99,7 +83,7 @@ def create_course_skill_map(cm_fk_course_id, cm_fk_skill_id, test_data=""):
 # Get skills required for the course using course id
 @app.route("/getSkillsForCourse/<string:cm_fk_course_id>", methods=['GET'])
 def getSkillsForCourse(cm_fk_course_id, test_data_course_map="", test_data_skill=""):
-    return cm.getSkillsForCourse(cm_fk_course_id, test_data_course_map, test_data_skill)
+    return cm.get_skills_for_course(cm_fk_course_id, test_data_course_map, test_data_skill)
 
 # Get courses available for the selected skill using skill_id
 @app.route("/getCoursesForSkill/<int:skill_id>", methods=['GET'])
@@ -145,8 +129,8 @@ def get_skill_by_id(skill_id, test_data=""):
 # This segment of code is update details of a selected skill
 # Update Skill details by skill_id
 @app.route("/updateSkill/<int:skill_id>", methods=['PUT'])
-def update_skill(skill_id, test_data="", new_data="", test_data2=""):
-    return s.update_skill(skill_id, test_data, new_data, test_data2)
+def update_skill(skill_id, test_data=""):
+    return s.update_skill(skill_id, test_data)
 
 # This segment of code is delete a selected skill
 # Delete Skill details by skill_id

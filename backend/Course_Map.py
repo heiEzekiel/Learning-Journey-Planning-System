@@ -1,6 +1,5 @@
 from flask import  request, jsonify
-import db_connector
-db = db_connector.db_connector()
+from db_connector import db
 from Courses import Course
 from Skills import Skill
 
@@ -194,7 +193,6 @@ def delete_skill_from_course(course_id, skill_id, test_data="", existing_data=""
     return jsonify(
         {
             "code": 404,
-
             "message": "Course and Skill not found."
         }
     ), 404

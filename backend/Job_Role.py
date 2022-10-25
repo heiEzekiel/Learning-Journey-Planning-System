@@ -1,6 +1,5 @@
 from flask import  request, jsonify
-import db_connector
-db = db_connector.db_connector()
+from db_connector import db
 
 class Job_Role(db.Model):
     __tablename__ = 'Job_Role'
@@ -27,15 +26,14 @@ class Job_Role(db.Model):
             "job_role_desc": self.job_role_desc,
             "job_role_status": self.job_role_status
         }
-
-
+        
 #Functions (CRUD)
 # ********************************* Create ********************************* 
 # Create Job Role
 def create_job_role():
     data = request.get_json()
     new_job_role = Job_Role(
-        data['job_role_name'], data['job_role_desc'], 1)
+        data['job_role_name'], data['job_role_desc'], 0)
     # check is existing role is there
     jobRoles = Job_Role.query.all()
     if jobRoles != None:

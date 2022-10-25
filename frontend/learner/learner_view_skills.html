@@ -124,7 +124,11 @@
 			<!-- Main content starts here  -->
 			<div class="container mt-3 mb-5">
 				<h3>List of skills available</h3>
-				<div id="role_skills"></div>
+				<div class="alert alert-danger mt-5" id="res" role="alert">
+					Please select a role <a href="learner_view_roles.html">here</a> to
+					view skills
+				</div>
+				<div id="job_skills"></div>
 			</div>
 		</div>
 		<script>
@@ -145,13 +149,13 @@
 				const response = await fetch(`${backendUrl}/${getSkillsForRole}/${id}`)
 					.then((response) => response.json())
 					.then((data) => {
-						result = JSON.parse(JSON.stringify(data[0].data));
-						// console.log(result);
-						if (result == "No records found") {
-							document.getElementById(
-								"role_skills"
-							).innerHTML = `<h5 class ="text-danger mt-5">No Skills found</h5>`;
+						// console.log(data[0].code);
+						if (data[0].code == 404) {
+							document.getElementById("res").style.display = "block";
+							document.getElementById("res").innerText = "No skills found";
 						} else {
+							count = 0;
+							result = JSON.parse(JSON.stringify(data[0].data));
 							message_str = `
                                     <br>
                                     <table class="table borderless table-hover mt-5" id="table">
@@ -165,9 +169,12 @@
                                     <tbody>
                                     `;
 							// console.log(result);
-							for (skill of result) {
+							for (const skill of result) {
 								console.log(skill);
+								const jobName = urlParams.get("job");
+								var id = parseInt(urlParams.get("id"));
 								if (skill[3] == 0) {
+									count = 1;
 									message_str += `
                                                 <tr class="border border-bottom ">
                                                 <th scope="row">${skill[0]}</th>
@@ -176,9 +183,17 @@
                                                 `;
 								}
 							}
+							if (count == 0) {
+								document.getElementById("res").style.display = "block";
+								document.getElementById("res").innerText = "No skills found";
+							} else {
+								document.getElementById("res").style.display = "None";
+								document.getElementById("job_skills").innerHTML = message_str;
+							}
+							message_str += `
+                        		</tbody>
+                      			</table>`;
 						}
-						message_str += `</tbody> </table>`;
-						document.getElementById("role_skills").innerHTML = message_str;
 						return data.data;
 					})
 					.catch((error) => {
@@ -186,7 +201,6 @@
 						// service offline, etc
 						console.log(error);
 					});
-				document.getElementById("role_skills").innerHTML = message_str;
 			}
 			getRoleSkillsforLeaner(id, job);
 		</script>

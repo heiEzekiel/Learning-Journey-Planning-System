@@ -99,7 +99,7 @@
                         <div class="card-body p-4 p-md-5">
                             <form>
                                 <div class="form-group mb-4 w-100">
-                                    <label for="skill_Name">Role Name</label>
+                                    <label for="skill_Name">Role Name</label> <small style="color: grey;">(max character: 50)</small>
                                     <input type="text" class="form-control" id="rname" placeholder="" required>
                                 </div>
                                 <label for="role_status">Role Status</label>
@@ -116,7 +116,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group mb-3 w-100">
-                                    <label for="skill_Description">Role Description</label>
+                                    <label for="skill_Description">Role Description</label><small style="color: grey;">(max character: 255)</small>
                                     <textarea class="form-control" id="roledesc" rows="3"
                                         placeholder="Enter Description" required></textarea>
                                 </div>
@@ -168,10 +168,6 @@
             document.getElementById("assignskill").className = "btn btn-default"
 
         }
-
-
-
-
 
         var current_skill = [];
         // We clicked on a button from 'view list of roles page, which brings us to do this'
@@ -314,33 +310,40 @@
                 alert("Please fill in all details")
             }
             else {
+                if (a.length > 50 && b.length > 255){
+                    alert("Both role name and description has reached the maximum characters.")
+                }else if(a.length >50){
+                        alert("Update role name has reached the maximum of 50 characters.")
+                }else if(b.length >255){
+                        alert("Update role description has reached the maximum of 255 characters.")
+                }else{
 
-                fetch(`${backendUrl}/${update_role}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        "job_role_name": document.getElementById("rname").value,
-                        "job_role_desc": document.getElementById("roledesc").value,
-                        "job_role_status": status
-                    }),
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log('Success:', data);
-                        if (data.code == 200) {
-                            alert("Updated successfully!");
-                            location.reload();
-                        }
-                        else {
-                            alert("Role name already exists!");
-                        }
-
+                    fetch(`${backendUrl}/${update_role}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            "job_role_name": document.getElementById("rname").value,
+                            "job_role_desc": document.getElementById("roledesc").value,
+                            "job_role_status": status
+                        }),
                     })
-                    .catch((error) => {
-                        console.error('Error:', error);
-                    });
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Success:', data);
+                            if (data.code == 200) {
+                                alert("Updated successfully!");
+                                location.reload();
+                            }
+                            else {
+                                alert("Role name already exists!");
+                            }
+                        })
+                        .catch((error) => {
+                            console.error('Error:', error);
+                        });
+                }
             }
         }
         // get parent Node of the del utton

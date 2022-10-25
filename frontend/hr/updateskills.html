@@ -91,10 +91,23 @@
                 <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
                   <div class="card-body p-4 p-md-5">
                     <form>
-                        <div class="form-group mb-3 w-100">
+                        <div class="form-group mb-4 w-100">
                           <label for="skill_Name">Skill Name</label>
                           <input type="text" class="form-control" id="skill_Name" placeholder="Enter Skill Name" required>
                         </div>
+                        <label for="role_status">Role Status</label>
+                        <div id ="skill_status" class="mb-4">
+                          <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                  id="inlineRadio1" value=1 checked>
+                              <label class="form-check-label" for="inlineRadio1">Active</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                  id="inlineRadio2" value=0>
+                              <label class="form-check-label" for="inlineRadio2">Inactive</label>
+                          </div>
+                      </div>
                         <div class="form-group mb-3 w-100">
                           <label for="skill_Description">Skill Description</label>
                           <textarea class="form-control" id="skill_Description" rows="3" placeholder="Enter Description" required></textarea>
@@ -132,6 +145,12 @@
                 document.getElementById("s_name2").innerText = " " + data.message[0].skill_name;
                 skill_Name.value = data.message[0]["skill_name"];
                 skill_Description.value = data.message[0]["skill_desc"];
+                //console.log(data.message[0]["skill_status"])
+                if (data.message[0]["skill_status"]== 0){
+                  document.getElementById('inlineRadio1').checked= true
+                }else{
+                  document.getElementById('inlineRadio2').checked= true
+                }
               }
             })
             .catch((error) => {
@@ -145,34 +164,49 @@
                     if(a=='' || b==''){
                         alert("Please fill in all details")
                     }
-        else{
-          fetch(`${backendUrl}/${updateSkill}`, {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              skill_name: document.getElementById("skill_Name").value,
-              skill_desc: document.getElementById("skill_Description").value,
-            }),
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              console.log("Success:", data);
-              if (data.code == 200) {
-                alert('Update successful')
-                location.reload();
-              }
-              else{
-                alert("Skill name already exists!");
-              }
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-            });
-          }
-        }
-        getSkillInfo();
+                      else{
+                        if (a.length > 50 && b.length > 255){
+                              alert("Both skill name and description has reached the maximum characters.")
+                        }else if(a.length >50){
+                                alert("Update skill name has reached the maximum of 50 characters.")
+                        }else if(b.length >255){
+                                alert("Update skill description has reached the maximum of 255 characters.")
+                        }else{
+                            var active= document.getElementById("inlineRadio1");
+                            if (active.checked){
+                              var status = 0
+                            }else{
+                              var status = 1
+                            }
+                            fetch(`${backendUrl}/${updateSkill}`, {
+                              method: "PUT",
+                              headers: {
+                                "Content-Type": "application/json",
+                              },
+                              body: JSON.stringify({
+                                skill_name: document.getElementById("skill_Name").value,
+                                skill_desc: document.getElementById("skill_Description").value,
+                                skill_status: status
+                              }),
+                            })
+                              .then((response) => response.json())
+                              .then((data) => {
+                                console.log("Success:", data);
+                                if (data.code == 200) {
+                                  alert('Update successful')
+                                  location.reload();
+                                }
+                                else{
+                                  alert("Skill name already exists!");
+                                }
+                              })
+                              .catch((error) => {
+                                console.error("Error:", error);
+                              });
+                            }
+                        }
+                      }
+          getSkillInfo();
 
         // const myData = function (getAllSkills) {
         // 	getid = 1;
