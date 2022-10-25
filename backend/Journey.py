@@ -38,24 +38,11 @@ class Journey(db.Model):
 #Functions (CRUD)
 # ********************************* Create ********************************* 
 # Create a new journey
-def create_journey(test_data=""):
-    data = None
-    if test_data == "":
-        data = request.get_json()
-    else:
-        data = test_data
+def create_journey():
+    data = request.get_json()
     journey_name, journey_status, j_fk_staff_id, j_fk_job_role_id = "", "", "", ""
-    journey = None
-    if test_data == "":
-        journey = Journey.query.filter_by(
-            j_fk_staff_id=data['j_fk_staff_id'], j_fk_job_role_id=data['j_fk_job_role_id']).first()
-    else:
-        return jsonify(
-            {
-                "code": 200,
-                "data": test_data
-            }
-        )
+    journey = Journey.query.filter_by(
+        j_fk_staff_id=data['j_fk_staff_id'], j_fk_job_role_id=data['j_fk_job_role_id']).first()
     if journey:  # if exist
         return jsonify(
             {
@@ -74,23 +61,23 @@ def create_journey(test_data=""):
 
     journey = Journey(journey_name=journey_name, journey_status=journey_status,
                       j_fk_staff_id=j_fk_staff_id, j_fk_job_role_id=j_fk_job_role_id)
-    if test_data == "":
-        try:
-            db.session.add(journey)
-            db.session.commit()
-        except Exception as e:
-            return jsonify(
-                {
-                    "code": 500,
-                    "message": "An error occurred updating the journey."
-                }
-            ), 500
+
+    try:
+        db.session.add(journey)
+        db.session.commit()
+    except Exception as e:
         return jsonify(
             {
-                "code": 211,
-                "data": journey.json()
+                "code": 500,
+                "message": "An error occurred updating the journey."
             }
-        )
+        ), 500
+    return jsonify(
+        {
+            "code": 211,
+            "data": journey.json()
+        }
+    )
 
 # ********************************* Retrieve ********************************* 
 # Retrieve all journeys
@@ -115,26 +102,11 @@ def get_journey(j_fk_staff_id):
 
 # ********************************* Delete ********************************* 
 # Delete a journey
-def delete_journey(journey_id, test_data=""):
-    del_lj = None
-    if test_data == "":
-        del_lj = Journey.query.filter_by(journey_id = journey_id).first()
-    else:
-        del_lj = test_data
-    if del_lj and test_data == "":
+def delete_journey(journey_id):
+    del_lj = Journey.query.filter_by(journey_id = journey_id).first()
+    if del_lj:
         db.session.delete(del_lj)
         db.session.commit()
-        return jsonify(
-            {
-                "code": 200,
-                "message" : "Journey removed successfully"
-            }
-        )
-    elif del_lj and test_data != "":
-        for i in del_lj:
-            if i.journey_id == journey_id:
-                del_lj.remove(i)
-                break
         return jsonify(
             {
                 "code": 200,

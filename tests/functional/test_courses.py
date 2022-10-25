@@ -18,7 +18,7 @@ class TestApp(flask_testing.TestCase):
         db.session.remove()
         db.drop_all()
 
-class TestJobRole(TestApp):
+class TestCourses(TestApp):
     def test_get_all_courses(self):
         course = Course(course_id="1", course_name="Python", course_desc="Python course", course_status="1", course_type="1", course_category="Programming")
         db.session.add(course)

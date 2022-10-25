@@ -72,5 +72,3 @@ class TestRoleMap(TestApp):
     
 if __name__ == '__main__':
     unittest.main()
-    
-

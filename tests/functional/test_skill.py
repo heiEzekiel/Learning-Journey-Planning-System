@@ -18,7 +18,7 @@ class TestApp(flask_testing.TestCase):
         db.session.remove()
         db.drop_all()
 
-class TestRoleMap(TestApp):
+class TestSkill(TestApp):
     def test_create_skill(self):
         request_body = {
             "skill_name": "Python",

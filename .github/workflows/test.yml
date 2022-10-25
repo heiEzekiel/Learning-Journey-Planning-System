@@ -29,3 +29,8 @@ jobs:
           python -m unittest tests/functional/test_job_role.py
           python -m unittest tests/functional/test_role_map.py
           python -m unittest tests/functional/test_skill.py
+          python -m unittest tests/functional/test_skill_map.py
+          python -m unittest tests/functional/test_course_map.py
+          python -m unittest tests/functional/test_registration.py
+          python -m unittest tests/functional/test_journey.py
+          python -m unittest tests/functional/test_joruney_map.py

@@ -77,23 +77,23 @@ def get_all_courses():
 # Create course to skill mapping
 # Used when updating course information, or mapping course information to skill. Used in assign skill to course
 @app.route("/createSkillMap/<string:cm_fk_course_id>/<int:cm_fk_skill_id>", methods=['POST'])
-def create_course_skill_map(cm_fk_course_id, cm_fk_skill_id, test_data=""):
-    return cm.create_course_skill_map(cm_fk_course_id, cm_fk_skill_id, test_data)
+def create_course_skill_map(cm_fk_course_id, cm_fk_skill_id):
+    return cm.create_course_skill_map(cm_fk_course_id, cm_fk_skill_id)
 
 # Get skills required for the course using course id
 @app.route("/getSkillsForCourse/<string:cm_fk_course_id>", methods=['GET'])
-def get_skills_for_course(cm_fk_course_id, test_data_course_map="", test_data_skill=""):
-    return cm.get_skills_for_course(cm_fk_course_id, test_data_course_map, test_data_skill)
+def get_skills_for_course(cm_fk_course_id):
+    return cm.get_skills_for_course(cm_fk_course_id)
 
 # Get courses available for the selected skill using skill_id
 @app.route("/getCoursesForSkill/<int:skill_id>", methods=['GET'])
-def get_courses_for_skill(skill_id, test_data_course_map="", test_data_course="", test_data_skill=""):
-    return cm.get_courses_for_skill(skill_id, test_data_course_map, test_data_course, test_data_skill)
+def get_courses_for_skill(skill_id):
+    return cm.get_courses_for_skill(skill_id)
 
 # Remove a skill from a course
 @app.route("/removeSkillFromCourse/<string:course_id>/<int:skill_id>", methods=['DELETE'])
-def delete_skill_from_course(course_id, skill_id, test_data="", existing_data=""):
-    return cm.delete_skill_from_course(course_id, skill_id, test_data, existing_data)
+def delete_skill_from_course(course_id, skill_id):
+    return cm.delete_skill_from_course(course_id, skill_id)
 
 
 # ********************************* Registration Related ******************************************************************
@@ -150,8 +150,8 @@ def get_staff_skills(sm_fk_staff_id):
 # ********************************* Journey Related ******************************************************************
 # Create Learning Journey
 @app.route("/createJourney", methods=['POST'])
-def create_journey(test_data=""):
-    return j.create_journey(test_data)
+def create_journey():
+    return j.create_journey()
 
 # Retrieve Learning Journey
 # Andy add test case
@@ -161,25 +161,25 @@ def get_journey(j_fk_staff_id):
 
 # Delete Learning Journey
 @app.route("/deleteJourney/<int:journey_id>", methods=['DELETE'])
-def delete_journey(journey_id, test_data=""):
-    return j.delete_journey(journey_id, test_data)
+def delete_journey(journey_id):
+    return j.delete_journey(journey_id)
 
 
 # ********************************* Journey Map Related ******************************************************************
 # Create Journey Map
 @app.route("/createJourneyMap/<int:jm_fk_journey_id>/<string:jm_fk_course_id>", methods=['POST'])
-def create_journey_map(jm_fk_journey_id, jm_fk_course_id, test_data=""):
-    return jm.create_journey_map(jm_fk_journey_id, jm_fk_course_id, test_data)
+def create_journey_map(jm_fk_journey_id, jm_fk_course_id):
+    return jm.create_journey_map(jm_fk_journey_id, jm_fk_course_id)
 
 # Get a list of journey maps
 @app.route("/getJourneyMaps", methods=['GET'])
-def get_journey_maps(test_data=""):
-    return jm.get_journey_maps(test_data)
+def get_journey_maps():
+    return jm.get_journey_maps()
 
 # delete a journey map
 @app.route("/deleteJourneyMap/<int:jm_fk_journey_id>/<string:jm_fk_course_id>", methods=['DELETE'])
-def delete_journey_map(jm_fk_journey_id,jm_fk_course_id, test_data=""):
-    return jm.delete_journey_map(jm_fk_journey_id,jm_fk_course_id, test_data)
+def delete_journey_map(jm_fk_journey_id,jm_fk_course_id):
+    return jm.delete_journey_map(jm_fk_journey_id,jm_fk_course_id)
 
 
 #  ********************************* Flask ******************************************************************
