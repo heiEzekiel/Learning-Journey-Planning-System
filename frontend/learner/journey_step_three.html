@@ -169,9 +169,9 @@
               <table class="table borderless table-hover mt-5" id="table">
                 <thead>
                   <tr class="bg-light">
-                  <th>Skill Name</th>
-                  <th class="w-50">Skill Description</th>
-                  <th class="w-25">Courses</th>
+                  <th class="align-middle text-wrap">Skill Name</th>
+                  <th class="align-middle text-wrap w-50">Skill Description</th>
+                  <th class="align-middle text-wrap w-25">Courses</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -194,9 +194,9 @@
     async function getCourses(skills, msg_str) {
       for (skill of skills) {
         msg_str += `
-          <tr class="border border-bottom ">
-            <th scope="row">${skill[0]}</th>
-            <td>${skill[1]}</td>
+          <tr class="align-middle text-wrap border border-bottom ">
+            <th class="align-middle text-wrap" scope="row">${skill[0]}</th>
+            <td class="align-middle text-wrap">${skill[1]}</td>
             `
         const response = await fetch(`${backendUrl}/${getCourse}/${skill[2]}`)
           .then((response) => response.json())
@@ -204,7 +204,7 @@
             //result =JSON.parse(JSON.stringify(data.data.skill))
             console.log(data[0].data);
             result = JSON.parse(JSON.stringify(data[0].data));
-            msg_str += `<td>`
+            msg_str += `<td class="align-middle text-wrap">`
             if (result != "No records found.") {
               for (var i = 0; i < result.length; i++) {
                 //console.log(result[i]['course_name'])

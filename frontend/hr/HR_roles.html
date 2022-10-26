@@ -200,9 +200,9 @@
 						message_str = `
 										<thead>
 											<tr class="bg-light">
-											<th>Job Role Name</th>
-											<th>Job Role Description</th>
-											<th>Job Role Status</th>
+											<th class="align-middle">Job Role Name</th>
+											<th class="align-middle">Job Role Description</th>
+											<th class="align-middle">Job Role Status</th>
 											<th>Action</th>
 											</tr>
 										</thead>`;
@@ -216,9 +216,9 @@
 										<tbody>
 										<tr>
 										
-											<td class="text-wrap">${role["job_role_name"]}</td>
-											<td class="text-wrap w-md-50">${role["job_role_desc"]}</td>
-											<td class="text-wrap ">${status}</td>
+											<td class="align-middle w-20">${role["job_role_name"]}</td>
+											<td class="align-middle text-wrap w-50">${role["job_role_desc"]}</td>
+											<td class="align-middle text-wrap">${status}</td>
 										
 											<td class=' text-wrap'> <a href="./role_skills.html?job=${role["job_role_name"]}&id=${role["job_role_id"]}">   <button type="button" class="btn btn-primary btn-sm">View Skills</button></a>
 											<a href="./update_roles.html?id=${role["job_role_id"]}">   <button type="button" class="btn btn-success btn-sm ">Edit</button></a>  

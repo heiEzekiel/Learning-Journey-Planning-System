@@ -127,10 +127,10 @@
                           message_str =  `
                           <thead>
                               <tr class="bg-light">
-                              <th scope="col">Skill Name</th>
-                              <th scope="col">Skill Description</th>
-                              <th scope="col">Skill Status</th>
-                              <th scope="col">Action</th>
+                              <th class="align-middle" scope="col">Skill Name</th>
+                              <th class="align-middle" scope="col">Skill Description</th>
+                              <th class="align-middle" scope="col">Skill Status</th>
+                              <th class="align-middle" scope="col">Action</th>
                               </tr>
                           </thead>`
                           for (const skill of result) {
@@ -142,10 +142,10 @@
                             message_str += `
                             <tbody>
                                 <tr>
-                                    <th scope="row">${skill['skill_name']}</th>
-                                    <td class="text-wrap w-50">${skill['skill_desc']}</td>
-                                    <td class="text-wrap">${status}</td>
-                                    <td class="text-wrap w-25"> 
+                                    <th class="align-middle text-wrap" scope="row">${skill['skill_name']}</th>
+                                    <td class="align-middle text-wrap w-50">${skill['skill_desc']}</td>
+                                    <td class="align-middle text-wrap">${status}</td>
+                                    <td class="align-middle text-wrap w-25"> 
                                     <button type="button" class="btn btn-primary" >View Course</button>
                                     <button type="button" class="btn btn-success" onClick="location.href='./updateskills.html?id=${skill['skill_id']}'">Edit</button>
                                     <button type="button" class="btn btn-danger" onClick="removeSkill(${skill['skill_id']})" >Delete</button>

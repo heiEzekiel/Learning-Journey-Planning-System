@@ -77,6 +77,7 @@ async function getLJ(staff_id) {
      
       result = JSON.parse(JSON.stringify(data.data))
       var count=0
+      var lj_c = 0
       var message_str = ""
       
   
@@ -86,6 +87,7 @@ async function getLJ(staff_id) {
         if (lj.journey_status == 'Completed') {
           count+= 1
         } else {
+          lj_c+=1
           message_str += `                      
                 <div class="card mt-3">
 <div class="card-body">
@@ -93,9 +95,7 @@ async function getLJ(staff_id) {
   <span  onClick="removeJourney(${lj.journey_id})" class="mt-1 mx-1 btn btn-danger text-white float-end" style="font-size:10px;" >
   Remove learning journey
   </span>
-  <span  class="mt-1 btn btn-primary text-white float-end" style="font-size:10px;">
-    View Learning Journey
-  </span>
+  <span onClick="location.href='./update_lj.html?id=${lj.journey_id}&name=${lj.journey_name}'" class="mt-1 btn btn-primary text-white float-end" style="font-size:10px;"> View Learning Journey </span>
   
 
 </h5>
@@ -106,6 +106,7 @@ async function getLJ(staff_id) {
 
 
       }
+      document.getElementById("countlj").innerText = lj_c
       document.getElementById("completedlj").innerText = count
       document.getElementById("lj").innerHTML += message_str }
     })
