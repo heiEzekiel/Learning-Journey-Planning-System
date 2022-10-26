@@ -180,9 +180,9 @@
 							<table class="table borderless table-hover mt-5" id="table">
 							<thead>
 								<tr class="bg-light">
-								<th>Skill Name</th>
-								<th class="w-50">Skill Description</th>
-								<th class="w-25">Action</th>
+								<th class="align-middle text-wrap">Skill Name</th>
+								<th class="align-middle text-wrap w-50">Skill Description</th>
+								<th class="align-middle text-wrap w-25">Action</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -195,8 +195,8 @@
 									count = 1;
 									message_str += `
                       <tr>
-                      <th scope="row">${skill[0]}</th>
-                      <td>${skill[1]}</td>
+                      <th class="align-middle text-wrap" scope="row">${skill[0]}</th>
+                      <td class="align-middle text-wrap">${skill[1]}</td>
 
                         <td> <button type="button" class="btn btn-primary" onClick="location.href='./journey_step_three.html?job=${jobName}&id=${id}'">Browse all courses</button> </td></tr>
                       </tr>`;
