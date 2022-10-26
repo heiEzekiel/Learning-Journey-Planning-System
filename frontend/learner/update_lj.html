@@ -121,9 +121,11 @@
     </div>
     <script>
       backendUrl = "http://127.0.0.1:5000";
+      var deleteJourney = 'deleteJourney';
       get_journey_maps = "getJourneyMaps";
       get_course_name = "getCourseName";
       remove_journey_maps ="deleteJourneyMap"
+      count = 0
       
       // retrieve user's LJ ID based on params
       const queryString = window.location.search;
@@ -148,6 +150,7 @@
                     </tr>
                   </thead>`;
             for (const journeyMap of result) {
+              count+=1
               cName = getCourse(journeyMap['jm_fk_course_id'])
               message_str += `
                 <tbody>
@@ -189,6 +192,13 @@
 
       getJourneyMaps();
       async function removeJourneyMaps(a){
+        console.log(a)
+        if (count<2){
+          removeJourney(id);
+
+        }
+        else{
+
         //console.log(a)
         journey_id= a.split('?')[0]
         course_id= a.split('?')[1]
@@ -205,8 +215,27 @@
           // Errors when calling the service; such as network error,
           // service offline, etc
           console.log(error);
-        });
+        }) };
       }
+
+
+      async function removeJourney(id) {
+  fetch(`${backendUrl}/${deleteJourney}/${id}`, {
+      method: 'DELETE'
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      alert("Removed course. Learning journey has been removed as there is no more course left.");
+      window.location.replace("./learner_profile.html");
+
+    })
+    .catch((error) => {
+      // Errors when calling the service; such as network error,
+      // service offline, etc
+      console.log(error);
+    });
+}
+
     </script>
     <!-- Javascript-->
     <script src="../js/core.min.js"></script>
