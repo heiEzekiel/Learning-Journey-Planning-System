@@ -20,12 +20,78 @@
   <link rel="stylesheet" href="../css/ljcss.css">
 
 </head>
+<style>
+  /* The Modal (background) */
+  .courseModal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
 
+  /* Modal Content/Box */
+  .courseModal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+  }
+
+  /* The Close Button */
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .underline-on-hover:hover {
+    text-decoration: underline;
+  }
+</style>
 <body>
   <div class="preloader">
     <div class="preloader-body">
       <div class="cssload-container"></div>
     </div>
+  </div>
+  <!-- The Modal -->
+  <div id="myModal" class="courseModal">
+
+    <!-- Modal content -->
+    <div class="courseModal-content">
+      <span class="close">&times;</span>
+      <br>
+      <br>
+      <div>
+        <h4 class="align-middle text-wrap text-center">Course Name</h4>
+        <p id="cname" class="align-middle text-wrap text-center"></p>
+        <br>
+        <h4 class="align-middle text-wrap text-center">Course Description</h4>
+        <p id="cdesc" class="align-middle text-wrap text-center"></p>
+        <br>
+        <h4 class="align-middle text-wrap text-center">Course Type</h4>
+        <p id="ctype" class="align-middle text-wrap text-center"></p>
+        <br>
+        <h4 class="align-middle text-wrap text-center">Course Category</h4>
+        <p id="ccat" class="align-middle text-wrap text-center">d</p>
+      </div>
+    </div>
+
   </div>
   <div class="page">
     <div id="home">
@@ -88,7 +154,7 @@
     <!-- Main content starts here  -->
     <div class="container mt-3 mb-5">
       <h3> <span class="text-primary">Step Three: </span> Browse & add courses for <span id="step3"></span></h3>
-      <div class="stepper-wrapper mt-5 text-white">
+      <div style="z-index:-1;  position: relative" class="stepper-wrapper mt-5 text-white">
         <div class="stepper-item completed">
           <div class="step-counter">1</div>
           <div class="step-name text-dark">Choose a job</div>
@@ -212,7 +278,7 @@
                   msg_str += `
                     <div class="form-check">
                       <input class="form-check-input" type="checkbox" value="${result[i]["course_id"]}?${result[i]["course_name"]}" onchange='handleChange(this)'>
-                      ${result[i]["course_name"]}
+                      <span style="cursor: pointer" class="underline-on-hover" onclick="openModal('${result[i]["course_name"]}', '${result[i]["course_desc"]}','${result[i]["course_type"]}','${result[i]["course_category"]}')" id="course_details"> ${result[i]["course_name"]} </span>
                     </div>
                     <br>
                     `
@@ -369,6 +435,35 @@
             check.checked = false
           }
         }
+      }
+    }
+
+    // Get the modal
+    var modal = document.getElementById("myModal");
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("course_details");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+    
+    function openModal(name, desc, type, cat) {
+      modal.style.display = "block";
+      document.getElementById("cname").innerHTML = name;
+      document.getElementById("cdesc").innerHTML = desc;
+      document.getElementById("ctype").innerHTML = type;
+      document.getElementById("ccat").innerHTML = cat;
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
       }
     }
 
