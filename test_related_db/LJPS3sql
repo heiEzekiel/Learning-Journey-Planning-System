@@ -86,15 +86,16 @@ select * from LJPS_DB.Registration;
 DROP TABLE IF EXISTS `Skill`;
 CREATE TABLE IF NOT EXISTS `Skill` (
   `skill_id` INT NOT NULL AUTO_INCREMENT,
-  `skill_name` VARCHAR(100) NOT NULL,
-  `skill_desc` TEXT NOT NULL,
+  `skill_name` VARCHAR(50) NOT NULL,
+   `skill_desc` varchar(255) NOT NULL,
   `skill_status` INT NOT NULL,
   PRIMARY KEY (`skill_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `Skill` (`skill_id`, `skill_name`, `skill_desc`, `skill_status`) VALUES
 ('501','Python 3','Python 3 is the latest programming language that you should know.','0'),
-('502','Data Analytics','Data Analytics refers to the ability to derive insights from data, using analytical tools.','0');
+('502','Data Analytics','Data Analytics refers to the ability to derive insights from data, using analytical tools.','0'),
+('503','Machine Learning','Machine learing requires knowledge of math and programming.','0');
 COMMIT;
 select * from LJPS_DB.Skill;
 
@@ -110,7 +111,8 @@ CREATE TABLE IF NOT EXISTS `Job_Role` (
 
 INSERT INTO `Job_Role` (`job_role_id`, `job_role_name`,`job_role_desc`, `job_role_status`) VALUES
 ('601','Software Developer','Full Stack Software developer with MERN stack','0'),
-('602','Data Analyst','Use your analytical skills and tools to derive new insights for our company','0');
+('602','Data Analyst','Use your analytical skills and tools to derive new insights for our company','0'),
+('603','Data Scientist','Use your statistics and programming skills to create value','0');
 COMMIT;
 select * from LJPS_DB.Job_Role;
 
@@ -118,7 +120,7 @@ select * from LJPS_DB.Job_Role;
 DROP TABLE IF EXISTS `Journey`;
 CREATE TABLE IF NOT EXISTS `Journey` (
   `journey_id` INT NOT NULL AUTO_INCREMENT,
-  `journey_name` VARCHAR(100) NOT NULL,
+  `journey_name` VARCHAR(40) NOT NULL,
   `journey_status` VARCHAR(100) NOT NULL,
   `j_fk_staff_id` INT,
   `j_fk_job_role_id` INT,
@@ -146,7 +148,8 @@ CREATE TABLE IF NOT EXISTS `Role_Map` (
 INSERT INTO `Role_Map` (`rm_fk_job_role_id`, `rm_fk_skill_id`) VALUES
 ('601','501'),
 ('602','501'),
-('602','502');
+('602','502'),
+('603','503');
 COMMIT;
 select * from LJPS_DB.Role_Map;
 
