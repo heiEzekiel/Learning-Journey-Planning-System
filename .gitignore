@@ -29,3 +29,5 @@ yarn-error.log*
 backend/__pycache__/Course_Map.cpython-310.pyc
 backend/__pycache__/Course_Map.cpython-310.pyc
 backend/__pycache__/Job_Role.cpython-310.pyc
+backend/__pycache__/Course_Map.cpython-310.pyc
+backend/__pycache__/Job_Role.cpython-310.pyc
