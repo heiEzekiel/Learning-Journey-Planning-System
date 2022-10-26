@@ -42,7 +42,7 @@ class TestJourneyMap(TestApp):
         db.session.add(journey_map)
         db.session.commit()
 
-        response = self.client.get('/getJourneyMaps')
+        response = self.client.get('/getJourneyMaps/1')
         self.assertEqual(response.json,
             {
                 'code': 200,
