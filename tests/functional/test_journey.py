@@ -41,7 +41,7 @@ class TestJourney(TestApp):
         )
 
     def test_get_journey(self):
-        journey = Journey(j_fk_staff_id = 1,j_fk_job_role_id = 1,journey_name = 'HR Journey',journey_status = 'Completed')
+        journey = Journey(j_fk_staff_id = 1,j_fk_job_role_id = 1,journey_name = 'HR Journey',journey_status = 'In-Progress')
         db.session.add(journey)
         db.session.commit()
 
@@ -54,7 +54,7 @@ class TestJourney(TestApp):
                     'j_fk_staff_id': 1,
                     'journey_id': 1,
                     'journey_name': 'HR Journey',
-                    'journey_status': 'Completed'
+                    'journey_status': 'In-Progress'
                 }]
             }
         )
