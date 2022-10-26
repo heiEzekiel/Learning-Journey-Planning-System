@@ -1,175 +1,203 @@
 <!DOCTYPE html>
 <html class="wide wow-animation" lang="en">
-	<head>
-		<title>HR view Roles</title>
-		<meta name="format-detection" content="telephone=no" />
-		<meta
-			name="viewport"
-			content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
-		/>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta charset="utf-8" />
-		<link rel="icon" href="images/favicon.ico" type="image/x-icon" />
-		<!-- Stylesheets-->
-		<link
-			rel="stylesheet"
-			type="text/css"
-			href="//fonts.googleapis.com/css?family=Poppins:400,500,600%7CTeko:300,400,500%7CMaven+Pro:500"
-		/>
-		<link
-			href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
-			rel="stylesheet"
-			integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
-			crossorigin="anonymous"
-		/>
-		<link rel="stylesheet" href="../css/fonts.css" />
-		<link rel="stylesheet" href="../css/style.css" />
-		<link rel="stylesheet" href="../css/index.css" />
-	</head>
 
-	<body>
-		<div class="preloader">
-			<div class="preloader-body">
-				<div class="cssload-container"></div>
-			</div>
+<head>
+	<title>HR view Roles</title>
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="viewport"
+		content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta charset="utf-8" />
+	<link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+	<!-- Stylesheets-->
+	<link rel="stylesheet" type="text/css"
+		href="//fonts.googleapis.com/css?family=Poppins:400,500,600%7CTeko:300,400,500%7CMaven+Pro:500" />
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous" />
+	<link rel="stylesheet" href="../css/fonts.css" />
+	<link rel="stylesheet" href="../css/style.css" />
+	<link rel="stylesheet" href="../css/index.css" />
+	<style>
+		button{ 
+			height: 100%;
+			width: 100%;
+		}
+
+		@media only screen and (max-width: 760px),
+		(min-device-width: 768px) and (max-device-width: 992px) {
+			table,
+			thead,
+			tbody,
+			th,
+			td,
+			tr {
+				display: block;
+			}
+			table{
+				width: 100%
+			}
+
+			thead tr {
+				position: absolute;
+				top: -9999px;
+				left: -9999px;
+			}
+
+			tr {
+				border: 1px solid #ccc;
+			}
+
+			td {
+				border: black;
+				border-bottom: 1px solid #eee;
+				display: flex;
+				text-align: left;
+				word-wrap: break-word;
+			}
+
+			td:before {
+				font-weight: bold;
+				width:100px;
+				margin-right: 40px;
+				word-wrap: break-word;
+
+			}
+
+
+			td:nth-of-type(1):before {
+				content: "Job Role Name";
+			}
+
+			td:nth-of-type(2):before {
+				content: "Job Role Description";
+			}
+
+			td:nth-of-type(3):before {
+				content: "Job Role Status";
+			}
+
+			td:nth-of-type(4):before {
+				content: "Action";
+			}
+
+
+		}
+	</style>
+</head>
+
+<body>
+	<div class="preloader">
+		<div class="preloader-body">
+			<div class="cssload-container"></div>
 		</div>
-		<div class="page">
-			<div id="home">
-				<!-- Page Header-->
-				<header class="section page-header">
-					<!-- RD Navbar-->
-					<div class="rd-navbar-wrap">
-						<nav
-							class="rd-navbar rd-navbar-classic"
-							data-layout="rd-navbar-fixed"
-							data-sm-layout="rd-navbar-fixed"
-							data-md-layout="rd-navbar-fixed"
-							data-md-device-layout="rd-navbar-fixed"
-							data-lg-layout="rd-navbar-static"
-							data-lg-device-layout="rd-navbar-fixed"
-							data-xl-layout="rd-navbar-static"
-							data-xl-device-layout="rd-navbar-static"
-							data-xxl-layout="rd-navbar-static"
-							data-xxl-device-layout="rd-navbar-static"
-							data-lg-stick-up-offset="46px"
-							data-xl-stick-up-offset="46px"
-							data-xxl-stick-up-offset="46px"
-							data-lg-stick-up="true"
-							data-xl-stick-up="true"
-							data-xxl-stick-up="true"
-						>
-							<div
-								class="rd-navbar-main-outer"
-								style="background-color: #668aff15"
-							>
-								<div class="rd-navbar-main">
-									<!-- RD Navbar Panel-->
-									<div class="rd-navbar-panel">
-										<!-- RD Navbar Toggle-->
-										<button
-											class="rd-navbar-toggle"
-											data-rd-navbar-toggle=".rd-navbar-nav-wrap"
-										>
-											<span></span>
-										</button>
-										<!-- RD Navbar Brand-->
-										<div class="rd-navbar-brand">
-											<a class="brand" href="index.html">
-												<h3 style="margin-left: 80px">LJPS</h3>
-											</a>
-										</div>
+	</div>
+	<div class="page">
+		<div id="home">
+			<!-- Page Header-->
+			<header class="section page-header">
+				<!-- RD Navbar-->
+				<div class="rd-navbar-wrap">
+					<nav class="rd-navbar rd-navbar-classic" data-layout="rd-navbar-fixed"
+						data-sm-layout="rd-navbar-fixed" data-md-layout="rd-navbar-fixed"
+						data-md-device-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-static"
+						data-lg-device-layout="rd-navbar-fixed" data-xl-layout="rd-navbar-static"
+						data-xl-device-layout="rd-navbar-static" data-xxl-layout="rd-navbar-static"
+						data-xxl-device-layout="rd-navbar-static" data-lg-stick-up-offset="46px"
+						data-xl-stick-up-offset="46px" data-xxl-stick-up-offset="46px" data-lg-stick-up="true"
+						data-xl-stick-up="true" data-xxl-stick-up="true">
+						<div class="rd-navbar-main-outer" style="background-color: #668aff15">
+							<div class="rd-navbar-main">
+								<!-- RD Navbar Panel-->
+								<div class="rd-navbar-panel">
+									<!-- RD Navbar Toggle-->
+									<button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap">
+										<span></span>
+									</button>
+									<!-- RD Navbar Brand-->
+									<div class="rd-navbar-brand">
+										<a class="brand" href="index.html">
+											<h3 style="margin-left: 80px">LJPS</h3>
+										</a>
 									</div>
-									<div class="rd-navbar-main-element">
-										<div class="rd-navbar-nav-wrap">
-											<ul class="rd-navbar-nav">
-												<li class="rd-nav-item active">
-													<a class="rd-nav-link" href="HR_roles.html"
-														>HR Roles</a
-													>
-												</li>
-												<li class="rd-nav-item">
-													<a
-														class="rd-nav-link text-decoration-none"
-														href="skills.html"
-														>Skills</a
-													>
-												</li>
-												<li class="rd-nav-item">
-													<a
-														class="rd-nav-link text-decoration-none"
-														href="view_course.html"
-														>Courses</a
-													>
-												</li>
-												<li class="rd-nav-item">
-													<a class="rd-nav-link text-decoration-none" href="#"
-														>Learners</a
-													>
-												</li>
-												<li class="rd-nav-item">
-													<a class="rd-nav-link text-decoration-none" href=""
-														>Profile</a
-													>
-												</li>
-											</ul>
-										</div>
+								</div>
+								<div class="rd-navbar-main-element">
+									<div class="rd-navbar-nav-wrap">
+										<ul class="rd-navbar-nav">
+											<li class="rd-nav-item active">
+												<a class="rd-nav-link" href="HR_roles.html">HR Roles</a>
+											</li>
+											<li class="rd-nav-item">
+												<a class="rd-nav-link text-decoration-none"
+													href="skills.html">Skills</a>
+											</li>
+											<li class="rd-nav-item">
+												<a class="rd-nav-link text-decoration-none"
+													href="view_course.html">Courses</a>
+											</li>
+											<li class="rd-nav-item">
+												<a class="rd-nav-link text-decoration-none" href="#">Learners</a>
+											</li>
+											<li class="rd-nav-item">
+												<a class="rd-nav-link text-decoration-none" href="">Profile</a>
+											</li>
+										</ul>
 									</div>
 								</div>
 							</div>
-						</nav>
-					</div>
-				</header>
-			</div>
-			<!-- Main content starts here  -->
-			<div class="container mt-5 mb-5">
-				<h3>List of roles</h3>
-
-				<div class="mb-0 d-flex justify-content-end">
-					<a href="create_role.html">
-						<button type="button" class="btn btn-primary">
-							Create New Role
-						</button></a
-					>
+						</div>
+					</nav>
 				</div>
-				<div class="alert alert-danger mt-5" id="res" role="alert"></div>
-				<table class="table borderless table-hover mt-5" id="table"></table>
-			</div>
+			</header>
 		</div>
-		<script>
-			backendUrl = "http://127.0.0.1:5000";
-			getAllJobRole = "getAllJobRole";
-			deleteRole = "deleteRole";
+		<!-- Main content starts here  -->
+		<div class="container mt-5 mb-5">
+			<h3>List of roles</h3>
 
-			// function to remove roles based on selection
-			// to do soft delete later on
-			async function removeRole(id) {
-				fetch(`${backendUrl}/${deleteRole}/${id}`, {
-					method: "DELETE",
+			<div class="mb-0 d-flex justify-content-center justify-content-md-end">
+				<a href="create_role.html">
+					<button type="button" class="btn btn-primary">
+						Create New Role
+					</button></a>
+			</div>
+			<div class="alert alert-danger mt-5" id="res" role="alert"></div>
+			<table class="table borderless table-hover mt-5" id="table"></table>
+		</div>
+	</div>
+	<script>
+		backendUrl = "http://127.0.0.1:5000";
+		getAllJobRole = "getAllJobRole";
+		deleteRole = "deleteRole";
+
+		// function to remove roles based on selection
+		// to do soft delete later on
+		async function removeRole(id) {
+			fetch(`${backendUrl}/${deleteRole}/${id}`, {
+				method: "DELETE",
+			})
+				.then((response) => response.json())
+				.then((data) => {
+					alert("Deleted role successfully");
+					location.reload();
 				})
-					.then((response) => response.json())
-					.then((data) => {
-						alert("Deleted role successfully");
-						location.reload();
-					})
-					.catch((error) => {
-						// Errors when calling the service; such as network error,
-						// service offline, etc
-						console.log(error);
-					});
-			}
+				.catch((error) => {
+					// Errors when calling the service; such as network error,
+					// service offline, etc
+					console.log(error);
+				});
+		}
 
-			async function getAllRole() {
-				const response = await fetch(`${backendUrl}/${getAllJobRole}`)
-					.then((response) => response.json())
-					.then((data) => {
-						console.log(JSON.parse(JSON.stringify(data)));
-						if (JSON.parse(JSON.stringify(data.code) == 404)) {
-							document.getElementById("res").innerText = "No records found";
-						} else {
-							document.getElementById("res").style.display = "none";
+		async function getAllRole() {
+			const response = await fetch(`${backendUrl}/${getAllJobRole}`)
+				.then((response) => response.json())
+				.then((data) => {
+					console.log(JSON.parse(JSON.stringify(data)));
+					if (JSON.parse(JSON.stringify(data.code) == 404)) {
+						document.getElementById("res").innerText = "No records found";
+					} else {
+						document.getElementById("res").style.display = "none";
 
-							result = JSON.parse(JSON.stringify(data.data));
-							message_str = `
+						result = JSON.parse(JSON.stringify(data.data));
+						message_str = `
 										<thead>
 											<tr class="bg-light">
 											<th>Job Role Name</th>
@@ -178,51 +206,50 @@
 											<th>Action</th>
 											</tr>
 										</thead>`;
-							for (const role of result) {
-								if (role["job_role_status"] == 0) {
-									status = "Active";
-								} else {
-									status = "Inactive";
-								}
-								message_str += `
+						for (const role of result) {
+							if (role["job_role_status"] == 0) {
+								status = "Active";
+							} else {
+								status = "Inactive";
+							}
+							message_str += `
 										<tbody>
 										<tr>
 										
-											<td class="w-20">${role["job_role_name"]}</td>
-											<td class="text-wrap w-50">${role["job_role_desc"]}</td>
-											<td class="text-wrap">${status}</td>
+											<td class="text-wrap">${role["job_role_name"]}</td>
+											<td class="text-wrap w-md-50">${role["job_role_desc"]}</td>
+											<td class="text-wrap ">${status}</td>
 										
-											<td class=' text-wrap w-25'> <a href="./role_skills.html?job=${role["job_role_name"]}&id=${role["job_role_id"]}">   <button type="button" class="btn btn-primary">View Skills</button></a>
-											<a href="./update_roles.html?id=${role["job_role_id"]}">   <button type="button" class="btn btn-success">Edit</button></a>  
-											<button type="button" class="btn btn-danger" onClick="removeRole(${role["job_role_id"]})">Remove</button> 
+											<td class=' text-wrap'> <a href="./role_skills.html?job=${role["job_role_name"]}&id=${role["job_role_id"]}">   <button type="button" class="btn btn-primary btn-sm">View Skills</button></a>
+											<a href="./update_roles.html?id=${role["job_role_id"]}">   <button type="button" class="btn btn-success btn-sm ">Edit</button></a>  
+											<a><button type="button" class="btn btn-danger btn-sm" onClick="removeRole(${role["job_role_id"]})">Remove</button></a>
 											</td>
 										</tr>
 										</tbody>
 										`;
-							}
-
-							// <th scope="row">${role["job_role_id"]}</th>
-							document.getElementById("table").innerHTML = message_str;
-							return data.roles;
 						}
-					})
-					.catch((error) => {
-						// Errors when calling the service; such as network error,
-						// service offline, etc
-						console.log(error);
-					});
-			}
 
-			getAllRole();
-		</script>
-		<!-- Javascript-->
-		<script src="../js/core.min.js"></script>
-		<script src="../js/script.js"></script>
-		<script
-			src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
-			integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
-			crossorigin="anonymous"
-		></script>
-		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-	</body>
+						// <th scope="row">${role["job_role_id"]}</th>
+						document.getElementById("table").innerHTML = message_str;
+						return data.roles;
+					}
+				})
+				.catch((error) => {
+					// Errors when calling the service; such as network error,
+					// service offline, etc
+					console.log(error);
+				});
+		}
+
+		getAllRole();
+	</script>
+	<!-- Javascript-->
+	<script src="../js/core.min.js"></script>
+	<script src="../js/script.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</body>
+
 </html>
