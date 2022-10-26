@@ -96,6 +96,12 @@
               const response = await fetch(`${backendUrl}/${get_skill}`)
                   .then((response) => response.json())
                   .then((data) => {
+                    if (data.code==404){
+                      
+                    }
+                    else{
+
+                
                       var skills = data[0]['data'];
                       for (s of skills) {
                           if (data[0]['code'] != 209) {
@@ -103,7 +109,7 @@
                           }
 
                       }
-
+                    }
                       allSkill();
                   })
                   .catch((error) => {
@@ -117,6 +123,7 @@
               const response = await fetch(`${backendUrl}/${get_all_skill}`)
                   .then((response) => response.json())
                   .then((data) => {
+                   
                       message_str = `
                     <thead>
                       <tr class="bg-light">
