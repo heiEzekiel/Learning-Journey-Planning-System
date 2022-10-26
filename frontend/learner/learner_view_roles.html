@@ -148,9 +148,9 @@
               message_str = `
               <thead>
                 <tr class="bg-light">
-                <th>Job Role Name</th>
-                <th>Job Role Description</th>
-                <th>Action</th>
+                <th class="align-middle text-wrap">Job Role Name</th>
+                <th class="align-middle text-wrap">Job Role Description</th>
+                <th class="align-middle text-wrap">Action</th>
                 </tr>
               </thead>`;
               count=0
@@ -163,8 +163,8 @@
                   message_str += `
               <tbody>
                 <tr>
-                  <td>${role["job_role_name"]}</td>
-                  <td class="text-wrap w-50">${role["job_role_desc"]}</td>
+                  <td class="align-middle text-wrap">${role["job_role_name"]}</td>
+                  <td class="align-middle text-wrap w-50">${role["job_role_desc"]}</td>
                   <td> <button type="button" class="btn btn-primary" onClick="location.href='./learner_view_skills.html?job=${role["job_role_name"]}&id=${role["job_role_id"]}'">View skills</button> </td>
                 </tr>
               </tbody>

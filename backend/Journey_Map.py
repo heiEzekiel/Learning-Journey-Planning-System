@@ -54,14 +54,14 @@ def create_journey_map(jm_fk_journey_id, jm_fk_course_id):
 
 # ********************************* Retrieve *********************************
 #Get all journey maps
-def get_journey_maps():
-    journeyMaps = Journey_Map.query.all()
+def get_journey_maps(jm_fk_journey_id):
+    journeyMaps = Journey_Map.query.filter_by(jm_fk_journey_id = jm_fk_journey_id).first()
     if journeyMaps:
         return jsonify(
             {
                 "code": 200,
                 "data":
-                [journeyMap.json() for journeyMap in journeyMaps]
+                [journeyMaps.json()]
             }
         )
     else:

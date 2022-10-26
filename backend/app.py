@@ -72,6 +72,11 @@ def delete_skill_from_job_role(job_role_id, skill_id):
 def get_all_courses():
     return c.get_all_courses()
 
+#Get course name
+@app.route("/getCourseName/<string:course_id>", methods=['GET'])
+def get_course_name(course_id):
+    return c.get_course_name(course_id)
+
 
 # ********************************* Course Map Related ******************************************************************
 # Create course to skill mapping
@@ -89,6 +94,8 @@ def get_skills_for_course(cm_fk_course_id):
 @app.route("/getCoursesForSkill/<int:skill_id>", methods=['GET'])
 def get_courses_for_skill(skill_id):
     return cm.get_courses_for_skill(skill_id)
+
+
 
 # Remove a skill from a course
 @app.route("/removeSkillFromCourse/<string:course_id>/<int:skill_id>", methods=['DELETE'])
@@ -172,9 +179,9 @@ def create_journey_map(jm_fk_journey_id, jm_fk_course_id):
     return jm.create_journey_map(jm_fk_journey_id, jm_fk_course_id)
 
 # Get a list of journey maps
-@app.route("/getJourneyMaps", methods=['GET'])
-def get_journey_maps():
-    return jm.get_journey_maps()
+@app.route("/getJourneyMaps/<string:jm_fk_journey_id>", methods=['GET'])
+def get_journey_maps(jm_fk_journey_id):
+    return jm.get_journey_maps(jm_fk_journey_id)
 
 # delete a journey map
 @app.route("/deleteJourneyMap/<int:jm_fk_journey_id>/<string:jm_fk_course_id>", methods=['DELETE'])

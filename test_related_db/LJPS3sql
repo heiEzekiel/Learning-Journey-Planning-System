@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS `Skill` (
 INSERT INTO `Skill` (`skill_id`, `skill_name`, `skill_desc`, `skill_status`) VALUES
 ('501','Python 3','Python 3 is the latest programming language that you should know.','0'),
 ('502','Data Analytics','Data Analytics refers to the ability to derive insights from data, using analytical tools.','0'),
-('503','Time Management','Time management involves managing time and looking at gantt charts.','0');
+('503','Machine Learning','Machine learing requires knowledge of math and programming.','0');
 COMMIT;
 select * from LJPS_DB.Skill;
 
@@ -111,7 +111,8 @@ CREATE TABLE IF NOT EXISTS `Job_Role` (
 
 INSERT INTO `Job_Role` (`job_role_id`, `job_role_name`,`job_role_desc`, `job_role_status`) VALUES
 ('601','Software Developer','Full Stack Software developer with MERN stack','0'),
-('602','Data Analyst','Use your analytical skills and tools to derive new insights for our company','0');
+('602','Data Analyst','Use your analytical skills and tools to derive new insights for our company','0'),
+('603','Data Scientist','Use your statistics and programming skills to create value','0');
 COMMIT;
 select * from LJPS_DB.Job_Role;
 
@@ -147,7 +148,8 @@ CREATE TABLE IF NOT EXISTS `Role_Map` (
 INSERT INTO `Role_Map` (`rm_fk_job_role_id`, `rm_fk_skill_id`) VALUES
 ('601','501'),
 ('602','501'),
-('602','502');
+('602','502'),
+('603','503');
 COMMIT;
 select * from LJPS_DB.Role_Map;
 
@@ -181,6 +183,7 @@ CREATE TABLE IF NOT EXISTS `Course_Map` (
 INSERT INTO `Course_Map` (`cm_fk_course_id`, `cm_fk_skill_id`) VALUES
 ('COR001','501'),
 ('COR001','502'),
+('FIN001','502'),
 ('COR006','501');
 COMMIT;
 select * from LJPS_DB.Course_Map;

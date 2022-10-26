@@ -86,8 +86,8 @@ select * from LJPS_DB.Registration;
 DROP TABLE IF EXISTS `Skill`;
 CREATE TABLE IF NOT EXISTS `Skill` (
   `skill_id` INT NOT NULL AUTO_INCREMENT,
-  `skill_name` VARCHAR(100) NOT NULL,
-  `skill_desc` TEXT NOT NULL,
+  `skill_name` VARCHAR(50) NOT NULL,
+  `skill_desc` varchar(255) NOT NULL,
   `skill_status` INT NOT NULL,
   PRIMARY KEY (`skill_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -125,7 +125,7 @@ select * from LJPS_DB.Job_Role;
 DROP TABLE IF EXISTS `Journey`;
 CREATE TABLE IF NOT EXISTS `Journey` (
   `journey_id` INT NOT NULL AUTO_INCREMENT,
-  `journey_name` VARCHAR(100) NOT NULL,
+  `journey_name` VARCHAR(40) NOT NULL,
   `journey_status` VARCHAR(100) NOT NULL,
   `j_fk_staff_id` INT,
   `j_fk_job_role_id` INT,
