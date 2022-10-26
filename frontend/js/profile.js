@@ -67,7 +67,7 @@ async function getLJ(staff_id) {
     await fetch(`${backendUrl}/${getJourney}/${staff_id}`)
     .then(response => response.json())
     .then(data => {
-
+      console.log(data)
       if (data.code ==404){
         document.getElementById("no_lj").innerHTML=" <span class=\"text-danger\">No ongoing Learning Journey </span>"
       }
@@ -93,7 +93,7 @@ async function getLJ(staff_id) {
   <span  onClick="removeJourney(${lj.journey_id})" class="mt-1 mx-1 btn btn-danger text-white float-end" style="font-size:10px;" >
   Remove learning journey
   </span>
-  <span  class="mt-1 btn btn-primary text-white float-end" style="font-size:10px;">
+  <span  onClick="location.href='./update_lj.html?id=${lj.journey_id}&name=${lj.journey_name}'" class="mt-1 btn btn-primary text-white float-end" style="font-size:10px;">
     View Learning Journey
   </span>
   

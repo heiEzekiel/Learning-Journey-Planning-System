@@ -60,6 +60,25 @@ def get_all_courses():
         }
     )
 
+# Get course name
+def get_course_name(course_id):
+    courses = Course.query.filter_by(course_id=course_id).all()
+    if courses:
+        return jsonify(
+            {
+                "code": 200,
+                "data":
+                [course.json() for course in courses]
+            }
+        )
+    else:
+        return jsonify(
+            {
+                "code":404,
+                "message": "No course found"
+            }
+        )
+
 
 # ********************************* Update ********************************* 
 

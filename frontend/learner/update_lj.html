@@ -74,7 +74,7 @@
                     <ul class="rd-navbar-nav">
 
                       <li class="rd-nav-item active">
-                        <a class="rd-nav-link" href="">Profile</a>
+                        <a class="rd-nav-link" href="learner_profile.html">Profile</a>
                       </li>
 
                       <li class="rd-nav-item">
@@ -115,20 +115,25 @@
     <!-- Main content starts here  -->
     <div class="container mt-5 mb-5">
       <h3>My Learning Journey</h3>
-
+      <span class="float-end my-3 btn btn-primary">Add Courses</span>
       <table class="table borderless table-hover mt-5" id="table">
       </table>
     </div>
     <script>
       backendUrl = "http://127.0.0.1:5000";
       get_journey_maps = "getJourneyMaps";
+      get_course_name = "getCourseName";
       remove_journey_maps ="deleteJourneyMap"
       
       // retrieve user's LJ ID based on params
+      const queryString = window.location.search;
+			const urlParams = new URLSearchParams(queryString);
+      var id = parseInt(urlParams.get("id"));
+      var name = urlParams.get("name");
       // Get journey map based on ID
 
       async function getJourneyMaps() {
-        const response = await fetch(`${backendUrl}/${get_journey_maps}`)
+        const response = await fetch(`${backendUrl}/${get_journey_maps}/${id}`)
           .then((response) => response.json())
           .then((data) => {
             // console.log(JSON.parse(JSON.stringify(data.data)));
@@ -137,17 +142,17 @@
             message_str = `
                   <thead>
                     <tr class="bg-light">
-                    
-                    <th>Journey Map ID</th>
-                    <th>Course ID</th>
+                    <th>Journey Map Name</th>
+                    <th>Course Name</th>
                     <th>Action</th>
                     </tr>
                   </thead>`;
-            for (const journeyMap of result['journeyMaps']) {
+            for (const journeyMap of result) {
+              cName = getCourse(journeyMap['jm_fk_course_id'])
               message_str += `
                 <tbody>
                   <tr>
-                    <td>${journeyMap["jm_fk_journey_id"]}</td>
+                    <td>${name}</td>
                     <td class="text-wrap w-50">${journeyMap["jm_fk_course_id"]}</td>
                     <td><button type="button" class="btn btn-danger" onclick="removeJourneyMaps(this.id)" id="${journeyMap["jm_fk_journey_id"]}?${journeyMap["jm_fk_course_id"]}">Remove</button></td>
                   </tr>
@@ -164,6 +169,23 @@
             console.log(error);
           });
       }
+
+      async function getCourse(id) {
+        const response = await fetch(`${backendUrl}/${get_course_name}/${id}`)
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data)
+            // console.log(JSON.parse(JSON.stringify(data.data)));
+            result = JSON.parse(JSON.stringify(data.data));
+            console.log(result)
+          })
+          .catch((error) => {
+            // Errors when calling the service; such as network error,
+            // service offline, etc
+            console.log(error);
+          });
+      }
+
 
       getJourneyMaps();
       async function removeJourneyMaps(a){
