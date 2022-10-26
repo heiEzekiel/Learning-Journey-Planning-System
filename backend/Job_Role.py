@@ -55,7 +55,7 @@ def create_job_role():
                         },
                         "message": "Job role already exist!"
                     }
-                ), 500
+                ), 400
 
     # if don't exist then execute these codes
     try:

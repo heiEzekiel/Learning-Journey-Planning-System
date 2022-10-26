@@ -69,7 +69,7 @@ def create_skills():
                         },
                         "message": "Skill name already exist!"
                     }
-                ), 500
+                ), 400
         # if no duplicate skill then run these codes
         try:
             db.session.add(skill)
