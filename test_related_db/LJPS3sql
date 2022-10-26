@@ -180,6 +180,7 @@ CREATE TABLE IF NOT EXISTS `Course_Map` (
 INSERT INTO `Course_Map` (`cm_fk_course_id`, `cm_fk_skill_id`) VALUES
 ('COR001','501'),
 ('COR001','502'),
+('FIN001','502'),
 ('COR006','501');
 COMMIT;
 select * from LJPS_DB.Course_Map;
