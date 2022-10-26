@@ -123,6 +123,9 @@
       backendUrl = "http://127.0.0.1:5000";
       get_journey_maps = "getJourneyMaps";
       remove_journey_maps ="deleteJourneyMap"
+      
+      // retrieve user's LJ ID based on params
+      // Get journey map based on ID
 
       async function getJourneyMaps() {
         const response = await fetch(`${backendUrl}/${get_journey_maps}`)
@@ -130,6 +133,7 @@
           .then((data) => {
             // console.log(JSON.parse(JSON.stringify(data.data)));
             result = JSON.parse(JSON.stringify(data.data));
+            console.log(result)
             message_str = `
                   <thead>
                     <tr class="bg-light">
