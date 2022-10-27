@@ -4,17 +4,6 @@ import os
 mysql_engine = ce("mysql+mysqlconnector://admin:SoftwareProject@spm.czdb9a0r4ea9.ap-southeast-1.rds.amazonaws.com:3306/LJPS_DB")
 #mysql_engine = ce("mysql+mysqlconnector://root@localhost:3306/LJPS_DB")
 
-# import contextlib
-# from sqlalchemy import MetaData
-
-# meta = MetaData()
-
-# with contextlib.closing(mysql_engine.connect()) as con:
-#     trans = con.begin()
-#     for table in reversed(meta.sorted_tables):
-#         con.execute(table.delete())
-#     trans.commit()
-
 dir = os.path.join(os.getcwd(), "raw_data")
 files = os.listdir(dir) 
 last = files.pop(1)
