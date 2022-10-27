@@ -87,7 +87,7 @@
             // console.log(JSON.parse(JSON.stringify(data.data)));
             result = JSON.parse(JSON.stringify(data.data));
             message_str = `
-                  <thead>
+                  <thead id="table_head">
                     <tr class="bg-light">
                     
                     <th class="align-middle text-center">Course ID</th>
@@ -101,7 +101,7 @@
                   </thead>`;
             for (const course of result) {
               message_str += `
-                <tbody>
+                <tbody id="table_body">
                   <tr>
                   
                     <td class="align-middle">${course["course_id"]}</td>
