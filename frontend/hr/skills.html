@@ -18,6 +18,73 @@
     <link rel="stylesheet" href="../css/fonts.css">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/index.css">
+    <style>
+      @media only screen and (max-width: 760px),
+		(min-device-width: 768px) and (max-device-width: 992px) {
+			
+			button{ 
+				height: 100%;
+				width: 100%;
+			}
+			
+			table,
+			thead,
+			tbody,
+			th,
+			td,
+			tr {
+				display: block;
+			}
+			table{
+				width: 100%
+			}
+
+			thead tr {
+				position: absolute;
+				top: -9999px;
+				left: -9999px;
+			}
+
+			tr {
+				border: 1px solid #ccc;
+			}
+
+			td {
+				border: black;
+				border-bottom: 1px solid #eee;
+				display: flex;
+				text-align: left;
+				word-wrap: break-word;
+			}
+
+			td:before {
+				font-weight: bold;
+				width:100px;
+				margin-right: 40px;
+				word-wrap: break-word;
+
+			}
+
+
+			td:nth-of-type(1):before {
+				content: "Job Role Name";
+			}
+
+			td:nth-of-type(2):before {
+				content: "Job Role Description";
+			}
+
+			td:nth-of-type(3):before {
+				content: "Job Role Status";
+			}
+
+			td:nth-of-type(4):before {
+				content: "Action";
+			}
+
+
+		}
+    </style>
   </head>
 
 <body>
@@ -127,10 +194,10 @@
                           message_str =  `
                           <thead>
                               <tr class="bg-light">
-                              <th class="align-middle" scope="col">Skill Name</th>
-                              <th class="align-middle" scope="col">Skill Description</th>
-                              <th class="align-middle" scope="col">Skill Status</th>
-                              <th class="align-middle" scope="col">Action</th>
+                              <th class="align-middle">Skill Name</th>
+                              <th class="align-middle" >Skill Description</th>
+                              <th class="align-middle" >Skill Status</th>
+                              <th class="align-middle" >Action</th>
                               </tr>
                           </thead>`
                           for (const skill of result) {
@@ -142,13 +209,13 @@
                             message_str += `
                             <tbody>
                                 <tr>
-                                    <th class="align-middle text-wrap" scope="row">${skill['skill_name']}</th>
-                                    <td class="align-middle text-wrap w-50">${skill['skill_desc']}</td>
+                                    <th class="align-middle text-wrap">${skill['skill_name']}</th>
+                                    <td class="align-middle text-wrap w-lg-50">${skill['skill_desc']}</td>
                                     <td class="align-middle text-wrap">${status}</td>
-                                    <td class="align-middle text-wrap w-25"> 
-                                    <button type="button" class="btn btn-primary" >View Course</button>
-                                    <button type="button" class="btn btn-success" onClick="location.href='./updateskills.html?id=${skill['skill_id']}'">Edit</button>
-                                    <button type="button" class="btn btn-danger" onClick="removeSkill(${skill['skill_id']})" >Delete</button>
+                                    <td class="text-wrap w-lg-25"> 
+                                    <button type="button" class="btn btn-primary btn-sm" >View Course</button>
+                                    <button type="button" class="btn btn-success btn-sm" onClick="location.href='./updateskills.html?id=${skill['skill_id']}'">Edit</button>
+                                    <button type="button" class="btn btn-danger btn-sm" onClick="removeSkill(${skill['skill_id']})" >Remove</button>
                                     </td>
                                 </tr>
                             </tbody>
