@@ -11,6 +11,7 @@ url = url + "frontend/hr/create_role.html"
 
 chrome_options = Options()
 chrome_options.add_argument("--headless")
+chrome_options.add_argument('--window-size=1920,1080') 
 browser = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
 browser.get(url)
 element_present = EC.presence_of_element_located((By.ID, 'title'))

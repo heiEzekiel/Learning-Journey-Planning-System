@@ -199,7 +199,7 @@
 
 						result = JSON.parse(JSON.stringify(data.data));
 						message_str = `
-										<thead>
+										<thead id="table_head">
 											<tr class="bg-light">
 											<th class="align-middle">Job Role Name</th>
 											<th class="align-middle">Job Role Description</th>
@@ -214,15 +214,15 @@
 								status = "Inactive";
 							}
 							message_str += `
-										<tbody>
+										<tbody id="table_body">
 										<tr>
-										
-											<td class="align-middle">${role["job_role_name"]}</td>
+											<td id="${role["job_role_name"]}" class="align-middle">${role["job_role_name"]}</td>
 											<td class="align-middle text-wrap w-lg-50">${role["job_role_desc"]}</td>
 											<td class="align-middle text-wrap">${status}</td>
 										
-											<td class=' text-wrap w-lg-25'> <a href="./role_skills.html?job=${role["job_role_name"]}&id=${role["job_role_id"]}">   <button type="button" class="btn btn-primary btn-sm">View Skills</button></a>
-											<a href="./update_roles.html?id=${role["job_role_id"]}">   <button type="button" class="btn btn-success btn-sm ">Edit</button></a>  
+											<td class=' text-wrap w-lg-25'> 
+											<a href="./role_skills.html?job=${role["job_role_name"]}&id=${role["job_role_id"]}"> <button id="view_${role['job_role_id']}" type="button" class="btn btn-primary btn-sm">View Skills</button></a>
+											<a href="./update_roles.html?id=${role["job_role_id"]}">   <button id="edit_${role['job_role_id']}" type="button" class="btn btn-success btn-sm ">Edit</button></a>  
 											<a><button type="button" class="btn btn-danger btn-sm" onClick="removeRole(${role["job_role_id"]})">Remove</button></a>
 											</td>
 										</tr>
