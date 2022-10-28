@@ -1,6 +1,4 @@
 #Just run the script to test and rmb to pip install libs
-import time
-from unittest import result
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
