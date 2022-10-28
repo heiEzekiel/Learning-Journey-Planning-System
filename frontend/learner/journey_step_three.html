@@ -345,6 +345,7 @@
 						data-bs-target="#collapseExample${skill[2]}"
 						aria-expanded="false" aria-controls="collapseExample${skill[2]}"
 						> <h4>${skill[0]} :</h4> ${skill[1]}</button>
+						<br>
 						`;
 					const response = await fetch(`${backendUrl}/${getCourse}/${skill[2]}`)
 						.then((response) => response.json())
@@ -359,13 +360,14 @@
 									//console.log(result[i]['course_name'])
 									if (result[i]["course_status"] == "Active") {
 										msg_str += `
+										
 										<div class='collapse multi-collapse text-wrap text-align-left' id="collapseExample${skill[2]}" style="background-color: #F9F9F9; padding:30px;">
 											<div class="form-check ">
 											<input class="form-check-input" type="checkbox" value="${result[i]["course_id"]}?${result[i]["course_name"]}" onchange='handleChange(this)'>
 											<span style="cursor: pointer; text-align:left;" class="underline-on-hover justify-content-start" onclick="openModal('${result[i]["course_name"]}', '${result[i]["course_desc"]}','${result[i]["course_type"]}','${result[i]["course_category"]}')" id="course_details"> ${result[i]["course_name"]} </span>
 											</div>
 										</div>
-										<br>
+										
 										`;
 									}
 								}
@@ -373,7 +375,7 @@
 								msg_str += `<div class="collapse multi-collapse" id="collapseExample${skill[2]}" style="background-color: #F3F3F3; padding:30px">
 										<span class="text-danger">No courses available</span>
 									</div>
-									<br>`;
+									`;
 							}
 							msg_str += `</td>`;
 							return data.data;
