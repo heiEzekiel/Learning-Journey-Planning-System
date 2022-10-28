@@ -38,6 +38,7 @@ try:
         print(f"\n{url}\nTest passed!")
     else:
         print(f"\n{url}\nTest failed!")
+        print('\nNeed remove before add')
 except:
     print(f"\n{url}\nTest failed!")
 browser.quit()
