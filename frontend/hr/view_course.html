@@ -103,14 +103,14 @@
               message_str += `
                 <tbody id="table_body">
                   <tr>
-                  
                     <td class="align-middle">${course["course_id"]}</td>
                     <td class="align-middle text-wrap">${course["course_name"]}</td>
                     <td class="align-middle text-wrap">${course["course_type"]}</td>
                     <td class="align-middle text-wrap">${course["course_category"]}</td>
                     <td class="align-middle text-wrap w-50">${course["course_desc"]}</td>
                     <td class="align-middle text-wrap">${course["course_status"]}</td>
-                    <td><a href="./course_assign.html?job=${course['course_name']}&id=${course['course_id']}"><button type="button" class="btn btn-primary">Assign</button></a></td>
+                    <td><a href="./course_assign.html?job=${course['course_name']}&id=${course['course_id']}">
+                      <button id="${course['course_id']}" type="button" class="btn btn-primary">Assign</button></a></td>
                   </tr>
                 </tbody>
                 `;
