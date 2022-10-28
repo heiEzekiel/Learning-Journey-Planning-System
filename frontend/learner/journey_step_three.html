@@ -69,6 +69,22 @@
 		.underline-on-hover:hover {
 			text-decoration: underline;
 		}
+		.collapsible {
+			background-color: rgb(241, 241, 241);
+			color: black;
+			cursor: pointer;
+			padding: 18px;
+			width: 100%;
+			border: none;
+			text-align: left;
+			outline: none;
+			font-size: 15px;
+		}
+
+		.active,
+		.collapsible:hover {
+			background-color: rgb(255, 255, 255);
+		}
 	</style>
 	<body>
 		<div class="preloader">
@@ -294,6 +310,7 @@
 			const job = urlParams.get("job");
 			var id = parseInt(urlParams.get("id"));
 			document.getElementById("step3").innerHTML += job;
+
 			async function getRoleSkills(id, job) {
 				const response = await fetch(`${backendUrl}/${getSkillsForJob}/${id}`)
 					.then((response) => response.json())
@@ -301,17 +318,7 @@
 						console.log(data[0].data);
 						// console.log(JSON.parse(JSON.stringify(data.data)));
 						result = JSON.parse(JSON.stringify(data[0].data));
-						message_str = `
-              <table class="table borderless table-hover mt-5" id="table">
-                <thead>
-                  <tr class="bg-light">
-                  <th class="align-middle text-wrap">Skill Name</th>
-                  <th class="align-middle text-wrap w-50">Skill Description</th>
-                  <th class="align-middle text-wrap w-25">Courses</th>
-                  </tr>
-                </thead>
-                <tbody>
-              `;
+						message_str = ``;
 						if (result == "No records found") {
 							document.getElementById(
 								"job_skills"
@@ -332,33 +339,41 @@
 			async function getCourses(skills, msg_str) {
 				for (skill of skills) {
 					msg_str += `
-          <tr class="align-middle text-wrap border border-bottom ">
-            <th class="align-middle text-wrap" scope="row">${skill[0]}</th>
-            <td class="align-middle text-wrap">${skill[1]}</td>
-            `;
+						<br>
+						<button type='button' class="btn btn-primary align-middle text-wrap collapsible"
+						data-bs-toggle="collapse"
+						data-bs-target="#collapseExample${skill[2]}"
+						aria-expanded="false" aria-controls="collapseExample${skill[2]}"
+						> <h4>${skill[0]} :</h4> ${skill[1]}</button>
+						`;
 					const response = await fetch(`${backendUrl}/${getCourse}/${skill[2]}`)
 						.then((response) => response.json())
 						.then((data) => {
 							//result =JSON.parse(JSON.stringify(data.data.skill))
 							console.log(data[0].data);
 							result = JSON.parse(JSON.stringify(data[0].data));
+							console.log(result);
 							msg_str += `<td class="align-middle text-wrap">`;
 							if (result != "No records found.") {
 								for (var i = 0; i < result.length; i++) {
 									//console.log(result[i]['course_name'])
 									if (result[i]["course_status"] == "Active") {
 										msg_str += `
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="${result[i]["course_id"]}?${result[i]["course_name"]}" onchange='handleChange(this)'>
-                      <span style="cursor: pointer" class="underline-on-hover" onclick="openModal('${result[i]["course_name"]}', '${result[i]["course_desc"]}','${result[i]["course_type"]}','${result[i]["course_category"]}')" id="course_details"> ${result[i]["course_name"]} </span>
-                    </div>
-                    <br>
-                    `;
+										<div class='collapse multi-collapse text-wrap text-align-left' id="collapseExample${skill[2]}" style="background-color: #F9F9F9; padding:30px;">
+											<div class="form-check ">
+											<input class="form-check-input" type="checkbox" value="${result[i]["course_id"]}?${result[i]["course_name"]}" onchange='handleChange(this)'>
+											<span style="cursor: pointer; text-align:left;" class="underline-on-hover justify-content-start" onclick="openModal('${result[i]["course_name"]}', '${result[i]["course_desc"]}','${result[i]["course_type"]}','${result[i]["course_category"]}')" id="course_details"> ${result[i]["course_name"]} </span>
+											</div>
+										</div>
+										<br>
+										`;
 									}
 								}
 							} else {
-								msg_str +=
-									'<span class="text-danger">No courses available</span>';
+								msg_str += `<div class="collapse multi-collapse" id="collapseExample${skill[2]}" style="background-color: #F3F3F3; padding:30px">
+										<span class="text-danger">No courses available</span>
+									</div>
+									<br>`;
 							}
 							msg_str += `</td>`;
 							return data.data;
@@ -369,19 +384,16 @@
 							console.log(error);
 						});
 				}
-				msg_str += `
-            </tbody>
-          </table>
-        `;
+
 				document.getElementById("job_skills").innerHTML = msg_str;
 			}
 			document.getElementById("modal_btn").onclick = function () {
 				msg_str = `
-        <br>
-        <p class="font-weight-bold">Course Summary
-        <p>
-        <ul>
-        `;
+						<br>
+						<p class="font-weight-bold">Course Summary
+						<p>
+						<ul>
+						`;
 				checkboxes = document.getElementsByClassName("form-check-input");
 				empty = true;
 				for (i = 0; i < checkboxes.length; i++) {
@@ -429,8 +441,7 @@
 						empty = false;
 					}
 				}
-				
-				if (empty || lj_name == "") {
+				if (empty || lj_name.value == "") {
 					alert("Fill up all inputs!");
 				} else {
 					if (name_length > 40) {
