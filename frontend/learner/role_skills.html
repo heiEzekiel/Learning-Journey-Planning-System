@@ -146,14 +146,14 @@
             "List of skills for " + job;
           message_str = `
             <table class="table borderless table-hover mt-5" id="table">
-              <thead>
+              <thead id="table_head">
                 <tr class="bg-light">
                 <th>Skill Name</th>
                 <th class="w-50">Skill Description</th>
                 <th class="w-25">Courses</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="table_body">
             `;
           if (result == "No records found") {
             document.getElementById("job_skills").innerHTML = `<h5 class ="text-danger mt-5">No Skills found</h5>`

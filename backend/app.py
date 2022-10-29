@@ -189,6 +189,7 @@ def delete_journey_map(jm_fk_journey_id,jm_fk_course_id):
     return jm.delete_journey_map(jm_fk_journey_id,jm_fk_course_id)
 
 
+
 #  ********************************* Flask ******************************************************************
 # Run flask app
 if __name__ == "__main__":

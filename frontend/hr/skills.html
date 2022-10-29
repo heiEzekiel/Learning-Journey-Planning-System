@@ -141,7 +141,7 @@
       </div>
       <!-- Main content starts here  -->
   <div class="container mt-5 mb-5">
-          <h3>List of Skills</h3>
+          <h3 id="title">List of Skills</h3>
       
           <div class="mb-0 d-flex justify-content-end">
             <button type="button" class="btn btn-primary" onclick="window.location.href='./skills_form.html'">Create
@@ -192,7 +192,7 @@
            document.getElementById("res").style.display= "none";
                           result =JSON.parse(JSON.stringify(data.data.skill))
                           message_str =  `
-                          <thead>
+                          <thead id="table_head">
                               <tr class="bg-light">
                               <th class="align-middle">Skill Name</th>
                               <th class="align-middle" >Skill Description</th>
@@ -207,9 +207,9 @@
                               var status = "Inactive"
                             }
                             message_str += `
-                            <tbody>
+                            <tbody id="table_body">
                                 <tr>
-                                    <th class="align-middle text-wrap">${skill['skill_name']}</th>
+                                    <th id="${skill['skill_name']}" class="align-middle text-wrap">${skill['skill_name']}</th>
                                     <td class="align-middle text-wrap w-lg-50">${skill['skill_desc']}</td>
                                     <td class="align-middle text-wrap">${status}</td>
                                     <td class="text-wrap w-lg-25"> 
