@@ -53,7 +53,21 @@ class TestRoleMap(TestApp):
                 ]
             }, 200
         ])
+    
+    def test_get_skills_for_no_job(self):
+        role_map = Role_Map(1,1)
+        db.session.add(role_map)
+        db.session.commit()
 
+        response = self.client.get('/getSkillsForJob/1')
+        self.assertEqual(response.json, [
+            {
+                'code': 404, 
+                'data': 'No records found'
+            }, 404
+        ])
+
+    
     def test_delete_skill_from_job_role(self):
         skill = Skill(skill_name="Python", skill_desc="Python skill", skill_status=1)
         db.session.add(skill)
