@@ -362,7 +362,7 @@
 										msg_str += `
 										
 										<div class='collapse multi-collapse text-wrap text-align-left' id="collapseExample${skill[2]}" style="background-color: #F9F9F9; padding:30px;">
-											<div class="form-check ">
+											<div class="form-check" style="text-align: left;">
 											<input class="form-check-input" type="checkbox" value="${result[i]["course_id"]}?${result[i]["course_name"]}" onchange='handleChange(this)'>
 											<span style="cursor: pointer; text-align:left;" class="underline-on-hover justify-content-start" onclick="openModal('${result[i]["course_name"]}', '${result[i]["course_desc"]}','${result[i]["course_type"]}','${result[i]["course_category"]}')" id="course_details"> ${result[i]["course_name"]} </span>
 											</div>
