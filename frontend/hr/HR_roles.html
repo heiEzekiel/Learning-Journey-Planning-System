@@ -17,73 +17,8 @@
 	<link rel="stylesheet" href="../css/fonts.css" />
 	<link rel="stylesheet" href="../css/style.css" />
 	<link rel="stylesheet" href="../css/index.css" />
-	<style>
-		@media only screen and (max-width: 760px),
-		(min-device-width: 768px) and (max-device-width: 992px) {
-			
-			button{ 
-				height: 100%;
-				width: 100%;
-			}
-			
-			table,
-			thead,
-			tbody,
-			th,
-			td,
-			tr {
-				display: block;
-			}
-			table{
-				width: 100%
-			}
-
-			thead tr {
-				position: absolute;
-				top: -9999px;
-				left: -9999px;
-			}
-
-			tr {
-				border: 1px solid #ccc;
-			}
-
-			td {
-				border: black;
-				border-bottom: 1px solid #eee;
-				display: flex;
-				text-align: left;
-				word-wrap: break-word;
-			}
-
-			td:before {
-				font-weight: bold;
-				width:100px;
-				margin-right: 40px;
-				word-wrap: break-word;
-
-			}
-
-
-			td:nth-of-type(1):before {
-				content: "Job Role Name";
-			}
-
-			td:nth-of-type(2):before {
-				content: "Job Role Description";
-			}
-
-			td:nth-of-type(3):before {
-				content: "Job Role Status";
-			}
-
-			td:nth-of-type(4):before {
-				content: "Action";
-			}
-
-
-		}
-	</style>
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+	<link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.2.3/css/fixedHeader.dataTables.min.css">
 </head>
 
 <body>
@@ -154,16 +89,36 @@
 		<div class="container mt-5 mb-5">
 			<h3>List of roles</h3>
 
-			<div class="mb-0 d-flex justify-content-center justify-content-md-end">
+			<div class="mb-3 d-flex justify-content-center justify-content-md-end">
 				<a href="create_role.html">
 					<button type="button" class="btn btn-primary">
 						Create New Role
 					</button></a>
 			</div>
 			<div class="alert alert-danger mt-5" id="res" role="alert"></div>
-			<table class="table borderless table-hover mt-5" id="table"></table>
+			<table class="table borderless table-hover mt-5" id="table" width="100%">
+				<thead>
+                    <tr class="bg-light">
+                        <th class="align-middle">Job Role Name</th>
+                        <th class="align-middle">Job Role Description</th>
+                        <th class="align-middle">Job Role Status</th>
+                        <th class="align-middle">Actions</th>
+                    </tr>
+                </thead>
+			</table>
 		</div>
 	</div>
+	<!-- Javascript-->
+	<script src="../js/core.min.js"></script>
+	<script src="../js/script.js"></script>
+	<script src="../js/index.js"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+	<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/fixedheader/3.2.3/js/dataTables.fixedHeader.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+		crossorigin="anonymous"></script>
+	<script src="../js/bootstrap.js"></script>
 	<script>
 		backendUrl = "http://127.0.0.1:5000";
 		getAllJobRole = "getAllJobRole";
@@ -187,70 +142,62 @@
 				});
 		}
 
-		async function getAllRole() {
-			const response = await fetch(`${backendUrl}/${getAllJobRole}`)
-				.then((response) => response.json())
-				.then((data) => {
-					console.log(JSON.parse(JSON.stringify(data)));
-					if (JSON.parse(JSON.stringify(data.code) == 404)) {
-						document.getElementById("res").innerText = "No records found";
-					} else {
-						document.getElementById("res").style.display = "none";
+		function getAllRole() {
+            $.ajax({
+                url: backendUrl + "/" + getAllJobRole,
+                type: "GET",
+                headers: {
+                    "accept": "application/json;odata=verbose",
+                    "content-type": "application/json;odata=verbose"
 
-						result = JSON.parse(JSON.stringify(data.data));
-						message_str = `
-										<thead>
-											<tr class="bg-light">
-											<th class="align-middle">Job Role Name</th>
-											<th class="align-middle">Job Role Description</th>
-											<th class="align-middle">Job Role Status</th>
-											<th>Action</th>
-											</tr>
-										</thead>`;
-						for (const role of result) {
-							if (role["job_role_status"] == 0) {
-								status = "Active";
-							} else {
-								status = "Inactive";
-							}
-							message_str += `
-										<tbody>
-										<tr>
-										
-											<td class="align-middle">${role["job_role_name"]}</td>
-											<td class="align-middle text-wrap w-lg-50">${role["job_role_desc"]}</td>
-											<td class="align-middle text-wrap">${status}</td>
-										
-											<td class=' text-wrap w-lg-25'> <a href="./role_skills.html?job=${role["job_role_name"]}&id=${role["job_role_id"]}">   <button type="button" class="btn btn-primary btn-sm">View Skills</button></a>
-											<a href="./update_roles.html?id=${role["job_role_id"]}">   <button type="button" class="btn btn-success btn-sm ">Edit</button></a>  
-											<a><button type="button" class="btn btn-danger btn-sm" onClick="removeRole(${role["job_role_id"]})">Remove</button></a>
-											</td>
-										</tr>
-										</tbody>
-										`;
-						}
-
-						// <th scope="row">${role["job_role_id"]}</th>
-						document.getElementById("table").innerHTML = message_str;
-						return data.roles;
-					}
-				})
-				.catch((error) => {
-					// Errors when calling the service; such as network error,
-					// service offline, etc
-					console.log(error);
-				});
-		}
+                },
+                success: function(data){
+                    if (data.code == 200){
+                        document.getElementById("res").style.display="none"
+                        var table = $('#table').DataTable({
+                            responsive: true,
+                            data: data.data,
+                            columns: [
+                                { data: 'job_role_name' },
+                                { data: 'job_role_desc' },
+                                { data: 'job_role_status',
+								  render: function (data, type, row, meta){
+									if (data == 0){
+										return 'Active'
+									}else{
+										return 'Inactive'
+									}
+								  }
+								},
+                                {
+                                    data: null,
+                                    render: function ( data, type, row, meta ) {
+                             
+                                        return 	`<a href="./role_skills.html?job=${data['job_role_name']}&id=${data["job_role_id"]}">   <button type="button" class="btn btn-primary btn-sm">View Skills</button></a>
+                                            <a href="./update_roles.html?id=${data["job_role_id"]}">   <button type="button" class="btn btn-success btn-sm ">Edit</button></a>  
+                                            <a><button type="button" class="btn btn-danger btn-sm" onClick="removeRole(${data["job_role_id"]})">Remove</button></a>
+                                            `
+                             
+                                    }
+                                }
+    
+                            ]
+                        })
+                    }else{
+                        document.getElementById("res").style.display="block"
+                        document.getElementById("res").innerText = "No records found";
+                        document.getElementById("table").style.display = "none"
+                    }
+                
+                },
+                error: function Error(result, error) {
+                    alert("error " + result.status + " " + result.statusText);
+                }
+            })
+        }
 
 		getAllRole();
 	</script>
-	<!-- Javascript-->
-	<script src="../js/core.min.js"></script>
-	<script src="../js/script.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
-		crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </body>
 
 </html>
