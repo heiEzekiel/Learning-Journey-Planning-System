@@ -47,12 +47,18 @@ class TestRoleMap(TestApp):
         response = self.client.get('/getSkillsForJob/1')
         self.assertEqual(response.json, [
             {
-                'code': 200, 
+                'code': 200,
                 'data': [
-                    ['Python', 'Python skill', 1, 1]
+                    {
+                        'skill_desc': 'Python skill',
+                        'skill_id': 1,
+                        'skill_name': 'Python',
+                        'skill_status': 1
+                    }
                 ]
             }, 200
-        ])
+        ]
+    )
     
     def test_get_skills_for_no_job(self):
         role_map = Role_Map(1,1)
