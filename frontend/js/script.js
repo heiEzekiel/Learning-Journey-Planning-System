@@ -788,12 +788,12 @@
 		}
 
 		// UI To Top
-		if ( isDesktop && !isNoviBuilder ) {
-			$().UItoTop( {
-				easingType:     'easeOutQuad',
-				containerClass: 'ui-to-top fa fa-angle-up'
-			} );
-		}
+		// if ( isDesktop && !isNoviBuilder ) {
+		// 	$().UItoTop( {
+		// 		easingType:     'easeOutQuad',
+		// 		containerClass: 'ui-to-top fa fa-angle-up'
+		// 	} );
+		// }
 
 		// lightGallery
 		if (plugins.lightGallery.length) {

@@ -207,23 +207,19 @@
         }
 
         async function getSkills() {
-            current_skill = [];
+            var current_skill = [];
             document.getElementById("table_new").innerHTML = "";
             const response = await fetch(`${backendUrl}/${get_skill}`)
                 .then((response) => response.json())
                 .then((data) => {
-                    if(data.code == 404){
-                        current_skill=[]
-                    }else{
+                    if(data[0].code == 200){
                         var skills = data[0]['data'];
-                        for (s of skills) {
-                            if (data[0]['code'] != 209) {
-                                current_skill.push(s[0]);
-                            }
+                        for (s of skills) { 
+                            current_skill.push(s["skill_name"])
                         }
                     }
 
-                    allSkill();
+                    allSkill(current_skill);
                 })
                 .catch((error) => {
                     // Errors when calling the service; such as network error,
@@ -232,7 +228,7 @@
                 });
         }
 
-        async function allSkill() {
+        async function allSkill(current_skill) {
             const response = await fetch(`${backendUrl}/${get_all_skill}`)
                 .then((response) => response.json())
                 .then((data) => {
