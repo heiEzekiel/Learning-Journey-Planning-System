@@ -212,7 +212,7 @@
             const response = await fetch(`${backendUrl}/${get_skill}`)
                 .then((response) => response.json())
                 .then((data) => {
-                    if(data[0].code == 200){
+                    if(data[0] !=null && data[0].code == 200){
                         var skills = data[0]['data'];
                         for (s of skills) { 
                             current_skill.push(s["skill_name"])
