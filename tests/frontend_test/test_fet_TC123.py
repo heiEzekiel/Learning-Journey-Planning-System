@@ -33,10 +33,9 @@ class TC123(unittest.TestCase):
                 connection.commit()
         cursor.close()
         connection.close()
-
         url = temp_url + "frontend/hr/skills.html"
         chrome_options = Options()
-        #chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--headless")
         ChromeDriverManager(log_level=0)
         chrome_options.add_argument('--log-level=3')
         chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
@@ -45,11 +44,10 @@ class TC123(unittest.TestCase):
         browser.get(url)
         element_present = EC.presence_of_element_located((By.ID, 'title'))
         WebDriverWait(browser, 2).until(element_present)
-
         try:
             result = browser.find_element(By.ID, "res")
-            
             if result:
+                res = True
                 self.assertTrue(res, "Passed")
             else:
                 self.assertTrue(res, "Failed")

@@ -46,7 +46,6 @@ class TC120(unittest.TestCase):
         element_present = EC.presence_of_element_located((By.ID, 'table'))
         WebDriverWait(browser, 2).until(element_present)
 
-        print("\n\n===== Results =====")
         try:
             result = browser.find_element(By.ID, "res")
             if result:

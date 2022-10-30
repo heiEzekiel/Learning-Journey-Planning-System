@@ -46,7 +46,6 @@ class TC112(unittest.TestCase):
         element_present = EC.presence_of_element_located((By.ID, 'title'))
         WebDriverWait(browser, 2).until(element_present)
 
-        print("\n\n===== Results =====")
         try:
             skill_name_box = browser.find_element(By.ID, "skillName")
             skill_desc_box = browser.find_element(By.ID, "skillDescription")
