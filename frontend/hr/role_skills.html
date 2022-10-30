@@ -94,11 +94,11 @@
       const response = await fetch(`${backendUrl}/${getSkillsForJob}/${id}`)
         .then((response) => response.json())
         .then((data) => {
-          console.log(data[0].data)
           // console.log(JSON.parse(JSON.stringify(data.data)));
-          result = JSON.parse(JSON.stringify(data[0].data));
           document.getElementById('title').innerHTML = "List of skills for " + job
-          message_str = `  
+          if (data[0]!= null && data[0].code == 200){
+            result = JSON.parse(JSON.stringify(data[0].data));
+            message_str = `  
             <br>
             <table class="table borderless table-hover mt-5" id="table">
               <thead id="table_head">
@@ -110,10 +110,9 @@
               </thead>
               <tbody id="table_body">
             `
-          if (result== "No records found"){
-            document.getElementById("job_skills").innerHTML= `<h5 class ="text-danger mt-5">No Skills found</h5>`
-          }else{
             getCourses(result, message_str)
+          }else{
+            document.getElementById("job_skills").innerHTML= `<h5 class ="text-danger mt-5">No Skills found</h5>`
           }
           return data.data;
         })
