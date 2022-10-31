@@ -51,6 +51,10 @@
 			width: 80%; /* Could be more or less, depending on screen size */
 		}
 
+		p{
+			text-align: left;
+		}
+
 		/* The Close Button */
 		.close {
 			color: #aaa;
@@ -94,23 +98,25 @@
 		</div>
 		<!-- The Modal -->
 		<div id="myModal" class="courseModal">
-			<!-- Modal content -->
 			<div class="courseModal-content">
-				<span class="close">&times;</span>
+				<div class="modal-header border-bottom p-0">
+					<h4 class="modal-title text-primary">Course summary</h5>
+					<span class="close">&times;</span>
+				</div>
 				<br />
 				<br />
 				<div>
-					<h4 class="align-middle text-wrap text-center">Course Name</h4>
-					<p id="cname" class="align-middle text-wrap text-center"></p>
+					<h5 class="text-wrap text-decoration-underline">Course Name</h5>
+					<p id="cname" class="text-wrap"></p>
 					<br />
-					<h4 class="align-middle text-wrap text-center">Course Description</h4>
-					<p id="cdesc" class="align-middle text-wrap text-center"></p>
+					<h5 class="text-wrap text-decoration-underline">Course Description</h5>
+					<p id="cdesc" class="text-wrap"></p>
 					<br />
-					<h4 class="align-middle text-wrap text-center">Course Type</h4>
-					<p id="ctype" class="align-middle text-wrap text-center"></p>
+					<h5 class="text-wrap text-decoration-underline">Course Type</h5>
+					<p id="ctype" class="text-wrap"></p>
 					<br />
-					<h4 class="align-middle text-wrap text-center">Course Category</h4>
-					<p id="ccat" class="align-middle text-wrap text-center">d</p>
+					<h5 class="text-wrap text-decoration-underline">Course Category</h5>
+					<p id="ccat" class="text-wrap">d</p>
 				</div>
 			</div>
 		</div>
@@ -342,12 +348,12 @@
 						<br>
 						<button type='button' class="btn btn-primary align-middle text-wrap collapsible"
 						data-bs-toggle="collapse"
-						data-bs-target="#collapseExample${skill[2]}"
-						aria-expanded="false" aria-controls="collapseExample${skill[2]}"
-						> <h4>${skill[0]} :</h4> ${skill[1]}</button>
+						data-bs-target="#collapseExample${skill['skill_id']}"
+						aria-expanded="false" aria-controls="collapseExample${skill['skill_id']}"
+						> <h4>${skill['skill_name']} :</h4> ${skill['skill_desc']}</button>
 						<br>
 						`;
-					const response = await fetch(`${backendUrl}/${getCourse}/${skill[2]}`)
+					const response = await fetch(`${backendUrl}/${getCourse}/${skill['skill_id']}`)
 						.then((response) => response.json())
 						.then((data) => {
 							//result =JSON.parse(JSON.stringify(data.data.skill))
@@ -361,7 +367,7 @@
 									if (result[i]["course_status"] == "Active") {
 										msg_str += `
 										
-										<div class='collapse multi-collapse text-wrap text-align-left' id="collapseExample${skill[2]}" style="background-color: #F9F9F9; padding:30px;">
+										<div class='collapse multi-collapse text-wrap text-align-left' id="collapseExample${skill['skill_id']}" style="background-color: #F9F9F9; padding:30px;">
 											<div class="form-check" style="text-align: left;">
 											<input class="form-check-input" type="checkbox" value="${result[i]["course_id"]}?${result[i]["course_name"]}" onchange='handleChange(this)'>
 											<span style="cursor: pointer; text-align:left;" class="underline-on-hover justify-content-start" onclick="openModal('${result[i]["course_name"]}', '${result[i]["course_desc"]}','${result[i]["course_type"]}','${result[i]["course_category"]}')" id="course_details"> ${result[i]["course_name"]} </span>
@@ -372,7 +378,7 @@
 									}
 								}
 							} else {
-								msg_str += `<div class="collapse multi-collapse" id="collapseExample${skill[2]}" style="background-color: #F9F9F9; padding:30px">
+								msg_str += `<div class="collapse multi-collapse" id="collapseExample${skill['skill_id']}" style="background-color: #F9F9F9; padding:30px">
 										<span class="text-danger">No courses available</span>
 									</div>
 									`;
@@ -392,7 +398,7 @@
 			document.getElementById("modal_btn").onclick = function () {
 				msg_str = `
 						<br>
-						<p class="font-weight-bold">Course Summary
+						<p class="font-weight-bold text-center">Course Summary
 						<p>
 						<ul>
 						`;
@@ -419,7 +425,7 @@
 					}
 					msg_str += `</ul>`;
 				} else {
-					msg_str += "<p class='text-danger'> No course added</p>";
+					msg_str += "<p class='text-danger text-center'> No course added</p>";
 				}
 				console.log(checkboxes);
 				document.getElementById("modal_courses").innerHTML = msg_str;
@@ -541,10 +547,10 @@
 
 			function openModal(name, desc, type, cat) {
 				modal.style.display = "block";
-				document.getElementById("cname").innerHTML = name;
-				document.getElementById("cdesc").innerHTML = desc;
-				document.getElementById("ctype").innerHTML = type;
-				document.getElementById("ccat").innerHTML = cat;
+				document.getElementById("cname").innerText = name;
+				document.getElementById("cdesc").innerText = desc;
+				document.getElementById("ctype").innerText = type;
+				document.getElementById("ccat").innerText = cat;
 			}
 
 			// When the user clicks on <span> (x), close the modal
