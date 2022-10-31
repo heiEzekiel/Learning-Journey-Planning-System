@@ -102,7 +102,7 @@
 			</div>
 			<div class="alert alert-danger mt-5" id="res" role="alert"></div>
 			<table class="table borderless table-hover mt-5" id="table" width="100%">
-				<thead>
+				<thead id="table_head">
                     <tr class="bg-light">
                         <th class="text-center">Job Role Name</th>
                         <th class="text-center w-50">Job Role Description</th>
@@ -110,6 +110,8 @@
                         <th class="text-center w-25">Actions</th>
                     </tr>
                 </thead>
+				<tbody id="table_body">
+				</tbody>
 			</table>
 		</div>
 	</div>
@@ -164,7 +166,11 @@
                             responsive: true,
                             data: data.data,
                             columns: [
-                                { data: 'job_role_name' },
+                                { data: 'job_role_name',
+								  createdCell: function(td, cellData, rowData, row, col) {
+								  	$(td).attr('id', cellData);
+								  }
+								},
                                 { data: 'job_role_desc' },
                                 { data: 'job_role_status',
 								  render: function (data, type, row, meta){
@@ -179,7 +185,7 @@
                                     data: null,
                                     render: function ( data, type, row, meta ) {
                              
-                                        return 	`<a href="./role_skills.html?job=${data['job_role_name']}&id=${data["job_role_id"]}">   <button type="button" class="btn btn-primary btn-sm">View Skills</button></a>
+                                        return 	`<a href="./role_skills.html?job=${data['job_role_name']}&id=${data["job_role_id"]}">   <button id="view_${data['job_role_id']}" type="button" class="btn btn-primary btn-sm">View Skills</button></a>
                                             <a href="./update_roles.html?id=${data["job_role_id"]}">   <button type="button" class="btn btn-success btn-sm ">Edit</button></a>  
                                             <a><button type="button" class="btn btn-danger btn-sm" onClick="removeRole(${data["job_role_id"]})">Remove</button></a>
                                             `

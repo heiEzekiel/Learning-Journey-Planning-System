@@ -128,7 +128,11 @@
               responsive: true,
               data: data[0].data,
               columns: [
-                { data: "skill_name" },
+                { data: "skill_name",
+                  createdCell: function(td, cellData, rowData, row, col) {
+                    $(td).attr('id', cellData);
+                  }
+                },
                 { data: "skill_desc" },
                 {
                   data: "skill_id",
