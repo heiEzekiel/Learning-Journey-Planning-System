@@ -203,7 +203,8 @@
                 
                 },
                 error: function Error(result, error) {
-                    alert("error " + result.status + " " + result.statusText);
+					document.getElementById("table").style.display = "none"
+					console.log(result);
                 }
             })
         }

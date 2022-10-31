@@ -198,12 +198,13 @@
 					} else {
 						document.getElementById("res").style.display = "block"
 						document.getElementById("res").innerText = "No records found";
-						document.getElementById("table").style.display = "none"
+						document.getElementById("job_skills").style.display = "none"
 					}
 
 				},
 				error: function Error(result, error) {
-					alert("error " + result.status + " " + result.statusText);
+					document.getElementById("job_skills").style.display = "none"
+					console.log(result);
 				}
 			})
 		}
