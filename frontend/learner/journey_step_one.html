@@ -180,7 +180,7 @@
                   data: null,
                   render: function (data, type, row, meta) {
 
-                    return `<a href="./role_skills.html?job=${data['job_role_name']}&id=${data["job_role_id"]}">   <button type="button" class="btn btn-primary btn-sm">View Skills</button></a>`
+                    return `<button type="button" class="btn btn-primary" onClick="location.href='./journey_step_two.html?job=${data["job_role_name"]}&id=${data["job_role_id"]}'">Select Role</button>`
 
                   }
                 }
