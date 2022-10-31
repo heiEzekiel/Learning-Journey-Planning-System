@@ -47,11 +47,16 @@ class TC119(unittest.TestCase):
         WebDriverWait(browser, 2).until(element_present)
 
         try:
+            check_list = ["Data Analyst", "Software Developer"]
             thead = browser.find_element(By.ID, "table_head")
             tbody = browser.find_element(By.ID, "table_body")
-            role_one = browser.find_element(By.ID, "Software Developer")
-            role_two = browser.find_element(By.ID, "Data Analyst")
-            if thead and tbody and role_one and role_two:
+            list_table_body = tbody.find_elements(By.TAG_NAME, "tr")
+            for row in list_table_body:
+                list_row = row.find_elements(By.TAG_NAME, "td")
+                role_name = list_row[0].get_attribute('innerText')
+                if role_name in check_list:
+                    check_list.remove(role_name)
+            if thead and tbody and not check_list:
                 res = True
                 self.assertTrue(res, "Passed")
             else:
