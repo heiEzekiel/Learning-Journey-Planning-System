@@ -1,227 +1,207 @@
 <!DOCTYPE html>
 <html class="wide wow-animation" lang="en">
-  <head>
-    <title>List of Roles</title>
-    <meta name="format-detection" content="telephone=no" />
-    <meta
-      name="viewport"
-      content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
-    />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta charset="utf-8" />
-    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
-    <!-- Stylesheets-->
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="//fonts.googleapis.com/css?family=Poppins:400,500,600%7CTeko:300,400,500%7CMaven+Pro:500"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="../css/fonts.css" />
-    <link rel="stylesheet" href="../css/style.css" />
-    <link rel="stylesheet" href="../css/index.css" />
-    <link rel="stylesheet" href="../css/ljcss.css" />
-  </head>
 
-  <body>
-    <div class="preloader">
-      <div class="preloader-body">
-        <div class="cssload-container"></div>
-      </div>
+<head>
+  <title>List of Roles</title>
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="viewport"
+    content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta charset="utf-8" />
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+  <!-- Stylesheets-->
+  <link rel="stylesheet" type="text/css"
+    href="//fonts.googleapis.com/css?family=Poppins:400,500,600%7CTeko:300,400,500%7CMaven+Pro:500" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous" />
+  <link rel="stylesheet" href="../css/fonts.css" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/index.css" />
+  <link rel="stylesheet" href="../css/ljcss.css" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.2.3/css/fixedHeader.dataTables.min.css">
+  <style>
+    td {
+      word-break: break-word;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="preloader">
+    <div class="preloader-body">
+      <div class="cssload-container"></div>
     </div>
-    <div class="page">
-      <div id="home">
-        <!-- Page Header-->
-        <header class="section page-header">
-          <!-- RD Navbar-->
-          <div class="rd-navbar-wrap">
-            <nav
-              class="rd-navbar rd-navbar-classic"
-              data-layout="rd-navbar-fixed"
-              data-sm-layout="rd-navbar-fixed"
-              data-md-layout="rd-navbar-fixed"
-              data-md-device-layout="rd-navbar-fixed"
-              data-lg-layout="rd-navbar-static"
-              data-lg-device-layout="rd-navbar-fixed"
-              data-xl-layout="rd-navbar-static"
-              data-xl-device-layout="rd-navbar-static"
-              data-xxl-layout="rd-navbar-static"
-              data-xxl-device-layout="rd-navbar-static"
-              data-lg-stick-up-offset="46px"
-              data-xl-stick-up-offset="46px"
-              data-xxl-stick-up-offset="46px"
-              data-lg-stick-up="true"
-              data-xl-stick-up="true"
-              data-xxl-stick-up="true"
-            >
-              <div class="rd-navbar-main-outer">
-                <div class="rd-navbar-main">
-                  <!-- RD Navbar Panel-->
-                  <div class="rd-navbar-panel">
-                    <!-- RD Navbar Toggle-->
-                    <button
-                      class="rd-navbar-toggle"
-                      data-rd-navbar-toggle=".rd-navbar-nav-wrap"
-                    >
-                      <span></span>
-                    </button>
-                    <!-- RD Navbar Brand-->
-                    <div class="rd-navbar-brand">
-                      <a class="brand" href="landing_page.html">
-                        <h3 style="margin-left: 80px">LJPS</h3>
-                      </a>
-                    </div>
+  </div>
+  <div class="page">
+    <div id="home">
+      <!-- Page Header-->
+      <header class="section page-header">
+        <!-- RD Navbar-->
+        <div class="rd-navbar-wrap">
+          <nav class="rd-navbar rd-navbar-classic" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed"
+            data-md-layout="rd-navbar-fixed" data-md-device-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-static"
+            data-lg-device-layout="rd-navbar-fixed" data-xl-layout="rd-navbar-static"
+            data-xl-device-layout="rd-navbar-static" data-xxl-layout="rd-navbar-static"
+            data-xxl-device-layout="rd-navbar-static" data-lg-stick-up-offset="46px" data-xl-stick-up-offset="46px"
+            data-xxl-stick-up-offset="46px" data-lg-stick-up="true" data-xl-stick-up="true" data-xxl-stick-up="true">
+            <div class="rd-navbar-main-outer">
+              <div class="rd-navbar-main">
+                <!-- RD Navbar Panel-->
+                <div class="rd-navbar-panel">
+                  <!-- RD Navbar Toggle-->
+                  <button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap">
+                    <span></span>
+                  </button>
+                  <!-- RD Navbar Brand-->
+                  <div class="rd-navbar-brand">
+                    <a class="brand" href="landing_page.html">
+                      <h3 style="margin-left: 80px">LJPS</h3>
+                    </a>
                   </div>
-                  <div class="rd-navbar-main-element">
-                    <div class="rd-navbar-nav-wrap">
-                      <ul class="rd-navbar-nav">
-                        <li class="rd-nav-item">
-                          <a class="rd-nav-link" href="learner_profile.html"
-                            >Profile</a
-                          >
-                        </li>
+                </div>
+                <div class="rd-navbar-main-element">
+                  <div class="rd-navbar-nav-wrap">
+                    <ul class="rd-navbar-nav">
+                      <li class="rd-nav-item">
+                        <a class="rd-nav-link" href="learner_profile.html">Profile</a>
+                      </li>
 
-                        <li class="rd-nav-item active">
-                          <a class="rd-nav-link" href=""
-                            >Start Learning Journey</a
-                          >
-                        </li>
+                      <li class="rd-nav-item active">
+                        <a class="rd-nav-link" href="">Start Learning Journey</a>
+                      </li>
 
-                        <li class="rd-nav-item">
-                          <a
-                            class="rd-nav-link text-decoration-none"
-                            href="learner_view_roles.html"
-                            >Roles</a
-                          >
-                        </li>
-                        <li class="rd-nav-item">
-                          <a
-                            class="rd-nav-link text-decoration-none"
-                            href="learner_view_skills.html"
-                            >Skills</a
-                          >
-                        </li>
-                        <li class="rd-nav-item">
-                          <a
-                            class="rd-nav-link text-decoration-none"
-                            href="view_course.html"
-                            >Courses</a
-                          >
-                        </li>
-                      </ul>
-                    </div>
+                      <li class="rd-nav-item">
+                        <a class="rd-nav-link text-decoration-none" href="learner_view_roles.html">Roles</a>
+                      </li>
+                      <li class="rd-nav-item">
+                        <a class="rd-nav-link text-decoration-none" href="learner_view_skills.html">Skills</a>
+                      </li>
+                      <li class="rd-nav-item">
+                        <a class="rd-nav-link text-decoration-none" href="view_course.html">Courses</a>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
-            </nav>
-          </div>
-        </header>
-      </div>
-      <!-- Main content starts here  -->
-      <div class="container mt-3 mb-5">
-        <h3>
-          <span class="text-primary">Step One: </span> Select a job role that
-          interests you
-        </h3>
-        <div class="stepper-wrapper mt-5 text-white">
-          <div class="stepper-item completed">
-            <div class="step-counter">1</div>
-            <div class="step-name text-dark">Choose a job</div>
-          </div>
-          <div class="stepper-item">
-            <div class="step-counter">2</div>
-            <div class="step-name text-dark">View Skill</div>
-          </div>
-          <div class="stepper-item">
-            <div class="step-counter">3</div>
-            <div class="step-name text-dark">Add courses</div>
-          </div>
-
-          <div class="stepper-item">
-            <div class="step-counter">4</div>
-            <div class="step-name text-dark">Complete</div>
-          </div>
+            </div>
+          </nav>
         </div>
-        <div class="alert alert-danger mt-5" id="res" role="alert"></div>
-        <table class="table borderless table-hover mt-5" id="table"></table>
-      </div>
+      </header>
     </div>
-    <script>
-      var backendUrl = "http://127.0.0.1:5000";
-      var getAllJobRole = "getAllJobRole";
+    <!-- Main content starts here  -->
+    <div class="container mt-3 mb-5">
+      <h3>
+        <span class="text-primary">Step One: </span> Select a job role that
+        interests you
+      </h3>
+      <div class="stepper-wrapper mt-5 text-white">
+        <div class="stepper-item completed">
+          <div class="step-counter">1</div>
+          <div class="step-name text-dark">Choose a job</div>
+        </div>
+        <div class="stepper-item">
+          <div class="step-counter">2</div>
+          <div class="step-name text-dark">View Skill</div>
+        </div>
+        <div class="stepper-item">
+          <div class="step-counter">3</div>
+          <div class="step-name text-dark">Add courses</div>
+        </div>
 
-      async function getAllRole() {
-        const response = await fetch(`${backendUrl}/${getAllJobRole}`)
-          .then((response) => response.json())
-          .then((data) => {
-            // console.log(JSON.parse(JSON.stringify(data.data)));
-            if (data.code == 404) {
-              document.getElementById("res").style.display = "block";
-              document.getElementById("res").innerText = "No job roles found";
-            } else {
+        <div class="stepper-item">
+          <div class="step-counter">4</div>
+          <div class="step-name text-dark">Complete</div>
+        </div>
+      </div>
+      <div class="alert alert-danger mt-5" id="res" role="alert"></div>
+      <table class="table borderless table-hover mt-5" id="table" width="100%">
+        <thead>
+          <tr class="bg-light">
+            <th class="text-center">Job Role Name</th>
+            <th class="text-center w-50">Job Role Description</th>
+            <th class="text-center">Job Role Status</th>
+            <th class="text-center ">Actions</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+  </div>
+  <!-- Javascript-->
+  <script src="../js/core.min.js"></script>
+  <script src="../js/script.js"></script>
+  <script src="../js/index.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/fixedheader/3.2.3/js/dataTables.fixedHeader.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+    crossorigin="anonymous"></script>
 
-              count=0
-              
-              result = JSON.parse(JSON.stringify(data.data));
-              console.log(result);
-              
-              message_str = `
-              <thead>
-                <tr class="bg-light">
-                
-                <th class="align-middle text-wrap">Job Role Name</th>
-                <th class="align-middle text-wrap">Job Role Description</th>
-                <th class="align-middle text-wrap">Action</th>
-                </tr>
-              </thead>`;
-              for (const role of result) {
-                if (role["job_role_status"] == 0) {
-                  count=1
-                  message_str += `
-              <tbody>
-                <tr>
-                  <td class="align-middle text-wrap">${role["job_role_name"]}</td>
-                  <td class="align-middle text-wrap w-50">${role["job_role_desc"]}</td>
-                  <td> <button type="button" class="btn btn-primary" onClick="location.href='./journey_step_two.html?job=${role["job_role_name"]}&id=${role["job_role_id"]}'">Select Role</button> </td>
-                </tr>
-              </tbody>
-              `;
+  <script>
+    var backendUrl = "http://127.0.0.1:5000";
+    var getAllJobRole = "getAllJobRole";
+
+    function getAllRole() {
+      $.ajax({
+        url: backendUrl + "/" + getAllJobRole,
+        type: "GET",
+        headers: {
+          "accept": "application/json;odata=verbose",
+          "content-type": "application/json;odata=verbose"
+
+        },
+        success: function (data) {
+          console.log(data)
+          if (data.code == 200) {
+            document.getElementById("res").style.display = "none"
+            var table = $('#table').DataTable({
+              responsive: true,
+              data: data.data,
+              columns: [
+                {
+                  data: 'job_role_name',
+                  createdCell: function (td, cellData, rowData, row, col) {
+                    $(td).attr('id', cellData);
+                  }
+                },
+                { data: 'job_role_desc' },
+                {
+                  data: 'job_role_status',
+                  render: function (data, type, row, meta) {
+                    if (data == 0) {
+                      return 'Active'
+                    } else {
+                      return 'Inactive'
+                    }
+                  }
+                },
+                {
+                  data: null,
+                  render: function (data, type, row, meta) {
+
+                    return `<a href="./role_skills.html?job=${data['job_role_name']}&id=${data["job_role_id"]}">   <button type="button" class="btn btn-primary btn-sm">View Skills</button></a>`
+
+                  }
                 }
-              }
-              if (count==0){
-                document.getElementById("res").style.display = "block";
-                document.getElementById("res").innerText = "No job roles found";
-              }
-              else{
-                document.getElementById("res").style.display = "None";
-                document.getElementById("table").innerHTML = message_str;
-              }
-              // <th scope="row">${role["job_role_id"]}</th> removed
-             
-            }
-          })
-          .catch((error) => {
-            // Errors when calling the service; such as network error,
-            // service offline, etc
-            console.log(error);
-          });
-      }
 
-      getAllRole();
-    </script>
-    <!-- Javascript-->
-    <script src="../js/core.min.js"></script>
-    <script src="../js/script.js"></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
-      crossorigin="anonymous"
-    ></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  </body>
+              ]
+            })
+          } else {
+            document.getElementById("res").style.display = "block"
+            document.getElementById("res").innerText = "No records found";
+            document.getElementById("table").style.display = "none"
+          }
+
+        },
+        error: function Error(result, error) {
+          alert("error " + result.status + " " + result.statusText);
+        }
+      })
+    }
+
+    getAllRole();
+  </script>
+</body>
+
 </html>
