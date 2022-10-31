@@ -169,10 +169,10 @@
                     data: null,
                     render: function (data, type, row, meta) {
                       if (current_skill.includes(data['skill_name'])) {
-                        return `<button id="${data['skill_name']}" type="button" onclick="del(this)" class="btn btn-danger">Remove</button>`
+                        return `<button id="${data['skill_name']}" type="button" onclick="del(this.id)" class="btn btn-danger">Remove</button>`
                       }
                       else {
-                        return `<button id="${data['skill_name']}" type="button" onclick="add(this)" class="btn btn-success">Add</button>`
+                        return `<button id="${data['skill_name']}" type="button" onclick="add(this.id)" class="btn btn-success">Add</button>`
                       }
 
                     }
@@ -192,92 +192,16 @@
           }
         })
       }
-      /*
-      async function allSkill() {
-        const response = await fetch(`${backendUrl}/${get_all_skill}`)
-          .then((response) => response.json())
-          .then((data) => {
-
-            message_str = `
-                    <thead>
-                      <tr class="bg-light">
-                      <th>Skill Name</th>
-                      <th>Skill Description</th>
-                      <th>Action</th>
-                      </tr>
-                    </thead>     <tbody>`;
-            console.log(data.data.skill);
-            var skills = data.data.skill;
-            for (s in skills) {
-              if (current_skill.includes(skills[s].skill_name)) {
-                message_str += `
-                    <tr>
-                      <th scope="row">${skills[s].skill_name}</th>
-                      <td>${skills[s].skill_desc}</td>
-                      <td> <button id="${skills[s].skill_name}" type="button" onclick="del(this)" class="btn btn-danger">Remove</button> </td>
-                    </tr>
-                  `;
-                continue;
-              }
-
-              message_str += `
-                  `;
-            }
-            message_str += `  </tbody>`;
-            document.getElementById("table").innerHTML = message_str;
-          })
-          .catch((error) => {
-            // Errors when calling the service; such as network error,
-            // service offline, etc
-            console.log(error);
-          });
-
-        const response2 = await fetch(`${backendUrl}/${get_all_skill}`)
-          .then((response2) => response2.json())
-          .then((data) => {
-            message_str += ``;
-            console.log(data.data.skill);
-            var skills = data.data.skill;
-            for (s in skills) {
-              if (current_skill.includes(skills[s].skill_name)) {
-
-                continue;
-              }
-
-              message_str += `
-                    <tr>
-                      <th scope="row">${skills[s].skill_name}</th>
-                      <td>${skills[s].skill_desc}</td>
-          
-                      <td> <button id="${skills[s].skill_name}" type="button" onclick="add(this)" class="btn btn-success">Add</button> </td>
-                    </tr>
-                
-                  `;
-            }
-            message_str += `  </tbody>`;
-            document.getElementById("table").innerHTML = message_str;
-          })
-          .catch((error) => {
-            // Errors when calling the service; such as network error,
-            // service offline, etc
-            console.log(error);
-          });
-      }
-      */
       // Get skills associated with the course
       getSkills();
       // get parent Node of the del utton
       function del(a) {
-        var text = a.parentNode.parentNode.innerHTML;
-        text = text.split('"row">').pop().split('</th>')[0]; // returns 'two'
-        getId(text);
+        console.log(a)
+        getId(a);
       }
       // get parent Node of the add button
       function add(a) {
-        var text = a.parentNode.parentNode.innerHTML;
-        text = text.split('"row">').pop().split('</th>')[0]; // returns 'two'
-        console.log(text)
-        getIdToAdd(text);
+        getIdToAdd(a);
       }
 
       // for add
@@ -343,7 +267,7 @@
           .then((response) => response.json())
           .then((data) => {
             alert("Added skill to course successfully");
-            getSkills();
+            location.reload()
           })
           .catch((error) => {
             // Errors when calling the service; such as network error,
