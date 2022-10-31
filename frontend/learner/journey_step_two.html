@@ -170,6 +170,11 @@
 						var table = $('#job_skills').DataTable({
 							responsive: true,
 							data: data[0].data,
+							"rowCallback": function(row, data, index){
+								if (data['skill_status'] == 1) {
+								   jQuery(row).hide();
+								}
+							 },
 							columns: [
 								{
 									data: "skill_name",

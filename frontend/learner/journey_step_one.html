@@ -120,7 +120,6 @@
           <tr class="bg-light">
             <th class="text-center">Job Role Name</th>
             <th class="text-center w-50">Job Role Description</th>
-            <th class="text-center">Job Role Status</th>
             <th class="text-center ">Actions</th>
           </tr>
         </thead>
@@ -158,6 +157,11 @@
             var table = $('#table').DataTable({
               responsive: true,
               data: data.data,
+              "rowCallback": function(row, data, index){
+                if (data['job_role_status'] == 1) {
+                   jQuery(row).hide();
+                }
+             },
               columns: [
                 {
                   data: 'job_role_name',
@@ -166,16 +170,6 @@
                   }
                 },
                 { data: 'job_role_desc' },
-                {
-                  data: 'job_role_status',
-                  render: function (data, type, row, meta) {
-                    if (data == 0) {
-                      return 'Active'
-                    } else {
-                      return 'Inactive'
-                    }
-                  }
-                },
                 {
                   data: null,
                   render: function (data, type, row, meta) {

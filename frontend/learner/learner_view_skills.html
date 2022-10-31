@@ -149,6 +149,11 @@
 					if (data[0] != null && data[0].code == 200) {
 						document.getElementById("res").style.display = "none"
 						var table = $('#job_skills').DataTable({
+							"rowCallback": function(row, data, index){
+								if (data['skill_status'] == 1) {
+								   jQuery(row).hide();
+								}
+							 },
 							responsive: true,
 							data: data[0].data,
 							columns: [
