@@ -152,7 +152,11 @@
                 responsive: true,
                 data: data.data.skill,
                 columns: [
-                  { data: 'skill_name' },
+                  { data: 'skill_name',
+                    createdCell: function(td, cellData, rowData, row, col) {
+                      $(td).attr('id', cellData);
+                    }  
+                  },
                   { data: 'skill_desc' },
                   {
                     data: 'skill_status',

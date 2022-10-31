@@ -166,7 +166,11 @@
                             responsive: true,
                             data: data.data,
                             columns: [
-                                { data: 'job_role_name' },
+                                { data: 'job_role_name',
+								  createdCell: function(td, cellData, rowData, row, col) {
+								  	$(td).attr('id', cellData);
+								  }
+								},
                                 { data: 'job_role_desc' },
                                 { data: 'job_role_status',
 								  render: function (data, type, row, meta){
