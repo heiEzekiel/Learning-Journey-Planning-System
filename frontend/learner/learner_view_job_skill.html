@@ -2,7 +2,7 @@
 <html class="wide wow-animation" lang="en">
 
 <head>
-	<title>List of Skills</title>
+	<title>List of SKills</title>
 	<meta name="format-detection" content="telephone=no" />
 	<meta name="viewport"
 		content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
@@ -98,94 +98,123 @@
 		<div class="container mt-3 mb-5">
 			<h3>List of skills available</h3>
 			<div class="alert alert-danger mt-5" id="res" role="alert">
+				Please select a role <a href="learner_view_roles.html">here</a> to
+				view skills
 			</div>
-			<table class="table borderless table-hover mt-5" id="table" width="100%">
-			  <thead>
-				<tr class="bg-light">
-				  <th class="text-center">Skill Name</th>
-				  <th class="text-center">Skill Description</th>
-				  <th class="text-center">Action</th>
-				</tr>
-			  </thead>
+			<table class="table borderless table-hover mt-5" id="job_skills" width="100%">
+				<thead>
+					<tr class="bg-light">
+						<th class="text-center">Skill Name</th>
+						<th class="text-center">Skill Description</th>
+						<th class="text-center">Courses</th>
+					</tr>
+				</thead>
 			</table>
 		</div>
 	</div>
-	 <!-- Javascript-->
-	 <script src="../js/core.min.js"></script>
-	 <script src="../js/script.js"></script>
-	 <script src="../js/index.js"></script>
-	 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-	 <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-	 <script src="https://cdn.datatables.net/fixedheader/3.2.3/js/dataTables.fixedHeader.min.js"></script>
-	 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
-	   integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
-	   crossorigin="anonymous"></script>
- 
-	 <script>
-	   var backendUrl = 'http://127.0.0.1:5000';
-	   var getskills = 'getskills';
+	<!-- Javascript-->
+	<script src="../js/core.min.js"></script>
+	<script src="../js/script.js"></script>
+	<script src="../js/index.js"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+	<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/fixedheader/3.2.3/js/dataTables.fixedHeader.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+		crossorigin="anonymous"></script>
+	<script>
+		// get role ID
 
-	   
- 
-	   function getAllSkills() {
-		 $.ajax({
-		   url: backendUrl + "/" + getskills,
-		   type: "GET",
-		   headers: {
-			 "accept": "application/json;odata=verbose",
-			 "content-type": "application/json;odata=verbose"
- 
-		   },
-		   success: function (data) {
-			 console.log(data.data.skill)
-			 if (data.code == 200) {
-			   document.getElementById("res").style.display = "none"
-			   var table = $('#table').DataTable({
-				 responsive: true,
-				 data: data.data.skill,
-				 "rowCallback": function(row, data, index){
+		// get skills based on id
+
+		const getSkillsForRole = "getSkillsForJob";
+		const getCourse = "getCoursesForSkill";
+		const queryString = window.location.search;
+		const urlParams = new URLSearchParams(queryString);
+		const job = urlParams.get("job");
+		const id = urlParams.get("id");
+		// console.log(id);
+
+		function getRoleSkills(id, job) {
+			$.ajax({
+				url: backendUrl + "/" + getSkillsForRole + "/" + id,
+				type: "GET",
+				headers: {
+					"accept": "application/json;odata=verbose",
+					"content-type": "application/json;odata=verbose"
+
+				},
+				success: function (data) {
+					console.log(data[0].data)
+					if (data[0] != null && data[0].code == 200) {
+						document.getElementById("res").style.display = "none"
+						var table = $('#job_skills').DataTable({
+							"rowCallback": function(row, data, index){
 								if (data['skill_status'] == 1) {
 								   jQuery(row).hide();
 								}
 							 },
-				 columns: [
-				   { data: 'skill_name',
-					 createdCell: function(td, cellData, rowData, row, col) {
-					   $(td).attr('id', cellData);
-					 }  
-				   },
-				   { data: 'skill_desc' },
-			
-				   {
-					 data: null,
-					 render: function (data, type, row, meta) {
- 
-					   return `
-					   <button type="button" class="btn btn-primary btn-sm" >View Course</button>
-					 
-											 `
- 
-					 }
-				   }
- 
-				 ]
-			   })
-			 } else {
-			   document.getElementById("res").style.display = "block"
-			   document.getElementById("res").innerText = "No records found";
-			   document.getElementById("table").style.display = "none"
-			 }
- 
-		   },
-		   error: function Error(result, error) {
-			 document.getElementById("table").style.display = "none"
-			 console.log(result);
-		   }
-		 })
-	   }
- 
-	   getAllSkills()
-	 </script>
+							responsive: true,
+							data: data[0].data,
+							columns: [
+								{
+									data: "skill_name",
+									createdCell: function (td, cellData, rowData, row, col) {
+										$(td).attr('id', cellData);
+									}
+								},
+								{ data: "skill_desc" },
+								{
+									data: "skill_id",
+									render: function (data) {
+										function getCourses(data) {
+											return JSON.parse($.ajax({
+												type: "GET",
+												url: `${backendUrl}/${getCourse}/${data}`,
+												async: false
+											}).responseText);
+										}
+										var result = getCourses(data)
+										//console.log(result)
+										var msg_str = ""
+										if (result[0].code == 200) {
+											msg_str = `<ul>`
+											const courses = result[0].data
+											var counter = 1
+											for (course of courses) {
+												if (course['course_status'] != "Retired") {
+													msg_str += `<li>${counter}. ${course['course_name']}</li>`
+													counter += 1
+												}
+											}
+											msg_str += `</ul>`
+											if (msg_str == "<ul></ul>") {
+												msg_str = `<span class="text-danger">No course available</span>`
+											}
+										} else {
+											msg_str = `<span class="text-danger">No course available</span>`
+										}
+										return msg_str
+									}
+								}
+
+							]
+						})
+					} else {
+						document.getElementById("res").style.display = "block"
+						document.getElementById("res").innerText = "No records found";
+						document.getElementById("job_skills").style.display = "none"
+					}
+
+				},
+				error: function Error(result, error) {
+					document.getElementById("job_skills").style.display = "none"
+					console.log(result);
+				}
+			})
+		}
+		getRoleSkills(id, job)
+	</script>
 </body>
 
 </html>
