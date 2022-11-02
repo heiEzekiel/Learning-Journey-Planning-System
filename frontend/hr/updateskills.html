@@ -140,7 +140,7 @@
           fetch(`${backendUrl}/${skillinfo}/${skill_id}`)
             .then((response) => response.json())
             .then((data) => {
-              console.log(data);
+              //console.log(data);
               if (data.code == 200) {
                 document.getElementById("s_name2").innerText = " " + data.message[0].skill_name;
                 skill_Name.value = data.message[0]["skill_name"];
@@ -191,7 +191,7 @@
                             })
                               .then((response) => response.json())
                               .then((data) => {
-                                console.log("Success:", data);
+                                //console.log("Success:", data);
                                 if (data.code == 200) {
                                   alert('Update successful')
                                   location.reload();

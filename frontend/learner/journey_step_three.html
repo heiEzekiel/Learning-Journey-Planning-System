@@ -321,7 +321,7 @@
 				const response = await fetch(`${backendUrl}/${getSkillsForJob}/${id}`)
 					.then((response) => response.json())
 					.then((data) => {
-						console.log(data[0].data);
+						//console.log(data[0].data);
 						// console.log(JSON.parse(JSON.stringify(data.data)));
 						result = JSON.parse(JSON.stringify(data[0].data));
 						message_str = ``;
@@ -357,9 +357,9 @@
 						.then((response) => response.json())
 						.then((data) => {
 							//result =JSON.parse(JSON.stringify(data.data.skill))
-							console.log(data[0].data);
+							//console.log(data[0].data);
 							result = JSON.parse(JSON.stringify(data[0].data));
-							console.log(result);
+							//console.log(result);
 							msg_str += `<td class="align-middle text-wrap">`;
 							if (result != "No records found.") {
 								for (var i = 0; i < result.length; i++) {
@@ -469,7 +469,7 @@
 						})
 							.then((response) => response.json())
 							.then((data) => {
-								console.log(data);
+								//console.log(data);
 								if (data.code == 404) {
 									alert("A similar learning journey existed already!");
 								} else {

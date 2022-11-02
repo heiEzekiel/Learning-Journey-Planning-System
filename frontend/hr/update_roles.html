@@ -188,7 +188,7 @@
             const response = await fetch(`${backendUrl}/${get_role}`)
                 .then((response) => response.json())
                 .then((data) => {
-                    console.log(data.data[0]);
+                    //console.log(data.data[0]);
                     document.getElementById("rname").value = data.data[0].job_role_name;
                     document.getElementById("r_name").innerText += " " + data.data[0].job_role_name;
                     document.getElementById("r_name2").innerText = data.data[0].job_role_name;
@@ -240,7 +240,7 @@
                         <th>Action</th>
                         </tr>
                     </thead>     <tbody>`;
-                    console.log(data.data.skill);
+                    //console.log(data.data.skill);
                     var skills = data.data.skill;
                     for (s in skills) {
                         if (current_skill.includes(skills[s].skill_name)) {
@@ -268,7 +268,7 @@
                 .then((response2) => response2.json())
                 .then((data) => {
                     message_str += ``;
-                    console.log(data.data.skill);
+                    //console.log(data.data.skill);
                     var skills = data.data.skill;
                     for (s in skills) {
                         if (current_skill.includes(skills[s].skill_name)) {
@@ -331,7 +331,7 @@
                     })
                         .then(response => response.json())
                         .then(data => {
-                            console.log('Success:', data);
+                            //console.log('Success:', data);
                             if (data.code == 200) {
                                 alert("Updated successfully!");
                                 location.reload();
@@ -391,7 +391,7 @@
         }
 
         async function removeJobRoleMap(id) {
-            console.log(`${backendUrl}/${removeRole}/${id}`);
+            //console.log(`${backendUrl}/${removeRole}/${id}`);
             fetch(`${backendUrl}/${removeRole}/${id}`, {
                 method: 'DELETE'
             })

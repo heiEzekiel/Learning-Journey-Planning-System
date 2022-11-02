@@ -164,7 +164,7 @@
 
 				},
 				success: function (data) {
-					console.log(data[0].data)
+					//console.log(data[0].data)
 					if (data[0] != null && data[0].code == 200) {
 						document.getElementById("res").style.display = "none"
 						var table = $('#job_skills').DataTable({
@@ -195,12 +195,14 @@
 					} else {
 						document.getElementById("res").style.display = "block"
 						document.getElementById("res").innerText = "No records found";
-						document.getElementById("table").style.display = "none"
+						document.getElementById("job_skills").style.display = "none"
 					}
 
 				},
 				error: function Error(result, error) {
-					document.getElementById("table").style.display = "none"
+					document.getElementById("res").style.display = "block"
+					document.getElementById("res").innerText = "No records found";
+					document.getElementById("job_skills").style.display = "none"
 					console.log(result);
 				}
 			})
