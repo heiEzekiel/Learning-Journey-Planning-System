@@ -166,6 +166,7 @@ def create_journey():
 def get_journey(j_fk_staff_id):
     return j.get_journey(j_fk_staff_id)
 
+
 # Delete Learning Journey
 @app.route("/deleteJourney/<int:journey_id>", methods=['DELETE'])
 def delete_journey(journey_id):

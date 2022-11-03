@@ -4,12 +4,20 @@ var deleteJourney = 'deleteJourney';
 var getCourse = 'getCourseReg'
 var getSkillStaff = 'getSkillStaff'
 var getRole = 'getAllJobRole'
+var getJourneyCompleted = 'getJourneyCompleted'
 staff_id = 140001 // dynamic later
 
 async function getCoursesRegistration(id) {
   await fetch(`${backendUrl}/${getCourse}/${id}`)
     .then(response => response.json())
     .then(data => {
+      if (data.code==404){
+        document.getElementById("completedC").innerText = 0;
+        document.getElementById("ongoingC").innerText = 0;
+      }
+      else{
+
+      
       records = data.data
       var complete = 0
       var ongoing = 0
@@ -21,7 +29,7 @@ async function getCoursesRegistration(id) {
         }
       }
       document.getElementById("completedC").innerText = complete;
-      document.getElementById("ongoingC").innerText = ongoing;
+      document.getElementById("ongoingC").innerText = ongoing;}
     })
     .catch(error => {
       // Errors when calling the service; such as network error, 
@@ -34,10 +42,14 @@ async function getStaffSkill(id) {
   await fetch(`${backendUrl}/${getSkillStaff}/${id}`)
     .then(response => response.json())
     .then(data => {
+      if (data.code==404){
+        document.getElementById("skillsattained").innerText = 0;
+      }
+      else{
       records = data.data
       var count = (records.length)
       document.getElementById("skillsattained").innerText = count;
-
+    }
     })
     .catch(error => {
       // Errors when calling the service; such as network error, 
@@ -54,7 +66,6 @@ async function removeJourney(id) {
     .then((data) => {
       alert("Deleted journey successfully");
       location.reload();
-
     })
     .catch((error) => {
       // Errors when calling the service; such as network error,
@@ -68,15 +79,15 @@ async function getLJ(staff_id) {
     await fetch(`${backendUrl}/${getJourney}/${staff_id}`)
     .then(response => response.json())
     .then(data => {
-
+      
       if (data.code == 404) {
+        document.getElementById("completedlj").innerText = 0;
         document.getElementById("no_lj").innerHTML = " <span class=\"text-danger\">No ongoing Learning Journey </span>"
       } else {
-
-
         result = JSON.parse(JSON.stringify(data.data))
         getLJstatus(result)
       }
+      
     })
     .catch(error => {
       // Errors when calling the service; such as network error, 
@@ -86,6 +97,7 @@ async function getLJ(staff_id) {
 }
 
 async function getLJstatus(journey) {
+ 
   var count = 0
   var lj_c = 0
   var message_str = ""
@@ -94,6 +106,7 @@ async function getLJstatus(journey) {
     await fetch(`${backendUrl}/${getRole}`)
     .then(response => response.json())
     .then(data => {
+      
       result = JSON.parse(JSON.stringify(data.data))
       console.log(result)
       var count = 0
@@ -150,9 +163,14 @@ Remove learning journey
 
 
       }
+    
       document.getElementById("countlj").innerText = lj_c
       document.getElementById("completedlj").innerText = count
       document.getElementById("lj").innerHTML += message_str
+
+      if(lj_c==0){
+        document.getElementById("no_lj").innerHTML = " <span class=\"text-danger\">No ongoing Learning Journey </span>"
+      }
     })
     .catch(error => {
       // Errors when calling the service; such as network error, 
