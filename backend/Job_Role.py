@@ -130,7 +130,7 @@ def update_job_role_by_id(job_role_id):
     job_role = Job_Role.query.filter_by(job_role_id=job_role_id).first()
     if job_role:
         exist_job_role = Job_Role.query.filter_by(job_role_name=str(data['job_role_name']).strip()).first()
-        if exist_job_role:
+        if exist_job_role and exist_job_role.job_role_id != job_role_id:
             return jsonify(
                 {
                     "code": 400,

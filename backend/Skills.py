@@ -175,7 +175,7 @@ def update_skill(skill_id):
     skill = Skill.query.filter_by(skill_id=skill_id).first()
     if skill:
         exist_skill = Skill.query.filter_by(skill_name=str(data['skill_name']).strip()).first()
-        if exist_skill:
+        if exist_skill and exist_skill.skill_id != skill_id:
             return jsonify(
                 {
                     "code": 400,
