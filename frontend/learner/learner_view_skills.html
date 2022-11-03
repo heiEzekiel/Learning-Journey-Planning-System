@@ -141,8 +141,8 @@
 		   success: function (data) {
 			   if (data.code == 200) {
 				stat = 0
-				for (skill in data.data.skill){
-					if (data.data.skill['skill_status']== 0){
+				for (skill of data.data.skill){
+					if (skill['skill_status']== 0){
 						stat =1
 					}
 				}
