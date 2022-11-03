@@ -47,6 +47,7 @@ class TC202(unittest.TestCase):
         WebDriverWait(browser, 2).until(element_present)
         
         try:
+            time.sleep(1)
             skill = browser.find_element(By.ID, "502")
             if skill:
                 skill.click()
