@@ -177,7 +177,7 @@
                       return `
                       <button type="button" class="btn btn-primary btn-sm" >View Course</button>
                       <button id="edit_${data['skill_name']}" type="button" class="btn btn-success btn-sm" onClick="location.href='./updateskills.html?id=${data['skill_id']}'">Edit</button>
-                      <button type="button" class="btn btn-danger btn-sm" onClick="removeSkill(${data['skill_id']})" >Remove</button>
+                      <button id="remove_${data['skill_name']}" type="button" class="btn btn-danger btn-sm" onClick="removeSkill(${data['skill_id']})" >Remove</button>
                                             `
 
                     }

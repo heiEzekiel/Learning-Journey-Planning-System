@@ -33,8 +33,7 @@ class Job_Role(db.Model):
 # Create Job Role
 def create_job_role():
     data = request.get_json()
-    new_job_role = Job_Role(
-        data['job_role_name'], data['job_role_desc'], 0)
+    new_job_role = Job_Role(data['job_role_name'], data['job_role_desc'], 0)
     # check is existing role is there
     jobRoles = Job_Role.query.all()
     if jobRoles:
