@@ -50,16 +50,16 @@ class TC218(unittest.TestCase):
             thead = browser.find_element(By.ID, "table_head")
             tbody = browser.find_element(By.ID, "table_body")
             assign_button = browser.find_element(By.ID, "COR001")
-            assign_button.click()
-            browser.get(browser.current_url)
-            time.sleep(1)
-            element_present = EC.presence_of_element_located((By.ID, 'table'))
-            WebDriverWait(browser, 2).until(element_present)
-            add_button = browser.find_element(By.ID, "Machine learning")
-            add_button.click()
+            if thead and tbody and assign_button:
+                assign_button.click()
+                time.sleep(1)
+                browser.get(browser.current_url)
+                time.sleep(1)
+                add_button = browser.find_element(By.ID, "add_Machine Learning")
+                add_button.click()
             alert = WebDriverWait(browser, 5).until(EC.alert_is_present())
             alert_text = alert.text
-            if alert_text == "Added skill to course successfully":
+            if "Added skill to course successfully" in alert_text:
                 browser.switch_to.alert.accept()
                 res = True
                 self.assertTrue(res, "Passed")

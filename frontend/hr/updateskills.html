@@ -113,7 +113,7 @@
                           <textarea class="form-control" id="skill_Description" rows="3" placeholder="Enter Description" required></textarea>
                         </div>
                         <!-- <button type="submit" class="btn btn-primary" id="btn">Update</button> -->
-                        <button type="button" class="btn btn-primary" onclick="updateSkills()">Update</button>
+                        <button id="update_btn" type="button" class="btn btn-primary" onclick="updateSkills()">Update</button>
                     </form>
                   </div>
                 </div>
@@ -193,7 +193,7 @@
                               .then((data) => {
                                 //console.log("Success:", data);
                                 if (data.code == 200) {
-                                  alert('Update successful')
+                                  alert('Updated successfully!')
                                   location.reload();
                                 }
                                 else{

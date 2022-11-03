@@ -89,7 +89,7 @@
       <div class="alert alert-danger mt-5" id="res" role="alert">
       </div>
       <table class="table borderless table-hover mt-5" id="table" width="100%">
-        <thead>
+        <thead id="table_head">
           <tr class="bg-light">
             <th class="text-center">Skill Name</th>
             <th class="text-center">Skill Description</th>
@@ -97,6 +97,8 @@
             <th class="text-center">Action</th>
           </tr>
         </thead>
+        <tbody id="table_body">
+        </tbody>
       </table>
 
     </div>
@@ -174,7 +176,7 @@
 
                       return `
                       <button type="button" class="btn btn-primary btn-sm" >View Course</button>
-                      <button type="button" class="btn btn-success btn-sm" onClick="location.href='./updateskills.html?id=${data['skill_id']}'">Edit</button>
+                      <button id="edit_${data['skill_name']}" type="button" class="btn btn-success btn-sm" onClick="location.href='./updateskills.html?id=${data['skill_id']}'">Edit</button>
                       <button type="button" class="btn btn-danger btn-sm" onClick="removeSkill(${data['skill_id']})" >Remove</button>
                                             `
 

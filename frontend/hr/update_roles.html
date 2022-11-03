@@ -248,7 +248,7 @@
                     <tr>
                         <th scope="row">${skills[s].skill_name}</th>
                         <td>${skills[s].skill_desc}</td>
-                        <td> <button type="button" onclick="del(this)" class="btn btn-danger">Remove</button> </td>
+                        <td> <button id="remove_${skills[s].skill_name}" type="button" onclick="del(this)" class="btn btn-danger">Remove</button> </td>
                     </tr>
                     `;
                             continue;
@@ -278,7 +278,7 @@
                     <tr>
                         <th scope="row">${skills[s].skill_name}</th>
                         <td>${skills[s].skill_desc}</td>
-                        <td> <button type="button" onclick="add(this)" class="btn btn-success">Add</button> </td>
+                        <td> <button id="add_${skills[s].skill_name}" type="button" onclick="add(this)" class="btn btn-success">Add</button> </td>
                     </tr>
                 
                     `;
@@ -296,6 +296,8 @@
         getRoleDetails();
         // Get skills associated with the role
         getSkills();
+
+
         async function updateRole() {
             var a = document.getElementById("rname").value
             var b = document.getElementById("roledesc").value

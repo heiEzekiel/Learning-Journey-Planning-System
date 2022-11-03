@@ -62,12 +62,12 @@ class TC111(unittest.TestCase):
             
             if "Skill creation unsuccessful" in alert_text:
                 browser.switch_to.alert.accept()
-                print(f"\n{url}\nTest passed!")
+                res = True
+                self.assertTrue(res, "Passed")
             else:
-                print(f"\n{url}\nTest failed!")
-                print('Error occured')
+                self.assertTrue(res, "Failed")
         except:
-            print(f"\n{url}\nTest failed!")
+            self.assertTrue(res, "Failed")
         browser.quit()
 
 if __name__ == '__main__':

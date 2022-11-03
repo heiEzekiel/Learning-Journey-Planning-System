@@ -80,13 +80,15 @@
       <h3 id="title" class="mb-3">Assign skills</h3>
       <div class="alert alert-danger mt-5" id="res" role="alert"></div>
       <table class="table borderless table-hover mt-5" id="table" width="100%">
-        <thead>
+        <thead id="table_head">
           <tr class="bg-light">
             <th class="text-center">Skill Name</th>
             <th class="text-center w-50">Skill Description</th>
             <th class="text-center">Actions</th>
           </tr>
         </thead>
+        <tbody id="table_body">
+        </tbody>
       </table>
     </div>
 
@@ -169,10 +171,10 @@
                     data: null,
                     render: function (data, type, row, meta) {
                       if (current_skill.includes(data['skill_name'])) {
-                        return `<button id="${data['skill_name']}" type="button" onclick="del(this.id)" class="btn btn-danger">Remove</button>`
+                        return `<button id="remove_${data['skill_name']}" type="button" onclick="del(this.id)" class="btn btn-danger">Remove</button>`
                       }
                       else {
-                        return `<button id="${data['skill_name']}" type="button" onclick="add(this.id)" class="btn btn-success">Add</button>`
+                        return `<button id="add_${data['skill_name']}" type="button" onclick="add(this.id)" class="btn btn-success">Add</button>`
                       }
 
                     }
@@ -207,6 +209,7 @@
 
       // for add
       async function getIdToAdd(text) {
+        text = text.split("_")[1];
         const response = await fetch(`${backendUrl}/${get_skill_id}/${text}`)
           .then((response) => response.json())
           .then((data) => {
@@ -221,6 +224,7 @@
       }
       // for delete
       async function getId(text) {
+        text = text.split("_")[1];
         //console.log(`${backendUrl}/${get_skill_id}/${text}`)
         const response = await fetch(`${backendUrl}/${get_skill_id}/${text}`)
           .then((response) => response.json())
