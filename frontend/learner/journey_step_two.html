@@ -170,59 +170,73 @@
 				success: function (data) {
 					//console.log(data[0].data)
 					if (data[0] != null && data[0].code == 200) {
-						document.getElementById("res").style.display = "none"
-						var table = $('#job_skills').DataTable({
-							responsive: true,
-							data: data[0].data,
-							"rowCallback": function(row, data, index){
-								if (data['skill_status'] == 1) {
-								   jQuery(row).hide();
-								}
-							 },
-							columns: [
-								{
-									data: "skill_name",
-									createdCell: function (td, cellData, rowData, row, col) {
-										$(td).attr('id', cellData);
+						stat = 0
+						for (skill of data[0].data){
+							if (skill['skill_status']== 0){
+								stat =1
+							}
+						}
+						if (stat == 1){
+							document.getElementById("res").style.display = "none"
+							var table = $('#job_skills').DataTable({
+								responsive: true,
+								data: data[0].data,
+								"rowCallback": function(row, data, index){
+									if (data['skill_status'] == 1) {
+									   jQuery(row).hide();
 									}
-								},
-								{ data: "skill_desc" },
-								{
-									data: null,
-									render: function (data) {
-										staff_id = 140001
-										function get_skill_for_staff(id) {
-											return JSON.parse($.ajax({
-												type: "GET",
-												url: `${backendUrl}/${getSkillsForStaff}/${id}`,
-												async: false
-											}).responseText);
-										  }
-										result = get_skill_for_staff(staff_id)
-										console.log(result)
-										attain_status = 0
-										if (result.code == 200){
-											for (skill of result.data){
-												if (skill['sm_fk_skill_id'] == data['skill_id']){
-													attain_status= 1
+								 },
+								columns: [
+									{
+										data: "skill_name",
+										createdCell: function (td, cellData, rowData, row, col) {
+											$(td).attr('id', cellData);
+										}
+									},
+									{ data: "skill_desc" },
+									{
+										data: null,
+										render: function (data) {
+											staff_id = 140001
+											function get_skill_for_staff(id) {
+												return JSON.parse($.ajax({
+													type: "GET",
+													url: `${backendUrl}/${getSkillsForStaff}/${id}`,
+													async: false
+												}).responseText);
+											  }
+											result = get_skill_for_staff(staff_id)
+											console.log(result)
+											attain_status = 0
+											if (result.code == 200){
+												for (skill of result.data){
+													if (skill['sm_fk_skill_id'] == data['skill_id']){
+														attain_status= 1
+													}
 												}
+												if (attain_status== 1){
+													return `<td>Attained</td>`
+												}
+												return `<td>Unattained</td>`
+											}else{
+												return `<td>Unattained</td>`
 											}
-											if (attain_status== 1){
-												return `<td>Attained</td>`
-											}
-											return `<td>Unattained</td>`
+										}
+									},
+									{
+										data: null,
+										render: function (data) {
+											return `<td> <button type="button" class="btn btn-primary" onClick="location.href='./journey_step_three.html?job=${job}&id=${id}'">Browse all courses</button> </td>`
 										}
 									}
-								},
-								{
-									data: null,
-									render: function (data) {
-										return `<td> <button type="button" class="btn btn-primary" onClick="location.href='./journey_step_three.html?job=${job}&id=${id}'">Browse all courses</button> </td>`
-									}
-								}
-
-							]
-						})
+	
+								]
+							})
+						}else{
+							document.getElementById("res").style.display = "block"
+							document.getElementById("res").innerText = "No records found";
+							document.getElementById("job_skills").style.display = "none"
+						}
 					} else {
 						document.getElementById("res").style.display = "block"
 						document.getElementById("res").innerText = "No records found";

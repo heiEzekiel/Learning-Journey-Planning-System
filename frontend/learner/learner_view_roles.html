@@ -132,36 +132,47 @@
         success: function (data) {
           //console.log(data)
           if (data.code == 200) {
-
-            document.getElementById("res").style.display = "none"
-            var table = $('#table').DataTable({
-              responsive: true,
-              data: data.data,
-              "rowCallback": function(row, data, index){
-                if (data['job_role_status'] == 1) {
-                   jQuery(row).hide();
-                }
-              },
-              columns: [
-                {
-                  data: 'job_role_name',
-                  createdCell: function (td, cellData, rowData, row, col) {
-                    $(td).attr('id', cellData);
+            stat = 0
+            for(skill of data.data){
+              if (skill['job_role_status']== 0){
+                stat = 1
+              }
+            }
+            if (stat == 1){
+              document.getElementById("res").style.display = "none"
+              var table = $('#table').DataTable({
+                responsive: true,
+                data: data.data,
+                "rowCallback": function(row, data, index){
+                  if (data['job_role_status'] == 1) {
+                     jQuery(row).hide();
                   }
                 },
-                { data: 'job_role_desc' },
-                {
-                  data: null,
-                  render: function (data, type, row, meta) {
-
-                    return ` <button type="button" class="btn btn-primary" onClick="location.href='./learner_view_job_skill.html?job=${data["job_role_name"]}&id=${data["job_role_id"]}'">View skills</button>
-                                        `
-
+                columns: [
+                  {
+                    data: 'job_role_name',
+                    createdCell: function (td, cellData, rowData, row, col) {
+                      $(td).attr('id', cellData);
+                    }
+                  },
+                  { data: 'job_role_desc' },
+                  {
+                    data: null,
+                    render: function (data, type, row, meta) {
+  
+                      return ` <button type="button" class="btn btn-primary" onClick="location.href='./learner_view_job_skill.html?job=${data["job_role_name"]}&id=${data["job_role_id"]}'">View skills</button>
+                                          `
+  
+                    }
                   }
-                }
-
-              ]
-            })
+  
+                ]
+              })
+            }else{
+              document.getElementById("res").style.display = "block"
+              document.getElementById("res").innerText = "No records found";
+              document.getElementById("table").style.display = "none"
+            }
           } else {
             document.getElementById("res").style.display = "block"
             document.getElementById("res").innerText = "No records found";

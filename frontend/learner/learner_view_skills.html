@@ -104,6 +104,7 @@
 				<tr class="bg-light">
 				  <th class="text-center">Skill Name</th>
 				  <th class="text-center">Skill Description</th>
+				  <th class="text-center">Attained Status</th>
 				  <th class="text-center">Action</th>
 				</tr>
 			  </thead>
@@ -124,6 +125,7 @@
 	 <script>
 	   var backendUrl = 'http://127.0.0.1:5000';
 	   var getskills = 'getskills';
+	   const getSkillsForStaff ="getSkillStaff";
 
 	   
  
@@ -137,39 +139,79 @@
  
 		   },
 		   success: function (data) {
-			   //console.log(data.data.skill)
 			   if (data.code == 200) {
-			   document.getElementById("res").style.display = "none"
-			   var table = $('#table').DataTable({
-				 responsive: true,
-				 data: data.data.skill,
-				 "rowCallback": function(row, data, index){
-								if (data['skill_status'] == 1) {
-								   jQuery(row).hide();
+				stat = 0
+				for (skill in data.data.skill){
+					if (data.data.skill['skill_status']== 0){
+						stat =1
+					}
+				}
+				if (stat == 1){
+					document.getElementById("res").style.display = "none"
+					var table = $('#table').DataTable({
+					  responsive: true,
+					  data: data.data.skill,
+					  "rowCallback": function(row, data, index){
+									 if (data['skill_status'] == 1) {
+										jQuery(row).hide();
+									 }
+								  },
+					  columns: [
+						{ data: 'skill_name',
+						  createdCell: function(td, cellData, rowData, row, col) {
+							$(td).attr('id', cellData);
+						  }  
+						},
+						{ data: 'skill_desc' },
+						{
+							data: null,
+							render: function (data) {
+								staff_id = 140001
+								function get_skill_for_staff(id) {
+									return JSON.parse($.ajax({
+										type: "GET",
+										url: `${backendUrl}/${getSkillsForStaff}/${id}`,
+										async: false
+									}).responseText);
+								  }
+								result = get_skill_for_staff(staff_id)
+								console.log(result)
+								attain_status = 0
+								if (result.code == 200){
+									for (skill of result.data){
+										if (skill['sm_fk_skill_id'] == data['skill_id']){
+											attain_status= 1
+										}
+									}
+									if (attain_status== 1){
+										return `<td>Attained</td>`
+									}
+									return `<td>Unattained</td>`
+								}else{
+									return `<td>Unattained</td>`
 								}
-							 },
-				 columns: [
-				   { data: 'skill_name',
-					 createdCell: function(td, cellData, rowData, row, col) {
-					   $(td).attr('id', cellData);
-					 }  
-				   },
-				   { data: 'skill_desc' },
-			
-				   {
-					 data: null,
-					 render: function (data, type, row, meta) {
- 
-					   return `
-					   <button type="button" class="btn btn-primary btn-sm" >View Course</button>
-					 
-											 `
- 
-					 }
-				   }
- 
-				 ]
-			   })
+							}
+						},
+						{
+						  data: null,
+						  render: function (data, type, row, meta) {
+	  
+							return `
+							<button type="button" class="btn btn-primary btn-sm" >View Course</button>
+						  
+												  `
+	  
+						  }
+						}
+	  
+					  ]
+					})
+
+				} else{
+					document.getElementById("res").style.display = "block"
+					document.getElementById("res").innerText = "No records found";
+					document.getElementById("table").style.display = "none"
+				}
 			 } else {
 			   document.getElementById("res").style.display = "block"
 			   document.getElementById("res").innerText = "No records found";
