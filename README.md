@@ -12,10 +12,10 @@
 BananaOrange is a Learning Journey Planning System (LJPS) which aims to guide staff on courses they can take to assist them for their upcoming new positions or in a different area within the organisation.
 
 # Technologies
-## Frontend is created with:
+### Frontend is created with:
 * Bootstrap == 5.2.1
 
-## Backend is created with:
+### Backend is created with:
 * Python == 3.10.8
 * Flask==2.0.3
 * Flask-Cors==3.0.10
@@ -29,7 +29,7 @@ BananaOrange is a Learning Journey Planning System (LJPS) which aims to guide st
 * mysqlclient==2.1.1
 
 
-## Testing is created with:
+### Testing is created with:
 * selenium==4.1.0
 * webdriver-manager==3.5.4
 * flask_testing==0.8.1
