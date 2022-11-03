@@ -37,6 +37,26 @@ class TestCourses(TestApp):
                     "course_type": "1"
                 }
             ]})
+            
+    def test_get_course_name(self):
+        course = Course(course_id="1", course_name="Python", course_desc="Python course", course_status="1", course_type="1", course_category="Programming")
+        db.session.add(course)
+        db.session.commit()
+
+        response = self.client.get('/getCourseName/1')
+        self.assertEqual(response.json, {
+            'code': 200,
+            'data': [
+                {
+                    'course_category': 'Programming',
+                    'course_desc': 'Python course',
+                    'course_id': '1',
+                    'course_name': 'Python',
+                    'course_status': '1',
+                    'course_type': '1'
+                }
+            ]
+        })
 
 if __name__ == '__main__':
     unittest.main()

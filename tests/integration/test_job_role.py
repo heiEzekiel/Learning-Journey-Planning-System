@@ -143,7 +143,55 @@ class TestJobRole(TestApp):
                 "message": "Job Role not found."
             })
     
-    
+    def test_update_inactive_job_role_status(self):
+        job_role = Job_Role("Human Resource", "HR's job role", 1)
+        db.session.add(job_role)
+        db.session.commit()
+
+        request_body = {
+            "job_role_name" : "Human Resource",
+            "job_role_desc" : "HR's job role",
+            "job_role_status": 0
+        }
+        
+        response = self.client.put('/updateJobRole/1', 
+                                    data=json.dumps(request_body),
+                                    content_type='application/json') 
+        self.assertEqual(response.json, {
+            "code" : 200,
+            "data": {
+                "job_role_desc": "HR's job role",
+                "job_role_id": 1,
+                "job_role_name": "Human Resource",
+                "job_role_status": 0
+                },
+                "message": "Job Role successfully updated",
+            })
+    def test_update_active_job_role_status(self):
+        job_role = Job_Role("Human Resource", "HR's job role", 0)
+        db.session.add(job_role)
+        db.session.commit()
+
+        request_body = {
+            "job_role_name" : "Human Resource",
+            "job_role_desc" : "HR's job role",
+            "job_role_status": 1
+        }
+        
+        response = self.client.put('/updateJobRole/1', 
+                                    data=json.dumps(request_body),
+                                    content_type='application/json') 
+        self.assertEqual(response.json, {
+            "code" : 200,
+            "data": {
+                "job_role_desc": "HR's job role",
+                "job_role_id": 1,
+                "job_role_name": "Human Resource",
+                "job_role_status": 1
+                },
+                "message": "Job Role successfully updated",
+            })
+        
     def test_delete_job_role(self):
         job_role = Job_Role("Human Resource", "HR's job role", 1)
         db.session.add(job_role)

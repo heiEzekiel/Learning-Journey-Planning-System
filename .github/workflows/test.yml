@@ -24,7 +24,7 @@ jobs:
           python -m unittest tests/units/test_unit.py
       - name: Integration test with unittest
         run: | 
-          python -m unittest discover tests/functional
+          python -m unittest discover tests/integration
       # - name: Frontend testing with unittest
       #   run: |
       #     python -m unittest discover tests/frontend_test

@@ -92,6 +92,7 @@ class TestCourseMap(TestApp):
             'code': 200,
             'message' : 'Course removed successfully'
         })
-        
+    
+    
 if __name__ == '__main__':
     unittest.main()

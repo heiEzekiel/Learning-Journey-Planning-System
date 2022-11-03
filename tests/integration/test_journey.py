@@ -55,6 +55,13 @@ class TestJourney(TestApp):
         self.assertEqual(response.json, 
             {
                 'code': 404,
+                'data': {
+                    'j_fk_job_role_id': 1,
+                    'j_fk_staff_id': 1,
+                    'journey_id': 1,
+                    'journey_name': 'HR Journey',
+                    'journey_status': 'Completed'
+                }
             }
         )
 
