@@ -83,7 +83,7 @@ def create_journey():
 # Retrieve all journeys
 
 def get_journey(j_fk_staff_id):
-    journeys = Journey.query.filter_by(j_fk_staff_id=j_fk_staff_id).filter_by(journey_status='In-Progress').all()
+    journeys = Journey.query.filter_by(j_fk_staff_id=j_fk_staff_id).all()
     if journeys:
         print(journeys)
         return jsonify(
@@ -99,6 +99,7 @@ def get_journey(j_fk_staff_id):
                 "message": "There are no journey found."
             }
         )
+
 
 # ********************************* Update ********************************* 
 
