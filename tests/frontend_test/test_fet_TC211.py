@@ -46,6 +46,7 @@ class TC211(unittest.TestCase):
         element_present = EC.presence_of_element_located((By.ID, 'job_skills'))
         WebDriverWait(browser, 2).until(element_present)
         try:
+            time.sleep(1)
             skill = browser.find_element(By.ID, "501")
             if skill:
                 skill.click()

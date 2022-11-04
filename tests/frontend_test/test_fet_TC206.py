@@ -20,7 +20,7 @@ class TC206(unittest.TestCase):
             finally:
                 fh.close()
         res = False
-        sql_query = read_file("test_related_db/LJPS3.sql")
+        sql_query = read_file("test_related_db/LJPS_test_add_tolj.sql")
         engine = temp_engine
         connection = engine.raw_connection()
         cursor = connection.cursor()
@@ -34,7 +34,7 @@ class TC206(unittest.TestCase):
         cursor.close()
         connection.close()
 
-        url = temp_url + "frontend/learner/journey_step_two.html?job=Software%20Developer&id=602"
+        url = temp_url + "frontend/learner/journey_step_two.html?job=Software%20Developer&id=601"
         chrome_options = Options()
         chrome_options.add_argument("--headless")
         ChromeDriverManager(log_level=0)
@@ -70,7 +70,7 @@ class TC206(unittest.TestCase):
                     verify_two = browser.find_element(By.ID, "verify_FIN001").get_attribute("innerHTML")
                     if ("Systems Thinking and Design" in verify_one) and ("Data Collection and Analysis" in verify_two):
                         lj_name_box = browser.find_element(By.ID, "learningJourneyName")
-                        lj_name_box.send_keys("Data Analytics roadmap")
+                        lj_name_box.send_keys("Software Dev")
                         create_lj_btn = browser.find_element(By.ID, "createLJ")
                         create_lj_btn.click()
                     else:
