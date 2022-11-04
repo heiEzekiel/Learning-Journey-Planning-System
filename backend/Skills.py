@@ -174,9 +174,21 @@ def update_skill(skill_id):
     data = request.get_json()
     skill = Skill.query.filter_by(skill_id=skill_id).first()
     if skill:
-        skill.skill_name = data['skill_name']
-        skill.skill_desc = data['skill_desc']
-        skill.skill_status = data['skill_status']
+        exist_skill = Skill.query.filter_by(skill_name=str(data['skill_name']).strip()).first()
+        if exist_skill and exist_skill.skill_id != skill_id:
+            return jsonify(
+                {
+                    "code": 400,
+                    "data": {
+                        "skill_name": data['skill_name']
+                    },
+                    "message": "Skill name already exist!"
+                }
+            ), 400
+        else:
+            skill.skill_name = str(data['skill_name']).strip()
+            skill.skill_desc = data['skill_desc']
+            skill.skill_status = data['skill_status']
         try:
             db.session.commit()
         except:

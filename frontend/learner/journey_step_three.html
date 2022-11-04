@@ -291,6 +291,7 @@
 										Close
 									</button>
 									<button
+										id="createLJ"
 										type="button"
 										class="btn btn-primary"
 										onclick="create_lj()"
@@ -346,11 +347,11 @@
 				for (skill of skills) {
 					msg_str += `
 						<br>
-						<button type='button' class="btn btn-primary align-middle text-wrap collapsible"
+						<button id="${skill['skill_id']}" type='button' class="btn btn-primary align-middle text-wrap collapsible"
 						data-bs-toggle="collapse"
 						data-bs-target="#collapseExample${skill['skill_id']}"
 						aria-expanded="false" aria-controls="collapseExample${skill['skill_id']}"
-						> <h4>${skill['skill_name']} :</h4> ${skill['skill_desc']}</button>
+						> <h4 id="${skill['skill_name']}">${skill['skill_name']} :</h4> ${skill['skill_desc']}</button>
 						<br>
 						`;
 					const response = await fetch(`${backendUrl}/${getCourse}/${skill['skill_id']}`)
@@ -369,8 +370,8 @@
 										
 										<div class='collapse multi-collapse text-wrap text-align-left' id="collapseExample${skill['skill_id']}" style="background-color: #F9F9F9; padding:30px;">
 											<div class="form-check" style="text-align: left;">
-											<input class="form-check-input" type="checkbox" value="${result[i]["course_id"]}?${result[i]["course_name"]}" onchange='handleChange(this)'>
-											<span style="cursor: pointer; text-align:left;" class="underline-on-hover justify-content-start" onclick="openModal('${result[i]["course_name"]}', '${result[i]["course_desc"]}','${result[i]["course_type"]}','${result[i]["course_category"]}')" id="course_details"> ${result[i]["course_name"]} </span>
+											<input id="check_${skill['skill_id']}_${result[i]["course_id"]}" class="form-check-input" type="checkbox" value="${result[i]["course_id"]}?${result[i]["course_name"]}" onchange='handleChange(this)'>
+											<span style="cursor: pointer; text-align:left;" class="underline-on-hover justify-content-start" onclick="openModal('${result[i]["course_name"]}', '${result[i]["course_desc"]}','${result[i]["course_type"]}','${result[i]["course_category"]}')" id="course_details" name="${skill['skill_id']}_${result[i]["course_id"]}"> ${result[i]["course_name"]} </span>
 											</div>
 										</div>
 										
@@ -379,7 +380,7 @@
 								}
 							} else {
 								msg_str += `<div class="collapse multi-collapse" id="collapseExample${skill['skill_id']}" style="background-color: #F9F9F9; padding:30px">
-										<span class="text-danger">No courses available</span>
+										<span id="no_course" class="text-danger">No courses available</span>
 									</div>
 									`;
 							}
@@ -416,7 +417,7 @@
 							if (tempList.indexOf(checkboxes[i].value.split("?")[1]) == -1) {
 								tempList.push(checkboxes[i].value.split("?")[1]);
 								msg_str += `
-                    <li class= 'font-weight-light'>- ${
+                    <li id="verify_${checkboxes[i].value.split("?")[0]}" class= 'font-weight-light'>- ${
 											checkboxes[i].value.split("?")[1]
 										}</li>
                     `;
@@ -449,7 +450,7 @@
 						empty = false;
 					}
 				}
-				if (empty || lj_name.value == "") {
+				if (empty || lj_name.length == 0) {
 					alert("Fill up all inputs!");
 				} else {
 					if (name_length > 40) {
@@ -469,7 +470,7 @@
 						})
 							.then((response) => response.json())
 							.then((data) => {
-								//console.log(data);
+								console.log(data["data"]);
 								if (data.code == 404) {
 									alert("A similar learning journey existed already!");
 								} else {

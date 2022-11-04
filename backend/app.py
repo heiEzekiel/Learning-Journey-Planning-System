@@ -95,8 +95,6 @@ def get_skills_for_course(cm_fk_course_id):
 def get_courses_for_skill(skill_id):
     return cm.get_courses_for_skill(skill_id)
 
-
-
 # Remove a skill from a course
 @app.route("/removeSkillFromCourse/<string:course_id>/<int:skill_id>", methods=['DELETE'])
 def delete_skill_from_course(course_id, skill_id):
@@ -148,7 +146,6 @@ def delete_skill(skill_id):
 
 # ********************************* Skill Map Related ******************************************************************
 #Get skills of each staff
-#Andy add test case
 @app.route("/getSkillStaff/<int:sm_fk_staff_id>", methods=['GET'])
 def get_staff_skills(sm_fk_staff_id):
     return sm.get_staff_skills(sm_fk_staff_id)
@@ -161,7 +158,6 @@ def create_journey():
     return j.create_journey()
 
 # Retrieve Learning Journey
-# Andy add test case
 @app.route("/getJourney/<int:j_fk_staff_id>", methods=['GET'])
 def get_journey(j_fk_staff_id):
     return j.get_journey(j_fk_staff_id)

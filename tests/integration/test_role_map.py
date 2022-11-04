@@ -36,6 +36,7 @@ class TestRoleMap(TestApp):
                 },
             "message": "Success"
             })
+            
     def test_get_skills_for_job(self):
         skill = Skill(skill_name="Python", skill_desc="Python skill", skill_status=1)
         db.session.add(skill)

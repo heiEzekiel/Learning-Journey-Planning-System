@@ -41,12 +41,12 @@ class Journey(db.Model):
 def create_journey():
     data = request.get_json()
     journey_name, journey_status, j_fk_staff_id, j_fk_job_role_id = "", "", "", ""
-    journey = Journey.query.filter_by(
-        j_fk_staff_id=data['j_fk_staff_id'], j_fk_job_role_id=data['j_fk_job_role_id']).first()
+    journey = Journey.query.filter_by(j_fk_staff_id=data['j_fk_staff_id'], j_fk_job_role_id=data['j_fk_job_role_id']).first()
     if journey:  # if exist
         return jsonify(
             {
-                "code": 404
+                "code": 404,
+                "data": journey.json()
             }
         )
 

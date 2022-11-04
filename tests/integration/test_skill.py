@@ -161,7 +161,54 @@ class TestSkill(TestApp):
                 },
                 "message": "Skill not found."
             })
-        
+    def test_update_inactive_skill(self):
+        skill = Skill("Java", "Java skill", 1)
+        db.session.add(skill)
+        db.session.commit()
+
+        request_body = {
+            "skill_name": "Java",
+            "skill_desc": "Java OOP",
+            "skill_status": 0
+        }
+        response = self.client.put('/updateSkill/1', 
+                                    data=json.dumps(request_body),
+                                    content_type='application/json')
+        self.assertEqual(response.json, {
+            "code" : 200,
+            "data": {
+                "skill_desc": "Java OOP",
+                "skill_id": 1,
+                "skill_name": "Java",
+                "skill_status": 0
+            },
+            "message": "Skill successfully updated"
+        })
+    
+    def test_update_active_skill(self):
+        skill = Skill("Java", "Java skill", 0)
+        db.session.add(skill)
+        db.session.commit()
+
+        request_body = {
+            "skill_name": "Java",
+            "skill_desc": "Java OOP",
+            "skill_status": 1
+        }
+        response = self.client.put('/updateSkill/1', 
+                                    data=json.dumps(request_body),
+                                    content_type='application/json')
+        self.assertEqual(response.json, {
+            "code" : 200,
+            "data": {
+                "skill_desc": "Java OOP",
+                "skill_id": 1,
+                "skill_name": "Java",
+                "skill_status": 1
+            },
+            "message": "Skill successfully updated"
+        })
+    
     def test_delete_skill(self):
         skill = Skill("Java", "Java skill", 1)
         db.session.add(skill)

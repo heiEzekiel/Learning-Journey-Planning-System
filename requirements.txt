@@ -3,7 +3,6 @@ Flask-Cors==3.0.10
 Flask-SQLAlchemy==2.5.1
 requests==2.27.1
 SQLAlchemy==1.4.31
-pytest==7.1.3
 
 # new
 Werkzeug==2.0.3

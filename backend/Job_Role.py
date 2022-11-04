@@ -33,8 +33,7 @@ class Job_Role(db.Model):
 # Create Job Role
 def create_job_role():
     data = request.get_json()
-    new_job_role = Job_Role(
-        data['job_role_name'], data['job_role_desc'], 0)
+    new_job_role = Job_Role(data['job_role_name'], data['job_role_desc'], 0)
     # check is existing role is there
     jobRoles = Job_Role.query.all()
     if jobRoles:
@@ -129,9 +128,21 @@ def update_job_role_by_id(job_role_id):
     data = request.get_json()
     job_role = Job_Role.query.filter_by(job_role_id=job_role_id).first()
     if job_role:
-        job_role.job_role_name = data['job_role_name']
-        job_role.job_role_desc = data['job_role_desc']
-        job_role.job_role_status = data['job_role_status']
+        exist_job_role = Job_Role.query.filter_by(job_role_name=str(data['job_role_name']).strip()).first()
+        if exist_job_role and exist_job_role.job_role_id != job_role_id:
+            return jsonify(
+                {
+                    "code": 400,
+                    "data": {
+                        "job_role_name": data['job_role_name']
+                    },
+                    "message": "Job role already exist!"
+                }
+            ), 400
+        else:
+            job_role.job_role_name = data['job_role_name']
+            job_role.job_role_desc = data['job_role_desc']
+            job_role.job_role_status = data['job_role_status']
         try:
             db.session.commit()
         except:

@@ -187,7 +187,7 @@
                              
                                         return 	`<a href="./role_skills.html?job=${data['job_role_name']}&id=${data["job_role_id"]}">   <button id="view_${data['job_role_id']}" type="button" class="btn btn-primary btn-sm">View Skills</button></a>
                                             <a href="./update_roles.html?id=${data["job_role_id"]}">   <button id="edit_${data['job_role_id']}" type="button" class="btn btn-success btn-sm ">Edit</button></a>  
-                                            <a><button type="button" class="btn btn-danger btn-sm" onClick="removeRole(${data["job_role_id"]})">Remove</button></a>
+                                            <a><button id="remove_${data['job_role_id']}" type="button" class="btn btn-danger btn-sm" onClick="removeRole(${data["job_role_id"]})">Remove</button></a>
                                             `
                              
                                     }
