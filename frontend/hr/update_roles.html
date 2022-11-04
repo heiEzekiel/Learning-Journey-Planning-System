@@ -426,8 +426,9 @@
                 .then((response) => response.json())
                 .then((data) => {
                     alert("Deleted skill from job successfully");
-                    //getSkills();
-                    location.reload();
+                    $('#table_new').dataTable().fnClearTable();
+                    $('#table_new').dataTable().fnDestroy();
+                    getSkills()
 
                 })
                 .catch((error) => {
@@ -452,8 +453,10 @@
                 .then((response) => response.json())
                 .then((data) => {
                     alert("Added skill to job successfully");
-                    location.reload();
-                    //getSkills();
+                    $('#table_new').dataTable().fnClearTable();
+                    $('#table_new').dataTable().fnDestroy();
+                    getSkills()
+                    
                 })
                 .catch((error) => {
                     // Errors when calling the service; such as network error,
@@ -461,6 +464,7 @@
                     console.log(error);
                 });
         }
+          
     </script>
     </div>
 
