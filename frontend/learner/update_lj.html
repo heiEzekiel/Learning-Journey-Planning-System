@@ -87,7 +87,7 @@
     <!-- Main content starts here  -->
     <div class="container mt-5 mb-5">
       <h3 id="journey_Name">My Learning Journey</h3>
-      <span class="float-end my-3 btn btn-primary">Add Courses</span>
+      <span class="float-end my-3 btn btn-primary" onclick ="addCourses()">Add Courses</span>
       <table class="table borderless table-hover mt-5 w-100" id="table">
       </table>
     </div>
@@ -104,8 +104,13 @@
       const urlParams = new URLSearchParams(queryString);
       var id = parseInt(urlParams.get("id"));
       var name = urlParams.get("name");
+      var job = urlParams.get("job");
       // Get journey map based on ID
       document.getElementById("journey_Name").innerText = name
+
+      function addCourses(){
+        location.href = `./add_course.html?id=${id}&journeyName=${name}&job=${job}`
+      }
       async function getJourneyMaps() {
         const response = await fetch(`${backendUrl}/${get_journey_maps}/${id}`)
           .then((response) => response.json())

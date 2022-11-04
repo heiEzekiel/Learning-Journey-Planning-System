@@ -134,7 +134,7 @@ async function getLJstatus(journey) {
 <span id="remove_${lj.journey_id}" onClick="removeJourney(${lj.journey_id})" class="mt-1 mx-1 btn btn-danger text-white float-end" style="font-size:10px;" >
 Remove learning journey
 </span>
-<span onClick="location.href='./update_lj.html?id=${lj.journey_id}&name=${lj.journey_name}'" class="mt-1 btn btn-primary text-white float-end" style="font-size:10px;"> View Learning Journey </span>
+<span onClick="location.href='./update_lj.html?id=${lj.journey_id}&name=${lj.journey_name}&job=${r.job_role_id}'" class="mt-1 btn btn-primary text-white float-end" style="font-size:10px;"> View Learning Journey </span>
 
 
 </h5>

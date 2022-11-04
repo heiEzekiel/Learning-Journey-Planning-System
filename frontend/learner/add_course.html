@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html class="wide wow-animation" lang="en">
+
+<head>
+    <title>Skills required for role</title>
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport"
+        content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="utf-8" />
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+    <!-- Stylesheets-->
+    <link rel="stylesheet" type="text/css"
+        href="//fonts.googleapis.com/css?family=Poppins:400,500,600%7CTeko:300,400,500%7CMaven+Pro:500" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous" />
+    <link rel="stylesheet" href="../css/fonts.css" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/index.css" />
+    <link rel="stylesheet" href="../css/ljcss.css" />
+</head>
+<style>
+    /* The Modal (background) */
+    .courseModal {
+        display: none;
+        /* Hidden by default */
+        position: fixed;
+        /* Stay in place */
+        z-index: 1;
+        /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%;
+        /* Full width */
+        height: 100%;
+        /* Full height */
+        overflow: auto;
+        /* Enable scroll if needed */
+        background-color: rgb(0, 0, 0);
+        /* Fallback color */
+        background-color: rgba(0, 0, 0, 0.4);
+        /* Black w/ opacity */
+    }
+
+    /* Modal Content/Box */
+    .courseModal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        /* 15% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        /* Could be more or less, depending on screen size */
+    }
+
+    p {
+        text-align: left;
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .underline-on-hover:hover {
+        text-decoration: underline;
+    }
+
+    .collapsible {
+        background-color: rgb(241, 241, 241);
+        color: black;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+    }
+
+    .active,
+    .collapsible:hover {
+        background-color: rgb(255, 255, 255);
+    }
+</style>
+
+<body>
+    <div class="preloader">
+        <div class="preloader-body">
+            <div class="cssload-container"></div>
+        </div>
+    </div>
+    <!-- The Modal -->
+    <div id="myModal" class="courseModal">
+        <div class="courseModal-content">
+            <div class="modal-header border-bottom p-0">
+                <h4 class="modal-title text-primary">Course summary</h5>
+                    <span class="close">&times;</span>
+            </div>
+            <br />
+            <br />
+            <div>
+                <h5 class="text-wrap text-decoration-underline">Course Name</h5>
+                <p id="cname" class="text-wrap"></p>
+                <br />
+                <h5 class="text-wrap text-decoration-underline">Course Description</h5>
+                <p id="cdesc" class="text-wrap"></p>
+                <br />
+                <h5 class="text-wrap text-decoration-underline">Course Type</h5>
+                <p id="ctype" class="text-wrap"></p>
+                <br />
+                <h5 class="text-wrap text-decoration-underline">Course Category</h5>
+                <p id="ccat" class="text-wrap">d</p>
+            </div>
+        </div>
+    </div>
+    <div class="page">
+        <div id="home">
+            <!-- Page Header-->
+            <header class="section page-header">
+                <!-- RD Navbar-->
+                <div class="rd-navbar-wrap">
+                    <nav class="rd-navbar rd-navbar-classic" data-layout="rd-navbar-fixed"
+                        data-sm-layout="rd-navbar-fixed" data-md-layout="rd-navbar-fixed"
+                        data-md-device-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-static"
+                        data-lg-device-layout="rd-navbar-fixed" data-xl-layout="rd-navbar-static"
+                        data-xl-device-layout="rd-navbar-static" data-xxl-layout="rd-navbar-static"
+                        data-xxl-device-layout="rd-navbar-static" data-lg-stick-up-offset="46px"
+                        data-xl-stick-up-offset="46px" data-xxl-stick-up-offset="46px" data-lg-stick-up="true"
+                        data-xl-stick-up="true" data-xxl-stick-up="true">
+                        <div class="rd-navbar-main-outer">
+                            <div class="rd-navbar-main">
+                                <!-- RD Navbar Panel-->
+                                <div class="rd-navbar-panel">
+                                    <!-- RD Navbar Toggle-->
+                                    <button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap">
+                                        <span></span>
+                                    </button>
+                                    <!-- RD Navbar Brand-->
+                                    <div class="rd-navbar-brand">
+                                        <a class="brand" href="landing_page.html">
+                                            <h3 style="margin-left: 80px">LJPS</h3>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="rd-navbar-main-element">
+                                    <div class="rd-navbar-nav-wrap">
+                                        <ul class="rd-navbar-nav">
+                                            <li class="rd-nav-item">
+                                                <a class="rd-nav-link" href="learner_profile.html">Profile</a>
+                                            </li>
+
+                                            <li class="rd-nav-item active">
+                                                <a class="rd-nav-link" href="">Start Learning Journey</a>
+                                            </li>
+
+                                            <li class="rd-nav-item">
+                                                <a class="rd-nav-link text-decoration-none"
+                                                    href="learner_view_roles.html">Roles</a>
+                                            </li>
+                                            <li class="rd-nav-item">
+                                                <a class="rd-nav-link text-decoration-none"
+                                                    href="learner_view_skills.html">Skills</a>
+                                            </li>
+                                            <li class="rd-nav-item">
+                                                <a class="rd-nav-link text-decoration-none"
+                                                    href="learner_view_course.html">Courses</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </header>
+        </div>
+        <!-- Main content starts here  -->
+        <div class="container mt-3 mb-5">
+            <h3>
+                Add courses
+                for <span id="step3"></span>
+            </h3>
+
+            <div class="d-flex justify-content-end mt-3">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                    id="modal_btn">
+                    Add to Learning Journey
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">
+                                    Create Learning Journey
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-outline">
+                                    <label for="skillName">Learning Journey Name</label>
+                                    <input type="text" class="form-control" id="learningJourneyName"
+                                        placeholder="Enter name" required />
+                                </div>
+                                <div id="modal_courses"></div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                    Close
+                                </button>
+                                <button id="createLJ" type="button" class="btn btn-primary" onclick="create_lj_map()">
+                                    Add
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="job_skills"></div>
+        </div>
+    </div>
+    <script>
+        backendUrl = "http://127.0.0.1:5000";
+        const getSkillsForJob = "getSkillsForJob";
+        const getCourse = "getCoursesForSkill";
+        const createJourney = "createJourney";
+        const createJourneyMap = "createJourneyMap";
+        const get_journey_maps = "getJourneyMaps";
+        const getSkillsForStaff = "getSkillStaff";
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        var job = parseInt(urlParams.get("job"));
+        var journeyName = urlParams.get("journeyName");
+        var id = parseInt(urlParams.get("id"));
+        document.getElementById("step3").innerHTML += journeyName;
+        const staff_id = 140001;
+        var current_courses = []
+        async function getJourneyMaps(id) {
+            const response = await fetch(`${backendUrl}/${get_journey_maps}/${id}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.code && data.code == 200) {
+                        result = JSON.parse(JSON.stringify(data.data));
+                        for (map of result) {
+                            current_courses.push(map["jm_fk_course_id"])
+                        }
+                    }
+                    getRoleSkills(job, current_courses)
+                })
+                .catch((error) => {
+                    // Errors when calling the service; such as network error,
+                    // service offline, etc
+                    console.log(error);
+                });
+        }
+        getJourneyMaps(id)
+
+        async function getRoleSkills(id, current_courses) {
+            const response = await fetch(`${backendUrl}/${getSkillsForJob}/${job}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    //console.log(data[0].data);
+                    // console.log(JSON.parse(JSON.stringify(data.data)));
+                    if (data[0].code && data[0].code == 200) {
+                        result = JSON.parse(JSON.stringify(data[0].data));
+                        message_str = ``;
+                        getCourses(result, message_str, current_courses);
+                    } else {
+                        document.getElementById("job_skills").innerHTML = `<h5 class ="text-danger mt-5">No Skills found</h5>`;
+                    }
+                    return data.data;
+                })
+                .catch((error) => {
+                    // Errors when calling the service; such as network error,
+                    // service offline, etc
+                    document.getElementById("job_skills").innerHTML = `<h5 class ="text-danger mt-5">No Skills found</h5>`;
+                });
+        }
+        async function getCourses(skills, msg_str, current_courses) {
+            for (skill of skills) {
+                const responseOne = await fetch(`${backendUrl}/${getSkillsForStaff}/${staff_id}`)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        //result =JSON.parse(JSON.stringify(data.data.skill))
+                        //console.log(data[0].data);
+                        result = JSON.parse(JSON.stringify(data));
+                        console.log(result)
+                        attain_status = 0;
+                        if (result.code == 200) {
+                            for (skill_staff of result.data) {
+                                if (skill_staff["sm_fk_skill_id"] == skill["skill_id"]) {
+                                    // console.log(skill_staff["sm_fk_skill_id"])
+                                    attain_status = 1;
+                                }
+                            }
+                            if (attain_status == 1) {
+                                msg_str += `
+									<br>
+									<button id="${skill['skill_id']}" type='button' class="btn btn-primary align-middle text-wrap collapsible"
+									data-bs-toggle="collapse"
+									data-bs-target="#collapseExample${skill['skill_id']}"
+									aria-expanded="false" aria-controls="collapseExample${skill['skill_id']}"
+									> <h4 id="${skill['skill_name']}">${skill['skill_name']} <span class="text-success">(Attained)</span> : <span id="status_${skill['skill_id']}"></span></h4> ${skill['skill_desc']}</button>
+									<br>
+									`;
+
+                            } else {
+                                msg_str += `
+									<br>
+									<button id="${skill['skill_id']}" type='button' class="btn btn-primary align-middle text-wrap collapsible"
+									data-bs-toggle="collapse"
+									data-bs-target="#collapseExample${skill['skill_id']}"
+									aria-expanded="false" aria-controls="collapseExample${skill['skill_id']}"
+									> <h4 id="${skill['skill_name']}">${skill['skill_name']} <span class="text-danger">(Unattained)</span>: <span id="status_${skill['skill_id']}"></span></h4> ${skill['skill_desc']}</button>
+									<br>
+									`;
+                            }
+                        } else {
+                            msg_str += `
+									<br>
+									<button id="${skill['skill_id']}" type='button' class="btn btn-primary align-middle text-wrap collapsible"
+									data-bs-toggle="collapse"
+									data-bs-target="#collapseExample${skill['skill_id']}"
+									aria-expanded="false" aria-controls="collapseExample${skill['skill_id']}"
+									> <h4 id="${skill['skill_name']}">${skill['skill_name']} <span class="text-danger">(Unattained)</span> : <span id="status_${skill['skill_id']}"></span> </h4> ${skill['skill_desc']}</button>
+									<br>
+									`;
+                        }
+                        return data.data;
+                    })
+                    .catch((error) => {
+                        // Errors when calling the service; such as network error,
+                        // service offline, etc
+                        console.log(error);
+                    })
+                const response = await fetch(`${backendUrl}/${getCourse}/${skill['skill_id']}`)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        //result =JSON.parse(JSON.stringify(data.data.skill))
+                        //console.log(data[0].data);
+                        result = JSON.parse(JSON.stringify(data[0].data));
+                        //console.log(result);
+                        msg_str += `<td class="align-middle text-wrap">`;
+                        if (result != "No records found.") {
+                            for (var i = 0; i < result.length; i++) {
+                                //console.log(result[i]['course_name'])
+                                if (result[i]["course_status"] == "Active") {
+                                    msg_str += `
+										
+										<div class='collapse multi-collapse text-wrap text-align-left' id="collapseExample${skill['skill_id']}" style="background-color: #F9F9F9; padding:30px;">
+											<div class="form-check" style="text-align: left;">
+                                        `
+                                    if (current_courses.includes(result[i]['course_id'])) {
+                                        msg_str +=
+                                            `
+                                                <input id="check_${skill['skill_id']}_${result[i]["course_id"]}" class="form-check-input" type="checkbox" value="${result[i]["course_id"]}?${result[i]["course_name"]}" onchange='handleChange(this)' checked disabled>
+                                                <span style="cursor: pointer; text-align:left;" class="underline-on-hover justify-content-start" onclick="openModal('${result[i]["course_name"]}', '${result[i]["course_desc"]}','${result[i]["course_type"]}','${result[i]["course_category"]}')" id="course_details" name="${skill['skill_id']}_${result[i]["course_id"]}"> ${result[i]["course_name"]} </span>
+                                                </div>
+                                            </div>
+                                            
+                                            `;
+                                    } else {
+                                        msg_str +=
+                                            `
+                                                <input id="check_${skill['skill_id']}_${result[i]["course_id"]}" class="form-check-input" type="checkbox" value="${result[i]["course_id"]}?${result[i]["course_name"]}" onchange='handleChange(this)'>
+                                                <span style="cursor: pointer; text-align:left;" class="underline-on-hover justify-content-start" onclick="openModal('${result[i]["course_name"]}', '${result[i]["course_desc"]}','${result[i]["course_type"]}','${result[i]["course_category"]}')" id="course_details" name="${skill['skill_id']}_${result[i]["course_id"]}"> ${result[i]["course_name"]} </span>
+                                                </div>
+                                            </div>
+                                            
+                                            `;
+
+                                    }
+                                }
+                            }
+                        } else {
+                            msg_str += `<div class="collapse multi-collapse" id="collapseExample${skill['skill_id']}" style="background-color: #F9F9F9; padding:30px">
+										<span id="no_course" class="text-danger">No courses available</span>
+									</div>
+									`;
+                        }
+                        msg_str += `</td>`;
+                        return data.data;
+                    })
+                    .catch((error) => {
+                        // Errors when calling the service; such as network error,
+                        // service offline, etc
+                        console.log(error);
+                    });
+            }
+
+            document.getElementById("job_skills").innerHTML = msg_str;
+        }
+        new_courses =[]
+        document.getElementById("modal_btn").onclick = function () {
+            document.getElementById('learningJourneyName').value = journeyName
+            document.getElementById('learningJourneyName').disabled = true
+            msg_str = `
+						<br>
+						<p class="font-weight-bold text-center">Course Summary
+						<p>
+						<ul>
+						`;
+            checkboxes = document.getElementsByClassName("form-check-input");
+            empty = true;
+            for (i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].checked) {
+                    empty = false;
+                }
+            }
+            tempList = [];
+            checks_disabled= 0
+            checks_enabled= 0
+            for (i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].checked && checkboxes[i].disabled) {
+                    checks_disabled +=1
+                }
+                if(checkboxes[i].checked){
+                    checks_enabled +=1
+                }
+            }
+            if (!empty) {
+                if (checks_disabled != checks_enabled){
+                    for (i = 0; i < checkboxes.length; i++) {
+                        if (checkboxes[i].checked && !checkboxes[i].disabled) {
+                            if (tempList.indexOf(checkboxes[i].value.split("?")[1]) == -1) {
+                                if (!current_courses.includes(checkboxes[i].id.split("_")[2])) {
+                                    tempList.push(checkboxes[i].value.split("?")[1]);
+                                    new_courses.push(checkboxes[i].id.split("_")[2])
+                                    msg_str += `
+                            <li id="verify_${checkboxes[i].value.split("?")[0]}" class= 'font-weight-light'>- ${checkboxes[i].value.split("?")[1]
+                                        }</li>
+                            `;
+    
+                                }
+                            }
+                        }
+                    }
+                    msg_str += `</ul>`;
+                }else{
+                    msg_str += "<p class='text-danger text-center'> No course added</p>";
+                }
+
+            } else {
+                msg_str += "<p class='text-danger text-center'> No course added</p>";
+            }
+            document.getElementById("modal_courses").innerHTML = msg_str;
+        };
+
+        async function create_lj_map() {
+            if (new_courses.length != 0){
+                for (course of new_courses){
+                    fetch(`${backendUrl}/${createJourneyMap}/${id}/${course}`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            jm_fk_journey_id: id,
+                            jm_fk_course_id: course,
+                        }),
+                    })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            console.log(data["data"]);
+                            return data;
+                        })
+                        .catch((error) => {
+                            // Errors when calling the service; such as network error,
+                            // service offline, etc
+                            console.log(error);
+                        });
+
+                    }
+                    alert("Courses successfully added to learning journey!")
+                    window.location.reload()
+            }else{
+                alert("Fill up all inputs!")
+            }
+        }
+
+        function handleChange(checkbox) {
+            var checkboxes = document.getElementsByClassName("form-check-input");
+            if (checkbox.checked == true) {
+                for (const check of checkboxes) {
+                    if (checkbox.value == check.value) {
+                        check.checked = true;
+                    }
+                }
+            } else {
+                for (const check of checkboxes) {
+                    if (checkbox.value == check.value) {
+                        check.checked = false;
+                    }
+                }
+            }
+        }
+
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("course_details");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        function openModal(name, desc, type, cat) {
+            modal.style.display = "block";
+            document.getElementById("cname").innerText = name;
+            document.getElementById("cdesc").innerText = desc;
+            document.getElementById("ctype").innerText = type;
+            document.getElementById("ccat").innerText = cat;
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        };
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        };
+    </script>
+    <!-- Javascript-->
+    <script src="../js/core.min.js"></script>
+    <script src="../js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</body>
+
+</html>
