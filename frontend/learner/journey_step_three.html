@@ -89,6 +89,9 @@
 		.collapsible:hover {
 			background-color: rgb(255, 255, 255);
 		}
+		.btn-float-left {
+				float: left;
+			}
 	</style>
 	<body>
 		<div class="preloader">
@@ -214,6 +217,16 @@
 					<span class="text-primary">Step Three: </span> Browse & add courses
 					for <span id="step3"></span>
 				</h3>
+				<br />
+				<div class="justify-content-left" >
+					<button
+						class="btn btn-primary btn-float-left"
+						role="button"
+						id="backButton"
+						onclick="history.back()"
+						>Back</button>
+					<br />
+				</div>
 				<div
 					style="z-index: -1; position: relative"
 					class="stepper-wrapper mt-5 text-white"
