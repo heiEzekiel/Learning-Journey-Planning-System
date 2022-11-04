@@ -218,15 +218,6 @@
 					for <span id="step3"></span>
 				</h3>
 				<br />
-				<div class="justify-content-left" >
-					<button
-						class="btn btn-primary btn-float-left"
-						role="button"
-						id="backButton"
-						onclick="history.back()"
-						>Back</button>
-					<br />
-				</div>
 				<div
 					style="z-index: -1; position: relative"
 					class="stepper-wrapper mt-5 text-white"
@@ -249,73 +240,81 @@
 						<div class="step-name text-dark">Complete</div>
 					</div>
 				</div>
-
-				<div class="d-flex justify-content-end mt-3">
-					<!-- Button trigger modal -->
-					<button
-						type="button"
-						class="btn btn-primary"
-						data-bs-toggle="modal"
-						data-bs-target="#exampleModal"
-						id="modal_btn"
-					>
-						Create Learning Journey
-					</button>
-					<!-- Modal -->
-					<div
-						class="modal fade"
-						id="exampleModal"
-						tabindex="-1"
-						aria-labelledby="exampleModalLabel"
-						aria-hidden="true"
-					>
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalLabel">
-										Create Learning Journey
-									</h5>
-									<button
-										type="button"
-										class="btn-close"
-										data-bs-dismiss="modal"
-										aria-label="Close"
-									></button>
-								</div>
-								<div class="modal-body">
-									<div class="form-outline">
-										<label for="skillName">Learning Journey Name</label>
-										<input
-											type="text"
-											class="form-control"
-											id="learningJourneyName"
-											placeholder="Enter name"
-											required
-										/>
+					<div>
+							<button
+								class="btn btn-primary pull-left"
+								role="button"
+								id="backButton"
+								onclick="history.back()"
+								>Back</button>
+			
+							<!-- Button trigger modal -->
+							<button
+								type="button"
+								class="btn btn-primary pull-right"
+								data-bs-toggle="modal"
+								data-bs-target="#exampleModal"
+								id="modal_btn"
+							>
+								Create Learning Journey
+							</button>
+							<!-- Modal -->
+							<div
+								class="modal fade"
+								id="exampleModal"
+								tabindex="-1"
+								aria-labelledby="exampleModalLabel"
+								aria-hidden="true"
+							>
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">
+												Create Learning Journey
+											</h5>
+											<button
+												type="button"
+												class="btn-close"
+												data-bs-dismiss="modal"
+												aria-label="Close"
+											></button>
+										</div>
+										<div class="modal-body">
+											<div class="form-outline">
+												<label for="skillName">Learning Journey Name</label>
+												<input
+													type="text"
+													class="form-control"
+													id="learningJourneyName"
+													placeholder="Enter name"
+													required
+												/>
+											</div>
+											<div id="modal_courses"></div>
+										</div>
+										<div class="modal-footer">
+											<button
+												type="button"
+												class="btn btn-secondary"
+												data-bs-dismiss="modal"
+											>
+												Close
+											</button>
+											<button
+												id="createLJ"
+												type="button"
+												class="btn btn-primary"
+												onclick="create_lj()"
+											>
+												Create
+											</button>
+										</div>
 									</div>
-									<div id="modal_courses"></div>
-								</div>
-								<div class="modal-footer">
-									<button
-										type="button"
-										class="btn btn-secondary"
-										data-bs-dismiss="modal"
-									>
-										Close
-									</button>
-									<button
-										id="createLJ"
-										type="button"
-										class="btn btn-primary"
-										onclick="create_lj()"
-									>
-										Create
-									</button>
 								</div>
 							</div>
-						</div>
 					</div>
-				</div>
+					<br>
+					<br>
 				<div id="job_skills"></div>
 			</div>
 		</div>
