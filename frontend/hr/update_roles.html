@@ -16,11 +16,17 @@
     <link rel="stylesheet" href="../css/fonts.css">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.2.3/css/fixedHeader.dataTables.min.css">
 </head>
 <style>
     html.ie-10 .ie-panel,
     html.lt-ie-10 .ie-panel {
         display: block;
+    }
+
+    td {
+        word-break: break-word;
     }
 </style>
 </head>
@@ -99,11 +105,12 @@
                         <div class="card-body p-4 p-md-5">
                             <form>
                                 <div class="form-group mb-4 w-100">
-                                    <label for="skill_Name">Role Name</label> <small style="color: grey;">(max character: 50)</small>
+                                    <label for="skill_Name">Role Name</label> <small style="color: grey;">(max
+                                        character: 50)</small>
                                     <input type="text" class="form-control" id="rname" placeholder="" required>
                                 </div>
                                 <label for="role_status">Role Status</label>
-                                <div id ="role_status" class="mb-4">
+                                <div id="role_status" class="mb-4">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="inlineRadioOptions"
                                             id="inlineRadio1" value=1 checked>
@@ -116,12 +123,14 @@
                                     </div>
                                 </div>
                                 <div class="form-group mb-3 w-100">
-                                    <label for="skill_Description">Role Description</label><small style="color: grey;">(max character: 255)</small>
+                                    <label for="skill_Description">Role Description</label><small
+                                        style="color: grey;">(max character: 255)</small>
                                     <textarea class="form-control" id="roledesc" rows="3"
                                         placeholder="Enter Description" required></textarea>
                                 </div>
                                 <!-- <button type="submit" class="btn btn-primary" id="btn">Update</button> -->
-                                <button id="update_btn" type="button" class="btn btn-primary" onclick="updateRole()">Update</button>
+                                <button id="update_btn" type="button" class="btn btn-primary"
+                                    onclick="updateRole()">Update</button>
                             </form>
                         </div>
                     </div>
@@ -141,12 +150,22 @@
                     <button class="btn btn-primary" id="assignskill" onclick="showskill(this)">Assign Skill</button>
                 </div>
             </div>
-
-            <table class="table borderless table-hover mt-5" id="table_new">
+            <div class="alert alert-danger mt-5" id="res" role="alert"></div>
+            <table class="table borderless table-hover mt-5" id="table_new" width="100%">
             </table>
         </div>
     </div>
 
+    <!-- Javascript-->
+    <script src="../js/core.min.js"></script>
+    <script src="../js/script.js"></script>
+    <script src="../js/index.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/3.2.3/js/dataTables.fixedHeader.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+        crossorigin="anonymous"></script>
 
     <script>
         document.getElementById("skilldiv").style.display = 'none';
@@ -193,10 +212,10 @@
                     document.getElementById("r_name").innerText += " " + data.data[0].job_role_name;
                     document.getElementById("r_name2").innerText = data.data[0].job_role_name;
                     document.getElementById("roledesc").value = data.data[0].job_role_desc;
-                    if (data.data[0].job_role_status == 0){
-                        document.getElementById('inlineRadio1').checked= true
-                    }else{
-                        document.getElementById('inlineRadio2').checked= true
+                    if (data.data[0].job_role_status == 0) {
+                        document.getElementById('inlineRadio1').checked = true
+                    } else {
+                        document.getElementById('inlineRadio2').checked = true
                     }
                 })
                 .catch((error) => {
@@ -212,9 +231,9 @@
             const response = await fetch(`${backendUrl}/${get_skill}`)
                 .then((response) => response.json())
                 .then((data) => {
-                    if(data[0] !=null && data[0].code == 200){
+                    if (data[0] != null && data[0].code == 200) {
                         var skills = data[0]['data'];
-                        for (s of skills) { 
+                        for (s of skills) {
                             current_skill.push(s["skill_name"])
                         }
                     }
@@ -228,69 +247,79 @@
                 });
         }
 
-        async function allSkill(current_skill) {
-            const response = await fetch(`${backendUrl}/${get_all_skill}`)
-                .then((response) => response.json())
-                .then((data) => {
-                    message_str = `
-                    <thead>
-                        <tr class="bg-light">
-                        <th>Skill Name</th>
-                        <th>Skill Description</th>
-                        <th>Action</th>
-                        </tr>
-                    </thead>     <tbody>`;
-                    //console.log(data.data.skill);
-                    var skills = data.data.skill;
-                    for (s in skills) {
-                        if (current_skill.includes(skills[s].skill_name)) {
-                            message_str += `
-                    <tr>
-                        <th scope="row">${skills[s].skill_name}</th>
-                        <td>${skills[s].skill_desc}</td>
-                        <td> <button id="remove_${skills[s].skill_name}" type="button" onclick="del(this)" class="btn btn-danger">Remove</button> </td>
-                    </tr>
-                    `;
-                            continue;
+        function allSkill(current_skill) {
+            $.ajax({
+                url: backendUrl + "/" + get_all_skill,
+                type: "GET",
+                headers: {
+                    "accept": "application/json;odata=verbose",
+                    "content-type": "application/json;odata=verbose"
+
+                },
+                success: function (data) {
+                    console.log(data)
+                    if (data.code == 200) {
+                        stat = 0
+                        for (skill of data.data.skill){
+                            if (skill['skill_status'] == 0){
+                                stat = 1
+                            }
                         }
-                        message_str += `
-                    `;
-                    }
-                    message_str += `  </tbody>`;
-                    document.getElementById("table_new").innerHTML = message_str;
-                })
-                .catch((error) => {
-                    // Errors when calling the service; such as network error,
-                    // service offline, etc
-                    console.log(error);
-                });
-            const response2 = await fetch(`${backendUrl}/${get_all_skill}`)
-                .then((response2) => response2.json())
-                .then((data) => {
-                    message_str += ``;
-                    //console.log(data.data.skill);
-                    var skills = data.data.skill;
-                    for (s in skills) {
-                        if (current_skill.includes(skills[s].skill_name)) {
-                            continue;
+                        if (stat == 1 ){
+                            document.getElementById("res").style.display = "none"
+                            var table = $('#table_new').DataTable({
+                                responsive: true,
+                                data: data.data.skill,
+                                "rowCallback": function(row, data, index){
+                                    if (data['skill_status'] == 1) {
+                                       jQuery(row).hide();
+                                    }
+                                 },
+                                columns: [
+                                    {
+                                        data: 'skill_name',
+                                        createdCell: function (td, cellData, rowData, row, col) {
+                                            $(td).attr('id', cellData);
+                                        },
+                                        title: 'Skill Name'
+                                    },
+                                    { data: 'skill_desc',
+                                      title: 'Skill Description'
+                                    },
+                                    {
+                                        data: null,
+                                        render: function (data, type, row, meta) {
+                                            if (current_skill.includes(data['skill_name'])) {
+                                                return `<button id="remove_${data['skill_name']}" type="button" onclick="del(this.id)" class="btn btn-danger">Remove</button>`
+                                            }
+                                            else {
+                                                return `<button id="add_${data['skill_name']}" type="button" onclick="add(this.id)" class="btn btn-success">Add</button>`
+                                            }
+    
+                                        },
+                                        title: 'Action'
+                                    }
+    
+                                ]
+                            })
+                            
+                        }else{
+                            document.getElementById("res").style.display = "block"
+                            document.getElementById("res").innerText = "No records found";
+                            document.getElementById("table_new").style.display = "none"
                         }
-                        message_str += `
-                    <tr>
-                        <th scope="row">${skills[s].skill_name}</th>
-                        <td>${skills[s].skill_desc}</td>
-                        <td> <button id="add_${skills[s].skill_name}" type="button" onclick="add(this)" class="btn btn-success">Add</button> </td>
-                    </tr>
-                
-                    `;
+                    } else {
+                        document.getElementById("res").style.display = "block"
+                        document.getElementById("res").innerText = "No records found";
+                        document.getElementById("table_new").style.display = "none"
                     }
-                    message_str += `  </tbody>`;
-                    document.getElementById("table_new").innerHTML = message_str;
-                })
-                .catch((error) => {
-                    // Errors when calling the service; such as network error,
-                    // service offline, etc
-                    console.log(error);
-                });
+
+                },
+                error: function Error(result, error) {
+                    document.getElementById("table_new").style.display = "none"
+                    console.log(result);
+                }
+            })
         }
         // get Role details and put it in the input
         getRoleDetails();
@@ -302,9 +331,9 @@
             var a = document.getElementById("rname").value
             var b = document.getElementById("roledesc").value
             var active = document.getElementById('inlineRadio1')
-            if( active.checked){
+            if (active.checked) {
                 var status = 0
-            }else{
+            } else {
                 var status = 1
             }
             console.log(status)
@@ -312,13 +341,13 @@
                 alert("Please fill in all details")
             }
             else {
-                if (a.length > 50 && b.length > 255){
+                if (a.length > 50 && b.length > 255) {
                     alert("Both role name and description has reached the maximum characters.")
-                }else if(a.length >50){
-                        alert("Update role name has reached the maximum of 50 characters.")
-                }else if(b.length >255){
-                        alert("Update role description has reached the maximum of 255 characters.")
-                }else{
+                } else if (a.length > 50) {
+                    alert("Update role name has reached the maximum of 50 characters.")
+                } else if (b.length > 255) {
+                    alert("Update role description has reached the maximum of 255 characters.")
+                } else {
 
                     fetch(`${backendUrl}/${update_role}`, {
                         method: 'PUT',
@@ -350,16 +379,13 @@
         }
         // get parent Node of the del utton
         function del(a) {
-            var text = a.parentNode.parentNode.innerHTML;
-            text = text.split('"row">').pop().split('</th>')[0]; // returns 'two'
-            getId(text);
+            //console.log(a.split('_')[1])
+            getId(a.split('_')[1]);
         }
-
         // get parent Node of the add button
         function add(a) {
-            var text = a.parentNode.parentNode.innerHTML;
-            text = text.split('"row">').pop().split('</th>')[0]; // returns 'two'
-            getIdToAdd(text);
+            //console.log(a.split('_')[1])
+            getIdToAdd(a.split('_')[1]);
         }
 
         // for add
@@ -400,7 +426,8 @@
                 .then((response) => response.json())
                 .then((data) => {
                     alert("Deleted skill from job successfully");
-                    getSkills();
+                    //getSkills();
+                    location.reload();
 
                 })
                 .catch((error) => {
@@ -425,7 +452,8 @@
                 .then((response) => response.json())
                 .then((data) => {
                     alert("Added skill to job successfully");
-                    getSkills();
+                    location.reload();
+                    //getSkills();
                 })
                 .catch((error) => {
                     // Errors when calling the service; such as network error,
@@ -434,10 +462,6 @@
                 });
         }
     </script>
-    <!-- Javascript-->
-    <script src="../js/core.min.js"></script>
-    <script src="../js/script.js"></script>
-    <!-- coded by Himic-->
     </div>
 
 </body>

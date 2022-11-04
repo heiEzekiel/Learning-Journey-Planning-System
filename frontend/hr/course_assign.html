@@ -156,32 +156,51 @@
           success: function (data) {
             //console.log(data)
             if (data.code == 200) {
-              document.getElementById("res").style.display = "none"
-              var table = $('#table').DataTable({
-                responsive: true,
-                data: data.data.skill,
-                columns: [
-                  { data: 'skill_name',
-                    createdCell: function(td, cellData, rowData, row, col) {
-                      $(td).attr('id', cellData);
-                    } 
-                  },
-                  { data: 'skill_desc' },
-                  {
-                    data: null,
-                    render: function (data, type, row, meta) {
-                      if (current_skill.includes(data['skill_name'])) {
-                        return `<button id="remove_${data['skill_name']}" type="button" onclick="del(this.id)" class="btn btn-danger">Remove</button>`
-                      }
-                      else {
-                        return `<button id="add_${data['skill_name']}" type="button" onclick="add(this.id)" class="btn btn-success">Add</button>`
-                      }
-
+              stat = 0
+              for (skill of data.data.skill) {
+                if (skill['skill_status'] == 0) {
+                  stat = 1
+                }
+              }
+              if (stat == 1){
+                document.getElementById("res").style.display = "none"
+                var table = $('#table').DataTable({
+                  responsive: true,
+                  data: data.data.skill,
+                  "rowCallback": function (row, data, index) {
+                    if (data['skill_status'] == 1) {
+                      jQuery(row).hide();
                     }
-                  }
+                  },
+                  columns: [
+                    {
+                      data: 'skill_name',
+                      createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).attr('id', cellData);
+                      }
+                    },
+                    { data: 'skill_desc' },
+                    {
+                      data: null,
+                      render: function (data, type, row, meta) {
+                        if (current_skill.includes(data['skill_name'])) {
+                          return `<button id="remove_${data['skill_name']}" type="button" onclick="del(this.id)" class="btn btn-danger">Remove</button>`
+                        }
+                        else {
+                          return `<button id="add_${data['skill_name']}" type="button" onclick="add(this.id)" class="btn btn-success">Add</button>`
+                        }
+  
+                      }
+                    }
+  
+                  ]
+                })
 
-                ]
-              })
+              }else{
+                document.getElementById("res").style.display = "block"
+                document.getElementById("res").innerText = "No records found";
+                document.getElementById("table").style.display = "none"
+              }
             } else {
               document.getElementById("res").style.display = "block"
               document.getElementById("res").innerText = "No records found";
