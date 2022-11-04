@@ -69,20 +69,20 @@ python backend/app.py
 ### Learner
 
 1. The image shown below will be the login page for Learner.
-   ![Alt text](assets/img/learnerpage.jpg.jpg?raw=true "Title")
+   ![Alt text](assets/img/learnerpage.jpg?raw=true "Title")
 
 2. After logging in, you will be redirected to this main page.
-   ![Alt text](assets/img/learnerhomepage.jpg.jpg?raw=true "Title")
+   ![Alt text](assets/img/learnerhomepage.jpg?raw=true "Title")
 
 This system allows learner to select a role they want and see a list of skills required. Learners also can see the courses they can take to acquire those skills, and add/remove them on their learning journey.
 
 ### HR/Admin
 
 1. The image shown below will be the login page for HR/Admin.
-   ![Alt text](assets/img/hrpage.jpg.jpg?raw=true "Title")
+   ![Alt text](assets/img/hrpage.jpg?raw=true "Title")
 
 2. After logging in, you will be redirected to this main page.
-   ![Alt text](assets/img/hrhomepage.jpg.jpg?raw=true "Title")
+   ![Alt text](assets/img/hrhomepage.jpg?raw=true "Title")
 
 This system allows HR/Admin to view, create, update & remove job roles and skills. HR/Admin also can assign the skills to roles & skills to courses as required.
 
