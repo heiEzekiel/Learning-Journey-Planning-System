@@ -360,8 +360,6 @@
 			getRoleSkills(id, job);
 			async function getCourses(skills, msg_str) {
 				for (skill of skills) {
-
-
 					const responseOne = await fetch(`${backendUrl}/${getSkillsForStaff}/${staff_id}`)
 							.then((response) => response.json())
 							.then((data) => {
@@ -378,37 +376,35 @@
 										}
 									}
 									if (attain_status == 1) {
-										// msg_str += `<small style="text-align: right;">Attained</small>`
-										
-					msg_str += `
-						<br>
-						<button id="${skill['skill_id']}" type='button' class="btn btn-primary align-middle text-wrap collapsible"
-						data-bs-toggle="collapse"
-						data-bs-target="#collapseExample${skill['skill_id']}"
-						aria-expanded="false" aria-controls="collapseExample${skill['skill_id']}"
-						> <h4 id="${skill['skill_name']}">${skill['skill_name']} <span class="text-success">(Attained)</span> : <span id="status_${skill['skill_id']}"></span></h4> ${skill['skill_desc']}</button>
-						<br>
-						`;
+								msg_str += `
+									<br>
+									<button id="${skill['skill_id']}" type='button' class="btn btn-primary align-middle text-wrap collapsible"
+									data-bs-toggle="collapse"
+									data-bs-target="#collapseExample${skill['skill_id']}"
+									aria-expanded="false" aria-controls="collapseExample${skill['skill_id']}"
+									> <h4 id="${skill['skill_name']}">${skill['skill_name']} <span class="text-success">(Attained)</span> : <span id="status_${skill['skill_id']}"></span></h4> ${skill['skill_desc']}</button>
+									<br>
+									`;
 										
 									} else{	msg_str += `
-						<br>
-						<button id="${skill['skill_id']}" type='button' class="btn btn-primary align-middle text-wrap collapsible"
-						data-bs-toggle="collapse"
-						data-bs-target="#collapseExample${skill['skill_id']}"
-						aria-expanded="false" aria-controls="collapseExample${skill['skill_id']}"
-						> <h4 id="${skill['skill_name']}">${skill['skill_name']} <span class="text-danger">(Unattained)</span>: <span id="status_${skill['skill_id']}"></span></h4> ${skill['skill_desc']}</button>
-						<br>
-						`;}
+									<br>
+									<button id="${skill['skill_id']}" type='button' class="btn btn-primary align-middle text-wrap collapsible"
+									data-bs-toggle="collapse"
+									data-bs-target="#collapseExample${skill['skill_id']}"
+									aria-expanded="false" aria-controls="collapseExample${skill['skill_id']}"
+									> <h4 id="${skill['skill_name']}">${skill['skill_name']} <span class="text-danger">(Unattained)</span>: <span id="status_${skill['skill_id']}"></span></h4> ${skill['skill_desc']}</button>
+									<br>
+									`;}
 								} else {
 									msg_str += `
-						<br>
-						<button id="${skill['skill_id']}" type='button' class="btn btn-primary align-middle text-wrap collapsible"
-						data-bs-toggle="collapse"
-						data-bs-target="#collapseExample${skill['skill_id']}"
-						aria-expanded="false" aria-controls="collapseExample${skill['skill_id']}"
-						> <h4 id="${skill['skill_name']}">${skill['skill_name']} <span class="text-danger">(Unattained)</span> : <span id="status_${skill['skill_id']}"></span> </h4> ${skill['skill_desc']}</button>
-						<br>
-						`;
+									<br>
+									<button id="${skill['skill_id']}" type='button' class="btn btn-primary align-middle text-wrap collapsible"
+									data-bs-toggle="collapse"
+									data-bs-target="#collapseExample${skill['skill_id']}"
+									aria-expanded="false" aria-controls="collapseExample${skill['skill_id']}"
+									> <h4 id="${skill['skill_name']}">${skill['skill_name']} <span class="text-danger">(Unattained)</span> : <span id="status_${skill['skill_id']}"></span> </h4> ${skill['skill_desc']}</button>
+									<br>
+									`;
 								}
 								return data.data;
 								})
@@ -418,53 +414,48 @@
 									console.log(error);
 								})
 
-
-
-
-
-
-					const response = await fetch(`${backendUrl}/${getCourse}/${skill['skill_id']}`)
-						.then((response) => response.json())
-						.then((data) => {
-							//result =JSON.parse(JSON.stringify(data.data.skill))
-							//console.log(data[0].data);
-							result = JSON.parse(JSON.stringify(data[0].data));
-							//console.log(result);
-							msg_str += `<td class="align-middle text-wrap">`;
-							if (result != "No records found.") {
-								for (var i = 0; i < result.length; i++) {
-									//console.log(result[i]['course_name'])
-									if (result[i]["course_status"] == "Active") {
-										msg_str += `
-										
-										<div class='collapse multi-collapse text-wrap text-align-left' id="collapseExample${skill['skill_id']}" style="background-color: #F9F9F9; padding:30px;">
-											<div class="form-check" style="text-align: left;">
-											<input id="check_${skill['skill_id']}_${result[i]["course_id"]}" class="form-check-input" type="checkbox" value="${result[i]["course_id"]}?${result[i]["course_name"]}" onchange='handleChange(this)'>
-											<span style="cursor: pointer; text-align:left;" class="underline-on-hover justify-content-start" onclick="openModal('${result[i]["course_name"]}', '${result[i]["course_desc"]}','${result[i]["course_type"]}','${result[i]["course_category"]}')" id="course_details" name="${skill['skill_id']}_${result[i]["course_id"]}"> ${result[i]["course_name"]} </span>
+							const response = await fetch(`${backendUrl}/${getCourse}/${skill['skill_id']}`)
+								.then((response) => response.json())
+								.then((data) => {
+									//result =JSON.parse(JSON.stringify(data.data.skill))
+									//console.log(data[0].data);
+									result = JSON.parse(JSON.stringify(data[0].data));
+									//console.log(result);
+									msg_str += `<td class="align-middle text-wrap">`;
+									if (result != "No records found.") {
+										for (var i = 0; i < result.length; i++) {
+											//console.log(result[i]['course_name'])
+											if (result[i]["course_status"] == "Active") {
+												msg_str += `
+												
+												<div class='collapse multi-collapse text-wrap text-align-left' id="collapseExample${skill['skill_id']}" style="background-color: #F9F9F9; padding:30px;">
+													<div class="form-check" style="text-align: left;">
+													<input id="check_${skill['skill_id']}_${result[i]["course_id"]}" class="form-check-input" type="checkbox" value="${result[i]["course_id"]}?${result[i]["course_name"]}" onchange='handleChange(this)'>
+													<span style="cursor: pointer; text-align:left;" class="underline-on-hover justify-content-start" onclick="openModal('${result[i]["course_name"]}', '${result[i]["course_desc"]}','${result[i]["course_type"]}','${result[i]["course_category"]}')" id="course_details" name="${skill['skill_id']}_${result[i]["course_id"]}"> ${result[i]["course_name"]} </span>
+													</div>
+												</div>
+												
+												`;
+											}
+										}
+									} else {
+										msg_str += `<div class="collapse multi-collapse" id="collapseExample${skill['skill_id']}" style="background-color: #F9F9F9; padding:30px">
+												<span id="no_course" class="text-danger">No courses available</span>
 											</div>
-										</div>
-										
-										`;
+											`;
 									}
-								}
-							} else {
-								msg_str += `<div class="collapse multi-collapse" id="collapseExample${skill['skill_id']}" style="background-color: #F9F9F9; padding:30px">
-										<span id="no_course" class="text-danger">No courses available</span>
-									</div>
-									`;
-							}
-							msg_str += `</td>`;
-							return data.data;
-						})
-						.catch((error) => {
-							// Errors when calling the service; such as network error,
-							// service offline, etc
-							console.log(error);
-						});
+									msg_str += `</td>`;
+									return data.data;
+								})
+								.catch((error) => {
+									// Errors when calling the service; such as network error,
+									// service offline, etc
+									console.log(error);
+								});
 
-				
-								}
-					
+						
+										}
+							
 
 				// document.getElementById("job_skills").innerHTML = message;
 				document.getElementById("job_skills").innerHTML = msg_str;
