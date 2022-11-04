@@ -325,12 +325,15 @@
 			const getCourse = "getCoursesForSkill";
 			const createJourney = "createJourney";
 			const createJourneyMap = "createJourneyMap";
+			const getSkillsForStaff = "getSkillStaff";
 			const queryString = window.location.search;
 			const urlParams = new URLSearchParams(queryString);
 			const job = urlParams.get("job");
+			const staff_id = 140001;
 			var id = parseInt(urlParams.get("id"));
 			document.getElementById("step3").innerHTML += job;
 
+			
 			async function getRoleSkills(id, job) {
 				const response = await fetch(`${backendUrl}/${getSkillsForJob}/${id}`)
 					.then((response) => response.json())
@@ -355,18 +358,71 @@
 					});
 			}
 			getRoleSkills(id, job);
-
 			async function getCourses(skills, msg_str) {
 				for (skill of skills) {
+
+
+					const responseOne = await fetch(`${backendUrl}/${getSkillsForStaff}/${staff_id}`)
+							.then((response) => response.json())
+							.then((data) => {
+								//result =JSON.parse(JSON.stringify(data.data.skill))
+								//console.log(data[0].data);
+								result = JSON.parse(JSON.stringify(data));
+								console.log(result)
+								attain_status = 0;
+								if (result.code == 200) {
+									for (skill_staff of result.data) {
+										if (skill_staff["sm_fk_skill_id"] == skill["skill_id"]) {
+											// console.log(skill_staff["sm_fk_skill_id"])
+											attain_status = 1;
+										}
+									}
+									if (attain_status == 1) {
+										// msg_str += `<small style="text-align: right;">Attained</small>`
+										
 					msg_str += `
 						<br>
 						<button id="${skill['skill_id']}" type='button' class="btn btn-primary align-middle text-wrap collapsible"
 						data-bs-toggle="collapse"
 						data-bs-target="#collapseExample${skill['skill_id']}"
 						aria-expanded="false" aria-controls="collapseExample${skill['skill_id']}"
-						> <h4 id="${skill['skill_name']}">${skill['skill_name']} :</h4> ${skill['skill_desc']}</button>
+						> <h4 id="${skill['skill_name']}">${skill['skill_name']} <span class="text-success">(Attained)</span> : <span id="status_${skill['skill_id']}"></span></h4> ${skill['skill_desc']}</button>
 						<br>
 						`;
+										
+									} else{	msg_str += `
+						<br>
+						<button id="${skill['skill_id']}" type='button' class="btn btn-primary align-middle text-wrap collapsible"
+						data-bs-toggle="collapse"
+						data-bs-target="#collapseExample${skill['skill_id']}"
+						aria-expanded="false" aria-controls="collapseExample${skill['skill_id']}"
+						> <h4 id="${skill['skill_name']}">${skill['skill_name']} <span class="text-danger">(Unattained)</span>: <span id="status_${skill['skill_id']}"></span></h4> ${skill['skill_desc']}</button>
+						<br>
+						`;}
+								} else {
+									msg_str += `
+						<br>
+						<button id="${skill['skill_id']}" type='button' class="btn btn-primary align-middle text-wrap collapsible"
+						data-bs-toggle="collapse"
+						data-bs-target="#collapseExample${skill['skill_id']}"
+						aria-expanded="false" aria-controls="collapseExample${skill['skill_id']}"
+						> <h4 id="${skill['skill_name']}">${skill['skill_name']} <span class="text-danger">(Unattained)</span> : <span id="status_${skill['skill_id']}"></span> </h4> ${skill['skill_desc']}</button>
+						<br>
+						`;
+								}
+								return data.data;
+								})
+								.catch((error) => {
+									// Errors when calling the service; such as network error,
+									// service offline, etc
+									console.log(error);
+								})
+
+
+
+
+
+
 					const response = await fetch(`${backendUrl}/${getCourse}/${skill['skill_id']}`)
 						.then((response) => response.json())
 						.then((data) => {
@@ -405,8 +461,12 @@
 							// service offline, etc
 							console.log(error);
 						});
-				}
 
+				
+								}
+					
+
+				// document.getElementById("job_skills").innerHTML = message;
 				document.getElementById("job_skills").innerHTML = msg_str;
 			}
 			document.getElementById("modal_btn").onclick = function () {
