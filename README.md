@@ -86,8 +86,6 @@ This system allows learner to select a role they want and see a list of skills r
 
 This system allows HR/Admin to view, create, update & remove job roles and skills. HR/Admin also can assign the skills to roles & skills to courses as required.
 
-With this, you have successfully setup this project and please feel free to try out this project!
-
 # Tests
 
 This project has 3 different testing methods with their respective commands:
