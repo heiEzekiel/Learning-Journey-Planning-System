@@ -47,7 +47,7 @@
 			background-color: #fefefe;
 			margin: 15% auto; /* 15% from the top and centered */
 			padding: 20px;
-			border: 1px solid #888;
+			border: 1px solid rgb(104, 104, 104);
 			width: 80%; /* Could be more or less, depending on screen size */
 		}
 
@@ -377,7 +377,7 @@
 									if (attain_status == 1) {
 								msg_str += `
 									<br>
-									<button id="${skill['skill_id']}" type='button' class="btn btn-primary align-middle text-wrap collapsible"
+									<button id="${skill['skill_id']}" type='button' class="btn btn-light align-middle text-wrap collapsible"
 									data-bs-toggle="collapse"
 									data-bs-target="#collapseExample${skill['skill_id']}"
 									aria-expanded="false" aria-controls="collapseExample${skill['skill_id']}"
@@ -387,7 +387,7 @@
 										
 									} else{	msg_str += `
 									<br>
-									<button id="${skill['skill_id']}" type='button' class="btn btn-primary align-middle text-wrap collapsible"
+									<button id="${skill['skill_id']}" type='button' class="btn btn-light align-middle text-wrap collapsible"
 									data-bs-toggle="collapse"
 									data-bs-target="#collapseExample${skill['skill_id']}"
 									aria-expanded="false" aria-controls="collapseExample${skill['skill_id']}"
@@ -397,7 +397,7 @@
 								} else {
 									msg_str += `
 									<br>
-									<button id="${skill['skill_id']}" type='button' class="btn btn-primary align-middle text-wrap collapsible"
+									<button id="${skill['skill_id']}" type='button' class="btn btn-light align-middle text-wrap collapsible"
 									data-bs-toggle="collapse"
 									data-bs-target="#collapseExample${skill['skill_id']}"
 									aria-expanded="false" aria-controls="collapseExample${skill['skill_id']}"
