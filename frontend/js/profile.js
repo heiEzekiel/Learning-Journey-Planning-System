@@ -108,7 +108,7 @@ async function getLJstatus(journey) {
     .then(data => {
       
       result = JSON.parse(JSON.stringify(data.data))
-      console.log(result)
+      //console.log(result)
       var count = 0
       var lj_c = 0
       var message_str = ""
@@ -131,7 +131,7 @@ async function getLJstatus(journey) {
               <div class="card mt-3">
 <div class="card-body">
 <h5 class="card-title fs-6 fw-bold">${lj.journey_name}    
-<span  onClick="removeJourney(${lj.journey_id})" class="mt-1 mx-1 btn btn-danger text-white float-end" style="font-size:10px;" >
+<span id="remove_${lj.journey_id}" onClick="removeJourney(${lj.journey_id})" class="mt-1 mx-1 btn btn-danger text-white float-end" style="font-size:10px;" >
 Remove learning journey
 </span>
 <span onClick="location.href='./update_lj.html?id=${lj.journey_id}&name=${lj.journey_name}'" class="mt-1 btn btn-primary text-white float-end" style="font-size:10px;"> View Learning Journey </span>

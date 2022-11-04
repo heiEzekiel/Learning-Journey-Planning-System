@@ -162,6 +162,9 @@
                   { data: 'skill_desc' },
                   {
                     data: 'skill_status',
+                    createdCell: function(td, cellData, rowData, row, col) {
+                      $(td).attr('name', "skillstatus");
+                    },
                     render: function (data, type, row, meta) {
                       if (data == 0) {
                         return 'Active'
