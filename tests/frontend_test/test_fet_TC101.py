@@ -33,7 +33,7 @@ class TC101(unittest.TestCase):
                 connection.commit()
         cursor.close()
         connection.close()
-        
+
         url = temp_url + "frontend/hr/create_role.html"
         chrome_options = Options()
         chrome_options.add_argument("--headless")

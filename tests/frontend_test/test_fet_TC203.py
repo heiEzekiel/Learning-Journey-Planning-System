@@ -47,6 +47,7 @@ class TC203(unittest.TestCase):
         WebDriverWait(browser, 2).until(element_present)
         
         try:
+            time.sleep(1)
             role = browser.find_element(By.ID, "603")
             if role:
                 role.click()
@@ -62,6 +63,7 @@ class TC203(unittest.TestCase):
                     skill = browser.find_element(By.ID, "503")
                     if skill:
                         skill.click()
+                        time.sleep(1)
                         no_course = browser.find_element(By.ID, "no_course").get_attribute("innerHTML")
                         if no_course == "No courses available":
                             res = True

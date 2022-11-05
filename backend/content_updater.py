@@ -23,7 +23,7 @@ def main():
             df = df[~df["reg_id"].isin(sqldf["reg_id"])]
         df = df.merge(sqldf, indicator=True, how='outer').query('_merge=="left_only"').drop('_merge', axis=1)
         df.to_sql(table_name, mysql_engine, if_exists='append', index=False)
-        print(table_name, "done!")
+        print(table_name.capitalize(), "done!")
     print("\nAll Tables Updated!")
 
 main()
