@@ -113,7 +113,7 @@ CREATE TABLE IF NOT EXISTS `Job_Role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `Job_Role` (`job_role_id`, `job_role_name`,`job_role_desc`, `job_role_status`) VALUES
-('601','Software Developer','Full Stack Software developer with MERN stack','1'),
+('601','Software Developer','Full Stack Software developer with MERN stack','0'),
 ('602','Data Analyst','Use your analytical skills and tools to derive new insights for our company','0'),
 ('603','Frontend Developer','Use frontend skills and tools in web design','0'),
 ('604','Full Stack Developer','Use web development skills and tools in web development','0'),
