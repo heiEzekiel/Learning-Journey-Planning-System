@@ -54,10 +54,13 @@ BananaOrange is a Learning Journey Planning System (LJPS) which aims to guide st
 ```
 $ pip install -r requirements.txt
 ```
+
 3. To import data from LMS, run the following commands in terminal from root directory:
+
 ```
 python backend/content_updater.py
 ```
+
 4. To start backend services, run the following commands in terminal from root directory:
 
 ```
@@ -65,28 +68,28 @@ python backend/app.py
 ```
 
 5. To start frontend services, click on the Live Server located at the bottom-right of Visual Studio Code.
-   ![Alt text](assets/img/live-server.png?raw=true "Title")
+   ![Alt text](assets/img/live-server.png?raw=true "GoLive")
 
 6. The image shown below will be the starting page the of our website. You can select your role and login.
-   ![Alt text](assets/img/indexpage.jpg?raw=true "Title")
+   ![Alt text](assets/img/indexpage.jpg?raw=true "index.html")
 
 ### Learner
 
 1. The image shown below will be the login page for Learner.
-   ![Alt text](assets/img/learnerpage.jpg?raw=true "Title")
+   ![Alt text](assets/img/learnerpage.jpg?raw=true "landing_page.html")
 
 2. After logging in, you will be redirected to this main page.
-   ![Alt text](assets/img/learnerhomepage.jpg?raw=true "Title")
+   ![Alt text](assets/img/learnerhomepage.jpg?raw=true "learner_profile.html")
 
 This system allows learner to select a role they want and see a list of skills required. Learners also can see the courses they can take to acquire those skills, and add/remove them on their learning journey.
 
 ### HR/Admin
 
 1. The image shown below will be the login page for HR/Admin.
-   ![Alt text](assets/img/hrpage.jpg?raw=true "Title")
+   ![Alt text](assets/img/hrpage.jpg?raw=true "hr_landing_page.html")
 
 2. After logging in, you will be redirected to this main page.
-   ![Alt text](assets/img/hrhomepage.jpg?raw=true "Title")
+   ![Alt text](assets/img/hrhomepage.jpg?raw=true "HR_roles.html")
 
 This system allows HR/Admin to view, create, update & remove job roles and skills. HR/Admin also can assign the skills to roles & skills to courses as required.
 

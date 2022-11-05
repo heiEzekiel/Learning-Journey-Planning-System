@@ -11,7 +11,7 @@ from tests.frontend_test.url import url as temp_url
 from sqlalchemy.sql import text
 from tests.frontend_test.db import engine as temp_engine
     
-class TC414(unittest.TestCase):
+class TC415(unittest.TestCase):
     def test_temp(self):
         def read_file(filename):
             fh = open(filename, "r")
@@ -50,10 +50,13 @@ class TC414(unittest.TestCase):
             table_head = browser.find_element(By.ID, "table_head")
             table_body = browser.find_element(By.ID, "table_body")
             if table_head and table_body:
-                desc_col = table_head.find_elements(By.TAG_NAME, "th")[1]
-                desc_col.click()
-                desc_col.click()
-                if desc_col.get_attribute("aria-sort") == "descending":
+                skill_one = browser.find_element(By.ID, "CSS")
+                skill_two = browser.find_element(By.ID, "Data Analytics")
+                skill_three = browser.find_element(By.ID, "HTML")
+                skill_four = browser.find_element(By.ID, "Javascript")
+                skill_five = browser.find_element(By.ID, "Machine learning")
+                skill_six = browser.find_element(By.ID, "Python 3")
+                if skill_one and skill_two and skill_three and skill_four and skill_five and skill_six:
                     res = True
                     self.assertTrue(res, "Passed")
                 else:

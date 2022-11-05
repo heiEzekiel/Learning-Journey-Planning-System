@@ -11,7 +11,7 @@ from tests.frontend_test.url import url as temp_url
 from sqlalchemy.sql import text
 from tests.frontend_test.db import engine as temp_engine
     
-class TC414(unittest.TestCase):
+class TC424(unittest.TestCase):
     def test_temp(self):
         def read_file(filename):
             fh = open(filename, "r")
@@ -34,7 +34,7 @@ class TC414(unittest.TestCase):
         cursor.close()
         connection.close()
 
-        url = temp_url + "frontend/learner/learner_view_skills.html"
+        url = temp_url + "frontend/hr/HR_roles.html"
         chrome_options = Options()
         chrome_options.add_argument("--headless")
         ChromeDriverManager(log_level=0)

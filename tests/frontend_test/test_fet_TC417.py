@@ -11,7 +11,7 @@ from tests.frontend_test.url import url as temp_url
 from sqlalchemy.sql import text
 from tests.frontend_test.db import engine as temp_engine
     
-class TC414(unittest.TestCase):
+class TC417(unittest.TestCase):
     def test_temp(self):
         def read_file(filename):
             fh = open(filename, "r")
@@ -34,7 +34,7 @@ class TC414(unittest.TestCase):
         cursor.close()
         connection.close()
 
-        url = temp_url + "frontend/learner/learner_view_skills.html"
+        url = temp_url + "frontend/hr/skills.html"
         chrome_options = Options()
         chrome_options.add_argument("--headless")
         ChromeDriverManager(log_level=0)
@@ -50,10 +50,10 @@ class TC414(unittest.TestCase):
             table_head = browser.find_element(By.ID, "table_head")
             table_body = browser.find_element(By.ID, "table_body")
             if table_head and table_body:
-                desc_col = table_head.find_elements(By.TAG_NAME, "th")[1]
-                desc_col.click()
-                desc_col.click()
-                if desc_col.get_attribute("aria-sort") == "descending":
+                search_box = browser.find_element(By.ID, "table_filter").find_element(By.TAG_NAME, "input")
+                search_box.send_keys("I love SPM")
+                empty = browser.find_element(By.CLASS_NAME, "dataTables_empty").get_attribute("innerHTML")
+                if "No matching records found" in empty:
                     res = True
                     self.assertTrue(res, "Passed")
                 else:
