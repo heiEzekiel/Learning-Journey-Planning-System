@@ -21,7 +21,7 @@ BananaOrange is a Learning Journey Planning System (LJPS) which aims to guide st
 
 ### Backend is created with:
 
-- Python == 3.10.8
+- Python==3.10.8
 - Flask==2.0.3
 - Flask-Cors==3.0.10
 - Flask-SQLAlchemy==2.5.1
@@ -32,6 +32,7 @@ BananaOrange is a Learning Journey Planning System (LJPS) which aims to guide st
 - mysql-connector==2.2.9
 - mysql-connector-python==8.0.28
 - mysqlclient==2.1.1
+- pandas==1.5.1
 
 ### Testing is created with:
 
@@ -53,17 +54,20 @@ BananaOrange is a Learning Journey Planning System (LJPS) which aims to guide st
 ```
 $ pip install -r requirements.txt
 ```
-
-3. To start backend services, run the following commands in terminal from root directory:
+3. To import data from LMS, run the following commands in terminal from root directory:
+```
+python backend/content_updater.py
+```
+4. To start backend services, run the following commands in terminal from root directory:
 
 ```
 python backend/app.py
 ```
 
-4. To start frontend services, click on the Live Server located at the bottom-right of Visual Studio Code.
+5. To start frontend services, click on the Live Server located at the bottom-right of Visual Studio Code.
    ![Alt text](assets/img/live-server.png?raw=true "Title")
 
-5. The image shown below will be the starting page the of our website. You can select your role and login.
+6. The image shown below will be the starting page the of our website. You can select your role and login.
    ![Alt text](assets/img/indexpage.jpg?raw=true "Title")
 
 ### Learner
