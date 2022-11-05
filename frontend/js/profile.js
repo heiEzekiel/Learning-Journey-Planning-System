@@ -113,10 +113,6 @@ async function getLJstatus(journey) {
       var lj_c = 0
       var message_str = ""
 
-
-
-
-
       for (lj of journey) {
 
         if (lj.journey_status == 'Completed') {
@@ -130,11 +126,11 @@ async function getLJstatus(journey) {
               message_str += `                      
               <div class="card mt-3">
 <div class="card-body">
-<h5 class="card-title fs-6 fw-bold">${lj.journey_name}    
+<h5 id="name_${lj.journey_id}" class="card-title fs-6 fw-bold">${lj.journey_name}    
 <span id="remove_${lj.journey_id}" onClick="removeJourney(${lj.journey_id})" class="mt-1 mx-1 btn btn-danger text-white float-end" style="font-size:10px;" >
 Remove learning journey
 </span>
-<span onClick="location.href='./update_lj.html?id=${lj.journey_id}&name=${lj.journey_name}&job=${r.job_role_id}'" class="mt-1 btn btn-primary text-white float-end" style="font-size:10px;"> View Learning Journey </span>
+<span id="view_${lj.journey_id}" onClick="location.href='./update_lj.html?id=${lj.journey_id}&name=${lj.journey_name}&job=${r.job_role_id}'" class="mt-1 btn btn-primary text-white float-end" style="font-size:10px;"> View Learning Journey </span>
 
 
 </h5>
@@ -145,7 +141,7 @@ Remove learning journey
               message_str += `                      
               <div class="card mt-3">
 <div class="card-body">
-<h5 class="card-title fs-6 fw-bold">${lj.journey_name} <span class="text-danger">(Inactive)</span>   
+<h5 id="name_${lj.journey_id}" class="card-title fs-6 fw-bold">${lj.journey_name} <span id="inactive_${lj.journey_id}" class="text-danger">(Inactive)</span>   
 <span  onClick="removeJourney(${lj.journey_id})" class="mt-1 mx-1 btn btn-danger text-white float-end" style="font-size:10px;" >
 Remove learning journey
 </span>

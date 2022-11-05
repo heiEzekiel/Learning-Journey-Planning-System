@@ -167,6 +167,8 @@
 						{ data: 'skill_desc' },
 						{
 							data: null,
+						  	createdCell: function(td, cellData, rowData, row, col) {
+								$(td).attr('name', "status")},
 							render: function (data) {
 								staff_id = 140001
 								function get_skill_for_staff(id) {
