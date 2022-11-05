@@ -5,19 +5,19 @@ import os
 mysql_engine = ce("mysql+mysqlconnector://root@localhost:3306/LJPS_DB")
 
 def main():
-    dir = os.path.join(os.getcwd(), "raw_data")
+    dir = os.path.join(os.getcwd(), "backend/raw_data")    
     files = os.listdir(dir) 
     last = files.pop(1)
     files.append(last)
     for file in files:
-        table_name = file.split(".")[0].capitalize()
+        table_name = file.split(".")[0]
         sql_query = "select * from " + table_name + ";"
         sqldf = pd.read_sql(sql_query, mysql_engine)
         csv_file = os.path.join(dir,file)
         df = pd.read_csv(csv_file, encoding_errors='ignore', index_col=False)
         df = df.fillna('')
         df.columns = map(str.lower, df.columns)
-        if table_name == "Registration":
+        if table_name == "registration":
             sqldf["reg_id"]=sqldf["reg_id"].apply(str)
             df["reg_id"]=df["reg_id"].apply(str)
             df = df[~df["reg_id"].isin(sqldf["reg_id"])]
