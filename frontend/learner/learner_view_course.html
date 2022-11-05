@@ -2,7 +2,7 @@
 <html class="wide wow-animation" lang="en">
 
 <head>
-  <title>HR view Courses</title>
+  <title>List of Courses</title>
   <meta name="format-detection" content="telephone=no">
   <meta name="viewport"
     content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -133,7 +133,7 @@
           },
           success: function (data) {
             //console.log(data)
-            if (data.code == 200) {
+            if (data.code == 200 && data.data.length != 0) {
               document.getElementById("res").style.display = "none"
               var table = $('#table').DataTable({
                 responsive: true,
