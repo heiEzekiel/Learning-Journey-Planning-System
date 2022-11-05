@@ -87,7 +87,7 @@
     <!-- Main content starts here  -->
     <div class="container mt-5 mb-5">
       <h3 id="journey_Name">My Learning Journey</h3>
-      <span class="float-end my-3 btn btn-primary" onclick ="addCourses()">Add Courses</span>
+      <span class="float-end my-3 btn btn-primary" onclick="addCourses()">Add Courses</span>
       <table class="table borderless table-hover mt-5 w-100" id="table">
       </table>
     </div>
@@ -97,7 +97,7 @@
       get_journey_maps = "getJourneyMaps";
       get_course_name = "getCourseName";
       remove_journey_maps = "deleteJourneyMap"
-      
+
 
       // retrieve user's LJ ID based on params
       const queryString = window.location.search;
@@ -108,7 +108,7 @@
       // Get journey map based on ID
       document.getElementById("journey_Name").innerText = name
 
-      function addCourses(){
+      function addCourses() {
         location.href = `./add_course.html?id=${id}&journeyName=${name}&job=${job}`
       }
       async function getJourneyMaps() {
@@ -153,21 +153,21 @@
       }
 
       async function getCourse(journeyMaps, msg_str) {
-        msg_str +=`<tbody id="table_body">`;
+        msg_str += `<tbody id="table_body">`;
         //console.log(journeyMaps)
         count = 0
-       
+
         for (const journeyMap of journeyMaps) {
           //console.log(`${backendUrl}/${get_course_name}/${journeyMap['jm_fk_course_id']}`)
           const response = await fetch(`${backendUrl}/${get_course_name}/${journeyMap['jm_fk_course_id']}`)
             .then((response) => response.json())
             .then((data) => {
-              count+=1
+              count += 1
               //console.log(data)
               // console.log(JSON.parse(JSON.stringify(data.data)));
               result = JSON.parse(JSON.stringify(data.data));
               courseName = result[0].course_name
-              msg_str +=`
+              msg_str += `
                 <tr>       
                   <td class="text-wrap w-50">${courseName}</td>
                   <td><button type="button" class="btn btn-danger" onclick="removeJourneyMaps(this.id)" id="${journeyMap["jm_fk_journey_id"]}?${journeyMap["jm_fk_course_id"]}">Remove</button></td>
@@ -185,7 +185,7 @@
             });
           // return result[0].course_name
         }
-        msg_str +=`</tbody>`;
+        msg_str += `</tbody>`;
         document.getElementById("table").innerHTML = msg_str;
 
       }
