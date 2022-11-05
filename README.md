@@ -109,7 +109,7 @@ python -m unittest discover tests/integration
 3. Frontend Testing
 
 ```
-python -m unittest discover tests/frontend_test
+python -m unittest discover tests/frontend_test; python -m unittest tests/frontend_test/update_db.py
 ```
 
 # Credits
