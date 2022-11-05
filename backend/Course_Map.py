@@ -131,7 +131,7 @@ def get_courses_for_skill(skill_id):
 
 # ********************************* Delete ********************************* 
 # Delete a course skill map
-def delete_skill_from_course(course_id, skill_id, test_data="", existing_data=""):
+def delete_skill_from_course(course_id, skill_id):
     course = Course_Map.query.filter_by(
         cm_fk_course_id=course_id, cm_fk_skill_id=skill_id).first()
 
