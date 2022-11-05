@@ -20,78 +20,82 @@
     <link rel="stylesheet" href="../css/ljcss.css" />
 </head>
 <style>
-    /* The Modal (background) */
-    .courseModal {
-        display: none;
-        /* Hidden by default */
-        position: fixed;
-        /* Stay in place */
-        z-index: 1;
-        /* Sit on top */
-        left: 0;
-        top: 0;
-        width: 100%;
-        /* Full width */
-        height: 100%;
-        /* Full height */
-        overflow: auto;
-        /* Enable scroll if needed */
-        background-color: rgb(0, 0, 0);
-        /* Fallback color */
-        background-color: rgba(0, 0, 0, 0.4);
-        /* Black w/ opacity */
-    }
+	/* The Modal (background) */
+	.courseModal {
+		display: none;
+		/* Hidden by default */
+		position: fixed;
+		/* Stay in place */
+		z-index: 1;
+		/* Sit on top */
+		left: 0;
+		top: 0;
+		width: 100%;
+		/* Full width */
+		height: 100%;
+		/* Full height */
+		overflow: auto;
+		/* Enable scroll if needed */
+		background-color: rgb(0, 0, 0);
+		/* Fallback color */
+		background-color: rgba(0, 0, 0, 0.4);
+		/* Black w/ opacity */
+	}
 
-    /* Modal Content/Box */
-    .courseModal-content {
-        background-color: #fefefe;
-        margin: 15% auto;
-        /* 15% from the top and centered */
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%;
-        /* Could be more or less, depending on screen size */
-    }
+	/* Modal Content/Box */
+	.courseModal-content {
+		background-color: #fefefe;
+		margin: 15% auto;
+		/* 15% from the top and centered */
+		padding: 20px;
+		border: 1px solid rgb(104, 104, 104);
+		width: 80%;
+		/* Could be more or less, depending on screen size */
+	}
 
-    p {
-        text-align: left;
-    }
+	p {
+		text-align: left;
+	}
 
-    /* The Close Button */
-    .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-    }
+	/* The Close Button */
+	.close {
+		color: #aaa;
+		float: right;
+		font-size: 28px;
+		font-weight: bold;
+	}
 
-    .close:hover,
-    .close:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-    }
+	.close:hover,
+	.close:focus {
+		color: black;
+		text-decoration: none;
+		cursor: pointer;
+	}
 
-    .underline-on-hover:hover {
-        text-decoration: underline;
-    }
+	.underline-on-hover:hover {
+		text-decoration: underline;
+	}
 
-    .collapsible {
-        background-color: rgb(241, 241, 241);
-        color: black;
-        cursor: pointer;
-        padding: 18px;
-        width: 100%;
-        border: none;
-        text-align: left;
-        outline: none;
-        font-size: 15px;
-    }
+	.collapsible {
+		background-color: rgb(241, 241, 241);
+		color: black;
+		cursor: pointer;
+		padding: 18px;
+		width: 100%;
+		border: none;
+		text-align: left;
+		outline: none;
+		font-size: 15px;
+	}
 
-    .active,
-    .collapsible:hover {
-        background-color: rgb(255, 255, 255);
-    }
+	.active,
+	.collapsible:hover {
+		background-color: rgb(255, 255, 255);
+	}
+
+	.btn-float-left {
+		float: left;
+	}
 </style>
 
 <body>
@@ -157,11 +161,11 @@
                                     <div class="rd-navbar-nav-wrap">
                                         <ul class="rd-navbar-nav">
                                             <li class="rd-nav-item">
-                                                <a class="rd-nav-link" href="learner_profile.html">Profile</a>
+                                                <a class="rd-nav-link active" href="learner_profile.html">Profile</a>
                                             </li>
 
-                                            <li class="rd-nav-item active">
-                                                <a class="rd-nav-link" href="">Start Learning Journey</a>
+                                            <li class="rd-nav-item">
+                                                <a class="rd-nav-link" href="journey_step_one.html">Start Learning Journey</a>
                                             </li>
 
                                             <li class="rd-nav-item">
@@ -313,7 +317,7 @@
                                 if (attain_status == 1) {
                                     msg_str += `
                                         <br>
-                                        <button id="${skill['skill_id']}" type='button' class="btn btn-primary align-middle text-wrap collapsible"
+                                        <button id="${skill['skill_id']}" type='button' class="btn btn-light align-middle text-wrap collapsible"
                                         data-bs-toggle="collapse"
                                         data-bs-target="#collapseExample${skill['skill_id']}"
                                         aria-expanded="false" aria-controls="collapseExample${skill['skill_id']}"
@@ -324,7 +328,7 @@
                                 } else {
                                     msg_str += `
                                         <br>
-                                        <button id="${skill['skill_id']}" type='button' class="btn btn-primary align-middle text-wrap collapsible"
+                                        <button id="${skill['skill_id']}" type='button' class="btn btn-light align-middle text-wrap collapsible"
                                         data-bs-toggle="collapse"
                                         data-bs-target="#collapseExample${skill['skill_id']}"
                                         aria-expanded="false" aria-controls="collapseExample${skill['skill_id']}"
@@ -335,7 +339,7 @@
                             } else {
                                 msg_str += `
                                         <br>
-                                        <button id="${skill['skill_id']}" type='button' class="btn btn-primary align-middle text-wrap collapsible"
+                                        <button id="${skill['skill_id']}" type='button' class="btn btn-light align-middle text-wrap collapsible"
                                         data-bs-toggle="collapse"
                                         data-bs-target="#collapseExample${skill['skill_id']}"
                                         aria-expanded="false" aria-controls="collapseExample${skill['skill_id']}"
