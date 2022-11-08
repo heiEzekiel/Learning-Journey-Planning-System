@@ -61,7 +61,6 @@ def create_job_role():
         db.session.add(new_job_role)
         db.session.commit()
     except Exception as e:
-        print(e)
         return jsonify(
             {
                 "code": 500,

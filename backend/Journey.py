@@ -85,7 +85,6 @@ def create_journey():
 def get_journey(j_fk_staff_id):
     journeys = Journey.query.filter_by(j_fk_staff_id=j_fk_staff_id).all()
     if journeys:
-        print(journeys)
         return jsonify(
             {
                 "code": 200,

@@ -75,7 +75,6 @@ def create_skills():
             db.session.add(skill)
             db.session.commit()
         except Exception as e:
-            print(e)
             return jsonify(
                 {
                     "code": 500,
@@ -94,7 +93,6 @@ def create_skills():
             db.session.add(skill)
             db.session.commit()
         except Exception as e:
-            print(e)
             return jsonify(
                 {
                     "code": 500,

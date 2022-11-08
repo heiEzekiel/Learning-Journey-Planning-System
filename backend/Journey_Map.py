@@ -35,7 +35,6 @@ def create_journey_map(jm_fk_journey_id, jm_fk_course_id):
             db.session.add(new_map)
             db.session.commit()
         except Exception as e:
-            print(e)
             return jsonify(
                 {
                     "code": 500,

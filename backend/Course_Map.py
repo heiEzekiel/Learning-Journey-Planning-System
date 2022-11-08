@@ -35,7 +35,6 @@ def create_course_skill_map(cm_fk_course_id, cm_fk_skill_id):
         db.session.add(new_map)
         db.session.commit()
     except Exception as e:
-        print(e)
         return jsonify(
             {
                 "code": 500,
@@ -145,7 +144,6 @@ def delete_skill_from_course(course_id, skill_id):
             }
         )
     except Exception as e:
-        print(e)
         return jsonify(
             {
                 "code": 404,

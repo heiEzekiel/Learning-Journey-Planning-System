@@ -34,7 +34,6 @@ def create_role_map(rm_fk_job_role_id, rm_fk_skill_id):
         db.session.add(new_map)
         db.session.commit()
     except Exception as e:
-        print(e)
         return jsonify(
             {
                 "code": 500,
