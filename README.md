@@ -112,9 +112,14 @@ python -m unittest discover tests/integration
 3. Frontend Testing
 
 ```
-python -m unittest discover tests/frontend_test; python -m unittest tests/frontend_test/update_db.py
+python -m unittest discover tests/frontend_test 
+```
+
+4. Reset Database with LMS Data from CSV files
+```
+python -m unittest tests/frontend_test/update_db.py
 ```
 
 # Credits
 
-Special shoutout to the Prof. Swavek, Instructor Kong Ming and Boris for the guidance.
+Special shoutout to Prof. Swavek, Instructor Kong Ming and Boris for the guidance.
