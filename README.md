@@ -1,4 +1,5 @@
-# BananaOrange
+# LJPS (G5T1)
+# Done by: Andy, Ezekiel, Jing Yi, Sherry, Yee Sen
 
 # Table of contents
 
