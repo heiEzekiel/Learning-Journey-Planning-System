@@ -17,7 +17,9 @@ Learning Journey Planning System (LJPS) aims to guide staff on courses they can 
 
 ### Frontend is created with:
 
-- Bootstrap == 5.2.1
+- Bootstrap==5.2.1
+- JQuery==3.5.1
+- Datatables==1.12.1
 
 ### Backend is created with:
 
