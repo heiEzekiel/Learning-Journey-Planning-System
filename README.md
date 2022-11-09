@@ -113,6 +113,7 @@ python -m unittest discover tests/integration
 ```
 
 3. Frontend Testing
+(Note that selenium automated testing duration differs from device to device. One of our member's laptop took arond 45 minutes, but another member's laptop took 11 minutes. Oug frontend testing covers every single test case hence it takes slightly longer)
 
 ```
 python -m unittest discover tests/frontend_test 
