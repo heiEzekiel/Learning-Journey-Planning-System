@@ -11,7 +11,7 @@
 
 # Project Description
 
-BananaOrange is a Learning Journey Planning System (LJPS) which aims to guide staff on courses they can take to assist them for their upcoming new positions or in a different area within the organisation.
+Learning Journey Planning System (LJPS) aims to guide staff on courses they can take to assist them for their upcoming new positions or in a different area within the organisation.
 
 # Technologies
 
@@ -122,4 +122,4 @@ python -m unittest tests/frontend_test/update_db.py
 
 # Credits
 
-Special shoutout to Prof. Swavek, Instructor Kong Ming and Boris for the guidance.
+Special shoutout to Prof. Swavek, Instructor Kong Ming and TA Boris for the guidance.
