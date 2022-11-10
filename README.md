@@ -121,7 +121,7 @@ python -m unittest discover tests/frontend_test
 
 4. Reset Database with LMS Data from CSV files
 ```
-python -m unittest tests/frontend_test/update_db.py
+python backend/content_updater.py
 ```
 
 # Credits
