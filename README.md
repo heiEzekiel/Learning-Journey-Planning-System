@@ -1,5 +1,5 @@
 # IS212 - Software Project Management
-# Done by: Andy, Ezekiel, Jing Yi, Sherry, Yee Sen
+## Done by: Andy, Ezekiel, Jing Yi, Sherry, Yee Sen
 
 # Table of contents
 
